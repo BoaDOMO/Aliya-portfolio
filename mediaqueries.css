@@ -2,6 +2,7 @@
   #profile {
     display: block;
     height: fit-content;
+    margin-bottom: 1rem;
   }
   .profile_pic_container {
     width: 300px;
