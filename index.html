@@ -12,10 +12,10 @@
     <div id="nav">
       <nav id="desktop-nav">
         <h1>RESUME</h1>
-        <h2>RESUME</h2>
         <div>
           <ul class="nav-links">
             <li><a href="#profile">About</a></li>
+            <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#reference">Reference</a></li>
@@ -25,10 +25,15 @@
       </nav>
       <nav id="hamburger-nav">
         <h1>RESUME</h1>
-        <h2>RESUME</h2>
         <div class="hamburger-menu">
           <div class="hamburger-icon" onclick="toggleMenu()">
             <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="menu-links">
+            <li><a href="#profile" onclick="toggleMenu()">About</a></li>
+            <li><a href="#skills" onclick="toggleMenu()">Skills</a></li>
             <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
             <li><a href="#education" onclick="toggleMenu()">Education</a></li>
             <li><a href="#reference" onclick="toggleMenu()">Reference</a></li>
@@ -42,30 +47,35 @@
     <section id="profile">
       <div class="profile_pic_container">
         <img src="./assets/profile-pic.png" alt="Aliya profile picture" />
+      </div>
+      <div class="profile_text">
+        <p class="profile_text_1">Hello, I'm</p>
+        <h1 class="profile_name">Aliya Koy</h1>
+        <p class="profile_text_2">Digital Product Owner</p>
         <div class="btn-container">
           <button
             class="btn btn-color-2"
-            onclick="window.open('./assets/resume-example.pdf')"
             onclick="window.open('./assets/resume.pdf')"
           >
             Download CV
           </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
           <button class="btn btn-color-1" onclick="location.href='./#contact-info'">
             Contact Info
           </button>
         </div>
+      </div>
+      <div class="profile_about">
+        <p>
+          I am a fintech and digital product specialist with 3 years of
+          experience. Skilled in UI/UX design, front-end development, product
+          and project management, and data analysis. I excel at creating
+          user-centric digital products and collaborating with cross-functional
+          teams to deliver high-impact solutions.
         </p>
       </div>
     </section>
 
     <section id="skills">
-      <h1>SKILLS</h1>
-      <div class="skill-container">
-        <div class="skill-card">
-          <p>Product Management</p>
-          <div class="progress-bar">
-            <div class="level level-5"></div>
       <h2>SKILLS</h2>
       <div class="skill">
           <p class="name1">Product Management</p>
@@ -73,11 +83,6 @@
           <div class="skill-bar">
               <div class="level experienced"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Project Management</p>
-          <div class="progress-bar">
-            <div class="level level-4"></div>
           <ul class="description">
               <li>
                   Skilled in end-to-end product management from ideation to post-launch monitoring.
@@ -91,11 +96,6 @@
           <div class="skill-bar">
               <div class="level experienced"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Scrum/Agile Methodologies</p>
-          <div class="progress-bar">
-            <div class="level level-4"></div>
           <ul class="description">
               <li>
                   Adept at coordinating teams and timelines to ensure timely product releases and service improvements.
@@ -109,11 +109,6 @@
           <div class="skill-bar">
               <div class="level proficient"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Business Analysis</p>
-          <div class="progress-bar">
-            <div class="level level-3"></div>
           <ul class="description">
               <li>
                   Proficient in applying Agile principles and Scrum practices to enhance team collaboration and project delivery.
@@ -127,11 +122,6 @@
           <div class="skill-bar">
               <div class="level proficient"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>UI/UX Design</p>
-          <div class="progress-bar">
-            <div class="level level-4"></div>
           <ul class="description">
               <li>
                   Skilled in identifying business needs, gathering requirements, and proposing effective solutions to improve processes and products.
@@ -145,11 +135,6 @@
           <div class="skill-bar">
               <div class="level competent"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Front-End Development</p>
-          <div class="progress-bar">
-            <div class="level level-3"></div>
           <ul class="description">
               <li>
                   Competent in Figma, focused on creating intuitive and user-friendly designs for digital products and services.
@@ -163,11 +148,6 @@
           <div class="skill-bar">
               <div class="level competent"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Marketing Strategy Development</p>
-          <div class="progress-bar">
-            <div class="level level-2"></div>
           <ul class="description">
               <li>
                   Competent in HTML5, CSS3, and Java, with a foundational understanding of front-end development and object-oriented programming principles.
@@ -181,11 +161,6 @@
           <div class="skill-bar">
               <div class="level proficient"></div>
           </div>
-        </div>
-        <div class="skill-card">
-          <p>Microsoft Office and Google Suite</p>
-          <div class="progress-bar">
-            <div class="level level-5"></div>
           <ul class="description">
               <li>
                   Ability to create and execute targeted marketing plans that drive product engagement and adoption, collaborating with cross-functional teams.
@@ -199,14 +174,12 @@
           <div class="skill-bar">
               <div class="level experienced"></div>
           </div>
-        </div>
           <ul class="description">
               <li>
                   Expert proficiency in Word, Excel, and PowerPoint, with strong skills in document creation, data analysis, and professional presentations.
               </li>
           </ul>
       </div>
-    </section>
   </section>
   
   <section id="experience">
@@ -355,7 +328,5 @@
       <p>Copyright &#169; 2024 Aliya Koy. All Rights Reserved.</p>
     </footer>
     <script src="script.js"></script>
-  </body>
   </bod>
-</html>
 </html>
