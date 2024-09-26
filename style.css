@@ -35,7 +35,7 @@ li {
   font-weight: 320;
   font-style: normal;
   color: rgb(85, 85, 85);
-  margin: 0.25rem;
+  margin: 0.25rem 0;
 }
 
 em {
@@ -379,6 +379,7 @@ section {
 }
 
 /* Experience */
+
 
 
 /* FOOTER SECTION */
