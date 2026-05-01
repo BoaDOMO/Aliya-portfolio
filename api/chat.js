@@ -61,6 +61,6 @@ ${knowledgeBase}`;
     return res.status(200).json({ answer });
   } catch (err) {
     console.error("API error:", err);
-    return res.status(500).json({ error: "Something went wrong. Please try again." });
+    return res.status(500).json({ error: err.message || "Something went wrong. Please try again." });
   }
 };
