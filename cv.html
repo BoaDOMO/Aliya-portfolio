@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aliya Koy — CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Source Code Pro", monospace;
+      background: #d8d8d8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    /* ── SCREEN TOOLBAR ── */
+    .toolbar {
+      width: 21cm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .toolbar-label {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .tbtn {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.85rem;
+      padding: 0.45rem 1.25rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      border: none;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tbtn-primary {
+      background: #26428b;
+      color: white;
+    }
+
+    .tbtn-primary:hover { background: #1a2d5e; }
+
+    .tbtn-secondary {
+      background: white;
+      color: #26428b;
+      border: 1.5px solid #26428b;
+    }
+
+    .tbtn-secondary:hover { background: #f0f4ff; }
+
+    /* ── A4 PAGE ── */
+    .page {
+      width: 21cm;
+      min-height: 29.7cm;
+      background: white;
+      padding: 1.4cm 1.8cm;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    /* ── HEADER ── */
+    .cv-header {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 0 1.2rem;
+      align-items: center;
+      padding-bottom: 0.7rem;
+      border-bottom: 2px solid #26428b;
+      margin-bottom: 0.8rem;
+    }
+
+    .cv-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 2px solid #26428b;
+    }
+
+    .cv-name {
+      font-family: "Oswald", sans-serif;
+      font-size: 1.9rem;
+      font-weight: 500;
+      color: #26428b;
+      line-height: 1.1;
+    }
+
+    .cv-title {
+      font-size: 0.82rem;
+      color: #555;
+      margin-top: 0.2rem;
+    }
+
+    .cv-contact {
+      text-align: right;
+      font-size: 0.73rem;
+      color: #555;
+      line-height: 1.85;
+    }
+
+    .cv-contact a {
+      color: #26428b;
+      text-decoration: none;
+    }
+
+    /* ── SECTIONS ── */
+    .cv-section {
+      margin-bottom: 0.8rem;
+    }
+
+    .cv-section-title {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #26428b;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid rgba(38, 66, 139, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── ABOUT ── */
+    .cv-about {
+      font-size: 0.78rem;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    /* ── SKILLS ── */
+    .cv-skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .cv-skill-card {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+    }
+
+    .cv-skill-card-title {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.72rem;
+      color: #26428b;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .cv-skill-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cv-skill-card ul li {
+      font-size: 0.7rem;
+      color: #555;
+      padding: 0.15rem 0;
+      border-bottom: 1px solid #f2f2f2;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .cv-skill-card ul li::before {
+      content: "→";
+      color: #26428b;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .cv-skill-card ul li:last-child { border-bottom: none; }
+
+    /* ── EXPERIENCE ── */
+    .cv-entry {
+      margin-bottom: 0.65rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid rgba(38, 66, 139, 0.2);
+    }
+
+    .cv-entry:last-child { margin-bottom: 0; }
+
+    .cv-entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .cv-entry-company {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #26428b;
+    }
+
+    .cv-entry-date {
+      font-size: 0.68rem;
+      color: #888;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cv-entry-role {
+      font-size: 0.75rem;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 0.2rem;
+    }
+
+    .cv-entry ul {
+      padding-left: 1rem;
+      list-style-type: disc;
+    }
+
+    .cv-entry ul li {
+      font-size: 0.73rem;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 0.08rem;
+    }
+
+    /* ── EDUCATION ── */
+    .cv-edu-entry {
+      margin-bottom: 0.4rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid rgba(38, 66, 139, 0.2);
+    }
+
+    .cv-edu-entry:last-child { margin-bottom: 0; }
+
+    /* ── FOOTER CONTACT ── */
+    .cv-footer {
+      margin-top: 0.8rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(38, 66, 139, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.6rem;
+      font-size: 0.72rem;
+      color: #555;
+    }
+
+    .cv-footer a {
+      color: #26428b;
+      text-decoration: none;
+    }
+
+    .cv-footer-dot {
+      color: #26428b;
+      font-weight: bold;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+        display: block;
+      }
+
+      .toolbar { display: none; }
+
+      .page {
+        box-shadow: none;
+        width: 100%;
+        min-height: 100vh;
+        padding: 1.4cm 1.8cm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN TOOLBAR (hidden when printing) -->
+  <div class="toolbar">
+    <span class="toolbar-label">CV PREVIEW — A4</span>
+    <div class="toolbar-actions">
+      <button class="tbtn tbtn-secondary" onclick="window.close()">
+        <i class="fa-solid fa-arrow-left"></i> Back to Site
+      </button>
+      <button class="tbtn tbtn-primary" onclick="window.print()">
+        <i class="fa-solid fa-download"></i> Save as PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- A4 PAGE -->
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="cv-header">
+      <img class="cv-photo" src="./assets/profile-pic.jpg" alt="Aliya Koy" />
+      <div>
+        <div class="cv-name">Aliya Koy</div>
+        <div class="cv-title">Digital Product Owner (AI Lead)</div>
+      </div>
+      <div class="cv-contact">
+        <div>097 725 93 72</div>
+        <div>aliyakoy365@gmail.com</div>
+        <div><a href="https://www.linkedin.com/in/aliya-koy-b48b761b1/">LinkedIn</a></div>
+        <div>Phnom Penh, Cambodia</div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="cv-section">
+      <div class="cv-section-title">About</div>
+      <p class="cv-about">
+        Results-oriented Digital Product Owner and AI Lead with 8+ years of experience across fintech, telecoms, and banking. Currently spearheading an AI-powered conversational assistant at KB Prasac Bank — one of Cambodia's top 4 banks — covering RAG pipeline design, LLM platform evaluation, and cross-functional AI strategy. Proven track record in turning complex ideas into user-centric digital products that drive engagement and operational efficiency.
+      </p>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="cv-section">
+      <div class="cv-section-title">Skills</div>
+      <div class="cv-skills-grid">
+        <div class="cv-skill-card">
+          <div class="cv-skill-card-title"><i class="fa-solid fa-microchip"></i> AI & Innovation</div>
+          <ul>
+            <li>Conversational AI Design</li>
+            <li>RAG Pipeline Development</li>
+            <li>LLM Platform Evaluation</li>
+            <li>AI Product Strategy</li>
+          </ul>
+        </div>
+        <div class="cv-skill-card">
+          <div class="cv-skill-card-title"><i class="fa-solid fa-layer-group"></i> Product & Delivery</div>
+          <ul>
+            <li>Digital Product Ownership</li>
+            <li>Agile / Scrum Delivery</li>
+            <li>Stakeholder Management</li>
+            <li>Product Roadmapping</li>
+          </ul>
+        </div>
+        <div class="cv-skill-card">
+          <div class="cv-skill-card-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Analysis & Design</div>
+          <ul>
+            <li>Business Analysis</li>
+            <li>Requirements Gathering</li>
+            <li>UI/UX Design (Figma)</li>
+            <li>User Journey Mapping</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="cv-section">
+      <div class="cv-section-title">Experience</div>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">KB Prasac Bank</span>
+          <span class="cv-entry-date">April 2026 – Present</span>
+        </div>
+        <div class="cv-entry-role">Senior Digital Product Owner (AI Lead)</div>
+        <ul>
+          <li>Leading the development of an AI-powered conversational assistant for one of Cambodia's top 4 banks.</li>
+          <li>Responsible for LLM platform evaluation, RAG pipeline design, and integration planning.</li>
+          <li>Driving cross-functional coordination and AI strategy to improve customer experience and operational efficiency.</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">Boost Capital (Cambodia) Co., Ltd.</span>
+          <span class="cv-entry-date">June 2023 – Jan 2026</span>
+        </div>
+        <div class="cv-entry-role">Senior Product Specialist</div>
+        <ul>
+          <li>Led the design and optimization of chatbot solutions to improve customer engagement and streamline loan applications.</li>
+          <li>Collaborated across product, marketing, and tech teams to ensure seamless user journeys aligned with campaign goals.</li>
+          <li>Leveraged user data and feedback loops to enhance product features and support adoption metrics.</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">Smart Axiata Co., Ltd.</span>
+          <span class="cv-entry-date">Nov 2021 – June 2023</span>
+        </div>
+        <div class="cv-entry-role">VAS & DCB Product Specialist</div>
+        <ul>
+          <li>Managed digital products including VAS Gaming and SmartPay, with partnerships across Google, Apple, and Coda DCB.</li>
+          <li>Led go-to-market campaigns and identified growth opportunities through data-driven product iterations.</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">PTC Computer Co., Ltd.</span>
+          <span class="cv-entry-date">Sept 2018 – Sept 2021</span>
+        </div>
+        <div class="cv-entry-role">Retail Product Supervisor → Bid & Tender Specialist → Corporate & SMB Sales</div>
+        <ul>
+          <li>Supervised retail operations for major tech brands (Dell, Asus, Acer, HP, Razer); trained sales teams and managed customer support.</li>
+          <li>Managed NGO and government tender projects across RFQ, ITB, and NCB document formats.</li>
+          <li>Built and maintained SMB and corporate client relationships to drive sales growth.</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">Fabric Arts (Cambodia) Co., Ltd.</span>
+          <span class="cv-entry-date">June 2017 – July 2018</span>
+        </div>
+        <div class="cv-entry-role">Translator / Assistant</div>
+        <ul>
+          <li>Provided English–Khmer translation and executive support for the CEO of a leather bag manufacturing company.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="cv-section">
+      <div class="cv-section-title">Education</div>
+
+      <div class="cv-edu-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">Asia Pacific International University</span>
+          <span class="cv-entry-date">June 2012 – June 2016</span>
+        </div>
+        <div class="cv-entry-role">Bachelor of Science — Muaklek, Saraburi, Thailand</div>
+      </div>
+
+      <div class="cv-edu-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-company">Cambodia Adventist School</span>
+          <span class="cv-entry-date">May 2009 – June 2012</span>
+        </div>
+        <div class="cv-entry-role">High School Diploma — Phnom Penh, Cambodia</div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER CONTACT -->
+    <div class="cv-footer">
+      <span>097 725 93 72</span>
+      <span class="cv-footer-dot">·</span>
+      <span>aliyakoy365@gmail.com</span>
+      <span class="cv-footer-dot">·</span>
+      <a href="https://www.linkedin.com/in/aliya-koy-b48b761b1/">LinkedIn</a>
+      <span class="cv-footer-dot">·</span>
+      <span>#555 Rada Street, Phnom Penh, Cambodia</span>
+    </div>
+
+  </div>
+
+  <script>
+    // Auto-trigger print only when opened via window.open() from the portfolio
+    if (window.opener) {
+      window.addEventListener("load", () => setTimeout(() => window.print(), 800));
+    }
+  </script>
+</body>
+</html>

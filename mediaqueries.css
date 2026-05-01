@@ -3,6 +3,7 @@
     font-size: 1.75rem;
   }
 }
+
 @media screen and (max-width: 1920px) {
   html {
     font-size: 1rem;
@@ -13,11 +14,16 @@
   #profile {
     display: block;
     height: fit-content;
+    padding-top: 4rem;
   }
   .profile_pic_container {
-    width: 300px;
-    height: 300px;
+    width: 260px;
+    height: 260px;
     margin: 0 auto 2rem;
+  }
+  .profile_about {
+    max-width: 100%;
+    margin: 1rem auto;
   }
 }
 
@@ -31,6 +37,7 @@
   #profile {
     display: block;
     height: fit-content;
+    padding-top: 4rem;
   }
 }
 
@@ -44,6 +51,10 @@
   #profile {
     display: block;
     height: fit-content;
+    padding-top: 4rem;
+  }
+  .skills-categories {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -57,18 +68,12 @@
   #profile {
     display: block;
     height: fit-content;
+    padding-top: 4rem;
   }
-}
-@media screen and (max-width: 768px) {
-  #desktop-nav {
-    display: none;
-  }
-  #hamburger-nav {
-    display: flex;
-  }
-  #profile {
-    display: block;
-    height: fit-content;
+  .profile_pic_container {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 2rem;
   }
 }
 
@@ -85,5 +90,14 @@
   #profile {
     display: block;
     height: fit-content;
+    padding-top: 3rem;
+  }
+  .profile_pic_container {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 1.5rem;
+  }
+  .experience-timeline {
+    padding-left: 1.25rem;
   }
 }
