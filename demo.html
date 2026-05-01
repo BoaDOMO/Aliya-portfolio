@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG AI Demo — Aliya Koy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #0d0f1a;
+      --panel: #141828;
+      --panel-alt: #111422;
+      --border: rgba(255, 255, 255, 0.07);
+      --accent: #4d7ef7;
+      --accent-dark: #26428b;
+      --text: #e2e4f0;
+      --muted: #6b7280;
+      --success: #34d399;
+      --user-bg: #26428b;
+      --bot-bg: #1e2338;
+      --input-bg: #1a1e30;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Source Code Pro", monospace;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .demo-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 0.35rem 0.9rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    .demo-title {
+      font-family: "Oswald", sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    .demo-subtitle {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .demo-badge {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      background: rgba(77, 126, 247, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(77, 126, 247, 0.3);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .demo-body {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── PANEL SHARED ── */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--panel-alt);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      font-family: "Oswald", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    .panel-header i { color: var(--accent); }
+
+    .panel-header-title { color: var(--text); }
+
+    .kb-editable-badge {
+      margin-left: auto;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2rem;
+      background: rgba(52, 211, 153, 0.12);
+      color: var(--success);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+    }
+
+    /* ── KB PANEL ── */
+    .panel-kb-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .kb-company-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .kb-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: "Oswald", sans-serif;
+    }
+
+    .kb-company-input {
+      font-family: "Oswald", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 0.3rem 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 200ms ease;
+    }
+
+    .kb-company-input:focus { border-bottom-color: var(--accent); }
+
+    .kb-section { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .kb-textarea {
+      font-family: "Source Code Pro", monospace;
+      font-size: 0.75rem;
+      color: var(--text);
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.6rem 0.75rem;
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      line-height: 1.6;
+      transition: border-color 200ms ease;
+    }
+
+    .kb-textarea:focus { border-color: rgba(77, 126, 247, 0.4); }
+
+    .panel-kb-footer {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--panel-alt);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .update-btn {
+      font-family: "Oswald", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1.25rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .update-btn:hover { background: #3d6ee7; }
+    .update-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .kb-status {
+      font-size: 0.75rem;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    .kb-status.visible { opacity: 1; }
+
+    /* ── CHAT PANEL ── */
+    .panel-chat { border-right: none; }
+
+    .chat-clear-btn {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 0.2rem 0.7rem;
+      cursor: pointer;
+      font-family: "Source Code Pro", monospace;
+      transition: all 200ms ease;
+    }
+
+    .chat-clear-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Suggested questions */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .suggestion-chip {
+      font-family: "Source Code Pro", monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      background: rgba(77, 126, 247, 0.1);
+      border: 1px solid rgba(77, 126, 247, 0.25);
+      border-radius: 2rem;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .suggestion-chip:hover {
+      background: rgba(77, 126, 247, 0.2);
+      border-color: var(--accent);
+    }
+
+    /* Messages */
+    .message {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 85%;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message.bot { align-self: flex-start; }
+
+    .message.system {
+      align-self: center;
+      max-width: 100%;
+    }
+
+    .message-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(77, 126, 247, 0.15);
+      border: 1px solid rgba(77, 126, 247, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .message-bubble {
+      padding: 0.65rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .message.bot .message-bubble {
+      background: var(--bot-bg);
+      border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+      color: var(--text);
+    }
+
+    .message.user .message-bubble {
+      background: var(--user-bg);
+      color: white;
+      border-top-right-radius: 4px;
+    }
+
+    .message.system .message-bubble {
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      color: var(--success);
+      font-size: 0.72rem;
+      border-radius: 2rem;
+      padding: 0.3rem 1rem;
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.65rem 0.9rem;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── CHAT INPUT ── */
+    .chat-input-area {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--panel-alt);
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .chat-input {
+      flex: 1;
+      font-family: "Source Code Pro", monospace;
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      resize: none;
+      line-height: 1.5;
+      max-height: 120px;
+      transition: border-color 200ms ease;
+    }
+
+    .chat-input:focus { border-color: rgba(77, 126, 247, 0.4); }
+    .chat-input::placeholder { color: var(--muted); }
+
+    .send-btn {
+      width: 38px;
+      height: 38px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 200ms ease;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover { background: #3d6ee7; transform: scale(1.05); }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      body { overflow: auto; height: auto; }
+      .demo-body { grid-template-columns: 1fr; height: auto; }
+      .panel { min-height: 60vh; }
+      .panel-kb-body { max-height: 50vh; }
+      .chat-messages { min-height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="demo-header">
+    <div class="demo-header-left">
+      <button class="back-btn" onclick="window.location.href='./index.html'">
+        <i class="fa-solid fa-arrow-left"></i> Portfolio
+      </button>
+      <div>
+        <div class="demo-title">RAG AI DEMO</div>
+        <div class="demo-subtitle">Edit the knowledge base. Ask questions. See how RAG works.</div>
+      </div>
+    </div>
+    <span class="demo-badge">LIVE DEMO</span>
+  </div>
+
+  <!-- MAIN -->
+  <div class="demo-body">
+
+    <!-- LEFT: KNOWLEDGE BASE -->
+    <div class="panel panel-kb">
+      <div class="panel-header">
+        <i class="fa-solid fa-database"></i>
+        <span class="panel-header-title">Knowledge Base</span>
+        <span class="kb-editable-badge">EDITABLE</span>
+      </div>
+
+      <div class="panel-kb-body">
+
+        <div class="kb-company-row">
+          <label class="kb-label">Company Name</label>
+          <input class="kb-company-input" id="companyName" value="Nova Finance" />
+        </div>
+
+        <div class="kb-section">
+          <label class="kb-label">About</label>
+          <textarea class="kb-textarea" id="kb-about" rows="5">Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces. Our mission is to make financial services accessible, fast, and fair for every Cambodian. We operate fully digitally — no physical branches required.</textarea>
+        </div>
+
+        <div class="kb-section">
+          <label class="kb-label">Products & Services</label>
+          <textarea class="kb-textarea" id="kb-products" rows="8">Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month (flat rate) | Disbursed within 24 hours after approval.
+
+Business Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month (flat rate) | Disbursed in 1–3 business days.
+
+Nova Savings Account: 5.5% annual interest | Minimum deposit $50 | No monthly fees | Free ATM withdrawals up to 5 times per month.
+
+Nova Digital Wallet: Free instant transfers between Nova accounts | 0.5% cashback on all purchases | QR code payments accepted at over 10,000 merchants.</textarea>
+        </div>
+
+        <div class="kb-section">
+          <label class="kb-label">FAQ</label>
+          <textarea class="kb-textarea" id="kb-faq" rows="10">Q: How do I apply for a loan?
+A: Apply online at novafinance.com.kh or through the Nova Finance mobile app (available on iOS and Android).
+
+Q: What documents do I need?
+A: Valid Cambodian National ID or Passport, last 3 months of bank statements or salary slips, and proof of address.
+
+Q: How long does approval take?
+A: Our team reviews applications within 4 business hours. You will receive an SMS and email notification upon decision.
+
+Q: Can I repay my loan early?
+A: Yes. Nova Finance charges no early repayment penalties. You can settle your loan at any time.
+
+Q: What happens if I miss a payment?
+A: A late fee of 0.5% of the outstanding balance applies per day after the due date. Contact our support team before your due date if you need assistance.
+
+Q: Can I have two loans at the same time?
+A: Yes, if your first loan is in good standing and your total outstanding balance does not exceed your approved credit limit.
+
+Q: How do I contact customer support?
+A: Hotline: 023 456 789 (8am–8pm daily) | Email: support@novafinance.com.kh | In-app live chat.</textarea>
+        </div>
+
+        <div class="kb-section">
+          <label class="kb-label">Policies</label>
+          <textarea class="kb-textarea" id="kb-policies" rows="6">Eligibility: Applicants must be aged 18–65, hold a valid Cambodian National ID or valid work permit, have a minimum monthly income of $250, and have no active loan defaults at any financial institution.
+
+Data Privacy: Customer data is processed in compliance with Cambodian Law on Data Privacy. Data is used solely for loan assessment, account management, and regulatory reporting. We do not sell customer data to third parties.
+
+Security: All data is encrypted using AES-256 encryption. Servers are located in Cambodia and undergo quarterly security audits.</textarea>
+        </div>
+
+      </div>
+
+      <div class="panel-kb-footer">
+        <button class="update-btn" id="updateBtn" onclick="updateKB()">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          Update Knowledge Base
+        </button>
+        <span class="kb-status" id="kbStatus">
+          <i class="fa-solid fa-circle-check"></i> Updated
+        </span>
+      </div>
+    </div>
+
+    <!-- RIGHT: CHAT -->
+    <div class="panel panel-chat">
+      <div class="panel-header">
+        <i class="fa-solid fa-robot"></i>
+        <span class="panel-header-title" id="chatTitle">Nova Finance AI Assistant</span>
+        <button class="chat-clear-btn" onclick="clearChat()">Clear chat</button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="message-bubble">
+            Hi! I'm the <strong>Nova Finance</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base on the left.
+            <div class="suggestions">
+              <span class="suggestion-chip" onclick="useSuggestion(this)">What are your loan interest rates?</span>
+              <span class="suggestion-chip" onclick="useSuggestion(this)">How do I apply?</span>
+              <span class="suggestion-chip" onclick="useSuggestion(this)">What documents do I need?</span>
+              <span class="suggestion-chip" onclick="useSuggestion(this)">Can I repay early?</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <textarea
+          class="chat-input"
+          id="chatInput"
+          placeholder="Ask something about Nova Finance..."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const sessionId = Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+    let conversationHistory = [];
+    let currentKB = collectKB();
+    let isLoading = false;
+
+    function collectKB() {
+      const parts = [
+        { label: "About", id: "kb-about" },
+        { label: "Products & Services", id: "kb-products" },
+        { label: "FAQ", id: "kb-faq" },
+        { label: "Policies", id: "kb-policies" },
+      ];
+      return parts
+        .map((p) => {
+          const val = document.getElementById(p.id).value.trim();
+          return val ? `## ${p.label}\n${val}` : "";
+        })
+        .filter(Boolean)
+        .join("\n\n");
+    }
+
+    function updateKB() {
+      currentKB = collectKB();
+      const company = document.getElementById("companyName").value.trim() || "the company";
+
+      // Update chat header
+      document.getElementById("chatTitle").textContent = `${company} AI Assistant`;
+
+      // Show system message in chat
+      addSystemMessage(`Knowledge base updated — AI now knows ${company}`);
+
+      // Show success status
+      const btn = document.getElementById("updateBtn");
+      const status = document.getElementById("kbStatus");
+      btn.disabled = true;
+      status.classList.add("visible");
+      setTimeout(() => {
+        status.classList.remove("visible");
+        btn.disabled = false;
+      }, 2500);
+    }
+
+    async function sendMessage() {
+      if (isLoading) return;
+      const input = document.getElementById("chatInput");
+      const question = input.value.trim();
+      if (!question) return;
+
+      input.value = "";
+      input.style.height = "auto";
+
+      addMessage("user", question);
+      conversationHistory.push({ role: "user", content: question });
+
+      const typingId = showTyping();
+      isLoading = true;
+      document.getElementById("sendBtn").disabled = true;
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question,
+            knowledgeBase: currentKB,
+            history: conversationHistory.slice(-10),
+            sessionId,
+            companyName: document.getElementById("companyName").value.trim(),
+          }),
+        });
+
+        const data = await res.json();
+        removeTyping(typingId);
+
+        if (res.ok) {
+          addMessage("bot", data.answer);
+          conversationHistory.push({ role: "assistant", content: data.answer });
+        } else {
+          addMessage("bot", data.error || "Something went wrong. Please try again.");
+        }
+      } catch {
+        removeTyping(typingId);
+        addMessage("bot", "Could not reach the server. Please check your connection and try again.");
+      }
+
+      isLoading = false;
+      document.getElementById("sendBtn").disabled = false;
+    }
+
+    function addMessage(role, content) {
+      const container = document.getElementById("chatMessages");
+      const el = document.createElement("div");
+      el.className = `message ${role}`;
+
+      if (role === "bot") {
+        el.innerHTML = `
+          <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="message-bubble">${escapeHtml(content)}</div>
+        `;
+      } else {
+        el.innerHTML = `<div class="message-bubble">${escapeHtml(content)}</div>`;
+      }
+
+      container.appendChild(el);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function addSystemMessage(text) {
+      const container = document.getElementById("chatMessages");
+      const el = document.createElement("div");
+      el.className = "message system";
+      el.innerHTML = `<div class="message-bubble"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(text)}</div>`;
+      container.appendChild(el);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function showTyping() {
+      const container = document.getElementById("chatMessages");
+      const id = "typing-" + Date.now();
+      const el = document.createElement("div");
+      el.id = id;
+      el.className = "message bot";
+      el.innerHTML = `
+        <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+        <div class="message-bubble">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      `;
+      container.appendChild(el);
+      container.scrollTop = container.scrollHeight;
+      return id;
+    }
+
+    function removeTyping(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    function clearChat() {
+      conversationHistory = [];
+      const container = document.getElementById("chatMessages");
+      container.innerHTML = "";
+      const company = document.getElementById("companyName").value.trim() || "Nova Finance";
+      addMessage("bot", `Chat cleared. I'm the ${company} AI assistant — ask me anything about our products and services.`);
+    }
+
+    function handleKey(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function autoResize(el) {
+      el.style.height = "auto";
+      el.style.height = Math.min(el.scrollHeight, 120) + "px";
+    }
+
+    function useSuggestion(chip) {
+      const input = document.getElementById("chatInput");
+      input.value = chip.textContent;
+      chip.closest(".suggestions").remove();
+      sendMessage();
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\n/g, "<br>");
+    }
+  </script>
+</body>
+</html>
