@@ -58,6 +58,8 @@ ${knowledgeBase}`;
       }).catch(() => {});
     }
 
+    console.log(`[${new Date().toISOString()}] session=${sessionId} company="${companyName}" Q: ${question} | A: ${answer}`);
+
     return res.status(200).json({ answer });
   } catch (err) {
     console.error("API error:", err);
