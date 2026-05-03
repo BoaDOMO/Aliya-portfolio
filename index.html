@@ -9,21 +9,9 @@
     <link rel="stylesheet" href="mediaqueries.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-      /* ── HERO ── */
-      #hero {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 86vh;
-        text-align: center;
-        gap: 1.25rem;
+      /* ── SCROLL CUE ── */
+      #profile {
         position: relative;
-      }
-
-      .hero-tagline {
-        font-size: 1.05rem;
-        max-width: 420px;
       }
 
       .scroll-cue {
@@ -39,6 +27,7 @@
         font-size: 0.72rem;
         color: rgb(170, 170, 170);
         animation: cueFloat 2s ease-in-out infinite;
+        cursor: pointer;
       }
 
       @keyframes cueFloat {
@@ -263,24 +252,6 @@
         30% { transform: translateY(-4px); opacity: 1; }
       }
 
-      /* ── FOOTER ── */
-      #contact {
-        padding: 2rem 1rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.07);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.6rem;
-      }
-
-      .contact-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-        font-family: "Oswald", sans-serif;
-        font-size: 0.95rem;
-      }
-
       /* ── MOBILE ── */
       @media (max-width: 768px) {
         .project-section {
@@ -303,16 +274,6 @@
           height: 280px;
         }
 
-        #hero {
-          min-height: auto;
-          padding: 5rem 1rem 4rem;
-        }
-
-        .contact-links {
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem;
-        }
       }
     </style>
   </head>
@@ -325,7 +286,7 @@
         </div>
         <div>
           <ul class="nav-links">
-            <li><a href="#hero">Home</a></li>
+            <li><a href="#profile">Home</a></li>
             <li><a href="./profile.html">Profile</a></li>
             <li><a href="#rag-chatbot">Lab</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -343,7 +304,7 @@
             <span></span>
           </div>
           <div class="menu-links">
-            <li><a href="#hero" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#profile" onclick="toggleMenu()">Home</a></li>
             <li><a href="./profile.html" onclick="toggleMenu()">Profile</a></li>
             <li><a href="#rag-chatbot" onclick="toggleMenu()">Lab</a></li>
             <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
@@ -352,18 +313,34 @@
       </nav>
     </div>
 
-    <section id="hero">
-      <h1 class="profile_name">Aliya Koy</h1>
-      <p class="hero-tagline">A small lab for things I want to build.</p>
-      <div class="btn-container">
-        <button class="btn btn-color-2" onclick="window.location.href='./profile.html'">
-          View Profile →
-        </button>
-        <button class="btn btn-color-1" onclick="location.href='#contact'">
-          Get in Touch
-        </button>
+    <section id="profile">
+      <div class="profile_pic_container">
+        <img src="./assets/profile-pic.jpg" alt="Aliya Koy profile picture" />
       </div>
-      <div class="scroll-cue">
+      <div class="profile_text">
+        <p class="profile_text_1">Hello, I'm</p>
+        <h1 class="profile_name">Aliya Koy</h1>
+        <p class="profile_text_2">Digital Product Owner (AI Lead)</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/aliya-koy-b48b761b1/" target="_blank" class="social-icon">
+            <img src="./assets/linkedin.png" alt="LinkedIn" />
+          </a>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-color-2" onclick="window.open('./cv.html')">
+            Download CV
+          </button>
+          <button class="btn btn-color-1" onclick="window.location.href='./profile.html'">
+            View Profile →
+          </button>
+        </div>
+      </div>
+      <div class="profile_about">
+        <p>
+          Results-oriented Digital Product Owner and AI Lead with 8+ years of experience across fintech, telecoms, and banking. Specializing in AI-powered conversational systems, RAG pipeline design, and LLM platform evaluation. Proven track record in turning complex ideas into user-centric digital products that drive engagement and operational efficiency.
+        </p>
+      </div>
+      <div class="scroll-cue" onclick="location.href='#rag-chatbot'">
         <i class="fa-solid fa-chevron-down"></i>
         <span>Scroll</span>
       </div>
@@ -411,12 +388,15 @@
       </div>
     </section>
 
-    <footer id="contact">
-      <ul class="contact-links">
-        <li><a href="mailto:aliyakoy365@gmail.com">aliyakoy365@gmail.com</a></li>
-        <li><a href="https://www.linkedin.com/in/aliya-koy-b48b761b1/" target="_blank">LinkedIn</a></li>
-        <li><a href="./profile.html">Profile</a></li>
-      </ul>
+    <section id="contact" class="fade-in">
+      <h2 class="title">CONTACT INFO</h2>
+      <p class="name1">097 725 93 72</p><br>
+      <p class="name1">aliyakoy365@gmail.com</p>
+      <br>
+      <p class="name1"><a href="https://www.linkedin.com/in/aliya-koy-b48b761b1/" target="_blank">LinkedIn</a></p>
+    </section>
+
+    <footer>
       <p>Copyright &#169; 2026 Aliya Koy. All Rights Reserved.</p>
     </footer>
 

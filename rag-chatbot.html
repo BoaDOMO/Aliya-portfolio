@@ -8,18 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --bg: #0d0f1a;
-      --panel: #141828;
-      --panel-alt: #111422;
-      --border: rgba(255, 255, 255, 0.07);
-      --accent: #4d7ef7;
+      --bg: #F5F1E8;
+      --panel: #FFFFFF;
+      --panel-alt: rgba(245, 241, 232, 0.6);
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #185FA5;
       --accent-dark: #26428b;
-      --text: #e2e4f0;
-      --muted: #6b7280;
-      --success: #34d399;
-      --user-bg: #26428b;
-      --bot-bg: #1e2338;
-      --input-bg: #1a1e30;
+      --text: #1A1A1A;
+      --muted: #666666;
+      --success: #16a34a;
+      --user-bg: #185FA5;
+      --bot-bg: #F0ECE5;
+      --input-bg: #F5F2ED;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,8 +40,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.75rem 1.5rem;
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
+      background: rgba(245, 241, 232, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
       flex-shrink: 0;
     }
 
@@ -87,9 +89,9 @@
       letter-spacing: 0.1em;
       padding: 0.2rem 0.6rem;
       border-radius: 2rem;
-      background: rgba(77, 126, 247, 0.15);
+      background: rgba(24, 95, 165, 0.1);
       color: var(--accent);
-      border: 1px solid rgba(77, 126, 247, 0.3);
+      border: 1px solid rgba(24, 95, 165, 0.25);
     }
 
     /* ── MAIN LAYOUT ── */
@@ -132,9 +134,9 @@
       letter-spacing: 0.1em;
       padding: 0.15rem 0.5rem;
       border-radius: 2rem;
-      background: rgba(52, 211, 153, 0.12);
+      background: rgba(22, 163, 74, 0.1);
       color: var(--success);
-      border: 1px solid rgba(52, 211, 153, 0.25);
+      border: 1px solid rgba(22, 163, 74, 0.25);
     }
 
     /* ── KB PANEL ── */
@@ -194,7 +196,7 @@
       transition: border-color 200ms ease;
     }
 
-    .kb-textarea:focus { border-color: rgba(77, 126, 247, 0.4); }
+    .kb-textarea:focus { border-color: rgba(24, 95, 165, 0.4); }
 
     .panel-kb-footer {
       padding: 0.75rem 1.25rem;
@@ -222,7 +224,7 @@
       gap: 0.4rem;
     }
 
-    .update-btn:hover { background: #3d6ee7; }
+    .update-btn:hover { background: #0d4f8c; }
     .update-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .kb-status {
@@ -276,8 +278,8 @@
       font-family: "Source Code Pro", monospace;
       font-size: 0.72rem;
       color: var(--accent);
-      background: rgba(77, 126, 247, 0.1);
-      border: 1px solid rgba(77, 126, 247, 0.25);
+      background: rgba(24, 95, 165, 0.08);
+      border: 1px solid rgba(24, 95, 165, 0.22);
       border-radius: 2rem;
       padding: 0.3rem 0.8rem;
       cursor: pointer;
@@ -285,7 +287,7 @@
     }
 
     .suggestion-chip:hover {
-      background: rgba(77, 126, 247, 0.2);
+      background: rgba(24, 95, 165, 0.15);
       border-color: var(--accent);
     }
 
@@ -312,8 +314,8 @@
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background: rgba(77, 126, 247, 0.15);
-      border: 1px solid rgba(77, 126, 247, 0.3);
+      background: rgba(24, 95, 165, 0.1);
+      border: 1px solid rgba(24, 95, 165, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -343,8 +345,8 @@
     }
 
     .message.system .message-bubble {
-      background: rgba(52, 211, 153, 0.08);
-      border: 1px solid rgba(52, 211, 153, 0.2);
+      background: rgba(22, 163, 74, 0.08);
+      border: 1px solid rgba(22, 163, 74, 0.2);
       color: var(--success);
       font-size: 0.72rem;
       border-radius: 2rem;
@@ -402,7 +404,7 @@
       transition: border-color 200ms ease;
     }
 
-    .chat-input:focus { border-color: rgba(77, 126, 247, 0.4); }
+    .chat-input:focus { border-color: rgba(24, 95, 165, 0.4); }
     .chat-input::placeholder { color: var(--muted); }
 
     .send-btn {
@@ -421,13 +423,13 @@
       flex-shrink: 0;
     }
 
-    .send-btn:hover { background: #3d6ee7; transform: scale(1.05); }
+    .send-btn:hover { background: #0d4f8c; transform: scale(1.05); }
     .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 2px; }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -445,7 +447,7 @@
   <div class="demo-header">
     <div class="demo-header-left">
       <button class="back-btn" onclick="window.location.href='./profile.html'">
-        <i class="fa-solid fa-arrow-left"></i> Portfolio
+        <i class="fa-solid fa-arrow-left"></i> Profile
       </button>
       <div>
         <div class="demo-title">RAG CHATBOT — NOVA FINANCE</div>
