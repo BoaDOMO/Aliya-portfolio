@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      .experience-extra { display: none; }
+      .experience-extra.open { display: block; }
+
+      .experience-toggle-btn {
+        margin-top: 1.5rem;
+        width: auto !important;
+        padding: 0.6rem 1.5rem !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+
+      .experience-toggle-btn i {
+        transition: transform 300ms ease;
+      }
+
+      .experience-toggle-btn.open i {
+        transform: rotate(180deg);
+      }
+    </style>
   </head>
   <body class="main-wrapper">
     <div id="nav">
@@ -126,57 +148,64 @@
           </ul>
         </div>
 
-        <div class="experience">
-          <p class="name1">PTC Computer Co., Ltd.</p>
-          <p class="name2">— Retail Product Supervisor</p>
-          <p class="name3">SEPT 2020 – SEPT 2021 · 1 YR</p>
-          <ul class="description">
-            <li>Supervised sales operations for computer devices and accessories, working with brands like Dell, Asus, Acer, HP, and Razer.</li>
-            <li>Assisted the marketing team by ensuring the website was up to date with accurate product specs, SKUs, and images.</li>
-            <li>Trained sales teams and provided customer support to ensure product understanding and resolution of issues.</li>
-          </ul>
-        </div>
+        <div class="experience-extra" id="experienceExtra">
 
-        <div class="experience">
-          <p class="name1">PTC Computer Co., Ltd.</p>
-          <p class="name2">— Bid & Tender Specialist</p>
-          <p class="name3">SEPT 2019 – SEPT 2020 · 1 YR</p>
-          <ul class="description">
-            <li>Managed tender projects for NGOs and government entities, ensuring all project requirements were met in RFQ, ITB, and NCB documents.</li>
-            <li>Collaborated with internal teams to ensure timely delivery of projects after securing bids.</li>
-          </ul>
-        </div>
+          <div class="experience">
+            <p class="name1">PTC Computer Co., Ltd.</p>
+            <p class="name2">— Retail Product Supervisor</p>
+            <p class="name3">SEPT 2020 – SEPT 2021 · 1 YR</p>
+            <ul class="description">
+              <li>Supervised sales operations for computer devices and accessories, working with brands like Dell, Asus, Acer, HP, and Razer.</li>
+              <li>Assisted the marketing team by ensuring the website was up to date with accurate product specs, SKUs, and images.</li>
+              <li>Trained sales teams and provided customer support to ensure product understanding and resolution of issues.</li>
+            </ul>
+          </div>
 
-        <div class="experience">
-          <p class="name1">PTC Computer Co., Ltd.</p>
-          <p class="name2">— Corporate & SMB Sales Representative</p>
-          <p class="name3">SEPT 2018 – SEPT 2019 · 1 YR</p>
-          <ul class="description">
-            <li>Managed sales to corporate and small-medium businesses, presenting products, answering inquiries, and negotiating pricing.</li>
-            <li>Engaged with existing clients and new prospects, developing relationships to drive sales growth.</li>
-          </ul>
-        </div>
+          <div class="experience">
+            <p class="name1">PTC Computer Co., Ltd.</p>
+            <p class="name2">— Bid & Tender Specialist</p>
+            <p class="name3">SEPT 2019 – SEPT 2020 · 1 YR</p>
+            <ul class="description">
+              <li>Managed tender projects for NGOs and government entities, ensuring all project requirements were met in RFQ, ITB, and NCB documents.</li>
+              <li>Collaborated with internal teams to ensure timely delivery of projects after securing bids.</li>
+            </ul>
+          </div>
 
-        <div class="experience">
-          <p class="name1">Fabric Arts (Cambodia) Co., Ltd.</p>
-          <p class="name2">— Translator / Assistant</p>
-          <p class="name3">JUNE 2017 – JULY 2018 · 1 YR 1 MO</p>
-          <ul class="description">
-            <li>Provided English–Khmer translation services for the CEO of a leather bag manufacturing company.</li>
-            <li>Supported executive leadership with communication, cross-cultural coordination, and marketing translations.</li>
-          </ul>
-        </div>
+          <div class="experience">
+            <p class="name1">PTC Computer Co., Ltd.</p>
+            <p class="name2">— Corporate & SMB Sales Representative</p>
+            <p class="name3">SEPT 2018 – SEPT 2019 · 1 YR</p>
+            <ul class="description">
+              <li>Managed sales to corporate and small-medium businesses, presenting products, answering inquiries, and negotiating pricing.</li>
+              <li>Engaged with existing clients and new prospects, developing relationships to drive sales growth.</li>
+            </ul>
+          </div>
 
-        <div class="experience">
-          <p class="name1">Takeo Adventist School</p>
-          <p class="name2">— Volunteer Teacher</p>
-          <p class="name3">JUNE 2016 – MAY 2017 · 1 YR</p>
-          <ul class="description">
-            <li>Taught English and Biology at an orphanage school in Takeo, delivering lessons to improve students' knowledge and skills.</li>
-          </ul>
+          <div class="experience">
+            <p class="name1">Fabric Arts (Cambodia) Co., Ltd.</p>
+            <p class="name2">— Translator / Assistant</p>
+            <p class="name3">JUNE 2017 – JULY 2018 · 1 YR 1 MO</p>
+            <ul class="description">
+              <li>Provided English–Khmer translation services for the CEO of a leather bag manufacturing company.</li>
+              <li>Supported executive leadership with communication, cross-cultural coordination, and marketing translations.</li>
+            </ul>
+          </div>
+
+          <div class="experience">
+            <p class="name1">Takeo Adventist School</p>
+            <p class="name2">— Volunteer Teacher</p>
+            <p class="name3">JUNE 2016 – MAY 2017 · 1 YR</p>
+            <ul class="description">
+              <li>Taught English and Biology at an orphanage school in Takeo, delivering lessons to improve students' knowledge and skills.</li>
+            </ul>
+          </div>
+
         </div>
 
       </div>
+      <button class="btn btn-color-2 experience-toggle-btn" id="experienceToggleBtn" onclick="toggleExperience()">
+        View all experiences <i class="fa-solid fa-chevron-down"></i>
+      </button>
     </section>
 
     <section id="education" class="fade-in">
@@ -232,5 +261,16 @@
       <p>Copyright &#169; 2026 Aliya Koy. All Rights Reserved.</p>
     </footer>
     <script src="script.js"></script>
+    <script>
+      function toggleExperience() {
+        const extra = document.getElementById('experienceExtra');
+        const btn = document.getElementById('experienceToggleBtn');
+        const isOpen = extra.classList.toggle('open');
+        btn.classList.toggle('open');
+        btn.innerHTML = isOpen
+          ? 'Show less <i class="fa-solid fa-chevron-down"></i>'
+          : 'View all experiences <i class="fa-solid fa-chevron-down"></i>';
+      }
+    </script>
   </body>
 </html>
