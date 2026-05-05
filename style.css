@@ -182,7 +182,8 @@ nav {
 }
 
 nav h2 {
-  font-size: 1rem;
+  font-size: 20px;
+  line-height: 20px;
   font-weight: 600;
   color: #1A1A1A;
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
