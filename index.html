@@ -14,7 +14,7 @@
     <div id="nav">
       <nav id="desktop-nav">
         <div>
-          <h2>ALIYA KOY</h2>
+          <a href="./index.html" class="nav-logo"><h2>ALIYA KOY</h2></a>
         </div>
         <div>
           <ul class="nav-links">
@@ -27,7 +27,7 @@
       </nav>
       <nav id="hamburger-nav">
         <div>
-          <h2>ALIYA KOY</h2>
+          <a href="./index.html" class="nav-logo"><h2>ALIYA KOY</h2></a>
         </div>
         <div class="hamburger-menu">
           <div class="hamburger-icon" onclick="toggleMenu()">
@@ -45,13 +45,13 @@
       </nav>
     </div>
 
-    <main>
+    <main class="page-load-anim">
       <section class="page-hero">
         <p class="hero-label anim-hero-label">HELLO, I'M</p>
         <h1 class="hero-name">Aliya Koy</h1>
         <p class="hero-tagline anim-hero-tagline">A small lab for things I want to build.</p>
         <div class="hero-btns anim-hero-btns">
-          <button class="btn btn-color-1 hero-btn" onclick="window.location.href='./profile.html'">View Profile →</button>
+          <button class="btn btn-color-1 hero-btn" onclick="window.location.href='./profile.html'">View Profile &rarr;</button>
           <button class="btn btn-color-2 hero-btn" onclick="window.location.href='./contact.html'">Get in Touch</button>
         </div>
       </section>
@@ -60,6 +60,10 @@
     <footer>
       <p>Copyright &#169; 2026 Aliya Koy. All Rights Reserved.</p>
     </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
 
     <script src="script.js"></script>
   </body>

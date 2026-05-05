@@ -189,6 +189,22 @@ nav h2 {
   letter-spacing: 0.02em;
 }
 
+/* NAV LOGO LINK */
+
+.nav-logo {
+  text-decoration: none !important;
+  color: inherit;
+  display: inline-block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-logo:hover {
+  opacity: 0.65;
+  transform: translateY(-1px);
+  text-decoration: none !important;
+  color: #1A1A1A;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -489,7 +505,7 @@ section {
 
 .experience-timeline {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 2.75rem;
   border-left: 2px solid rgba(38, 66, 139, 0.25);
   margin-left: 0.5rem;
 }
@@ -512,7 +528,7 @@ section {
 .reference::before {
   content: "";
   position: absolute;
-  left: -2.65rem;
+  left: -3.4rem;
   top: 0.3rem;
   width: 12px;
   height: 12px;
@@ -541,7 +557,7 @@ footer {
   background: #9CAF88;
   width: 100%;
   text-align: center;
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   border-top: none;
 }
 
@@ -550,6 +566,52 @@ footer p {
   font-weight: 500;
   color: #1A1A1A;
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+/* BACK-TO-TOP BUTTON */
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  background: #26428b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 16px rgba(38, 66, 139, 0.3);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: #185FA5;
+}
+
+/* PAGE LOAD FADE-IN */
+
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-load-anim {
+  animation: page-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* AI DEMO TEASER */
@@ -1044,20 +1106,6 @@ footer p {
 
 .skill-list li {
   cursor: default;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  border-radius: 4px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.skill-list li:hover {
-  background: #185FA5;
-  color: white;
-  transform: translateY(-1px);
-}
-
-.skill-list li:hover::before {
-  color: white;
 }
 
 /* ═══════════════════════════════════════════════
@@ -1067,13 +1115,7 @@ footer p {
 .experience,
 .education,
 .reference {
-  transition: box-shadow 0.3s ease;
-}
-
-.experience:hover,
-.education:hover,
-.reference:hover {
-  box-shadow: inset 2px 0 0 #185FA5;
+  transition: none;
 }
 
 .experience::before,
