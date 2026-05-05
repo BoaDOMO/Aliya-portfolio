@@ -177,7 +177,7 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
       else if (this.y < 0) this.y = canvas.height;
     }
     draw() {
-      ctx.fillStyle = "#185FA5";
+      ctx.fillStyle = "#000000";
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
