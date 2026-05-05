@@ -720,6 +720,18 @@ footer p {
   opacity: 0.5;
 }
 
+.hero-content-box {
+  background: rgba(38, 66, 139, 0.04);
+  padding: 2.5rem 3rem;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(38, 66, 139, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+  max-width: 800px;
+  z-index: 1;
+}
+
 .hero-label {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.75rem;
