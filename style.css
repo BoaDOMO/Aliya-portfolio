@@ -80,7 +80,7 @@ h6:hover {
 }
 
 .title {
-  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
   font-size: 1.5rem;
   letter-spacing: 0.1em;
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -307,12 +307,16 @@ a,
 
 section {
   height: auto;
-  padding: 3rem 5%;
+  padding: 5rem 5%;
 }
 
 #skills,
 #education {
   background: #EDE9DF;
+}
+
+.first-section {
+  padding-top: 8rem;
 }
 
 /* PROFILE SECTION */
@@ -421,7 +425,7 @@ section {
 .skills-categories {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 .skill-category {
@@ -621,15 +625,16 @@ footer p {
 
 .page-hero-sm {
   min-height: 40vh;
-  padding: 6rem 5% 4rem;
+  padding: 8rem 5% 4rem;
   gap: 0.75rem;
 }
 
 .lab-hero {
-  min-height: 60vh;
+  min-height: calc(100vh - 70px);
   align-items: flex-start;
   text-align: left;
   justify-content: center;
+  padding: 5rem 5%;
 }
 
 .hero-label {
@@ -681,8 +686,8 @@ footer p {
   align-items: center;
   justify-content: center;
   gap: 6rem;
-  min-height: calc(100vh - 140px); /* Adjust based on nav/footer height */
-  padding: 2rem 5%;
+  min-height: 80vh;
+  padding: 8rem 5% 5rem;
 }
 
 .contact-hero-photo {

@@ -27,13 +27,6 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .project-section {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 5rem 5%;
-    gap: 2rem;
-  }
-
   .project-info {
     align-items: center;
     text-align: center;
@@ -65,13 +58,25 @@
   }
 
   section {
-    padding: 3rem 5%;
+    padding: 4rem 5%;
+  }
+
+  .first-section {
+    padding-top: 6rem;
   }
 
   /* Hero */
   .page-hero {
-    padding: 3rem 5%;
+    padding: 4rem 5%;
     gap: 1rem;
+  }
+
+  .page-hero-sm {
+    padding: 6rem 5% 3rem;
+  }
+
+  .lab-hero {
+    padding: 8rem 5% 3rem;
   }
 
   .hero-name {
@@ -101,8 +106,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
     gap: 2rem;
-    min-height: auto;
+    min-height: 80vh;
     padding: 4rem 5%;
   }
 
@@ -131,14 +137,6 @@
 
   .contact-info-label {
     width: auto;
-  }
-
-  /* Project section */
-  .project-section {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 3rem 5%;
-    gap: 1.5rem;
   }
 
   .project-title {
