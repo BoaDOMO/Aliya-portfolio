@@ -12,24 +12,25 @@
       /* ── PROJECT SECTION ── */
       .project-section {
         display: grid;
-        grid-template-columns: 42% 58%;
-        gap: 3.5rem;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        gap: 4rem;
         align-items: center;
-        min-height: 100vh;
-        padding: 4rem 2rem;
+        padding: 10vh 5%;
       }
 
       .project-info {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 1.25rem;
+        gap: 1.5rem;
         text-align: left;
       }
 
       .project-widget {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        overflow: visible;
       }
 
       .project-label {
@@ -263,53 +264,55 @@
       </nav>
     </div>
 
-    <section class="page-hero page-hero-sm">
-      <p class="hero-label">THE LAB</p>
-      <h1 class="hero-name">Things I'm building.</h1>
-      <p class="hero-tagline">Experiments, prototypes, and side projects.</p>
-    </section>
+    <main>
+      <section class="page-hero page-hero-sm lab-hero">
+        <p class="hero-label">THE LAB</p>
+        <h1 class="hero-name">Things I'm building.</h1>
+        <p class="hero-tagline">Experiments, prototypes, and side projects.</p>
+      </section>
 
-    <section id="rag-chatbot" class="project-section fade-in">
-      <div class="project-info">
-        <p class="project-label">PROJECT 01 — LIVE DEMO</p>
-        <h2 class="project-title">RAG Chatbot — Nova Finance</h2>
-        <p class="project-desc">
-          An interactive RAG demo where the AI answers questions based only on a live knowledge base — the same architecture used in real-world enterprise AI assistants.
-        </p>
-        <div class="tech-pills">
-          <span class="tech-pill">Gemini</span>
-          <span class="tech-pill">RAG</span>
-          <span class="tech-pill">Vercel Functions</span>
-          <span class="tech-pill">Embeddings</span>
+      <section id="rag-chatbot" class="project-section fade-in">
+        <div class="project-info">
+          <p class="project-label">PROJECT 01 — LIVE DEMO</p>
+          <h2 class="project-title">RAG Chatbot — Nova Finance</h2>
+          <p class="project-desc">
+            An interactive RAG demo where the AI answers questions based only on a live knowledge base — the same architecture used in real-world enterprise AI assistants.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Gemini</span>
+            <span class="tech-pill">RAG</span>
+            <span class="tech-pill">Vercel Functions</span>
+            <span class="tech-pill">Embeddings</span>
+          </div>
+          <button class="btn btn-color-1 btn-cta" onclick="window.location.href='./rag-chatbot.html'">
+            Try the full demo <i class="fa-solid fa-arrow-right"></i>
+          </button>
         </div>
-        <button class="btn btn-color-1 btn-cta" onclick="window.location.href='./rag-chatbot.html'">
-          Try the full demo <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
 
-      <div class="project-widget">
-        <div class="mini-chat">
-          <div class="mini-chat-header">
-            <span class="mini-chat-dot"></span>
-            <span class="mini-chat-label">RAG Chatbot Demo</span>
-            <span class="mini-chat-live">Live</span>
-          </div>
-          <div class="mini-chat-messages" id="miniChatMessages">
-            <div class="mini-msg bot">Hi! Ask me anything about Nova Finance — loans, rates, eligibility, or how to apply.</div>
-          </div>
-          <div class="mini-chat-input-row">
-            <input
-              class="mini-chat-input"
-              id="miniChatInput"
-              type="text"
-              placeholder="Ask a question..."
-              autocomplete="off"
-            />
-            <button class="mini-chat-send" id="miniChatSend" onclick="miniSendMessage()">Send</button>
+        <div class="project-widget">
+          <div class="mini-chat">
+            <div class="mini-chat-header">
+              <span class="mini-chat-dot"></span>
+              <span class="mini-chat-label">RAG Chatbot Demo</span>
+              <span class="mini-chat-live">Live</span>
+            </div>
+            <div class="mini-chat-messages" id="miniChatMessages">
+              <div class="mini-msg bot">Hi! Ask me anything about Nova Finance — loans, rates, eligibility, or how to apply.</div>
+            </div>
+            <div class="mini-chat-input-row">
+              <input
+                class="mini-chat-input"
+                id="miniChatInput"
+                type="text"
+                placeholder="Ask a question..."
+                autocomplete="off"
+              />
+              <button class="mini-chat-send" id="miniChatSend" onclick="miniSendMessage()">Send</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <footer>
       <p>Copyright &#169; 2026 Aliya Koy. All Rights Reserved.</p>
