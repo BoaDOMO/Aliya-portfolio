@@ -196,6 +196,11 @@ nav h2 {
   color: inherit;
   display: inline-block;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-logo h2 {
+  cursor: pointer;
 }
 
 .nav-logo:hover {
