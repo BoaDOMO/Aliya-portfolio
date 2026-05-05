@@ -25,7 +25,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: "Source Code Pro", monospace;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       background: var(--bg);
       color: var(--text);
       height: 100vh;
@@ -40,10 +40,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.75rem 1.5rem;
-      background: rgba(245, 241, 232, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+      background: #9CAF88;
+      border-bottom: none;
       flex-shrink: 0;
     }
 
@@ -54,11 +52,11 @@
     }
 
     .back-btn {
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #1A1A1A;
       background: none;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 2rem;
       padding: 0.35rem 0.9rem;
       cursor: pointer;
@@ -68,23 +66,23 @@
       gap: 0.4rem;
     }
 
-    .back-btn:hover { color: var(--text); border-color: var(--muted); }
+    .back-btn:hover { color: #185FA5; border-color: #185FA5; }
 
     .demo-title {
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       font-size: 1rem;
       font-weight: 500;
-      color: var(--text);
+      color: #1A1A1A;
       letter-spacing: 0.05em;
     }
 
     .demo-subtitle {
       font-size: 0.72rem;
-      color: var(--muted);
+      color: #333;
     }
 
     .demo-badge {
-      font-family: "Oswald", sans-serif;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       padding: 0.2rem 0.6rem;
@@ -118,7 +116,7 @@
       background: var(--panel-alt);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       font-size: 0.85rem;
       letter-spacing: 0.05em;
       color: var(--muted);
@@ -160,11 +158,11 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
     }
 
     .kb-company-input {
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       font-size: 1.1rem;
       font-weight: 500;
       color: var(--text);
@@ -182,7 +180,7 @@
     .kb-section { display: flex; flex-direction: column; gap: 0.3rem; }
 
     .kb-textarea {
-      font-family: "Source Code Pro", monospace;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.75rem;
       color: var(--text);
       background: var(--input-bg);
@@ -209,7 +207,7 @@
     }
 
     .update-btn {
-      font-family: "Oswald", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       font-size: 0.85rem;
       letter-spacing: 0.05em;
       padding: 0.5rem 1.25rem;
@@ -251,7 +249,7 @@
       border-radius: 2rem;
       padding: 0.2rem 0.7rem;
       cursor: pointer;
-      font-family: "Source Code Pro", monospace;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       transition: all 200ms ease;
     }
 
@@ -275,7 +273,7 @@
     }
 
     .suggestion-chip {
-      font-family: "Source Code Pro", monospace;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.72rem;
       color: var(--accent);
       background: rgba(24, 95, 165, 0.08);
@@ -390,7 +388,7 @@
 
     .chat-input {
       flex: 1;
-      font-family: "Source Code Pro", monospace;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.82rem;
       color: var(--text);
       background: var(--input-bg);

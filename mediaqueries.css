@@ -30,7 +30,7 @@
   .project-section {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding: 5rem 1.5rem;
+    padding: 5rem 5%;
     gap: 2rem;
   }
 
@@ -44,33 +44,33 @@
   }
 
   .contact-hero {
-    gap: 2.5rem;
+    gap: 3rem;
   }
 
   .contact-hero-photo {
     width: 200px;
     height: 200px;
   }
+
+  .contact-hero-text .hero-name {
+    font-size: 3.5rem;
+  }
 }
 
-/* ── MOBILE: max-width 600px ── */
+/* ── MOBILE: max-width 700px ── */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   html {
     font-size: 0.875rem;
   }
 
-  #desktop-nav {
-    display: none;
-  }
-
-  #hamburger-nav {
-    display: flex;
+  section {
+    padding: 3rem 5%;
   }
 
   /* Hero */
   .page-hero {
-    padding: 3rem 1rem;
+    padding: 3rem 5%;
     gap: 1rem;
   }
 
@@ -103,7 +103,7 @@
     text-align: center;
     gap: 2rem;
     min-height: auto;
-    padding: 3rem 1rem;
+    padding: 4rem 5%;
   }
 
   .contact-hero-photo {
@@ -124,11 +124,20 @@
     text-align: center;
   }
 
+  .contact-info-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-info-label {
+    width: auto;
+  }
+
   /* Project section */
   .project-section {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding: 3rem 1rem;
+    padding: 3rem 5%;
     gap: 1.5rem;
   }
 
@@ -158,5 +167,10 @@
 
   .btn-container .btn {
     width: 12rem !important;
+  }
+
+  .menu-links {
+    right: 0;
+    width: 100vw;
   }
 }
