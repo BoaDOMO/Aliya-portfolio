@@ -1,3 +1,5 @@
+/* ── LARGE SCREENS ── */
+
 @media screen and (max-width: 2560px) {
   html {
     font-size: 1.75rem;
@@ -10,94 +12,151 @@
   }
 }
 
-@media screen and (max-width: 1440px) {
-  #profile {
-    display: block;
-    height: fit-content;
-    padding-top: 4rem;
-  }
-  .profile_pic_container {
-    width: 260px;
-    height: 260px;
-    margin: 0 auto 2rem;
-  }
-  .profile_about {
-    max-width: 100%;
-    margin: 1rem auto;
-  }
-}
-
-@media screen and (max-width: 1366px) {
-  #desktop-nav {
-    display: none;
-  }
-  #hamburger-nav {
-    display: flex;
-  }
-  #profile {
-    display: block;
-    height: fit-content;
-    padding-top: 4rem;
-  }
-}
+/* ── TABLET: 601px – 1024px ── */
 
 @media screen and (max-width: 1024px) {
   #desktop-nav {
     display: none;
   }
+
   #hamburger-nav {
     display: flex;
   }
-  #profile {
-    display: block;
-    height: fit-content;
-    padding-top: 4rem;
-  }
+
   .skills-categories {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-section {
     grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 5rem 1.5rem;
+    gap: 2rem;
+  }
+
+  .project-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-title {
+    font-size: 1.9rem;
+  }
+
+  .contact-hero {
+    gap: 2.5rem;
+  }
+
+  .contact-hero-photo {
+    width: 200px;
+    height: 200px;
   }
 }
 
-@media screen and (max-width: 768px) {
-  #desktop-nav {
-    display: none;
-  }
-  #hamburger-nav {
-    display: flex;
-  }
-  #profile {
-    display: block;
-    height: fit-content;
-    padding-top: 4rem;
-  }
-  .profile_pic_container {
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 2rem;
-  }
-}
+/* ── MOBILE: max-width 600px ── */
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 600px) {
   html {
     font-size: 0.875rem;
   }
+
   #desktop-nav {
     display: none;
   }
+
   #hamburger-nav {
     display: flex;
   }
-  #profile {
-    display: block;
-    height: fit-content;
-    padding-top: 3rem;
+
+  /* Hero */
+  .page-hero {
+    padding: 3rem 1rem;
+    gap: 1rem;
   }
-  .profile_pic_container {
-    width: 180px;
-    height: 180px;
-    margin: 0 auto 1.5rem;
+
+  .hero-name {
+    font-size: 2.75rem;
   }
+
+  .page-hero-sm .hero-name {
+    font-size: 2rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero-btn {
+    width: 100% !important;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+
+  /* Contact hero stacks vertically */
+  .contact-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    min-height: auto;
+    padding: 3rem 1rem;
+  }
+
+  .contact-hero-photo {
+    width: 160px;
+    height: 160px;
+  }
+
+  .contact-hero-text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-hero-text .hero-name {
+    font-size: 2.5rem;
+  }
+
+  .contact-hero-text .hero-tagline {
+    text-align: center;
+  }
+
+  /* Project section */
+  .project-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 3rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .project-title {
+    font-size: 1.6rem;
+  }
+
+  .mini-chat-messages {
+    height: 240px;
+  }
+
+  /* Skills single column */
+  .skills-categories {
+    grid-template-columns: 1fr;
+  }
+
+  /* Experience timeline */
   .experience-timeline {
     padding-left: 1.25rem;
+  }
+
+  /* Buttons */
+  .btn-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-container .btn {
+    width: 12rem !important;
   }
 }

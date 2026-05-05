@@ -17,3 +17,18 @@ const observer = new IntersectionObserver(
 );
 
 document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+
+// Scroll-aware nav: transparent at top, frosted on scroll
+(function () {
+  const nav = document.getElementById("nav");
+  if (!nav) return;
+  function onScroll() {
+    if (window.scrollY > 50) {
+      nav.classList.add("nav-scrolled");
+    } else {
+      nav.classList.remove("nav-scrolled");
+    }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
