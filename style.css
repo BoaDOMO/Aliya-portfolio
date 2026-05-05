@@ -456,36 +456,68 @@ section {
 .skill-category {
   background: white;
   border-radius: 12px;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
   text-align: center;
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 120px;
 }
 
 .skill-category:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(38, 66, 139, 0.13);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(38, 66, 139, 0.15);
+  padding: 2rem 1.5rem;
 }
 
 .skill-category-icon {
   font-size: 2.25rem;
   color: #26428b;
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skill-category:hover .skill-category-icon {
+  max-height: 60px;
+  opacity: 1;
   margin-bottom: 1rem;
 }
 
 .skill-category-title {
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #26428b;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  transition: all 0.4s ease;
+}
+
+.skill-category:hover .skill-category-title {
+  margin-bottom: 1.25rem;
 }
 
 .skill-list {
   list-style: none;
   padding: 0;
   text-align: left;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-10px);
+}
+
+.skill-category:hover .skill-list {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .skill-list li {
