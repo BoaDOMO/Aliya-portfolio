@@ -8,7 +8,7 @@ module.exports = async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { question, knowledgeBase, history = [], sessionId, companyName } = req.body;
+  const { question, knowledgeBase, persona = "", history = [], sessionId, companyName } = req.body;
 
   if (!question || !knowledgeBase) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -17,8 +17,11 @@ module.exports = async function handler(req, res) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-    const systemPrompt = `You are a helpful AI customer service assistant for ${companyName || "the company"}.
+    const personaBlock = persona
+      ? `\nPERSONA / BEHAVIOR INSTRUCTIONS:\n${persona}\n`
+      : "";
 
+    const systemPrompt = `You are a helpful AI customer service assistant for ${companyName || "the company"}.${personaBlock}
 Answer questions based ONLY on the knowledge base provided below. Be concise, friendly, and accurate. Use plain text — no markdown formatting like ** or ## in your responses.
 
 If the answer is not found in the knowledge base, say: "I don't have that information in my knowledge base. Please contact our support team directly."
