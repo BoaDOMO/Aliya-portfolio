@@ -20,13 +20,21 @@
       --user-bg: #185FA5;
       --bot-bg: #F0ECE5;
       --input-bg: #F5F2ED;
+      --sidebar-brown: #5a4232;
+      --sidebar-brown-light: #7D5E48;
+      --sidebar-text: #EDE6DF;
+      --editor-bg: #1e1e1e;
+      --editor-header-bg: #1a1a1a;
+      --editor-text: #d4d4d4;
+      --editor-input-bg: #252526;
+      --editor-border: #3c3c3c;
+      --editor-label: #9CAF88;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      background: var(--bg);
       color: var(--text);
       height: 100vh;
       display: flex;
@@ -34,8 +42,21 @@
       overflow: hidden;
     }
 
+    /* ── GRADIENT MESH BACKGROUND ── */
+    .mesh-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     /* ── HEADER ── */
     .demo-header {
+      position: relative;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -95,240 +116,101 @@
 
     /* ── MAIN LAYOUT ── */
     .demo-body {
+      position: relative;
+      z-index: 5;
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 380px 1fr;
       flex: 1;
       overflow: hidden;
     }
 
-    /* ── PANEL SHARED ── */
-    .panel {
+    /* ── LEFT PANEL: INSTRUCTIONS ── */
+    .panel-instructions {
       display: flex;
       flex-direction: column;
       border-right: 1px solid var(--border);
       overflow: hidden;
+      background: rgba(245, 241, 232, 0.85);
+      backdrop-filter: blur(12px);
     }
 
-    .panel-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.75rem 1.25rem;
-      background: var(--panel-alt);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-    }
-
-    .panel-header i { color: var(--accent); }
-
-    .panel-header-title { color: var(--text); }
-
-    /* ── LEFT: PROMPT PANEL ── */
-    .panel-prompts-body {
+    .instructions-body {
       flex: 1;
       overflow-y: auto;
+      padding: 1.5rem 1.25rem 1.25rem;
       display: flex;
       flex-direction: column;
+      gap: 1.25rem;
     }
 
-    .prompts-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .prompt-item {
-      padding: 0.75rem 0.85rem;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 150ms ease;
-      position: relative;
-    }
-
-    .prompt-item:hover { background: rgba(0, 0, 0, 0.03); }
-
-    .prompt-item.active {
-      background: rgba(24, 95, 165, 0.06);
-      border-color: rgba(24, 95, 165, 0.2);
-    }
-
-    .prompt-item-name {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .prompt-item.active .prompt-item-name { color: var(--accent); }
-
-    .prompt-item-name input {
+    .instructions-section h3 {
       font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 500;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .instructions-section p {
+      font-size: 0.78rem;
+      line-height: 1.7;
       color: var(--text);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--border);
-      outline: none;
-      flex: 1;
-      padding: 0.15rem 0;
     }
 
-    .prompt-item-name input:focus { border-bottom-color: var(--accent); }
-
-    .prompt-item-preview {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-left: 1.35rem;
+    .instructions-section ul {
+      margin-top: 0.4rem;
+      padding-left: 1.1rem;
     }
 
-    .prompt-item-delete {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.6rem;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.65rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: all 150ms ease;
+    .instructions-section li {
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 0.3rem;
     }
 
-    .prompt-item:hover .prompt-item-delete { opacity: 0.5; }
-    .prompt-item:hover .prompt-item-delete:hover { opacity: 1; color: #dc2626; }
-
-    .prompt-item-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .prompt-item.active .prompt-item-dot { background: var(--accent); }
-
-    .prompts-actions {
-      padding: 0.75rem;
-      border-top: 1px solid var(--border);
-      background: var(--panel-alt);
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      flex-shrink: 0;
-    }
-
-    .prompt-textarea {
+    .suggestion-chip {
+      display: inline-block;
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.72rem;
-      color: var(--text);
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.5rem 0.7rem;
-      resize: vertical;
-      min-height: 70px;
-      outline: none;
-      line-height: 1.6;
-      transition: border-color 200ms ease;
-    }
-
-    .prompt-textarea:focus { border-color: rgba(24, 95, 165, 0.4); }
-
-    .btn-row {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      padding: 0.5rem 1rem;
+      color: var(--accent);
+      background: rgba(24, 95, 165, 0.08);
+      border: 1px solid rgba(24, 95, 165, 0.22);
       border-radius: 2rem;
+      padding: 0.35rem 0.85rem;
+      margin: 0.2rem 0.2rem 0.2rem 0;
       cursor: pointer;
       transition: all 200ms ease;
+    }
+
+    .suggestion-chip:hover {
+      background: rgba(24, 95, 165, 0.15);
+      border-color: var(--accent);
+    }
+
+    /* ── RIGHT PANEL ── */
+    .panel-main {
+      position: relative;
       display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .btn-primary:hover { background: #0d4f8c; }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-    .btn-sm {
-      font-size: 0.72rem;
-      padding: 0.35rem 0.8rem;
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-    }
-
-    .btn-success:hover { background: #15803d; }
-    .btn-success:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .status-msg {
-      font-size: 0.72rem;
-      color: var(--success);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      opacity: 0;
-      transition: opacity 300ms ease;
-      height: 0;
+      flex-direction: column;
       overflow: hidden;
+      padding: 2rem;
     }
 
-    .status-msg.visible { opacity: 1; height: auto; }
-
-    .status-msg.error { color: #dc2626; }
-
-    /* ── RIGHT: TABBED PANEL ── */
-    .panel-main { border-right: none; }
-
+    /* ── TAB BAR ── */
     .tab-bar {
       display: flex;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       flex-shrink: 0;
-      padding: 0.3rem 0.5rem 0 0.5rem;
+      padding: 0.3rem;
       gap: 0.15rem;
+      margin-bottom: 1.5rem;
+      width: fit-content;
     }
 
     .tab-btn {
@@ -337,8 +219,7 @@
       padding: 0.55rem 1.1rem;
       background: transparent;
       border: 1px solid transparent;
-      border-bottom: none;
-      border-radius: 6px 6px 0 0;
+      border-radius: 8px;
       cursor: pointer;
       color: var(--muted);
       transition: all 150ms ease;
@@ -350,124 +231,93 @@
 
     .tab-btn:hover { color: var(--text); background: rgba(0, 0, 0, 0.03); }
 
-    .tab-btn.active {
-      background: var(--panel);
-      border-color: var(--border);
-      color: var(--text);
+    .tab-btn.active[data-tab="preview"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      font-weight: 500;
+    }
+
+    .tab-btn.active[data-tab="code"] {
+      background: var(--text);
+      border-color: var(--text);
+      color: white;
       font-weight: 500;
     }
 
     .tab-content {
       display: none;
       flex: 1;
-      overflow-y: auto;
-      background: var(--panel);
+      overflow: hidden;
     }
 
-    .tab-content.active {
+    .tab-content.active { display: flex; flex-direction: column; }
+
+    /* ── PREVIEW TAB: FLOATING CARD ── */
+    .preview-card {
       display: flex;
       flex-direction: column;
-    }
-
-    /* ── PERSONA TAB ── */
-    .persona-body {
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .field-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-    }
-
-    .field-input {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--border);
-      padding: 0.35rem 0;
-      outline: none;
+      max-width: 720px;
       width: 100%;
-      transition: border-color 200ms ease;
+      margin: 0 auto;
+      height: 100%;
+      background: var(--panel);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
     }
 
-    .field-input:focus { border-bottom-color: var(--accent); }
-
-    .field-textarea {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      font-size: 0.78rem;
-      color: var(--text);
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.65rem 0.8rem;
-      resize: vertical;
-      min-height: 120px;
-      outline: none;
-      line-height: 1.7;
-      transition: border-color 200ms ease;
-    }
-
-    .field-textarea:focus { border-color: rgba(24, 95, 165, 0.4); }
-
-    .persona-footer {
-      padding: 0.75rem 1.25rem;
-      border-top: 1px solid var(--border);
-      background: var(--panel-alt);
+    .preview-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      background: linear-gradient(135deg, #F5F1E8 0%, #EDE6DF 50%, #E8DDD1 100%);
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
 
-    /* ── KB TAB ── */
-    .kb-body {
-      padding: 1rem 1.25rem;
+    .preview-header-left {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    .kb-company-row {
+    .preview-header-info {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
     }
 
-    .kb-section { display: flex; flex-direction: column; gap: 0.3rem; }
-
-    .kb-textarea {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      font-size: 0.75rem;
+    .preview-header-name {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
       color: var(--text);
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.6rem 0.75rem;
-      resize: vertical;
-      min-height: 80px;
-      outline: none;
-      line-height: 1.6;
-      transition: border-color 200ms ease;
     }
 
-    .kb-textarea:focus { border-color: rgba(24, 95, 165, 0.4); }
+    .preview-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-    /* ── CHAT TAB ── */
+    .btn-sm {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+    }
+
+    .btn-sm:hover { border-color: var(--muted); background: rgba(255, 255, 255, 0.95); }
+
     .chat-messages {
       flex: 1;
       overflow-y: auto;
@@ -475,30 +325,6 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-    }
-
-    .suggestions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .suggestion-chip {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      background: rgba(24, 95, 165, 0.08);
-      border: 1px solid rgba(24, 95, 165, 0.22);
-      border-radius: 2rem;
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-      transition: all 200ms ease;
-    }
-
-    .suggestion-chip:hover {
-      background: rgba(24, 95, 165, 0.15);
-      border-color: var(--accent);
     }
 
     .message {
@@ -513,11 +339,6 @@
     }
 
     .message.bot { align-self: flex-start; }
-
-    .message.system {
-      align-self: center;
-      max-width: 100%;
-    }
 
     .message-avatar {
       width: 30px;
@@ -553,6 +374,11 @@
       border-top-right-radius: 4px;
     }
 
+    .message.system {
+      align-self: center;
+      max-width: 100%;
+    }
+
     .message.system .message-bubble {
       background: rgba(22, 163, 74, 0.08);
       border: 1px solid rgba(22, 163, 74, 0.2);
@@ -562,27 +388,11 @@
       padding: 0.3rem 1rem;
     }
 
-    .typing-indicator {
+    .suggestions {
       display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0.65rem 0.9rem;
-    }
-
-    .typing-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--muted);
-      border-radius: 50%;
-      animation: bounce 1.2s infinite;
-    }
-
-    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes bounce {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-      30% { transform: translateY(-5px); opacity: 1; }
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
     }
 
     .chat-input-area {
@@ -633,52 +443,281 @@
     .send-btn:hover { background: #0d4f8c; transform: scale(1.05); }
     .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    .chat-clear-btn {
-      margin-left: auto;
-      font-size: 0.72rem;
-      color: var(--muted);
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 2rem;
-      padding: 0.2rem 0.7rem;
-      cursor: pointer;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      transition: all 200ms ease;
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.65rem 0.9rem;
     }
 
-    .chat-clear-btn:hover { color: var(--text); border-color: var(--muted); }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── CODE TAB (DESKTOP) ── */
+    .code-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .code-sidebar {
+      width: 200px;
+      background: var(--sidebar-brown);
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .code-sidebar-header {
+      padding: 0.9rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(237, 230, 223, 0.7);
+    }
+
+    .code-file-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    .code-file-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--sidebar-text);
+      cursor: pointer;
+      transition: all 150ms ease;
+      border-left: 3px solid transparent;
+    }
+
+    .code-file-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .code-file-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-left-color: var(--accent);
+      color: #fff;
+    }
+
+    .code-editor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--editor-bg);
+    }
+
+    .code-editor-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.75rem 1.25rem 1.25rem;
+    }
+
+    .code-editor-footer {
+      padding: 0.75rem 1.25rem;
+      background: var(--editor-header-bg);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FORM FIELDS ── */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .field-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--editor-label);
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    }
+
+    .field-input {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--editor-text);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--editor-border);
+      padding: 0.4rem 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 200ms ease;
+    }
+
+    .field-input:focus { border-bottom-color: var(--editor-label); }
+    .field-input::placeholder { color: #666; }
+
+    .field-textarea {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.82rem;
+      color: var(--editor-text);
+      background: var(--editor-input-bg);
+      border: 1px solid var(--editor-border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      resize: vertical;
+      min-height: 200px;
+      outline: none;
+      line-height: 1.7;
+      transition: border-color 200ms ease;
+      width: 100%;
+    }
+
+    .field-textarea:focus { border-color: var(--editor-label); }
+    .field-textarea::placeholder { color: #666; }
+
+    .btn {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--sidebar-brown);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--sidebar-brown-light); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .status-msg {
+      font-size: 0.72rem;
+      color: var(--editor-label);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    .status-msg.visible { opacity: 1; }
+    .status-msg.error { color: #dc2626; }
+
+    /* ── CODE TAB (MOBILE ACCORDION) ── */
+    .mobile-accordion {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--editor-border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--editor-bg);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      background: var(--editor-header-bg);
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--editor-text);
+      transition: background 150ms ease;
+    }
+
+    .accordion-header:hover { background: rgba(255, 255, 255, 0.04); }
+
+    .accordion-header i { font-size: 0.7rem; color: #666; transition: transform 200ms ease; }
+    .accordion-item.open .accordion-header i { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 1rem;
+      background: var(--editor-bg);
+    }
+
+    .accordion-item.open .accordion-body { display: block; }
+
+    .accordion-body .field-textarea {
+      min-height: 150px;
+      margin-bottom: 0.5rem;
+    }
+
+    .accordion-save-row {
+      display: flex;
+      justify-content: flex-end;
+    }
 
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 2px; }
 
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      gap: 0.75rem;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .empty-state i { font-size: 2rem; color: rgba(0, 0, 0, 0.1); }
+    .code-sidebar::-webkit-scrollbar-thumb,
+    .code-editor-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       body { overflow: auto; height: auto; }
       .demo-body { grid-template-columns: 1fr; height: auto; }
-      .panel { min-height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
-      .tab-bar { overflow-x: auto; }
+      .panel-instructions { display: none; }
+      .panel-main { padding: 1rem; min-height: 100vh; }
+      .code-layout { display: none; }
+      .mobile-accordion { display: flex; }
+      .tab-bar { overflow-x: auto; margin-bottom: 1rem; }
       .tab-btn { flex-shrink: 0; }
-      .chat-messages { min-height: 50vh; }
+      .preview-card { max-width: 100%; height: calc(100vh - 140px); }
+      .chat-messages { min-height: 300px; }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-accordion { display: none !important; }
     }
   </style>
 </head>
 <body>
+
+  <!-- GRADIENT MESH BACKGROUND -->
+  <canvas class="mesh-bg" id="meshCanvas"></canvas>
 
   <!-- HEADER -->
   <div class="demo-header">
@@ -688,7 +727,6 @@
       </button>
       <div>
         <div class="demo-title">RAG CHATBOT</div>
-        <div class="demo-subtitle">Define your prompt. Generate a knowledge base. Chat with it.</div>
       </div>
     </div>
     <span class="demo-badge">LIVE DEMO</span>
@@ -696,415 +734,390 @@
 
   <main class="demo-body">
 
-    <!-- ── LEFT: PROMPT PANEL ── -->
-    <div class="panel panel-prompts">
-      <div class="panel-header">
-        <i class="fa-solid fa-terminal"></i>
-        <span class="panel-header-title">Prompt</span>
-      </div>
+    <!-- ── LEFT: INSTRUCTIONS ── -->
+    <div class="panel-instructions">
+      <div class="instructions-body">
+        <div class="instructions-section">
+          <h3>What is RAG?</h3>
+          <p>
+            Retrieval-Augmented Generation (RAG) is an AI technique where a chatbot answers questions <strong>only using information from a knowledge base</strong> you provide. It does not hallucinate or make things up — every answer is grounded in your documents.
+          </p>
+        </div>
 
-      <div class="panel-prompts-body">
-        <div class="prompts-list" id="promptsList"></div>
+        <div class="instructions-section">
+          <h3>This Demo</h3>
+          <p>
+            This page lets you customize an AI assistant for a fictional company (<strong>Nova Finance</strong>). You can edit the assistant's persona and knowledge base in <strong>Code</strong> mode, then test it in <strong>Preview</strong> mode.
+          </p>
+          <ul>
+            <li>Edit the <strong>Persona</strong> to change how the AI behaves.</li>
+            <li>Edit <strong>About, Products, FAQ, Policies</strong> to update what the AI knows.</li>
+            <li>Switch to <strong>Preview</strong> to chat with your assistant.</li>
+            <li>Click <strong>Save</strong> to persist your changes.</li>
+          </ul>
+        </div>
 
-        <div class="prompts-actions">
-          <textarea
-            class="prompt-textarea"
-            id="promptInput"
-            placeholder="Describe the business you want to create a chatbot for..."
-          ></textarea>
-          <div class="btn-row">
-            <button class="btn btn-outline btn-sm" id="newPromptBtn" onclick="addNewPrompt()">
-              <i class="fa-solid fa-plus"></i> New
-            </button>
-            <button class="btn btn-success btn-sm" id="generateBtn" onclick="generateKB()">
-              <i class="fa-solid fa-wand-magic-sparkles"></i> Generate KB
-            </button>
+        <div class="instructions-section">
+          <h3>Try asking</h3>
+          <div>
+            <span class="suggestion-chip" onclick="useSuggestion(this)">What are your loan interest rates?</span>
+            <span class="suggestion-chip" onclick="useSuggestion(this)">How do I apply?</span>
+            <span class="suggestion-chip" onclick="useSuggestion(this)">What documents do I need?</span>
+            <span class="suggestion-chip" onclick="useSuggestion(this)">Can I repay early?</span>
           </div>
-          <span class="status-msg" id="genStatus">
-            <i class="fa-solid fa-circle-check"></i> Knowledge base generated
-          </span>
+        </div>
+
+        <div class="instructions-section">
+          <h3>Architecture</h3>
+          <p>
+            When you send a message, the backend embeds your question, searches the knowledge base for the most relevant passages, and feeds them to Gemini along with the persona instructions. This is the same pattern used in production enterprise AI assistants.
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- ── RIGHT: TABBED PANEL ── -->
+    <!-- ── RIGHT: MAIN PANEL ── -->
     <div class="panel panel-main">
       <div class="tab-bar">
-        <button class="tab-btn active" data-tab="persona" onclick="switchTab('persona')">
-          <i class="fa-solid fa-user-gear"></i> Persona
+        <button class="tab-btn active" data-tab="preview" onclick="switchTab('preview')">
+          <i class="fa-solid fa-eye"></i> Preview
         </button>
-        <button class="tab-btn" data-tab="kb" onclick="switchTab('kb')">
-          <i class="fa-solid fa-database"></i> Knowledge Base
+        <button class="tab-btn" data-tab="code" onclick="switchTab('code')">
+          <i class="fa-solid fa-code"></i> Code
         </button>
-        <button class="tab-btn" data-tab="chat" onclick="switchTab('chat')">
-          <i class="fa-solid fa-robot"></i> Chat
-        </button>
-        <button class="chat-clear-btn" id="clearChatBtn" onclick="clearChat()" style="margin-left:auto;">Clear chat</button>
       </div>
 
-      <!-- Persona Tab -->
-      <div class="tab-content active" id="tab-persona">
-        <div class="persona-body">
-          <div class="field-group">
-            <label class="field-label">Company Name</label>
-            <input class="field-input" id="personaCompany" placeholder="e.g. Nova Finance" onchange="saveCurrentPrompt()" />
-          </div>
-          <div class="field-group">
-            <label class="field-label">AI Role / Title</label>
-            <input class="field-input" id="personaRole" placeholder="e.g. Customer Service Assistant" onchange="saveCurrentPrompt()" />
-          </div>
-          <div class="field-group">
-            <label class="field-label">System Instructions</label>
-            <textarea class="field-textarea" id="personaInstructions" rows="6" placeholder="Define how the AI should behave..." onchange="saveCurrentPrompt()"></textarea>
-          </div>
-        </div>
-        <div class="persona-footer">
-          <span style="font-size:0.72rem;color:var(--muted);">
-            <i class="fa-solid fa-info-circle"></i> The persona defines how the AI assistant behaves.
-          </span>
-        </div>
-      </div>
-
-      <!-- Knowledge Base Tab -->
-      <div class="tab-content" id="tab-kb">
-        <div class="kb-body">
-          <div class="kb-company-row">
-            <label class="field-label">Company Name</label>
-            <input class="field-input" id="kbCompany" value="Nova Finance" onchange="saveCurrentPrompt()" />
-          </div>
-
-          <div class="kb-section">
-            <label class="field-label">About</label>
-            <textarea class="kb-textarea" id="kb-about" rows="5" onchange="saveCurrentPrompt()">Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces. Our mission is to make financial services accessible, fast, and fair for every Cambodian. We operate fully digitally — no physical branches required.</textarea>
-          </div>
-
-          <div class="kb-section">
-            <label class="field-label">Products & Services</label>
-            <textarea class="kb-textarea" id="kb-products" rows="8" onchange="saveCurrentPrompt()">Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month (flat rate) | Disbursed within 24 hours after approval.
-
-Business Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month (flat rate) | Disbursed in 1–3 business days.
-
-Nova Savings Account: 5.5% annual interest | Minimum deposit $50 | No monthly fees | Free ATM withdrawals up to 5 times per month.
-
-Nova Digital Wallet: Free instant transfers between Nova accounts | 0.5% cashback on all purchases | QR code payments accepted at over 10,000 merchants.</textarea>
-          </div>
-
-          <div class="kb-section">
-            <label class="field-label">FAQ</label>
-            <textarea class="kb-textarea" id="kb-faq" rows="10" onchange="saveCurrentPrompt()">Q: How do I apply for a loan?
-A: Apply online at novafinance.com.kh or through the Nova Finance mobile app (available on iOS and Android).
-
-Q: What documents do I need?
-A: Valid Cambodian National ID or Passport, last 3 months of bank statements or salary slips, and proof of address.
-
-Q: How long does approval take?
-A: Our team reviews applications within 4 business hours. You will receive an SMS and email notification upon decision.
-
-Q: Can I repay my loan early?
-A: Yes. Nova Finance charges no early repayment penalties. You can settle your loan at any time.
-
-Q: What happens if I miss a payment?
-A: A late fee of 0.5% of the outstanding balance applies per day after the due date. Contact our support team before your due date if you need assistance.
-
-Q: Can I have two loans at the same time?
-A: Yes, if your first loan is in good standing and your total outstanding balance does not exceed your approved credit limit.
-
-Q: How do I contact customer support?
-A: Hotline: 023 456 789 (8am–8pm daily) | Email: support@novafinance.com.kh | In-app live chat.</textarea>
-          </div>
-
-          <div class="kb-section">
-            <label class="field-label">Policies</label>
-            <textarea class="kb-textarea" id="kb-policies" rows="6" onchange="saveCurrentPrompt()">Eligibility: Applicants must be aged 18–65, hold a valid Cambodian National ID or valid work permit, have a minimum monthly income of $250, and have no active loan defaults at any financial institution.
-
-Data Privacy: Customer data is processed in compliance with Cambodian Law on Data Privacy. Data is used solely for loan assessment, account management, and regulatory reporting. We do not sell customer data to third parties.
-
-Security: All data is encrypted using AES-256 encryption. Servers are located in Cambodia and undergo quarterly security audits.</textarea>
-          </div>
-        </div>
-      </div>
-
-      <!-- Chat Tab -->
-      <div class="tab-content" id="tab-chat">
-        <div class="chat-messages" id="chatMessages">
-          <div class="message bot">
-            <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="message-bubble" id="welcomeMessage">
-              Hi! I'm the <strong>Nova Finance</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
-              <div class="suggestions">
-                <span class="suggestion-chip" onclick="useSuggestion(this)">What are your loan interest rates?</span>
-                <span class="suggestion-chip" onclick="useSuggestion(this)">How do I apply?</span>
-                <span class="suggestion-chip" onclick="useSuggestion(this)">What documents do I need?</span>
-                <span class="suggestion-chip" onclick="useSuggestion(this)">Can I repay early?</span>
+      <!-- Preview Tab -->
+      <div class="tab-content active" id="tab-preview">
+        <div class="preview-card">
+          <div class="preview-header">
+            <div class="preview-header-left">
+              <div class="preview-header-info">
+                <span class="preview-header-name" id="chatBotName">Nova Finance AI</span>
               </div>
+            </div>
+            <div class="preview-header-actions">
+              <button class="btn-sm" onclick="clearChat()">
+                <i class="fa-solid fa-rotate-right"></i> Clear chat
+              </button>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+              <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+              <div class="message-bubble" id="welcomeMessage">
+                Hi! I'm the <strong>Nova Finance</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
+                <div class="suggestions">
+                  <span class="suggestion-chip" onclick="useSuggestion(this)">What are your loan interest rates?</span>
+                  <span class="suggestion-chip" onclick="useSuggestion(this)">How do I apply?</span>
+                  <span class="suggestion-chip" onclick="useSuggestion(this)">What documents do I need?</span>
+                  <span class="suggestion-chip" onclick="useSuggestion(this)">Can I repay early?</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <textarea
+              class="chat-input"
+              id="chatInput"
+              placeholder="Ask a question..."
+              rows="1"
+              onkeydown="handleKey(event)"
+              oninput="autoResize(this)"
+            ></textarea>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Tab (Desktop) -->
+      <div class="tab-content" id="tab-code">
+        <div class="code-layout">
+          <div class="code-sidebar">
+            <div class="code-sidebar-header">Knowledge Base</div>
+            <div class="code-file-list" id="fileList">
+              <div class="code-file-item active" data-file="persona" onclick="selectFile('persona')">
+                Persona
+              </div>
+              <div class="code-file-item" data-file="about" onclick="selectFile('about')">
+                About
+              </div>
+              <div class="code-file-item" data-file="products" onclick="selectFile('products')">
+                Products
+              </div>
+              <div class="code-file-item" data-file="faq" onclick="selectFile('faq')">
+                FAQ
+              </div>
+              <div class="code-file-item" data-file="policies" onclick="selectFile('policies')">
+                Policies
+              </div>
+            </div>
+          </div>
+
+          <div class="code-editor">
+            <div class="code-editor-body" id="editorBody">
+              <!-- Populated by JS -->
+            </div>
+            <div class="code-editor-footer">
+              <span class="status-msg" id="saveStatus">
+                <i class="fa-solid fa-circle-check"></i> Saved
+              </span>
+              <button class="btn btn-primary" id="saveBtn" onclick="saveData()">
+                <i class="fa-solid fa-floppy-disk"></i> Save
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="chat-input-area">
-          <textarea
-            class="chat-input"
-            id="chatInput"
-            placeholder="Ask a question..."
-            rows="1"
-            onkeydown="handleKey(event)"
-            oninput="autoResize(this)"
-          ></textarea>
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-            <i class="fa-solid fa-paper-plane"></i>
-          </button>
+        <!-- Code Tab (Mobile Accordion) -->
+        <div class="mobile-accordion" id="mobileAccordion">
+          <div class="accordion-item open" data-mobile-file="persona">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Persona</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              <div class="field-group">
+                <label class="field-label">Company Name</label>
+                <input class="field-input" id="mobilePersonaCompany" placeholder="e.g. Nova Finance" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">AI Role / Title</label>
+                <input class="field-input" id="mobilePersonaRole" placeholder="e.g. Customer Service Assistant" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">System Instructions</label>
+                <textarea class="field-textarea" id="mobilePersonaInstructions" rows="6" placeholder="Define how the AI should behave..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-mobile-file="about">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>About</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              <textarea class="field-textarea" id="mobileKbAbout" rows="8" placeholder="About the company..."></textarea>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-mobile-file="products">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Products</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              <textarea class="field-textarea" id="mobileKbProducts" rows="8" placeholder="Products and services..."></textarea>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-mobile-file="faq">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>FAQ</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              <textarea class="field-textarea" id="mobileKbFaq" rows="8" placeholder="Frequently asked questions..."></textarea>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-mobile-file="policies">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Policies</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="accordion-body">
+              <textarea class="field-textarea" id="mobileKbPolicies" rows="8" placeholder="Company policies..."></textarea>
+            </div>
+          </div>
+
+          <div class="accordion-save-row" style="margin-top:0.5rem;">
+            <span class="status-msg" id="mobileSaveStatus" style="margin-right:0.75rem;">
+              <i class="fa-solid fa-circle-check"></i> Saved
+            </span>
+            <button class="btn btn-primary" onclick="saveData()">
+              <i class="fa-solid fa-floppy-disk"></i> Save
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </main>
 
   <script>
+    // ── ANIMATED BUBBLE NETWORK ──
+    (function() {
+      const canvas = document.getElementById('meshCanvas');
+      const ctx = canvas.getContext('2d');
+
+      let particles = [];
+      const particleCount = window.innerWidth < 700 ? 60 : 100;
+      const connectionDistance = 140;
+      const mouse = { x: null, y: null, radius: 150 };
+      const colors = ['#F5F1E8', '#EDE6DF', '#D4C5B5', '#C4B5A0', '#B8A994'];
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+      });
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 5 + 3;
+          this.speedX = (Math.random() * 0.6 - 0.3);
+          this.speedY = (Math.random() * 0.6 - 0.3);
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+          this.opacity = Math.random() * 0.3 + 0.2;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          if (this.x > canvas.width) this.x = 0;
+          else if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          else if (this.y < 0) this.y = canvas.height;
+
+          // Mouse interaction
+          if (mouse.x != null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+              const force = (mouse.radius - distance) / mouse.radius;
+              const angle = Math.atan2(dy, dx);
+              this.x -= Math.cos(angle) * force * 0.5;
+              this.y -= Math.sin(angle) * force * 0.5;
+            }
+          }
+        }
+
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = this.opacity;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      function init() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p, index) => {
+          p.update();
+          p.draw();
+
+          // Draw connections
+          for (let j = index + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < connectionDistance) {
+              const opacity = (1 - distance / connectionDistance) * 0.25;
+              ctx.strokeStyle = `rgba(212, 197, 181, ${opacity})`;
+              ctx.lineWidth = 1.2;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      resize();
+      init();
+      animate();
+      window.addEventListener('resize', () => {
+        resize();
+        init();
+      });
+    })();
+
     // ── DATA MODEL ──
-    const DEFAULT_PERSONA = {
-      company: "Nova Finance",
-      role: "Nova Finance AI Assistant",
-      instructions: "You are a helpful AI customer service assistant for Nova Finance, a digital-first microfinance institution in Cambodia. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate. Do not make up information."
+    const STORAGE_KEY = 'rag_chatbot_state';
+
+    const DEFAULT_DATA = {
+      persona: {
+        company: "Nova Finance",
+        role: "Nova Finance AI Assistant",
+        instructions: "You are a helpful AI customer service assistant for Nova Finance, a digital-first microfinance institution in Cambodia. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate. Do not make up information."
+      },
+      kb: {
+        about: "Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces. Our mission is to make financial services accessible, fast, and fair for every Cambodian. We operate fully digitally — no physical branches required.",
+        products: "Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month (flat rate) | Disbursed within 24 hours after approval.\n\nBusiness Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month (flat rate) | Disbursed in 1–3 business days.\n\nNova Savings Account: 5.5% annual interest | Minimum deposit $50 | No monthly fees | Free ATM withdrawals up to 5 times per month.\n\nNova Digital Wallet: Free instant transfers between Nova accounts | 0.5% cashback on all purchases | QR code payments accepted at over 10,000 merchants.",
+        faq: "Q: How do I apply for a loan?\nA: Apply online at novafinance.com.kh or through the Nova Finance mobile app (available on iOS and Android).\n\nQ: What documents do I need?\nA: Valid Cambodian National ID or Passport, last 3 months of bank statements or salary slips, and proof of address.\n\nQ: How long does approval take?\nA: Our team reviews applications within 4 business hours. You will receive an SMS and email notification upon decision.\n\nQ: Can I repay my loan early?\nA: Yes. Nova Finance charges no early repayment penalties. You can settle your loan at any time.\n\nQ: What happens if I miss a payment?\nA: A late fee of 0.5% of the outstanding balance applies per day after the due date. Contact our support team before your due date if you need assistance.\n\nQ: Can I have two loans at the same time?\nA: Yes, if your first loan is in good standing and your total outstanding balance does not exceed your approved credit limit.\n\nQ: How do I contact customer support?\nA: Hotline: 023 456 789 (8am–8pm daily) | Email: support@novafinance.com.kh | In-app live chat.",
+        policies: "Eligibility: Applicants must be aged 18–65, hold a valid Cambodian National ID or valid work permit, have a minimum monthly income of $250, and have no active loan defaults at any financial institution.\n\nData Privacy: Customer data is processed in compliance with Cambodian Law on Data Privacy. Data is used solely for loan assessment, account management, and regulatory reporting. We do not sell customer data to third parties.\n\nSecurity: All data is encrypted using AES-256 encryption. Servers are located in Cambodia and undergo quarterly security audits."
+      },
+      chatHistory: [],
+      activeTab: 'preview',
+      activeFile: 'persona'
     };
 
-    const DEFAULT_KB = {
-      about: "Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces. Our mission is to make financial services accessible, fast, and fair for every Cambodian. We operate fully digitally — no physical branches required.",
-      products: "Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month (flat rate) | Disbursed within 24 hours after approval.\n\nBusiness Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month (flat rate) | Disbursed in 1–3 business days.\n\nNova Savings Account: 5.5% annual interest | Minimum deposit $50 | No monthly fees | Free ATM withdrawals up to 5 times per month.\n\nNova Digital Wallet: Free instant transfers between Nova accounts | 0.5% cashback on all purchases | QR code payments accepted at over 10,000 merchants.",
-      faq: "Q: How do I apply for a loan?\nA: Apply online at novafinance.com.kh or through the Nova Finance mobile app (available on iOS and Android).\n\nQ: What documents do I need?\nA: Valid Cambodian National ID or Passport, last 3 months of bank statements or salary slips, and proof of address.\n\nQ: How long does approval take?\nA: Our team reviews applications within 4 business hours. You will receive an SMS and email notification upon decision.\n\nQ: Can I repay my loan early?\nA: Yes. Nova Finance charges no early repayment penalties. You can settle your loan at any time.\n\nQ: What happens if I miss a payment?\nA: A late fee of 0.5% of the outstanding balance applies per day after the due date. Contact our support team before your due date if you need assistance.\n\nQ: Can I have two loans at the same time?\nA: Yes, if your first loan is in good standing and your total outstanding balance does not exceed your approved credit limit.\n\nQ: How do I contact customer support?\nA: Hotline: 023 456 789 (8am–8pm daily) | Email: support@novafinance.com.kh | In-app live chat.",
-      policies: "Eligibility: Applicants must be aged 18–65, hold a valid Cambodian National ID or valid work permit, have a minimum monthly income of $250, and have no active loan defaults at any financial institution.\n\nData Privacy: Customer data is processed in compliance with Cambodian Law on Data Privacy. Data is used solely for loan assessment, account management, and regulatory reporting. We do not sell customer data to third parties.\n\nSecurity: All data is encrypted using AES-256 encryption. Servers are located in Cambodia and undergo quarterly security audits."
-    };
+    let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    let activeFile = 'persona';
+    let isLoading = false;
+    const sessionId = Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
 
-    const DEFAULT_PROMPT_TEXT = "Nova Finance is a digital-first microfinance institution based in Phnom Penh, Cambodia, serving over 50,000 customers across 25 provinces. They offer personal loans ($200–$10,000), business loans ($1,000–$50,000), savings accounts (5.5% interest), and a digital wallet with QR payments at 10,000+ merchants. The company is fully digital with no physical branches and serves Cambodian citizens aged 18–65.";
-
-    let prompts = [];
-    let activePromptId = null;
-    let promptCounter = 0;
-
-    function createPromptId() {
-      return 'prompt_' + (++promptCounter) + '_' + Date.now();
-    }
-
-    function initPrompts() {
-      const saved = localStorage.getItem('rag_prompts');
+    // ── INIT ──
+    function init() {
+      const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
-          prompts = JSON.parse(saved);
-          if (prompts.length > 0) {
-            promptCounter = prompts.reduce((max, p) => Math.max(max, parseInt(p.id.split('_')[1]) || 0), 0);
-            activePromptId = prompts[0].id;
-            renderPromptList();
-            loadActivePrompt();
-            return;
-          }
+          const parsed = JSON.parse(saved);
+          data = { ...DEFAULT_DATA, ...parsed };
+          if (parsed.persona) data.persona = { ...DEFAULT_DATA.persona, ...parsed.persona };
+          if (parsed.kb) data.kb = { ...DEFAULT_DATA.kb, ...parsed.kb };
         } catch (e) {}
       }
 
-      const defaultPrompt = {
-        id: createPromptId(),
-        name: 'Nova Finance',
-        text: DEFAULT_PROMPT_TEXT,
-        persona: { ...DEFAULT_PERSONA },
-        kb: { ...DEFAULT_KB }
-      };
-      prompts = [defaultPrompt];
-      activePromptId = defaultPrompt.id;
-      savePrompts();
-      renderPromptList();
-      loadActivePrompt();
-    }
+      activeFile = data.activeFile || 'persona';
+      loadEditors();
+      updateChatBotName();
+      restoreChat();
 
-    function savePrompts() {
-      localStorage.setItem('rag_prompts', JSON.stringify(prompts));
-    }
-
-    function getActivePrompt() {
-      return prompts.find(p => p.id === activePromptId);
-    }
-
-    function renderPromptList() {
-      const container = document.getElementById('promptsList');
-      container.innerHTML = prompts.map(p => `
-        <div class="prompt-item ${p.id === activePromptId ? 'active' : ''}" onclick="selectPrompt('${p.id}')">
-          <div class="prompt-item-name">
-            <span class="prompt-item-dot"></span>
-            <span class="prompt-item-name-text">${escapeHtml(p.name)}</span>
-          </div>
-          <div class="prompt-item-preview">${escapeHtml(p.text.substring(0, 60))}${p.text.length > 60 ? '...' : ''}</div>
-          ${prompts.length > 1 ? `<button class="prompt-item-delete" onclick="event.stopPropagation();deletePrompt('${p.id}')"><i class="fa-solid fa-xmark"></i></button>` : ''}
-        </div>
-      `).join('');
-    }
-
-    function selectPrompt(id) {
-      saveCurrentPrompt();
-      activePromptId = id;
-      renderPromptList();
-      loadActivePrompt();
-    }
-
-    function loadActivePrompt() {
-      const p = getActivePrompt();
-      if (!p) return;
-
-      document.getElementById('promptInput').value = p.text || '';
-
-      document.getElementById('personaCompany').value = p.persona.company || '';
-      document.getElementById('personaRole').value = p.persona.role || '';
-      document.getElementById('personaInstructions').value = p.persona.instructions || '';
-
-      document.getElementById('kbCompany').value = p.persona.company || '';
-      document.getElementById('kb-about').value = p.kb.about || '';
-      document.getElementById('kb-products').value = p.kb.products || '';
-      document.getElementById('kb-faq').value = p.kb.faq || '';
-      document.getElementById('kb-policies').value = p.kb.policies || '';
-    }
-
-    function saveCurrentPrompt() {
-      const p = getActivePrompt();
-      if (!p) return;
-
-      p.text = document.getElementById('promptInput').value.trim();
-
-      const companyFromKB = document.getElementById('kbCompany').value.trim();
-      const companyFromPersona = document.getElementById('personaCompany').value.trim();
-      const company = companyFromKB || companyFromPersona;
-      p.persona.company = company;
-
-      if (companyFromKB) document.getElementById('personaCompany').value = company;
-      if (companyFromPersona) document.getElementById('kbCompany').value = company;
-
-      p.persona.role = document.getElementById('personaRole').value.trim();
-      p.persona.instructions = document.getElementById('personaInstructions').value.trim();
-
-      p.kb.about = document.getElementById('kb-about').value.trim();
-      p.kb.products = document.getElementById('kb-products').value.trim();
-      p.kb.faq = document.getElementById('kb-faq').value.trim();
-      p.kb.policies = document.getElementById('kb-policies').value.trim();
-
-      p.name = company || 'Untitled';
-      p.text = document.getElementById('promptInput').value.trim();
-
-      savePrompts();
-      renderPromptList();
-    }
-
-    function addNewPrompt() {
-      saveCurrentPrompt();
-
-      const id = createPromptId();
-      const newPrompt = {
-        id,
-        name: 'New Business',
-        text: '',
-        persona: {
-          company: '',
-          role: '',
-          instructions: 'You are a helpful AI assistant. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate.'
-        },
-        kb: { about: '', products: '', faq: '', policies: '' }
-      };
-      prompts.push(newPrompt);
-      activePromptId = id;
-      savePrompts();
-      renderPromptList();
-      loadActivePrompt();
-
-      document.getElementById('promptInput').focus();
-    }
-
-    function deletePrompt(id) {
-      if (prompts.length <= 1) return;
-      const idx = prompts.findIndex(p => p.id === id);
-      if (idx === -1) return;
-      prompts.splice(idx, 1);
-      if (activePromptId === id) {
-        activePromptId = prompts[0].id;
-      }
-      savePrompts();
-      renderPromptList();
-      loadActivePrompt();
-    }
-
-    // ── GENERATE KB ──
-    let isGenerating = false;
-
-    async function generateKB() {
-      if (isGenerating) return;
-
-      saveCurrentPrompt();
-      const p = getActivePrompt();
-      if (!p) return;
-
-      const promptText = document.getElementById('promptInput').value.trim();
-      if (!promptText) {
-        showStatus('genStatus', 'Please enter a prompt description first.', true);
-        return;
+      if (data.activeTab === 'code') {
+        switchTab('code');
       }
 
-      p.text = promptText;
-      savePrompts();
-      renderPromptList();
-
-      isGenerating = true;
-      const btn = document.getElementById('generateBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
-
-      hideStatus('genStatus');
-
-      try {
-        const res = await fetch('/api/generate-kb', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: promptText })
-        });
-
-        const data = await res.json();
-
-        if (res.ok && data.persona && data.kb) {
-          p.persona = {
-            company: data.persona.company || p.persona.company || '',
-            role: data.persona.role || p.persona.role || '',
-            instructions: data.persona.instructions || p.persona.instructions || ''
-          };
-          p.kb = {
-            about: data.kb.about || '',
-            products: data.kb.products || '',
-            faq: data.kb.faq || '',
-            policies: data.kb.policies || ''
-          };
-          p.name = data.persona.company || 'Generated Business';
-          savePrompts();
-          renderPromptList();
-          loadActivePrompt();
-          showStatus('genStatus', 'Knowledge base generated successfully!');
-        } else {
-          showStatus('genStatus', data.error || 'Failed to generate. Try again.', true);
-        }
-      } catch (err) {
-        showStatus('genStatus', 'Could not reach the server. Please try again.', true);
-      }
-
-      isGenerating = false;
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Generate KB';
+      selectFile(activeFile);
     }
 
-    function showStatus(id, msg, isError) {
-      const el = document.getElementById(id);
-      el.innerHTML = isError
-        ? `<i class="fa-solid fa-circle-exclamation"></i> ${escapeHtml(msg)}`
-        : `<i class="fa-solid fa-circle-check"></i> ${escapeHtml(msg)}`;
-      el.className = 'status-msg visible' + (isError ? ' error' : '');
-      setTimeout(() => { el.className = 'status-msg'; }, 4000);
-    }
-
-    function hideStatus(id) {
-      document.getElementById(id).className = 'status-msg';
+    function saveToStorage() {
+      data.activeFile = activeFile;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
     // ── TAB SWITCHING ──
     function switchTab(tabName) {
-      saveCurrentPrompt();
+      data.activeTab = tabName;
+      saveToStorage();
 
       document.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.tab === tabName);
@@ -1112,25 +1125,116 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
       document.querySelectorAll('.tab-content').forEach(c => {
         c.classList.toggle('active', c.id === 'tab-' + tabName);
       });
+    }
 
-      document.getElementById('clearChatBtn').style.display = tabName === 'chat' ? '' : 'none';
+    // ── FILE SELECTION (DESKTOP) ──
+    function selectFile(fileName) {
+      activeFile = fileName;
+      data.activeFile = fileName;
+
+      document.querySelectorAll('.code-file-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.file === fileName);
+      });
+
+      const labels = {
+        persona: 'Persona',
+        about: 'About',
+        products: 'Products',
+        faq: 'FAQ',
+        policies: 'Policies'
+      };
+
+      const body = document.getElementById('editorBody');
+      if (fileName === 'persona') {
+        body.innerHTML = `
+          <div class="field-group">
+            <label class="field-label">Company Name</label>
+            <input class="field-input" id="personaCompany" value="${escapeHtml(data.persona.company)}" placeholder="e.g. Nova Finance" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">AI Role / Title</label>
+            <input class="field-input" id="personaRole" value="${escapeHtml(data.persona.role)}" placeholder="e.g. Customer Service Assistant" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">System Instructions</label>
+            <textarea class="field-textarea" id="personaInstructions" rows="12" placeholder="Define how the AI should behave...">${escapeHtml(data.persona.instructions)}</textarea>
+          </div>
+        `;
+      } else {
+        const rows = fileName === 'faq' ? 18 : (fileName === 'products' ? 14 : 12);
+        body.innerHTML = `
+          <textarea class="field-textarea" id="kb-${fileName}" rows="${rows}" placeholder="Enter ${labels[fileName].toLowerCase()} content...">${escapeHtml(data.kb[fileName])}</textarea>
+        `;
+      }
+    }
+
+    // ── SAVE ──
+    function saveData() {
+      const isMobile = window.innerWidth <= 768;
+
+      if (isMobile) {
+        data.persona.company = document.getElementById('mobilePersonaCompany').value.trim();
+        data.persona.role = document.getElementById('mobilePersonaRole').value.trim();
+        data.persona.instructions = document.getElementById('mobilePersonaInstructions').value.trim();
+        data.kb.about = document.getElementById('mobileKbAbout').value.trim();
+        data.kb.products = document.getElementById('mobileKbProducts').value.trim();
+        data.kb.faq = document.getElementById('mobileKbFaq').value.trim();
+        data.kb.policies = document.getElementById('mobileKbPolicies').value.trim();
+      } else {
+        if (activeFile === 'persona') {
+          data.persona.company = document.getElementById('personaCompany').value.trim();
+          data.persona.role = document.getElementById('personaRole').value.trim();
+          data.persona.instructions = document.getElementById('personaInstructions').value.trim();
+        } else {
+          const textarea = document.getElementById('kb-' + activeFile);
+          if (textarea) data.kb[activeFile] = textarea.value.trim();
+        }
+      }
+
+      saveToStorage();
+      updateChatBotName();
+      showSaveStatus();
+    }
+
+    function showSaveStatus() {
+      const id = window.innerWidth <= 768 ? 'mobileSaveStatus' : 'saveStatus';
+      const el = document.getElementById(id);
+      el.classList.add('visible');
+      setTimeout(() => el.classList.remove('visible'), 2000);
+    }
+
+    function updateChatBotName() {
+      const name = data.persona.company || 'Nova Finance';
+      document.getElementById('chatBotName').textContent = name + ' AI';
+    }
+
+    // ── MOBILE ACCORDION ──
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    }
+
+    function loadEditors() {
+      document.getElementById('mobilePersonaCompany').value = data.persona.company;
+      document.getElementById('mobilePersonaRole').value = data.persona.role;
+      document.getElementById('mobilePersonaInstructions').value = data.persona.instructions;
+      document.getElementById('mobileKbAbout').value = data.kb.about;
+      document.getElementById('mobileKbProducts').value = data.kb.products;
+      document.getElementById('mobileKbFaq').value = data.kb.faq;
+      document.getElementById('mobileKbPolicies').value = data.kb.policies;
     }
 
     // ── CHAT ──
-    const sessionId = Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-    let conversationHistory = [];
-    let isLoading = false;
-
     function collectKB() {
       const parts = [
-        { label: "About", id: "kb-about" },
-        { label: "Products & Services", id: "kb-products" },
-        { label: "FAQ", id: "kb-faq" },
-        { label: "Policies", id: "kb-policies" },
+        { label: "About", key: "about" },
+        { label: "Products & Services", key: "products" },
+        { label: "FAQ", key: "faq" },
+        { label: "Policies", key: "policies" },
       ];
       return parts
         .map(p => {
-          const val = document.getElementById(p.id).value.trim();
+          const val = data.kb[p.key].trim();
           return val ? `## ${p.label}\n${val}` : "";
         })
         .filter(Boolean)
@@ -1138,7 +1242,7 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
     }
 
     function getPersona() {
-      return document.getElementById('personaInstructions').value.trim();
+      return data.persona.instructions.trim();
     }
 
     async function sendMessage() {
@@ -1151,7 +1255,8 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
       input.style.height = "auto";
 
       addMessage("user", question);
-      conversationHistory.push({ role: "user", content: question });
+      data.chatHistory.push({ role: "user", content: question });
+      saveToStorage();
 
       const typingId = showTyping();
       isLoading = true;
@@ -1165,21 +1270,22 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
             question,
             knowledgeBase: collectKB(),
             persona: getPersona(),
-            history: conversationHistory.slice(-10),
+            history: data.chatHistory.slice(-10),
             sessionId,
-            companyName: document.getElementById("kbCompany").value.trim(),
+            companyName: data.persona.company,
           }),
         });
 
-        const data = await res.json();
+        const responseData = await res.json();
         removeTyping(typingId);
 
         if (res.ok) {
-          addMessage("bot", data.answer);
-          conversationHistory.push({ role: "assistant", content: data.answer });
+          addMessage("bot", responseData.answer);
+          data.chatHistory.push({ role: "assistant", content: responseData.answer });
         } else {
-          addMessage("bot", data.error || "Something went wrong. Please try again.");
+          addMessage("bot", responseData.error || "Something went wrong. Please try again.");
         }
+        saveToStorage();
       } catch {
         removeTyping(typingId);
         addMessage("bot", "Could not reach the server. Please check your connection and try again.");
@@ -1205,15 +1311,6 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
         el.innerHTML = `<div class="message-bubble">${content}</div>`;
       }
 
-      container.appendChild(el);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function addSystemMessage(text) {
-      const container = document.getElementById("chatMessages");
-      const el = document.createElement("div");
-      el.className = "message system";
-      el.innerHTML = `<div class="message-bubble"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(text)}</div>`;
       container.appendChild(el);
       container.scrollTop = container.scrollHeight;
     }
@@ -1245,11 +1342,23 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
     }
 
     function clearChat() {
-      conversationHistory = [];
+      data.chatHistory = [];
+      saveToStorage();
       const container = document.getElementById("chatMessages");
       container.innerHTML = "";
-      const company = document.getElementById("kbCompany").value.trim() || "Nova Finance";
+      const company = data.persona.company || "Nova Finance";
       addMessage("bot", `Chat cleared. I'm the ${company} AI assistant — ask me anything about our products and services.`);
+    }
+
+    function restoreChat() {
+      const container = document.getElementById("chatMessages");
+      if (data.chatHistory.length === 0) return;
+
+      container.innerHTML = "";
+      data.chatHistory.forEach(msg => {
+        if (msg.role === 'user') addMessage('user', msg.content);
+        else if (msg.role === 'assistant') addMessage('bot', msg.content);
+      });
     }
 
     function handleKey(e) {
@@ -1267,27 +1376,27 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
     function useSuggestion(chip) {
       const input = document.getElementById("chatInput");
       input.value = chip.textContent;
-      chip.closest(".suggestions").remove();
-      switchTab('chat');
-      sendMessage();
+      input.focus();
+      if (document.getElementById('tab-preview').classList.contains('active')) {
+        sendMessage();
+      } else {
+        switchTab('preview');
+        setTimeout(sendMessage, 100);
+      }
     }
 
     function escapeHtml(text) {
+      if (!text) return '';
       return text
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
-        .replace(/\n/g, "<br>");
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     // ── INIT ──
-    initPrompts();
-    document.getElementById('clearChatBtn').style.display = 'none';
-
-    document.getElementById('promptInput').addEventListener('input', function() {
-      const p = getActivePrompt();
-      if (p) { p.text = this.value; savePrompts(); renderPromptList(); }
-    });
+    init();
   </script>
 </body>
 </html>
