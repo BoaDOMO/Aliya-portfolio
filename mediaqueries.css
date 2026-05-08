@@ -147,6 +147,16 @@
     height: 240px;
   }
 
+  .mini-suggestion-chip {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .mini-chat-send {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
   /* Skills single column */
   .skills-categories {
     grid-template-columns: 1fr;

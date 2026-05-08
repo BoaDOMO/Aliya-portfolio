@@ -1,7 +1,10 @@
 {
   "name": "aliya-portfolio",
   "version": "1.0.0",
-"dependencies": {
+  "dependencies": {
     "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "vercel": "^53.2.0"
   }
 }
