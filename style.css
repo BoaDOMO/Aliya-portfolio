@@ -893,6 +893,115 @@ footer p {
   color: #185FA5;
 }
 
+/* CONTACT FORM */
+
+.contact-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-hero-right {
+  flex-shrink: 0;
+}
+
+.contact-form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  width: 480px;
+  max-width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.contact-form-card h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin-bottom: 2.5rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666666;
+  margin-bottom: 0.75rem;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: #F5F1E8;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.9375rem;
+  color: #1A1A1A;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #999999;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #185FA5;
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+}
+
+.form-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.btn-send {
+  width: 100%;
+  background: #1A1A1A;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1.1rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-send:hover {
+  background: #333333;
+  transform: translateY(-2px);
+}
+
+.btn-send:active {
+  transform: scale(0.98);
+}
+
+/* CONTACT FORM ANIMATION */
+
+.anim-contact-form {
+  animation: hero-fade-up-lg 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+}
+
 /* ═══════════════════════════════════════════════
    ANIMATION KEYFRAMES
 ═══════════════════════════════════════════════ */
@@ -1271,7 +1380,8 @@ footer a:hover {
   .anim-contact-tagline,
   .anim-contact-item-1,
   .anim-contact-item-2,
-  .anim-contact-item-3 {
+  .anim-contact-item-3,
+  .anim-contact-form {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

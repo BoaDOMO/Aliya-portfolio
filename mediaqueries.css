@@ -48,6 +48,11 @@
   .contact-hero-text .hero-name {
     font-size: 3.5rem;
   }
+
+  .contact-form-card {
+    width: 420px;
+    padding: 2.5rem;
+  }
 }
 
 /* ── MOBILE: max-width 700px ── */
@@ -137,6 +142,19 @@
 
   .contact-info-label {
     width: auto;
+  }
+
+  .contact-hero-left {
+    align-items: center;
+  }
+
+  .contact-hero-right {
+    width: 100%;
+  }
+
+  .contact-form-card {
+    width: 100%;
+    padding: 2rem;
   }
 
   .project-title {
