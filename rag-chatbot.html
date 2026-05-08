@@ -74,21 +74,18 @@
     }
 
     .back-btn {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-      font-size: 0.8rem;
-      color: #1A1A1A;
       background: none;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 2rem;
-      padding: 0.35rem 0.9rem;
+      border: none;
+      padding: 0;
       cursor: pointer;
-      transition: all 200ms ease;
+      color: #1A1A1A;
+      font-size: 1rem;
+      transition: color 200ms ease;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
     }
 
-    .back-btn:hover { color: #185FA5; border-color: #185FA5; }
+    .back-btn:hover { color: #185FA5; }
 
     .demo-title {
       font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
@@ -315,6 +312,14 @@
       display: flex;
       align-items: center;
       gap: 0.6rem;
+    }
+
+    .preview-header-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
     }
 
     .preview-header-info {
@@ -758,7 +763,7 @@
   <div class="demo-header">
     <div class="demo-header-left">
       <button class="back-btn" onclick="window.location.href='./lab.html'">
-        <i class="fa-solid fa-arrow-left"></i> Lab
+        <i class="fa-solid fa-arrow-left"></i>
       </button>
       <div>
         <div class="demo-title">RAG CHATBOT</div>
@@ -830,6 +835,7 @@
         <div class="preview-card">
           <div class="preview-header">
             <div class="preview-header-left">
+              <span class="preview-header-dot"></span>
               <div class="preview-header-info">
                 <span class="preview-header-name" id="chatBotName">Nova Finance AI</span>
               </div>
