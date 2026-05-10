@@ -1,0 +1,24 @@
+@theme {
+  --color-cream: #F5F1E8;
+  --color-beige: #EDE9DF;
+  --color-green: #9CAF88;
+  --color-blue: #185FA5;
+  --color-dark-blue: #26428b;
+  --color-near-black: #1A1A1A;
+  --color-text-gray: rgb(85, 85, 85);
+  --color-text-muted: rgb(120, 120, 120);
+  --color-label-gray: #999999;
+  --color-card: #FFFFFF;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-red: #d32f2f;
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-pill: 2rem;
+  --radius-card: 12px;
+  --radius-form: 20px;
+  --radius-input: 12px;
+  --radius-circle: 50%;
+}
