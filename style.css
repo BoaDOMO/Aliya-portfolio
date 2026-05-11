@@ -1558,6 +1558,10 @@ footer p {
   transform: scale(0.97);
   transition: transform 0.1s ease;
 }
+#desktop-nav .nav-links li {
+  display: flex;
+  align-items: center;
+}
 #desktop-nav .nav-links a {
   position: relative;
   display: inline-block;

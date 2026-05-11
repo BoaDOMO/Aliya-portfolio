@@ -1140,6 +1140,11 @@ footer p {
    MICRO-INTERACTIONS: NAV LINKS
 ═══════════════════════════════════════════════ */
 
+#desktop-nav .nav-links li {
+  display: flex;
+  align-items: center;
+}
+
 #desktop-nav .nav-links a {
   @apply relative inline-block;
   transition: opacity 0.2s ease !important;
