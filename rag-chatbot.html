@@ -68,34 +68,6 @@
       --editor-label: #A3B18A;
     }
 
-    .theme-toggle {
-      background: none;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 8px;
-      padding: 0.4rem 0.6rem;
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--text);
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(0, 0, 0, 0.05);
-    }
-
-    :root[data-theme="dark"] .theme-toggle {
-      color: var(--text);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    :root[data-theme="dark"] .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -286,7 +258,7 @@
       border-radius: 10px;
       flex-shrink: 0;
       padding: 0.3rem;
-      gap: 0.15rem;
+      gap: 0.5rem;
       margin-bottom: 1.5rem;
       width: fit-content;
     }
@@ -1098,7 +1070,7 @@
         <div class="demo-title">RAG CHATBOT</div>
       </div>
     </div>
-    <div style="display: flex; align-items: center; gap: 0.75rem;">
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 0.75rem;">
       <span class="demo-badge">LIVE DEMO</span>
       <button class="theme-toggle" id="themeToggleRag" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
     </div>
