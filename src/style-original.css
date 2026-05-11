@@ -1880,8 +1880,14 @@ footer a:hover {
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
+:root[data-theme="dark"] .name2,
+:root[data-theme="dark"] .name3,
+:root[data-theme="dark"] .description li {
+  color: var(--color-text-gray);
+}
+
 :root[data-theme="dark"] .experience-timeline {
-  border-left-color: var(--color-border);
+  border-left-color: rgba(255, 255, 255, 0.15);
 }
 
 :root[data-theme="dark"] .experience::before,
