@@ -2010,6 +2010,11 @@ footer a:hover {
   background: rgba(163, 177, 138, 0.15);
 }
 
+:root[data-theme="dark"] .contact-info-label,
+:root[data-theme="dark"] .form-label {
+  color: var(--color-text-gray);
+}
+
 :root[data-theme="dark"] .contact-form-card {
   border-color: var(--color-border);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
