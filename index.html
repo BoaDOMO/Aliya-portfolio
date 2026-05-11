@@ -91,11 +91,11 @@
           var isDark = theme === 'dark';
           document.querySelectorAll('.theme-toggle i').forEach(function (icon) {
             if (isDark) {
-              icon.classList.remove('fa-sun');
-              icon.classList.add('fa-moon');
-            } else {
               icon.classList.remove('fa-moon');
               icon.classList.add('fa-sun');
+            } else {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
             }
           });
         }

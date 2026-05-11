@@ -309,6 +309,9 @@
   .bg-cream {
     background-color: var(--color-cream);
   }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
+  }
   .text-center {
     text-align: center;
   }
@@ -1562,13 +1565,13 @@ footer p {
   text-decoration: none !important;
 }
 #desktop-nav .nav-links a:hover {
-  color: var(--color-near-black);
+  color: var(--color-blue);
   text-decoration-line: none;
-  opacity: 60%;
+  opacity: 1;
 }
 #desktop-nav .nav-links a.nav-active::after {
   border-radius: var(--radius-circle);
-  background-color: var(--color-near-black);
+  background-color: var(--color-blue);
   content: '';
   position: absolute;
   bottom: -6px;

@@ -1147,11 +1147,12 @@ footer p {
 }
 
 #desktop-nav .nav-links a:hover {
-  @apply opacity-60 text-near-black no-underline;
+  @apply text-blue no-underline;
+  opacity: 1;
 }
 
 #desktop-nav .nav-links a.nav-active::after {
-  @apply bg-near-black rounded-circle;
+  @apply bg-blue rounded-circle;
   content: '';
   position: absolute;
   bottom: -6px;
