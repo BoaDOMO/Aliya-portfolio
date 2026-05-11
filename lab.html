@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      (function() {
+        var saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -367,6 +379,129 @@
         .mini-suggestion-chip:hover { transform: none; }
         .mini-chat-send:hover { transform: none; }
       }
+
+      /* ═══════════════════════════════════════
+         DARK MODE OVERRIDES
+         ═══════════════════════════════════════ */
+
+      :root[data-theme="dark"] .project-label {
+        color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .project-title {
+        color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .tech-pill {
+        background: rgba(163, 177, 138, 0.1);
+        color: var(--color-blue);
+        border-color: rgba(163, 177, 138, 0.2);
+      }
+
+      :root[data-theme="dark"] .mini-chat {
+        background: var(--color-card);
+        box-shadow: var(--dm-card-shadow);
+      }
+
+      :root[data-theme="dark"] .mini-chat:hover {
+        box-shadow: var(--dm-card-hover-shadow);
+      }
+
+      :root[data-theme="dark"] .mini-chat-header {
+        background: linear-gradient(135deg, #121212 0%, #1A1A1A 100%);
+        border-bottom-color: var(--color-border);
+      }
+
+      :root[data-theme="dark"] .mini-chat-label {
+        color: var(--color-near-black);
+      }
+
+      :root[data-theme="dark"] .mini-chat-subtitle {
+        color: var(--color-text-muted);
+      }
+
+      :root[data-theme="dark"] .mini-chat-messages {
+        background: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+        scrollbar-color: var(--color-text-gray) transparent;
+      }
+
+      :root[data-theme="dark"] .mini-chat-messages::-webkit-scrollbar-thumb {
+        background: var(--color-text-gray);
+      }
+
+      :root[data-theme="dark"] .mini-msg.bot {
+        background: #1A1A1A;
+        color: var(--color-near-black);
+        border-left-color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .mini-msg.user {
+        background: var(--color-blue);
+        color: #0F172A;
+        box-shadow: 0 2px 8px rgba(163, 177, 138, 0.15);
+      }
+
+      :root[data-theme="dark"] .mini-msg-icon {
+        background: rgba(163, 177, 138, 0.15);
+        color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .mini-suggestion-chip {
+        color: var(--color-blue);
+        background: rgba(163, 177, 138, 0.08);
+        border-color: rgba(163, 177, 138, 0.18);
+      }
+
+      :root[data-theme="dark"] .mini-suggestion-chip:hover {
+        background: rgba(163, 177, 138, 0.15);
+        border-color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .mini-cta a {
+        color: var(--color-blue);
+      }
+
+      :root[data-theme="dark"] .mini-cta a:hover {
+        color: #8A9E78;
+      }
+
+      :root[data-theme="dark"] .mini-chat-input-row {
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.3), var(--color-card));
+        border-top-color: var(--color-border);
+      }
+
+      :root[data-theme="dark"] .mini-chat-input {
+        color: var(--color-near-black);
+        background: #1A1A1A;
+        border-color: var(--color-border);
+      }
+
+      :root[data-theme="dark"] .mini-chat-input:focus {
+        border-color: var(--color-blue);
+        box-shadow: 0 0 0 3px rgba(163, 177, 138, 0.15);
+      }
+
+      :root[data-theme="dark"] .mini-chat-input::placeholder {
+        color: var(--color-text-muted);
+      }
+
+      :root[data-theme="dark"] .mini-chat-send {
+        background: var(--color-blue);
+        color: #0F172A;
+      }
+
+      :root[data-theme="dark"] .mini-chat-send:hover {
+        background: #8A9E78;
+        box-shadow: 0 3px 10px rgba(163, 177, 138, 0.3);
+      }
+
+      :root[data-theme="dark"] .mini-typing {
+        background: #1A1A1A;
+      }
+
+      :root[data-theme="dark"] .mini-typing-dot {
+        background: var(--color-text-gray);
+      }
     </style>
   </head>
   <body class="main-wrapper">
@@ -382,6 +517,7 @@
             <li><a href="./profile.html">Profile</a></li>
             <li><a href="./lab.html">Lab</a></li>
             <li><a href="./contact.html">Contact</a></li>
+            <li><button class="theme-toggle" id="themeToggleDesktop" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button></li>
           </ul>
         </div>
       </nav>
@@ -390,10 +526,13 @@
           <a href="./index.html" class="nav-logo"><h2>ALIYA KOY</h2></a>
         </div>
         <div class="hamburger-menu">
-          <div class="hamburger-icon" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
           </div>
           <div class="menu-links">
             <li><a href="./index.html" onclick="toggleMenu()">Home</a></li>
@@ -407,7 +546,6 @@
 
     <main class="page-load-anim">
       <section class="page-hero page-hero-sm lab-hero">
-        <canvas class="neural-links-canvas" id="neuralCanvas"></canvas>
         <div class="hero-content-box">
           <p class="hero-label anim-lab-label">THE LAB</p>
           <h1 class="hero-name anim-lab-heading">Things I'm building.</h1>
@@ -639,5 +777,36 @@ Security: All data is encrypted using AES-256 encryption. Servers are located in
       });
     </script>
     <script src="script.js"></script>
+    <script>
+      (function () {
+        var root = document.documentElement;
+
+        function updateIcons() {
+          var theme = root.getAttribute('data-theme');
+          var isDark = theme === 'dark';
+          document.querySelectorAll('.theme-toggle i').forEach(function (icon) {
+            if (isDark) {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            } else {
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            }
+          });
+        }
+
+        updateIcons();
+
+        document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var current = root.getAttribute('data-theme');
+            var next = current === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcons();
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

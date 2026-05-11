@@ -4,7 +4,7 @@ This document describes the existing visual design as implemented in `style.css`
 
 ---
 
-## Brand Colors
+## Brand Colors — Light Mode
 
 | Name | Value | Usage |
 |---|---|---|
@@ -20,78 +20,172 @@ This document describes the existing visual design as implemented in `style.css`
 | White | `#FFFFFF` | Card backgrounds |
 | Red (error) | `#d32f2f` | Invalid form input borders |
 
+## Brand Colors — Dark Mode
+
+Dark mode is activated via `data-theme="dark"` on `<html>`, persisted to `localStorage('theme')`. A FOUC-prevention script in `<head>` reads the stored preference (or system `prefers-color-scheme`) before first paint.
+
+### Token Overrides (`src/tokens.css`)
+
+All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
+
+| Token | Value | Notes |
+|---|---|---|
+| `--color-cream` | `#0A0A0A` | Matte Obsidian page background |
+| `--color-beige` | `#121212` | Alternate section background |
+| `--color-green` | `#0D0D0D` | (Reserved, nav/footer use solid `#0B1120`) |
+| `--color-blue` | `#A3B18A` | Electric Sage — primary accent replaces blue |
+| `--color-dark-blue` | `#A3B18A` | Same as sage — everything blue in light → sage in dark |
+| `--color-near-black` | `#F3F4F6` | Near-white text |
+| `--color-text-gray` | `#9CA3AF` | Body text |
+| `--color-text-muted` | `#6B7280` | Secondary text |
+| `--color-label-gray` | `#6B7280` | Labels |
+| `--color-card` | `#141414` | Card backgrounds |
+| `--color-border` | `rgba(255, 255, 255, 0.05)` | Subtle light borders on dark |
+| `--color-red` | `#EF4444` | Errors |
+| `--dm-card-shadow` | `0 4px 12px rgba(0, 0, 0, 0.6)` | Card shadow |
+| `--dm-card-hover-shadow` | `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.04)` | Card hover shadow |
+
+### Key Design Decisions (Dark Mode)
+
+| Element | Light | Dark |
+|---|---|---|
+| Page background | Cream `#F5F1E8` | Matte Obsidian `#0A0A0A` + 1.5% noise texture |
+| Nav / Footer | Sage `#9CAF88` | Solid deep navy `#0B1120` |
+| Nav links text | Near-black `#1A1A1A` | Near-white `var(--color-near-black)` |
+| Nav logo | Near-black | Near-white |
+| Primary accent | Blue `#185FA5` | Electric Sage `#A3B18A` |
+| Secondary accent | Dark blue `#26428b` | Electric Sage (same) |
+| Hero name / headings | Blue | Sage |
+| Skill icons / arrows | Dark blue | Sage |
+| Timeline dots | Dark blue | Sage |
+| Back-to-top button | Dark blue | Sage |
+| Skill cards | White `#FFFFFF` | `var(--color-card)` `#141414` + glass border |
+| Buttons (filled) | Blue | Sage, text `#0F172A` |
+| Buttons (filled hover) | Black `#000000` | Darker sage `#8A9E78` |
+| Buttons (outlined hover) | Fills dark | Fills sage |
+| Contact form card | White | `var(--color-card)` |
+| Form inputs | Cream `#F5F1E8` | `#1A1A1A` |
+| Tagline / hero text | `var(--color-text-muted)` | `var(--color-near-black)` (near-white) |
+| Footer text | Near-black | `var(--color-text-gray)` |
+
+### Nav & Footer (Dark Mode)
+
+- Background: solid `#0B1120` (deep navy)
+- Border: `1px solid var(--color-border)`
+- Menu dropdown: solid `#0B1120`, matches nav
+- Theme toggle button: near-white icon, frosted hover
+
+### Glass Morphism (Cards in Dark Mode)
+
+Cards use a **dual-layered glass effect**:
+```css
+border: 1px solid var(--color-border);
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+```
+
+This creates a frosted glass look with a subtle white top highlight.
+
+### Theme Toggle
+
+- Located in desktop nav (as `<li>` in `.nav-links`) and alongside hamburger icon (flex row, `gap: 1.25rem`)
+- Uses `fa-moon` / `fa-sun` Font Awesome icons
+- JavaScript updates all `.theme-toggle i` elements via `querySelectorAll`
+
+### Impact Summary
+
+Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. The deep navy (`#0B1120`) nav/footer provides a grounded frame, while the 1.5% noise overlay prevents dead blacks on OLED screens.
+
 ## Typography
 
 | Element | Font | Notes |
 |---|---|---|
 | Body / Nav / Buttons / Headings (h2-h6) | `-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif` | System font stack |
-| Hero name (h1) | `Georgia, serif` | Italic, `#185FA5`, 4rem desktop / 2.75rem mobile |
+| Hero name (h1) | `Georgia, serif` | Italic, `#185FA5` light / `#A3B18A` dark, 4rem desktop / 2.75rem mobile |
 | Labels / Code / Dates | `ui-monospace, "SF Mono", Menlo, monospace` | Monospace stack |
-| Body text (p, li) | Monospace stack | 0.9375rem, `rgb(85, 85, 85)` |
+| Body text (p, li) | Monospace stack | 0.9375rem, `rgb(85, 85, 85)` light / `#9CA3AF` dark |
 | Section titles (.title) | Monospace stack | 1.5rem, uppercase, 0.1em tracking |
-| Hero label | Monospace stack | 0.75rem, uppercase, 0.2em tracking, `#185FA5` |
-| Company name (.name1) | System stack | Bold, `#26428b` |
-| Role (.name2) | System stack | Italic, `rgb(120, 120, 120)` |
-| Footer text | System stack | 14px, 500 weight, `#1A1A1A` |
+| Hero label | Monospace stack | 0.75rem, uppercase, 0.2em tracking, `#185FA5` light / `#A3B18A` dark |
+| Company name (.name1) | System stack | Bold, `#26428b` light / `#A3B18A` dark |
+| Role (.name2) | System stack | Italic, `rgb(120, 120, 120)` light / `#9CA3AF` dark |
+| Footer text | System stack | 14px, 500 weight, `#1A1A1A` light / `#9CA3AF` dark |
+| Demo title (RAG chatbot) | System stack | 20px, 600 weight, `#1A1A1A` light / `var(--text)` dark |
 
 **Loaded Google Fonts:** Source Code Pro (200–900), Oswald (200–700)
 
 ## Layout
 
 - **Max-width:** 2560px, min-width: 320px, centered
-- **Nav:** Sticky, 70px height, `#9CAF88`
+- **Nav:** Sticky, 70px height, `#9CAF88` light / `#0B1120` dark
 - **Sections:** 5rem 5% padding
-- **Footer:** `#9CAF88`, centered text, 1.25rem 2rem padding
+- **Footer:** `#9CAF88` light / `#0B1120` dark, centered text, 1.25rem 2rem padding
 
 ## Components
 
 ### Navigation
 - Desktop (`#desktop-nav`): Logo left, links right with 2rem gap
-- Mobile (`#hamburger-nav`): Shown at ≤1024px. Hamburger icon (3 lines → X when open). Menu slides in from left (100vw, top 70px, `#9CAF88` bg)
+- Mobile (`#hamburger-nav`): Shown at ≤1024px. Hamburger icon (3 lines → X when open). Menu slides in from left (100vw, top 70px, `#9CAF88` light / `#0B1120` dark bg)
+- Menu-links container has no `py-8` padding — links start flush at top
 - Active page link: 4px dot below via `::after`
-- Logo hover: opacity 0.65, translateY(-1px)
+- Logo hover: opacity 0.65, translateY(-1px) light / near-white dark
 - Link hover: opacity 0.6 (desktop), background shift (mobile)
+
+### Theme Toggle
+- Desktop: `<li>` in `.nav-links`, last position
+- Mobile/hamburger: sits alongside `.hamburger-icon` in a flex row with `gap: 1.25rem`
+- Icon swaps `fa-moon` ↔ `fa-sun` on click
+- All theme toggle icons stay in sync via `querySelectorAll('.theme-toggle i')`
 
 ### Hero (Home)
 - Centered, min-height 86vh
 - Label fades down → name letters stagger in → tagline fades up → buttons scale in
 
 ### Hero (Lab)
-- Left-aligned, neural links canvas background
-- Dark blue content box (`#26428b`) with white text, rounded 12px, backdrop blur
+- Left-aligned
+- Dark blue content box (`#26428b` light / `rgba(163, 177, 138, 0.08)` dark) with white text, rounded 12px, backdrop blur
 - Label blurs in → heading fades up → underline draws → tagline fades up → card fades up
 
 ### Hero (Contact)
 - Two-column: photo + text left, form card right
 - Photo zooms out → label fades down → heading bounces in → tagline fades up → info items slide in
-- Photo: 240px circle, `#26428b` border, shadow, hover scale(1.03)
+- Photo: 240px circle, no border in dark mode, shadow, hover scale(1.03)
 
 ### Skill Cards (Profile)
 - 3-column grid (2-col ≤1024px, 1-col ≤700px)
-- White card, rounded 12px, shadow, text-center
+- White card light / `var(--color-card)` dark, rounded 12px, shadow, text-center
 - Hover: translateY(-8px), shadow intensifies. Icon appears from above, list slides down, title repositions
-- List items: `→` prefix in `#26428b`
+- List items: `→` prefix in `#26428b` light / `var(--color-blue)` dark
 
 ### Timeline (Profile)
-- Left border line, dot markers (12px, `#26428b`, white border, outer shadow)
-- Current role dot pulses. All dots scale on hover
+- Left border line, dot markers (12px, `#26428b` light / `var(--color-blue)` dark, white border, outer shadow)
+- Current role dot pulses with sage glow in dark mode. All dots scale on hover
 - Sections: Skills on `#EDE9DF`, Experience + Education on default cream
 
 ### Contact Form
-- White card, rounded 20px, padding 3rem, 480px width
-- Inputs: `#F5F1E8` bg, rounded 12px, monospace text
+- White card light / `var(--color-card)` dark, rounded 20px, padding 3rem, 480px width
+- Inputs: `#F5F1E8` bg light / `#1A1A1A` bg dark, rounded 12px, monospace text
 - Floating labels transition from center to top on focus/fill
-- Send button: full-width, `#1A1A1A`, hover lift + shimmer, icon shifts on hover
+- Send button: full-width, `#1A1A1A` light / sage dark, hover lift + shimmer, icon shifts on hover
 
 ### Back-to-Top
-- 44px circle, `#26428b`, fixed bottom-right
+- 44px circle, `#26428b` light / `var(--color-blue)` dark, fixed bottom-right
 - Hidden by default, visible after 300px scroll
 
 ### Project Card (Lab)
 - 2-column grid (info + widget preview)
-- Tech pills: blue tint bg, border, rounded pill
+- Tech pills: blue tint bg light / sage tint bg dark, border, rounded pill
 - Hover: slight lift, pill stagger scale
-- Mini chat widget: white card with gradient header, green pulsing dot, monospace messages
+- Mini chat widget: white card light / dark card with dark gradient header, green pulsing dot, monospace messages
+- Chat messages: bot bubbles `#eeebe5` light / `#1A1A1A` dark, user bubbles `#26428b` light / sage dark
+
+### RAG Chatbot Page
+- Standalone page with its own inline CSS variables
+- Dark mode: `:root[data-theme="dark"]` overrides all local variables
+  - `--bg: #0A0A0A`, `--panel: #141414`, `--text: #F3F4F6`, `--accent: #A3B18A`
+- Header: solid `#0B1120` in dark mode (matches main nav)
+- Chat message bubbles follow the same patterns as the mini-chat widget
+- Code editor/sidebar keeps its existing dark theme with sage accent labels
+- All hardcoded `rgba(24, 95, 165, ...)` blue tones → sage `rgba(163, 177, 138, ...)`
 
 ## Breakpoints
 
@@ -110,6 +204,7 @@ All entrance animations use `cubic-bezier(0.16, 1, 0.3, 1)` easing. Reduced moti
 
 Currently uses **Font Awesome 6.5** via CDN. Free/regular/brand sets used for:
 - Navigation icons, social links, contact info icons, back-to-top chevron, lab buttons, chat avatar
+- Theme toggle: `fa-moon` (dark) / `fa-sun` (light)
 
 ## Images
 

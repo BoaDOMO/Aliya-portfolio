@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      (function() {
+        var saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,6 +34,7 @@
             <li><a href="./profile.html">Profile</a></li>
             <li><a href="./lab.html">Lab</a></li>
             <li><a href="./contact.html">Contact</a></li>
+            <li><button class="theme-toggle" id="themeToggleDesktop" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button></li>
           </ul>
         </div>
       </nav>
@@ -30,10 +43,13 @@
           <a href="./index.html" class="nav-logo"><h2>ALIYA KOY</h2></a>
         </div>
         <div class="hamburger-menu">
-          <div class="hamburger-icon" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
           </div>
           <div class="menu-links">
             <li><a href="./index.html" onclick="toggleMenu()">Home</a></li>
@@ -115,5 +131,36 @@
     </button>
 
     <script src="script.js"></script>
+    <script>
+      (function () {
+        var root = document.documentElement;
+
+        function updateIcons() {
+          var theme = root.getAttribute('data-theme');
+          var isDark = theme === 'dark';
+          document.querySelectorAll('.theme-toggle i').forEach(function (icon) {
+            if (isDark) {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            } else {
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            }
+          });
+        }
+
+        updateIcons();
+
+        document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var current = root.getAttribute('data-theme');
+            var next = current === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcons();
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

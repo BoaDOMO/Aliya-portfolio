@@ -22,3 +22,30 @@
   --radius-input: 12px;
   --radius-circle: 50%;
 }
+
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  --color-cream: #0A0A0A;
+  --color-beige: #121212;
+  --color-green: #0D0D0D;
+  --color-blue: #A3B18A;
+  --color-dark-blue: #A3B18A;
+  --color-near-black: #F3F4F6;
+  --color-text-gray: #9CA3AF;
+  --color-text-muted: #6B7280;
+  --color-label-gray: #6B7280;
+  --color-card: #141414;
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-red: #EF4444;
+
+  --dm-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --dm-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
