@@ -117,8 +117,23 @@ Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. Th
 
 - **Max-width:** 2560px, min-width: 320px, centered
 - **Nav:** Sticky, 70px height, `#9CAF88` light / `#0B1120` dark
-- **Sections:** 5rem 5% padding
+- **Sections:** 5rem 2rem padding
 - **Footer:** `#9CAF88` light / `#0B1120` dark, centered text, 1.25rem 2rem padding
+
+## Padding Standard
+
+All pages follow a consistent **`2rem` left/right padding** across all elements and breakpoints. This value scales responsively via the `html` font-size breakpoints:
+
+| Viewport | Font size | `2rem` actual |
+|---|---|---|
+| ≤700px (mobile) | 0.875rem | 28px |
+| 701–1920px | 1rem | 32px |
+| ≥2560px (ultrawide) | 1.75rem | 56px |
+
+Exceptions:
+- `.main-wrapper` has no horizontal padding — it spans full width with `max-width: 2560px`
+- Contact form card uses `padding: 3rem` internally
+- RAG chatbot panels have their own internal padding (`2rem`) within the split layout
 
 ## Components
 
