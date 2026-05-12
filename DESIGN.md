@@ -29,7 +29,7 @@ Dark mode is activated via `data-theme="dark"` on `<html>`, persisted to `localS
 All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 
 | Token | Value | Notes |
-|---|---|---|
+|---|---|---|---|
 | `--color-cream` | `#0A0A0A` | Matte Obsidian page background |
 | `--color-beige` | `#121212` | Alternate section background |
 | `--color-green` | `#0D0D0D` | (Reserved, nav/footer use `rgba(11, 17, 32, 0.85)` with glass) |
@@ -44,6 +44,7 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | `--color-red` | `#EF4444` | Errors |
 | `--dm-card-shadow` | `0 4px 12px rgba(0, 0, 0, 0.6)` | Card shadow |
 | `--dm-card-hover-shadow` | `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.04)` | Card hover shadow |
+| `--card-glow` | `none` | Disables warm glow in dark mode; light mode uses a warm radial gradient |
 
 ### Key Design Decisions (Dark Mode)
 
@@ -59,11 +60,11 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | Skill icons / arrows | Dark blue | Sage |
 | Timeline dots | Dark blue | Sage |
 | Back-to-top button | Dark blue | Sage + frosted `blur(8px)` → hover `blur(12px)` |
-| Skill cards | White `#FFFFFF` | `var(--color-card)` `#141414` + glass border |
+| Skill cards | White `#FFFFFF` + warm glow + crisp shadow | `var(--color-card)` `#141414` + glass border |
 | Buttons (filled) | Blue | Sage `rgba(163, 177, 138, 0.88)` + frosted `blur(8px)`, text `#0F172A` |
 | Buttons (filled hover) | Black `#000000` | Darker sage `#8A9E78` |
 | Buttons (outlined hover) | Fills dark | Fills sage |
-| Contact form card | White | `var(--color-card)` + frosted `blur(12px)` |
+| Contact form card | White + warm glow + crisp shadow | `var(--color-card)` + frosted `blur(12px)` |
 | Form inputs | Cream `#F5F1E8` | `#1A1A1A` |
 | Tagline / hero text | `var(--color-text-muted)` | `var(--color-near-black)` (near-white) |
 | Footer text | Near-black | `var(--color-text-gray)` |
@@ -77,7 +78,7 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 
 ### Glass Morphism (Dark Mode)
 
-Frosted glass is applied to the following elements in dark mode:
+Frosted glass is applied to the following elements in dark mode only:
 
 | Element | `backdrop-filter` | Background |
 |---|---|---|
@@ -90,6 +91,9 @@ Frosted glass is applied to the following elements in dark mode:
 | Back-to-top (`.back-to-top`) | `blur(8px)` → hover `blur(12px)` | `rgba(163, 177, 138, 0.85)` |
 | Theme toggle (`.theme-toggle`) | `blur(8px)` | transparent border |
 | Chat widgets (`.mini-chat`, `.preview-card`) | `blur(12px)` | `rgba(20, 20, 20, 0.85)` |
+| RAG panel (`.panel-instructions`) | `blur(12px)` | `rgba(10, 10, 10, 0.85)` |
+| RAG tab bar (`.tab-bar`) | `blur(8px)` | `rgba(255, 255, 255, 0.06)` |
+| RAG expand button (`.expand-btn`) | `blur(8px)` | `rgba(255, 255, 255, 0.06)` |
 
 The consistent glass pattern uses:
 ```css
@@ -99,7 +103,31 @@ backdrop-filter: blur(Npx);
 -webkit-backdrop-filter: blur(Npx);
 ```
 
-This creates a frosted glass look with a subtle white top highlight. All glass effects are scoped to `:root[data-theme="dark"]` — light mode uses solid backgrounds.
+This creates a frosted glass look with a subtle white top highlight. All glass effects are scoped to `:root[data-theme="dark"]` — light mode uses warm ambient glow instead.
+
+### Warm Ambient Glow + Crisp Shadows (Light Mode)
+
+Light mode cards get the opposite treatment of dark mode's frosted glass — warm, solid, and crisp:
+
+| Element | Effect | Implementation |
+|---|---|---|
+| Skill cards (`.skill-category`) | Warm glow + layered shadow | `--card-glow` + `box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03)` |
+| AI demo cards (`.ai-demo-card`) | Warm glow + layered shadow | Same pattern |
+| Contact form card (`.contact-form-card`) | Warm glow + layered shadow | Same pattern |
+| Project sections (`.project-section:hover`) | Layered hover shadow | `0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05)` |
+| Hero content box (`.hero-content-box`) | Solid dark blue | No frosted effect — backdrop blur only in dark mode |
+
+The warm glow is controlled via a CSS custom property:
+```css
+:root {
+  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 240, 225, 0.5), transparent 70%);
+}
+:root[data-theme="dark"] {
+  --card-glow: none;
+}
+```
+
+This creates a subtle warm radiant gradient from the top of each card, like paper catching sunlight, paired with three-layer crisp shadows that feel sharp and grounded — the visual opposite of dark mode's blurred, ethereal frosted glass.
 
 ### Theme Toggle
 
@@ -177,7 +205,7 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 ### Hero (Lab)
 - Left-aligned
-- Dark blue content box (`#26428b` light / `rgba(163, 177, 138, 0.08)` dark) with white text, rounded 12px, backdrop blur
+- Dark blue content box (`#26428b` light / `rgba(163, 177, 138, 0.08)` dark) with white text, rounded 12px, frosted blur in dark mode only
 - Label blurs in → heading fades up → underline draws → tagline fades up → card fades up
 
 ### Hero (Contact)
@@ -187,7 +215,7 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 ### Skill Cards (Profile)
 - 3-column grid (2-col ≤1024px, 1-col ≤700px)
-- White card light / `var(--color-card)` dark, rounded 12px, shadow, text-center
+- White card + warm glow + crisp layered shadow light / `var(--color-card)` + glass border dark, rounded 12px, text-center
 - Hover: translateY(-8px), shadow intensifies. Icon appears from above, list slides down, title repositions
 - List items: `→` prefix in `#26428b` light / `var(--color-blue)` dark
 
@@ -197,7 +225,7 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - Sections: Skills on `#EDE9DF`, Experience + Education on default cream
 
 ### Contact Form
-- White card light / `var(--color-card)` dark, rounded 20px, padding 3rem, 480px width
+- White card + warm glow + crisp layered shadow light / `var(--color-card)` + frosted `blur(12px)` dark, rounded 20px, padding 3rem, 480px width
 - Inputs: `#F5F1E8` bg light / `#1A1A1A` bg dark, rounded 12px, monospace text
 - Floating labels transition from center to top on focus/fill
 - Send button: full-width, `#1A1A1A` light / sage dark, hover lift + shimmer, icon shifts on hover
@@ -220,6 +248,9 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - Header: solid `#0B1120` in dark mode
 - Chat card (`.preview-card`): frosted `rgba(20,20,20,0.85)` + `blur(12px)`
 - Chat header (`.preview-header`): frosted gradient + `blur(10px)`
+- Left panel (`.panel-instructions`): frosted `rgba(10,10,10,0.85)` + `blur(12px)` in dark mode only
+- Tab bar (`.tab-bar`): frosted `rgba(255,255,255,0.06)` + `blur(8px)` in dark mode only
+- Expand button (`.expand-btn`): frosted `rgba(255,255,255,0.06)` + `blur(8px)` in dark mode only
 - Small buttons (`.btn-sm`): `backdrop-filter: blur(6px)` → hover `blur(10px)`
 - Chat message bubbles follow the same patterns as the mini-chat widget
 - Code editor/sidebar keeps its existing dark theme with sage accent labels
