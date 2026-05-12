@@ -15,7 +15,8 @@ html {
 }
 
 .main-wrapper {
-  @apply bg-cream max-w-[2560px] mx-auto min-h-screen flex flex-col;
+  @apply max-w-[2560px] mx-auto min-h-screen flex flex-col;
+  background: var(--bg-gradient-light);
   min-width: 320px;
   overflow-x: hidden;
 }
@@ -1711,7 +1712,7 @@ footer a:hover {
    ═══════════════════════════════════════════════ */
 
 :root[data-theme="dark"] .main-wrapper {
-  background-color: var(--color-cream);
+  background: var(--bg-gradient-dark);
   position: relative;
 }
 
@@ -1732,8 +1733,8 @@ footer a:hover {
 
 :root[data-theme="dark"] #nav {
   background-color: rgba(11, 17, 32, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -1782,8 +1783,8 @@ footer a:hover {
 
 :root[data-theme="dark"] footer {
   background-color: rgba(11, 17, 32, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--color-border);
 }
 
@@ -1797,18 +1798,19 @@ footer a:hover {
 
 :root[data-theme="dark"] .skill-category {
   border: 1px solid var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--dm-card-shadow);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 :root[data-theme="dark"] .skill-category:hover {
   border-color: rgba(255, 255, 255, 0.12);
   border-top-color: rgba(255, 255, 255, 0.18);
   box-shadow: var(--dm-card-hover-shadow);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 :root[data-theme="dark"] .skill-list li {
@@ -1859,16 +1861,17 @@ footer a:hover {
 
 :root[data-theme="dark"] .ai-demo-card {
   border-color: var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 :root[data-theme="dark"] .ai-demo-card:hover {
   border-color: rgba(163, 177, 138, 0.3);
   box-shadow: 0 4px 24px rgba(163, 177, 138, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 :root[data-theme="dark"] .ai-demo-desc {
@@ -1889,7 +1892,7 @@ footer a:hover {
 :root[data-theme="dark"] .hero-content-box {
   background-color: rgba(163, 177, 138, 0.08);
   border: 1px solid rgba(163, 177, 138, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
 }
 
@@ -1937,10 +1940,11 @@ footer a:hover {
 
 :root[data-theme="dark"] .contact-form-card {
   border-color: var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--dm-card-shadow);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 :root[data-theme="dark"] .contact-form-card:hover {
@@ -1973,21 +1977,21 @@ footer a:hover {
 
 :root[data-theme="dark"] .project-section:hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 :root[data-theme="dark"] .back-to-top {
   background: rgba(163, 177, 138, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(163, 177, 138, 0.3);
 }
 
 :root[data-theme="dark"] .back-to-top:hover {
   background: rgba(163, 177, 138, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 4px 20px rgba(163, 177, 138, 0.3);
 }
 

@@ -28,7 +28,7 @@
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --color-cream: #F5F1E8;
-    --color-beige: #EDE9DF;
+    --color-beige: #E6DECF;
     --color-green: #9CAF88;
     --color-blue: #185FA5;
     --color-dark-blue: #26428b;
@@ -400,7 +400,8 @@
 }
 :root {
   color-scheme: light;
-  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 240, 225, 0.5), transparent 70%);
+  --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
+  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -408,7 +409,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   --color-cream: #0A0A0A;
-  --color-beige: #121212;
+  --color-beige: #161618;
   --color-green: #0D0D0D;
   --color-blue: #A3B18A;
   --color-dark-blue: #A3B18A;
@@ -416,12 +417,14 @@
   --color-text-gray: #9CA3AF;
   --color-text-muted: #6B7280;
   --color-label-gray: #6B7280;
-  --color-card: #141414;
-  --color-border: rgba(255, 255, 255, 0.05);
+  --color-card: #18181A;
+  --color-border: rgba(255, 255, 255, 0.06);
   --color-red: #EF4444;
-  --dm-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  --dm-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --bg-gradient-dark: radial-gradient(ellipse at 50% 0%, #0f0f18 0%, #0A0A0A 50%, #050508 100%);
+  --dm-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  --dm-card-hover-shadow: 0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --card-glow: none;
+  --card-glow-dark: radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%);
 }
 * {
   margin: 0;
@@ -438,7 +441,7 @@ html {
   min-height: 100vh;
   max-width: 2560px;
   flex-direction: column;
-  background-color: var(--color-cream);
+  background: var(--bg-gradient-light);
   min-width: 320px;
   overflow-x: hidden;
 }
@@ -2061,7 +2064,7 @@ footer a:hover {
   outline-offset: 2px;
 }
 :root[data-theme="dark"] .main-wrapper {
-  background-color: var(--color-cream);
+  background: var(--bg-gradient-dark);
   position: relative;
 }
 :root[data-theme="dark"] .main-wrapper::before {
@@ -2079,8 +2082,8 @@ footer a:hover {
 }
 :root[data-theme="dark"] #nav {
   background-color: rgba(11, 17, 32, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--color-border);
 }
 :root[data-theme="dark"] nav h2 {
@@ -2118,8 +2121,8 @@ footer a:hover {
 }
 :root[data-theme="dark"] footer {
   background-color: rgba(11, 17, 32, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--color-border);
 }
 :root[data-theme="dark"] footer p {
@@ -2130,17 +2133,18 @@ footer a:hover {
 }
 :root[data-theme="dark"] .skill-category {
   border: 1px solid var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--dm-card-shadow);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 :root[data-theme="dark"] .skill-category:hover {
   border-color: rgba(255, 255, 255, 0.12);
   border-top-color: rgba(255, 255, 255, 0.18);
   box-shadow: var(--dm-card-hover-shadow);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 :root[data-theme="dark"] .skill-list li {
   border-bottom-color: rgba(255, 255, 255, 0.06);
@@ -2181,15 +2185,16 @@ footer a:hover {
 }
 :root[data-theme="dark"] .ai-demo-card {
   border-color: var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 :root[data-theme="dark"] .ai-demo-card:hover {
   border-color: rgba(163, 177, 138, 0.3);
   box-shadow: 0 4px 24px rgba(163, 177, 138, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 :root[data-theme="dark"] .ai-demo-desc {
   color: var(--color-text-gray);
@@ -2206,7 +2211,7 @@ footer a:hover {
 :root[data-theme="dark"] .hero-content-box {
   background-color: rgba(163, 177, 138, 0.08);
   border: 1px solid rgba(163, 177, 138, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: none;
 }
 :root[data-theme="dark"] .hero-content-box .hero-label {
@@ -2243,10 +2248,11 @@ footer a:hover {
 }
 :root[data-theme="dark"] .contact-form-card {
   border-color: var(--color-border);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--dm-card-shadow);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-image: var(--card-glow-dark);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 :root[data-theme="dark"] .contact-form-card:hover {
   box-shadow: var(--dm-card-hover-shadow);
@@ -2273,19 +2279,19 @@ footer a:hover {
 }
 :root[data-theme="dark"] .project-section:hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 :root[data-theme="dark"] .back-to-top {
   background: rgba(163, 177, 138, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(163, 177, 138, 0.3);
 }
 :root[data-theme="dark"] .back-to-top:hover {
   background: rgba(163, 177, 138, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 4px 20px rgba(163, 177, 138, 0.3);
 }
 :root[data-theme="dark"] :focus-visible {

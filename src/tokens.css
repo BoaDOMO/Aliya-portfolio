@@ -1,6 +1,6 @@
 @theme {
   --color-cream: #F5F1E8;
-  --color-beige: #EDE9DF;
+  --color-beige: #E6DECF;
   --color-green: #9CAF88;
   --color-blue: #185FA5;
   --color-dark-blue: #26428b;
@@ -53,7 +53,8 @@
 
 :root {
   color-scheme: light;
-  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 240, 225, 0.5), transparent 70%);
+  --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
+  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
 }
 
 :root[data-theme="dark"] {
@@ -63,7 +64,7 @@
   text-rendering: optimizeLegibility;
 
   --color-cream: #0A0A0A;
-  --color-beige: #121212;
+  --color-beige: #161618;
   --color-green: #0D0D0D;
   --color-blue: #A3B18A;
   --color-dark-blue: #A3B18A;
@@ -71,11 +72,13 @@
   --color-text-gray: #9CA3AF;
   --color-text-muted: #6B7280;
   --color-label-gray: #6B7280;
-  --color-card: #141414;
-  --color-border: rgba(255, 255, 255, 0.05);
+  --color-card: #18181A;
+  --color-border: rgba(255, 255, 255, 0.06);
   --color-red: #EF4444;
 
-  --dm-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  --dm-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --bg-gradient-dark: radial-gradient(ellipse at 50% 0%, #0f0f18 0%, #0A0A0A 50%, #050508 100%);
+  --dm-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  --dm-card-hover-shadow: 0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --card-glow: none;
+  --card-glow-dark: radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%);
 }
