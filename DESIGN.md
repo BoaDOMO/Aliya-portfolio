@@ -1,6 +1,6 @@
 # Current Design System
 
-This document describes the existing visual design as implemented in `style.css`, `mediaqueries.css`, and the HTML pages.
+This document describes the existing visual design as implemented in `style.css` and the HTML pages.
 
 ---
 
@@ -8,8 +8,8 @@ This document describes the existing visual design as implemented in `style.css`
 
 | Name | Value | Usage |
 |---|---|---|
-| Cream | `#F5F1E8` | Page background, main wrapper |
-| Beige | `#EDE9DF` | Alternate section backgrounds (skills, education) |
+| Cream | `#F5F1E8` | Page background base |
+| Beige | `#E6DECF` | Alternate section backgrounds (skills, education) |
 | Sage Green | `#9CAF88` | Navigation bar, footer |
 | Blue | `#185FA5` | Hero headings, links, accent elements, focus rings |
 | Dark Blue | `#26428b` | Skill icons, timeline dots, photo borders, some buttons/headings |
@@ -29,9 +29,9 @@ Dark mode is activated via `data-theme="dark"` on `<html>`, persisted to `localS
 All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 
 | Token | Value | Notes |
-|---|---|---|---|
+|---|---|---|
 | `--color-cream` | `#0A0A0A` | Matte Obsidian page background |
-| `--color-beige` | `#121212` | Alternate section background |
+| `--color-beige` | `#161618` | Alternate section background |
 | `--color-green` | `#0D0D0D` | (Reserved, nav/footer use `rgba(11, 17, 32, 0.85)` with glass) |
 | `--color-blue` | `#A3B18A` | Electric Sage — primary accent replaces blue |
 | `--color-dark-blue` | `#A3B18A` | Same as sage — everything blue in light → sage in dark |
@@ -39,19 +39,29 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | `--color-text-gray` | `#9CA3AF` | Body text |
 | `--color-text-muted` | `#6B7280` | Secondary text |
 | `--color-label-gray` | `#6B7280` | Labels |
-| `--color-card` | `#141414` | Card backgrounds |
-| `--color-border` | `rgba(255, 255, 255, 0.05)` | Subtle light borders on dark |
+| `--color-card` | `#18181A` | Card backgrounds |
+| `--color-border` | `rgba(255, 255, 255, 0.06)` | Subtle light borders on dark |
 | `--color-red` | `#EF4444` | Errors |
-| `--dm-card-shadow` | `0 4px 12px rgba(0, 0, 0, 0.6)` | Card shadow |
-| `--dm-card-hover-shadow` | `0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.04)` | Card hover shadow |
-| `--card-glow` | `none` | Disables warm glow in dark mode; light mode uses a warm radial gradient |
+| `--dm-card-shadow` | `0 4px 16px rgba(0, 0, 0, 0.7)` | Card shadow (dark) |
+| `--dm-card-hover-shadow` | `0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06)` | Card hover shadow (dark) |
+| `--card-glow` | `none` | Disables warm glow in dark mode |
+| `--card-glow-dark` | `radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%)` | Subtle sage top-glow on dark cards |
+
+### Additional Background Tokens
+
+Defined in `:root` and `:root[data-theme="dark"]` blocks (not Tailwind theme tokens):
+
+| Token | Light | Dark |
+|---|---|---|
+| `--bg-gradient-light` | `radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%)` | — |
+| `--bg-gradient-dark` | — | `radial-gradient(ellipse at 50% 0%, #0f0f18 0%, #0A0A0A 50%, #050508 100%)` |
 
 ### Key Design Decisions (Dark Mode)
 
 | Element | Light | Dark |
 |---|---|---|
-| Page background | Cream `#F5F1E8` | Matte Obsidian `#0A0A0A` + 1.5% noise texture |
-| Nav / Footer | Sage `#9CAF88` | Frosted navy `rgba(11, 17, 32, 0.85)` + `blur(12px)` |
+| Page background | Warm radial gradient `#FCF8F0 → #F5F1E8 → #EDE6DF` | Cool deep radial gradient `#0f0f18 → #0A0A0A → #050508` + 1.5% noise texture |
+| Nav / Footer | Sage `#9CAF88` | Frosted navy `rgba(11, 17, 32, 0.85)` + `blur(14px)` |
 | Nav links text | Near-black `#1A1A1A` | Near-white `var(--color-near-black)` |
 | Nav logo | Near-black | Near-white |
 | Primary accent | Blue `#185FA5` | Electric Sage `#A3B18A` |
@@ -59,19 +69,19 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | Hero name / headings | Blue | Sage |
 | Skill icons / arrows | Dark blue | Sage |
 | Timeline dots | Dark blue | Sage |
-| Back-to-top button | Dark blue | Sage + frosted `blur(8px)` → hover `blur(12px)` |
-| Skill cards | White `#FFFFFF` + warm glow + crisp shadow | `var(--color-card)` `#141414` + glass border |
+| Back-to-top button | Dark blue | Sage + frosted `blur(10px)` → hover `blur(14px)` |
+| Skill cards | White + enhanced golden glow + warm crisp shadow | `var(--color-card)` `#18181A` + subtle sage glow + glass border |
 | Buttons (filled) | Blue | Sage `rgba(163, 177, 138, 0.88)` + frosted `blur(8px)`, text `#0F172A` |
 | Buttons (filled hover) | Black `#000000` | Darker sage `#8A9E78` |
 | Buttons (outlined hover) | Fills dark | Fills sage |
-| Contact form card | White + warm glow + crisp shadow | `var(--color-card)` + frosted `blur(12px)` |
+| Contact form card | White + enhanced golden glow + warm crisp shadow | `var(--color-card)` + frosted `blur(14px)` + subtle sage glow |
 | Form inputs | Cream `#F5F1E8` | `#1A1A1A` |
 | Tagline / hero text | `var(--color-text-muted)` | `var(--color-near-black)` (near-white) |
 | Footer text | Near-black | `var(--color-text-gray)` |
 
 ### Nav & Footer (Dark Mode)
 
-- Background: frosted `rgba(11, 17, 32, 0.85)` with `backdrop-filter: blur(12px)`
+- Background: frosted `rgba(11, 17, 32, 0.85)` with `backdrop-filter: blur(14px)`
 - Border: `1px solid var(--color-border)`
 - Menu dropdown: solid `#0B1120`, matches nav
 - Theme toggle button: near-white icon, `backdrop-filter: blur(8px)` with frosted hover
@@ -82,23 +92,23 @@ Frosted glass is applied to the following elements in dark mode only:
 
 | Element | `backdrop-filter` | Background |
 |---|---|---|
-| Nav (`#nav`) | `blur(12px)` | `rgba(11, 17, 32, 0.85)` |
-| Footer | `blur(12px)` | `rgba(11, 17, 32, 0.85)` |
-| Skill cards (`.skill-category`) | `blur(10px)` → hover `blur(20px)` | `var(--color-card)` |
-| AI demo cards (`.ai-demo-card`) | `blur(8px)` → hover `blur(16px)` | `var(--color-card)` |
-| Contact form card (`.contact-form-card`) | `blur(12px)` | `var(--color-card)` |
+| Nav (`#nav`) | `blur(14px)` | `rgba(11, 17, 32, 0.85)` |
+| Footer | `blur(14px)` | `rgba(11, 17, 32, 0.85)` |
+| Skill cards (`.skill-category`) | `blur(12px)` → hover `blur(24px)` | `var(--color-card)` + `--card-glow-dark` |
+| AI demo cards (`.ai-demo-card`) | `blur(10px)` → hover `blur(20px)` | `var(--color-card)` + `--card-glow-dark` |
+| Contact form card (`.contact-form-card`) | `blur(14px)` | `var(--color-card)` + `--card-glow-dark` |
 | Buttons (`.btn-color-1`, `.btn-color-2:hover`) | `blur(8px)` | `rgba(163, 177, 138, 0.88)` |
-| Back-to-top (`.back-to-top`) | `blur(8px)` → hover `blur(12px)` | `rgba(163, 177, 138, 0.85)` |
+| Back-to-top (`.back-to-top`) | `blur(10px)` → hover `blur(14px)` | `rgba(163, 177, 138, 0.85)` |
 | Theme toggle (`.theme-toggle`) | `blur(8px)` | transparent border |
-| Chat widgets (`.mini-chat`, `.preview-card`) | `blur(12px)` | `rgba(20, 20, 20, 0.85)` |
-| RAG panel (`.panel-instructions`) | `blur(12px)` | `rgba(10, 10, 10, 0.85)` |
+| Chat widgets (`.mini-chat`, `.preview-card`) | `blur(14px)` | `rgba(20, 20, 20, 0.85)` |
+| RAG panel (`.panel-instructions`) | `blur(14px)` | `rgba(10, 10, 10, 0.85)` |
 | RAG tab bar (`.tab-bar`) | `blur(8px)` | `rgba(255, 255, 255, 0.06)` |
 | RAG expand button (`.expand-btn`) | `blur(8px)` | `rgba(255, 255, 255, 0.06)` |
 
 The consistent glass pattern uses:
 ```css
 border: 1px solid var(--color-border);
-border-top: 1px solid rgba(255, 255, 255, 0.1);
+border-top: 1px solid rgba(255, 255, 255, 0.12);
 backdrop-filter: blur(Npx);
 -webkit-backdrop-filter: blur(Npx);
 ```
@@ -111,23 +121,28 @@ Light mode cards get the opposite treatment of dark mode's frosted glass — war
 
 | Element | Effect | Implementation |
 |---|---|---|
-| Skill cards (`.skill-category`) | Warm glow + layered shadow | `--card-glow` + `box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03)` |
-| AI demo cards (`.ai-demo-card`) | Warm glow + layered shadow | Same pattern |
-| Contact form card (`.contact-form-card`) | Warm glow + layered shadow | Same pattern |
+| Skill cards (`.skill-category`) | Enhanced golden glow + warm layered shadow | `--card-glow` (enhanced golden) + `box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03)` |
+| AI demo cards (`.ai-demo-card`) | Enhanced golden glow + warm layered shadow | Same pattern |
+| Contact form card (`.contact-form-card`) | Enhanced golden glow + warm layered shadow | Same pattern |
 | Project sections (`.project-section:hover`) | Layered hover shadow | `0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05)` |
 | Hero content box (`.hero-content-box`) | Solid dark blue | No frosted effect — backdrop blur only in dark mode |
 
-The warm glow is controlled via a CSS custom property:
+The warm glow is controlled via CSS custom properties:
 ```css
 :root {
-  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 240, 225, 0.5), transparent 70%);
+  --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
+  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
 }
 :root[data-theme="dark"] {
+  --bg-gradient-dark: radial-gradient(ellipse at 50% 0%, #0f0f18 0%, #0A0A0A 50%, #050508 100%);
   --card-glow: none;
+  --card-glow-dark: radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%);
 }
 ```
 
-This creates a subtle warm radiant gradient from the top of each card, like paper catching sunlight, paired with three-layer crisp shadows that feel sharp and grounded — the visual opposite of dark mode's blurred, ethereal frosted glass.
+Light mode page background creates a warm "golden hour" vignette — brightest at the center-top content area, gently deepening to a toasted beige at the edges. Cards catch light from above with an enhanced golden glow, paired with warm-tinted crisp shadows.
+
+Dark mode page background creates a "midnight premium" atmosphere — a whisper of deep indigo at the top fading to pure obsidian at the bottom. Cards float with enhanced frosted glass, a barely-there sage top-glow, and deeper dimensional shadows.
 
 ### Theme Toggle
 
@@ -137,24 +152,29 @@ This creates a subtle warm radiant gradient from the top of each card, like pape
 
 ### Impact Summary
 
-Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. The frosted navy (`rgba(11, 17, 32, 0.85)` + `blur(12px)`) nav/footer provides a glassy grounded frame, while the 1.5% noise overlay prevents dead blacks on OLED screens.
+Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. The frosted navy (`rgba(11, 17, 32, 0.85)` + `blur(14px)`) nav/footer provides a glassy grounded frame, while the 1.5% noise overlay prevents dead blacks on OLED screens. The background shifts from a warm golden-hour radial gradient to a cool midnight radial gradient, creating dramatic contrast between themes.
 
 ## Typography
 
+All font stacks are defined as CSS custom properties in `src/tokens.css` — never hardcoded:
+
+| Token | Font Stack | Usage |
+|---|---|---|
+| `--font-body` | `-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif` | Body, nav, buttons, headings (h2-h6), UI text |
+| `--font-display` | `Georgia, serif` | Hero name (h1) — italic, `#185FA5` light / `#A3B18A` dark |
+| `--font-mono` | `ui-monospace, "SF Mono", Menlo, monospace` | Labels, code, dates, body text (p, li), chat messages |
+
 | Element | Font | Notes |
 |---|---|---|
-| Body / Nav / Buttons / Headings (h2-h6) | `-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif` | System font stack |
-| Hero name (h1) | `Georgia, serif` | Italic, `#185FA5` light / `#A3B18A` dark, 4rem desktop / 2.75rem mobile |
-| Labels / Code / Dates | `ui-monospace, "SF Mono", Menlo, monospace` | Monospace stack |
-| Body text (p, li) | Monospace stack | 0.9375rem, `rgb(85, 85, 85)` light / `#9CA3AF` dark |
-| Section titles (.title) | Monospace stack | 1.5rem, uppercase, 0.1em tracking |
-| Hero label | Monospace stack | 0.75rem, uppercase, 0.2em tracking, `#185FA5` light / `#A3B18A` dark |
-| Company name (.name1) | System stack | Bold, `#26428b` light / `#A3B18A` dark |
-| Role (.name2) | System stack | Italic, `rgb(120, 120, 120)` light / `#9CA3AF` dark |
-| Footer text | System stack | 14px, 500 weight, `#1A1A1A` light / `#9CA3AF` dark |
-| Demo title (RAG chatbot) | System stack | 20px, 600 weight, `#1A1A1A` light / `var(--text)` dark |
+| Body text (p, li) | `var(--font-mono)` | 0.9375rem, `rgb(85, 85, 85)` light / `#9CA3AF` dark |
+| Section titles (.title) | `var(--font-mono)` | 1.5rem, uppercase, 0.1em tracking |
+| Hero label | `var(--font-mono)` | 0.75rem, uppercase, 0.2em tracking, `#185FA5` light / `#A3B18A` dark |
+| Company name (.name1) | `var(--font-body)` | Bold, `#26428b` light / `#A3B18A` dark |
+| Role (.name2) | `var(--font-body)` | Italic, `rgb(120, 120, 120)` light / `#9CA3AF` dark |
+| Footer text | `var(--font-body)` | 14px, 500 weight, `#1A1A1A` light / `#9CA3AF` dark |
+| Demo title (RAG chatbot) | `var(--font-body)` | 20px, 600 weight |
 
-**Loaded Google Fonts:** Source Code Pro (200–900), Oswald (200–700)
+**Google Fonts:** None. All font stacks are system-native — no external font dependencies are loaded.
 
 ## Layout
 
@@ -168,7 +188,7 @@ Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. Th
 ### Breakpoints
 
 | Name | Max Width | Nav | Grid |
-|------|-----------|-----|------|
+|---|---|---|---|
 | Mobile | 639px | Hamburger | 1 column |
 | Tablet portrait | 767px | Hamburger | 8-col (stacked) |
 | Tablet landscape | 1023px | Hamburger | 8-col (split) |
@@ -215,17 +235,17 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 ### Skill Cards (Profile)
 - 3-column grid (2-col ≤1024px, 1-col ≤700px)
-- White card + warm glow + crisp layered shadow light / `var(--color-card)` + glass border dark, rounded 12px, text-center
-- Hover: translateY(-8px), shadow intensifies. Icon appears from above, list slides down, title repositions
+- White card + enhanced golden glow + warm layered shadow light / `var(--color-card)` + subtle sage glow + glass border + frosted `blur(12px)` dark, rounded 12px, text-center
+- Hover: translateY(-8px), shadow intensifies, blur increases to `24px` in dark mode
 - List items: `→` prefix in `#26428b` light / `var(--color-blue)` dark
 
 ### Timeline (Profile)
 - Left border line, dot markers (12px, `#26428b` light / `var(--color-blue)` dark, white border, outer shadow)
 - Current role dot pulses with sage glow in dark mode. All dots scale on hover
-- Sections: Skills on `#EDE9DF`, Experience + Education on default cream
+- Sections: Skills on `#E6DECF`, Experience + Education on default cream
 
 ### Contact Form
-- White card + warm glow + crisp layered shadow light / `var(--color-card)` + frosted `blur(12px)` dark, rounded 20px, padding 3rem, 480px width
+- White card + enhanced golden glow + warm layered shadow light / `var(--color-card)` + subtle sage glow + frosted `blur(14px)` dark, rounded 20px, padding 3rem, 480px width
 - Inputs: `#F5F1E8` bg light / `#1A1A1A` bg dark, rounded 12px, monospace text
 - Floating labels transition from center to top on focus/fill
 - Send button: full-width, `#1A1A1A` light / sage dark, hover lift + shimmer, icon shifts on hover
@@ -238,23 +258,24 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - 2-column grid (info + widget preview)
 - Tech pills: blue tint bg light / sage tint bg dark, border, rounded pill
 - Hover: slight lift, pill stagger scale
-- Mini chat widget: white card light / frosted dark card (`rgba(20,20,20,0.85)` + `blur(12px)`) with frosted gradient header (`blur(10px)`), green pulsing dot, monospace messages
+- Mini chat widget: white card light / frosted dark card (`rgba(20,20,20,0.85)` + `blur(14px)`) with frosted gradient header (`blur(12px)`), green pulsing dot, monospace messages
 - Chat messages: bot bubbles `#eeebe5` light / frosted `rgba(26,26,26,0.85)` + `blur(6px)` dark, user bubbles `#26428b` light / sage dark
 
 ### RAG Chatbot Page
-- Standalone page with its own inline CSS variables
-- Dark mode: `:root[data-theme="dark"]` overrides all local variables
-  - `--bg: #0A0A0A`, `--panel: #141414`, `--text: #F3F4F6`, `--accent: #A3B18A`
-- Header: solid `#0B1120` in dark mode
-- Chat card (`.preview-card`): frosted `rgba(20,20,20,0.85)` + `blur(12px)`
-- Chat header (`.preview-header`): frosted gradient + `blur(10px)`
-- Left panel (`.panel-instructions`): frosted `rgba(10,10,10,0.85)` + `blur(12px)` in dark mode only
+- Standalone page with its own layout, but color and typography are now tied to global design tokens via `var(--color-*)` and `var(--font-*)` references
+- Page-specific variables kept for elements without global equivalents: `--panel-alt`, `--muted`, `--success`, `--bot-bg`, `--input-bg`, `--sidebar-text`, `--editor-*`
+- Custom button class `.btn-code` is used (not global `.btn`) to avoid style conflicts
+- Dark mode: all color variables inherit global dark mode tokens automatically
+- Header: solid `#9CAF88` light / `#0B1120` dark
+- Chat card (`.preview-card`): frosted `rgba(20,20,20,0.85)` + `blur(14px)`
+- Chat header (`.preview-header`): frosted gradient + `blur(12px)`
+- Left panel (`.panel-instructions`): frosted `rgba(10,10,10,0.85)` + `blur(14px)` in dark mode only
 - Tab bar (`.tab-bar`): frosted `rgba(255,255,255,0.06)` + `blur(8px)` in dark mode only
 - Expand button (`.expand-btn`): frosted `rgba(255,255,255,0.06)` + `blur(8px)` in dark mode only
 - Small buttons (`.btn-sm`): `backdrop-filter: blur(6px)` → hover `blur(10px)`
 - Chat message bubbles follow the same patterns as the mini-chat widget
 - Code editor/sidebar keeps its existing dark theme with sage accent labels
-- All hardcoded `rgba(24, 95, 165, ...)` blue tones → sage `rgba(163, 177, 138, ...)`
+- All hardcoded `rgba(24, 95, 165, ...)` blue tones → sage `rgba(163, 177, 138, ...)` in dark mode via `var(--color-blue)`
 
 ## Animation Timing
 
