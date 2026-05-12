@@ -459,8 +459,8 @@ section {
   @apply bg-dark-blue rounded-circle;
   content: "";
   position: absolute;
-  left: -3.4rem;
-  top: 0.3rem;
+  left: -3.125rem;
+  top: 0.5rem;
   width: 12px;
   height: 12px;
   border: 2px solid white;
