@@ -24,40 +24,60 @@
       /* ── PROJECT SECTION ── */
       .project-section {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-        gap: 4rem;
+        grid-template-columns: repeat(8, 1fr);
+        gap: var(--spacing-8);
         align-items: center;
         padding: 10vh 5%;
       }
 
-      @media screen and (max-width: 1024px) {
-        .project-section {
-          grid-template-columns: 1fr;
-          padding: 8rem 5% 5rem;
-          gap: 3rem;
-        }
-      }
-
-      @media screen and (max-width: 700px) {
-        .project-section {
-          padding: 6rem 5% 4rem;
-          gap: 2rem;
-        }
-      }
-
       .project-info {
+        grid-column: span 3;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 1.5rem;
+        gap: var(--spacing-3);
         text-align: left;
       }
 
       .project-widget {
+        grid-column: span 5;
         display: flex;
         flex-direction: column;
         width: 100%;
         overflow: visible;
+      }
+
+      @media screen and (max-width: 1023px) {
+        .project-section {
+          grid-template-columns: 1fr;
+          gap: var(--spacing-6);
+          padding: var(--spacing-16) 5% var(--spacing-10);
+        }
+
+        .project-info,
+        .project-widget {
+          grid-column: span 1;
+        }
+
+        .project-info {
+          align-items: center;
+          text-align: center;
+        }
+
+        .project-title {
+          font-size: 1.9rem;
+        }
+      }
+
+      @media screen and (max-width: 639px) {
+        .project-section {
+          gap: var(--spacing-4);
+          padding: var(--spacing-12) 5% var(--spacing-8);
+        }
+
+        .project-title {
+          font-size: 1.6rem;
+        }
       }
 
       .project-label {
@@ -80,7 +100,7 @@
       .tech-pills {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: var(--spacing-1);
       }
 
       .tech-pill {
@@ -557,14 +577,16 @@
     </div>
 
     <main class="page-load-anim">
-      <section class="page-hero page-hero-sm lab-hero">
+      <div class="grid-container">
+        <section class="page-hero page-hero-sm lab-hero">
         <div class="hero-content-box">
           <p class="hero-label anim-lab-label">THE LAB</p>
           <h1 class="hero-name anim-lab-heading">Things I'm building.</h1>
           <span class="lab-underline"></span>
           <p class="hero-tagline anim-lab-tagline">Experiments, prototypes, and side projects.</p>
         </div>
-      </section>
+        </section>
+      </div>
 
       <section id="rag-chatbot" class="project-section anim-lab-card">
         <div class="project-info">

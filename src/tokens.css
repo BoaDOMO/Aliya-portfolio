@@ -21,6 +21,34 @@
   --radius-form: 20px;
   --radius-input: 12px;
   --radius-circle: 50%;
+
+  /* ── 8px Spacing Scale ── */
+  --spacing-1: 0.5rem;    /* 8px */
+  --spacing-2: 1rem;      /* 16px */
+  --spacing-3: 1.5rem;    /* 24px */
+  --spacing-4: 2rem;      /* 32px */
+  --spacing-5: 2.5rem;    /* 40px */
+  --spacing-6: 3rem;      /* 48px */
+  --spacing-7: 3.5rem;    /* 56px */
+  --spacing-8: 4rem;      /* 64px */
+  --spacing-9: 4.5rem;    /* 72px */
+  --spacing-10: 5rem;     /* 80px */
+  --spacing-12: 6rem;     /* 96px */
+  --spacing-14: 7rem;     /* 112px */
+  --spacing-16: 8rem;     /* 128px */
+  --spacing-20: 10rem;    /* 160px */
+  --spacing-24: 12rem;    /* 192px */
+
+  /* ── 8-Column Grid Tokens ── */
+  --grid-template-columns-8: repeat(8, minmax(0, 1fr));
+  --grid-column-span-1: span 1 / span 1;
+  --grid-column-span-2: span 2 / span 2;
+  --grid-column-span-3: span 3 / span 3;
+  --grid-column-span-4: span 4 / span 4;
+  --grid-column-span-5: span 5 / span 5;
+  --grid-column-span-6: span 6 / span 6;
+  --grid-column-span-7: span 7 / span 7;
+  --grid-column-span-8: span 8 / span 8;
 }
 
 :root {

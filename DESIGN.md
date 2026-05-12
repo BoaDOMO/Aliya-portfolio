@@ -130,25 +130,30 @@ Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. Th
 
 ## Layout
 
-- **Max-width:** 2560px, min-width: 320px, centered
-- **Nav:** Sticky, 70px height, `#9CAF88` light / frosted `rgba(11, 17, 32, 0.85)` + `blur(12px)` dark
-- **Sections:** 5rem 2rem padding
-- **Footer:** `#9CAF88` light / frosted `rgba(11, 17, 32, 0.85)` + `blur(12px)` dark, centered text, 1.25rem 2rem padding
+### Layout
 
-## Padding Standard
+- **Grid**: 8-column CSS grid system
+- **Container**: `max-width: 1200px`, centered, `2rem` (32px) side padding
+- **Grid classes**: `.grid-8` for the grid, `.col-span-{1-8}` for column spans
+- **Spacing scale**: 8px base. See `--spacing-*` tokens in `src/tokens.css`
 
-All pages follow a consistent **`2rem` left/right padding** across all elements and breakpoints. This value scales responsively via the `html` font-size breakpoints:
+### Breakpoints
 
-| Viewport | Font size | `2rem` actual |
-|---|---|---|
-| ≤700px (mobile) | 0.875rem | 28px |
-| 701–1920px | 1rem | 32px |
-| ≥2560px (ultrawide) | 1.75rem | 56px |
+| Name | Max Width | Nav | Grid |
+|------|-----------|-----|------|
+| Mobile | 639px | Hamburger | 1 column |
+| Tablet portrait | 767px | Hamburger | 8-col (stacked) |
+| Tablet landscape | 1023px | Hamburger | 8-col (split) |
+| Desktop | 1279px | Desktop | 8-col (full) |
+| Large desktop | 1535px | Desktop | 8-col (constrained) |
+| Ultrawide | 1536px+ | Desktop | 8-col (constrained, scaled) |
 
-Exceptions:
-- `.main-wrapper` has no horizontal padding — it spans full width with `max-width: 2560px`
-- Contact form card uses `padding: 3rem` internally
-- RAG chatbot panels have their own internal padding (`2rem`) within the split layout
+### Spacing Standard
+
+All spacing uses the 8px scale defined in `--spacing-*` tokens:
+- Section padding: `--spacing-10` (80px) top/bottom, `--spacing-4` (32px) sides
+- Card padding: `--spacing-5` (40px) or `--spacing-6` (48px)
+- Component gaps: `--spacing-2` through `--spacing-4` (16px–32px)
 
 ## Components
 
@@ -219,15 +224,6 @@ Exceptions:
 - Chat message bubbles follow the same patterns as the mini-chat widget
 - Code editor/sidebar keeps its existing dark theme with sage accent labels
 - All hardcoded `rgba(24, 95, 165, ...)` blue tones → sage `rgba(163, 177, 138, ...)`
-
-## Breakpoints
-
-| Max-Width | Changes |
-|---|---|
-| 2560px | `html` font-size: 1.75rem |
-| 1920px | `html` font-size: 1rem |
-| 1024px | Hide desktop nav, show hamburger; skills 2-col; contact photo 200px |
-| 700px | `html` font-size: 0.875rem; hero name 2.75rem; buttons stack; contact stacks vertically; skills 1-col |
 
 ## Animation Timing
 
