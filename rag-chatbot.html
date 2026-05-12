@@ -16,45 +16,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAG Chatbot — Aliya Koy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
   <style>
     :root {
-      --bg: #F5F1E8;
-      --panel: #FFFFFF;
+      --bg: var(--color-cream);
+      --panel: var(--color-card);
       --panel-alt: rgba(245, 241, 232, 0.6);
-      --border: rgba(0, 0, 0, 0.08);
-      --accent: #185FA5;
-      --accent-dark: #26428b;
-      --text: #1A1A1A;
+      --border: var(--color-border);
+      --accent: var(--color-blue);
+      --accent-dark: var(--color-dark-blue);
+      --text: var(--color-near-black);
       --muted: #666666;
       --success: #16a34a;
-      --user-bg: #185FA5;
+      --user-bg: var(--color-blue);
       --bot-bg: #F0ECE5;
       --input-bg: #F5F2ED;
-      --sidebar-brown: #185FA5;
-      --sidebar-brown-light: #26428b;
+      --sidebar-brown: var(--color-blue);
+      --sidebar-brown-light: var(--color-dark-blue);
       --sidebar-text: #EDE6DF;
       --editor-bg: #1e1e1e;
       --editor-header-bg: #1a1a1a;
       --editor-text: #d4d4d4;
       --editor-input-bg: #252526;
       --editor-border: #3c3c3c;
-      --editor-label: #185FA5;
+      --editor-label: var(--color-blue);
     }
 
     :root[data-theme="dark"] {
-      --bg: #0A0A0A;
-      --panel: #18181A;
+      --bg: var(--color-cream);
+      --panel: var(--color-card);
       --panel-alt: rgba(10, 10, 10, 0.6);
-      --border: rgba(255, 255, 255, 0.06);
-      --accent: #A3B18A;
-      --accent-dark: #A3B18A;
-      --text: #F3F4F6;
+      --border: var(--color-border);
+      --accent: var(--color-blue);
+      --accent-dark: var(--color-dark-blue);
+      --text: var(--color-near-black);
       --muted: #9CA3AF;
       --success: #34D399;
-      --user-bg: #A3B18A;
+      --user-bg: var(--color-blue);
       --bot-bg: #1A1A1A;
       --input-bg: #1A1A1A;
       --sidebar-brown: #0B1120;
@@ -65,13 +64,12 @@
       --editor-text: #d4d4d4;
       --editor-input-bg: #252526;
       --editor-border: #3c3c3c;
-      --editor-label: #A3B18A;
+      --editor-label: var(--color-blue);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       color: var(--text);
       height: 100vh;
       display: flex;
@@ -87,7 +85,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2rem;
-      background: #9CAF88;
+      background: var(--color-green);
       flex-shrink: 0;
       height: 70px;
       box-shadow: 0 2px 20px rgba(156, 175, 136, 0.18);
@@ -104,32 +102,32 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      color: #1A1A1A;
+      color: var(--color-near-black);
       font-size: 1rem;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       transition: color 200ms ease, transform 200ms ease;
       display: flex;
       align-items: center;
     }
 
-    .back-btn:hover { color: #185FA5; transform: translateX(-2px); }
+    .back-btn:hover { color: var(--color-blue); transform: translateX(-2px); }
 
     .demo-title {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 20px;
       font-weight: 600;
-      color: #1A1A1A;
+      color: var(--color-near-black);
       letter-spacing: 0.02em;
       line-height: 20px;
     }
 
     .demo-subtitle {
       font-size: 0.72rem;
-      color: #333;
+      color: var(--color-text-muted);
     }
 
     .demo-badge {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       padding: 0.2rem 0.6rem;
@@ -188,7 +186,7 @@
     }
 
     .instructions-section h3 {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.78rem;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -217,7 +215,7 @@
 
     .suggestion-chip {
       display: inline-block;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--accent);
       background: rgba(24, 95, 165, 0.08);
@@ -263,7 +261,7 @@
     }
 
     .tab-btn {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.75rem;
       padding: 0.55rem 1.1rem;
       background: transparent;
@@ -356,7 +354,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.85rem 1.25rem;
-      background: linear-gradient(135deg, #F5F1E8 0%, #EDE6DF 50%, #E8DDD1 100%);
+      background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-beige) 50%, #E8DDD1 100%);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
@@ -389,7 +387,7 @@
     }
 
     .preview-header-name {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 1.05rem;
       font-weight: 500;
       color: var(--text);
@@ -397,7 +395,7 @@
     }
 
     .preview-header-subtitle {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       color: var(--muted);
       letter-spacing: 0.02em;
@@ -410,7 +408,7 @@
     }
 
     .btn-sm {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.72rem;
       padding: 0.35rem 0.65rem;
       border-radius: 2rem;
@@ -542,7 +540,7 @@
 
     .chat-input {
       flex: 1;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.82rem;
       color: var(--text);
       background: var(--input-bg);
@@ -565,7 +563,7 @@
     .send-btn {
       width: 38px;
       height: 38px;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       background: var(--accent);
       color: white;
       border: none;
@@ -643,7 +641,7 @@
 
     .code-sidebar-header {
       padding: 0.9rem 1rem;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -660,7 +658,7 @@
       display: flex;
       align-items: center;
       padding: 0.6rem 1rem;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.78rem;
       color: var(--sidebar-text);
       cursor: pointer;
@@ -716,11 +714,11 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--editor-label);
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
     }
 
     .field-input {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.95rem;
       font-weight: 500;
       color: var(--editor-text);
@@ -740,7 +738,7 @@
     .field-input::placeholder { color: #666; }
 
     .field-textarea {
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-family: var(--font-mono);
       font-size: 0.82rem;
       color: var(--editor-text);
       background: var(--editor-input-bg);
@@ -761,8 +759,8 @@
     }
     .field-textarea::placeholder { color: #666; }
 
-    .btn {
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    .btn-code {
+      font-family: var(--font-body);
       font-size: 0.8rem;
       letter-spacing: 0.04em;
       padding: 0.5rem 1rem;
@@ -775,17 +773,17 @@
       border: none;
     }
 
-    .btn-primary {
+    .btn-code-primary {
       background: var(--sidebar-brown);
       color: white;
     }
 
-    .btn-primary:hover {
+    .btn-code-primary:hover {
       background: var(--sidebar-brown-light);
       box-shadow: 0 4px 16px rgba(24, 95, 165, 0.25);
       transform: translateY(-1px);
     }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-code-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .status-msg {
       font-size: 0.72rem;
@@ -824,7 +822,7 @@
       padding: 0.85rem 1rem;
       background: var(--editor-header-bg);
       cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       font-size: 0.85rem;
       font-weight: 500;
       color: var(--editor-text);
@@ -964,7 +962,7 @@
     }
 
     :root[data-theme="dark"] .preview-header {
-      background: linear-gradient(135deg, #121212 0%, #1A1A1A 100%);
+      background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-card) 100%);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
@@ -1003,11 +1001,11 @@
       box-shadow: 0 4px 12px rgba(163, 177, 138, 0.3);
     }
 
-    :root[data-theme="dark"] .btn-primary {
+    :root[data-theme="dark"] .btn-code-primary {
       background: #8A9E78;
     }
 
-    :root[data-theme="dark"] .btn-primary:hover {
+    :root[data-theme="dark"] .btn-code-primary:hover {
       background: var(--accent);
       box-shadow: 0 4px 16px rgba(163, 177, 138, 0.25);
     }
@@ -1047,7 +1045,7 @@
       .preview-header-dot { animation: none; }
       .tab-btn.active { animation: none; }
       .suggestion-chip:hover { transform: none; }
-      .btn-primary:hover { transform: none; }
+      .btn-code-primary:hover { transform: none; }
       .back-btn:hover { transform: none; }
       .send-btn:hover { transform: none; }
     }
@@ -1230,7 +1228,7 @@
               <span class="status-msg" id="saveStatus">
                 <i class="fa-solid fa-circle-check"></i> Saved
               </span>
-              <button class="btn btn-primary" id="saveBtn" onclick="saveData()">
+              <button class="btn-code btn-code-primary" id="saveBtn" onclick="saveData()">
                 <i class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
@@ -1304,7 +1302,7 @@
             <span class="status-msg" id="mobileSaveStatus" style="margin-right:0.75rem;">
               <i class="fa-solid fa-circle-check"></i> Saved
             </span>
-            <button class="btn btn-primary" onclick="saveData()">
+            <button class="btn-code btn-code-primary" onclick="saveData()">
               <i class="fa-solid fa-floppy-disk"></i> Save
             </button>
           </div>
