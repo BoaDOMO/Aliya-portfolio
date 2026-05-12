@@ -32,7 +32,7 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 |---|---|---|
 | `--color-cream` | `#0A0A0A` | Matte Obsidian page background |
 | `--color-beige` | `#121212` | Alternate section background |
-| `--color-green` | `#0D0D0D` | (Reserved, nav/footer use solid `#0B1120`) |
+| `--color-green` | `#0D0D0D` | (Reserved, nav/footer use `rgba(11, 17, 32, 0.85)` with glass) |
 | `--color-blue` | `#A3B18A` | Electric Sage — primary accent replaces blue |
 | `--color-dark-blue` | `#A3B18A` | Same as sage — everything blue in light → sage in dark |
 | `--color-near-black` | `#F3F4F6` | Near-white text |
@@ -50,7 +50,7 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | Element | Light | Dark |
 |---|---|---|
 | Page background | Cream `#F5F1E8` | Matte Obsidian `#0A0A0A` + 1.5% noise texture |
-| Nav / Footer | Sage `#9CAF88` | Solid deep navy `#0B1120` |
+| Nav / Footer | Sage `#9CAF88` | Frosted navy `rgba(11, 17, 32, 0.85)` + `blur(12px)` |
 | Nav links text | Near-black `#1A1A1A` | Near-white `var(--color-near-black)` |
 | Nav logo | Near-black | Near-white |
 | Primary accent | Blue `#185FA5` | Electric Sage `#A3B18A` |
@@ -58,33 +58,48 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | Hero name / headings | Blue | Sage |
 | Skill icons / arrows | Dark blue | Sage |
 | Timeline dots | Dark blue | Sage |
-| Back-to-top button | Dark blue | Sage |
+| Back-to-top button | Dark blue | Sage + frosted `blur(8px)` → hover `blur(12px)` |
 | Skill cards | White `#FFFFFF` | `var(--color-card)` `#141414` + glass border |
-| Buttons (filled) | Blue | Sage, text `#0F172A` |
+| Buttons (filled) | Blue | Sage `rgba(163, 177, 138, 0.88)` + frosted `blur(8px)`, text `#0F172A` |
 | Buttons (filled hover) | Black `#000000` | Darker sage `#8A9E78` |
 | Buttons (outlined hover) | Fills dark | Fills sage |
-| Contact form card | White | `var(--color-card)` |
+| Contact form card | White | `var(--color-card)` + frosted `blur(12px)` |
 | Form inputs | Cream `#F5F1E8` | `#1A1A1A` |
 | Tagline / hero text | `var(--color-text-muted)` | `var(--color-near-black)` (near-white) |
 | Footer text | Near-black | `var(--color-text-gray)` |
 
 ### Nav & Footer (Dark Mode)
 
-- Background: solid `#0B1120` (deep navy)
+- Background: frosted `rgba(11, 17, 32, 0.85)` with `backdrop-filter: blur(12px)`
 - Border: `1px solid var(--color-border)`
 - Menu dropdown: solid `#0B1120`, matches nav
-- Theme toggle button: near-white icon, frosted hover
+- Theme toggle button: near-white icon, `backdrop-filter: blur(8px)` with frosted hover
 
-### Glass Morphism (Cards in Dark Mode)
+### Glass Morphism (Dark Mode)
 
-Cards use a **dual-layered glass effect**:
+Frosted glass is applied to the following elements in dark mode:
+
+| Element | `backdrop-filter` | Background |
+|---|---|---|
+| Nav (`#nav`) | `blur(12px)` | `rgba(11, 17, 32, 0.85)` |
+| Footer | `blur(12px)` | `rgba(11, 17, 32, 0.85)` |
+| Skill cards (`.skill-category`) | `blur(10px)` → hover `blur(20px)` | `var(--color-card)` |
+| AI demo cards (`.ai-demo-card`) | `blur(8px)` → hover `blur(16px)` | `var(--color-card)` |
+| Contact form card (`.contact-form-card`) | `blur(12px)` | `var(--color-card)` |
+| Buttons (`.btn-color-1`, `.btn-color-2:hover`) | `blur(8px)` | `rgba(163, 177, 138, 0.88)` |
+| Back-to-top (`.back-to-top`) | `blur(8px)` → hover `blur(12px)` | `rgba(163, 177, 138, 0.85)` |
+| Theme toggle (`.theme-toggle`) | `blur(8px)` | transparent border |
+| Chat widgets (`.mini-chat`, `.preview-card`) | `blur(12px)` | `rgba(20, 20, 20, 0.85)` |
+
+The consistent glass pattern uses:
 ```css
 border: 1px solid var(--color-border);
 border-top: 1px solid rgba(255, 255, 255, 0.1);
-backdrop-filter: blur(10px);
+backdrop-filter: blur(Npx);
+-webkit-backdrop-filter: blur(Npx);
 ```
 
-This creates a frosted glass look with a subtle white top highlight.
+This creates a frosted glass look with a subtle white top highlight. All glass effects are scoped to `:root[data-theme="dark"]` — light mode uses solid backgrounds.
 
 ### Theme Toggle
 
@@ -94,7 +109,7 @@ This creates a frosted glass look with a subtle white top highlight.
 
 ### Impact Summary
 
-Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. The deep navy (`#0B1120`) nav/footer provides a grounded frame, while the 1.5% noise overlay prevents dead blacks on OLED screens.
+Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. The frosted navy (`rgba(11, 17, 32, 0.85)` + `blur(12px)`) nav/footer provides a glassy grounded frame, while the 1.5% noise overlay prevents dead blacks on OLED screens.
 
 ## Typography
 
@@ -116,9 +131,9 @@ Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. Th
 ## Layout
 
 - **Max-width:** 2560px, min-width: 320px, centered
-- **Nav:** Sticky, 70px height, `#9CAF88` light / `#0B1120` dark
+- **Nav:** Sticky, 70px height, `#9CAF88` light / frosted `rgba(11, 17, 32, 0.85)` + `blur(12px)` dark
 - **Sections:** 5rem 2rem padding
-- **Footer:** `#9CAF88` light / `#0B1120` dark, centered text, 1.25rem 2rem padding
+- **Footer:** `#9CAF88` light / frosted `rgba(11, 17, 32, 0.85)` + `blur(12px)` dark, centered text, 1.25rem 2rem padding
 
 ## Padding Standard
 
@@ -190,14 +205,17 @@ Exceptions:
 - 2-column grid (info + widget preview)
 - Tech pills: blue tint bg light / sage tint bg dark, border, rounded pill
 - Hover: slight lift, pill stagger scale
-- Mini chat widget: white card light / dark card with dark gradient header, green pulsing dot, monospace messages
-- Chat messages: bot bubbles `#eeebe5` light / `#1A1A1A` dark, user bubbles `#26428b` light / sage dark
+- Mini chat widget: white card light / frosted dark card (`rgba(20,20,20,0.85)` + `blur(12px)`) with frosted gradient header (`blur(10px)`), green pulsing dot, monospace messages
+- Chat messages: bot bubbles `#eeebe5` light / frosted `rgba(26,26,26,0.85)` + `blur(6px)` dark, user bubbles `#26428b` light / sage dark
 
 ### RAG Chatbot Page
 - Standalone page with its own inline CSS variables
 - Dark mode: `:root[data-theme="dark"]` overrides all local variables
   - `--bg: #0A0A0A`, `--panel: #141414`, `--text: #F3F4F6`, `--accent: #A3B18A`
-- Header: solid `#0B1120` in dark mode (matches main nav)
+- Header: solid `#0B1120` in dark mode
+- Chat card (`.preview-card`): frosted `rgba(20,20,20,0.85)` + `blur(12px)`
+- Chat header (`.preview-header`): frosted gradient + `blur(10px)`
+- Small buttons (`.btn-sm`): `backdrop-filter: blur(6px)` → hover `blur(10px)`
 - Chat message bubbles follow the same patterns as the mini-chat widget
 - Code editor/sidebar keeps its existing dark theme with sage accent labels
 - All hardcoded `rgba(24, 95, 165, ...)` blue tones → sage `rgba(163, 177, 138, ...)`
