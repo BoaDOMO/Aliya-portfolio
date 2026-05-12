@@ -111,11 +111,20 @@ h6:hover {
 .description {
   @apply font-mono my-2 list-none;
   font-size: 0.9375rem;
-  padding-left: 1.25rem;
+  padding-left: 1.75rem;
 }
 
 .description li {
-  @apply text-text-muted mb-1;
+  @apply text-text-muted mb-1 relative;
+}
+
+.description li::before {
+  content: "•";
+  color: var(--color-dark-blue);
+  position: absolute;
+  left: -0.75rem;
+  font-size: 1.1rem;
+  line-height: inherit;
 }
 
 .profile_text {
@@ -275,7 +284,8 @@ a,
 
 section {
   height: auto;
-  padding: var(--spacing-10) var(--spacing-4);
+  padding: var(--spacing-10) 0;
+  width: 100%;
 }
 
 #skills,
