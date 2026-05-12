@@ -53,6 +53,7 @@
 
 :root {
   color-scheme: light;
+  --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 240, 225, 0.5), transparent 70%);
 }
 
 :root[data-theme="dark"] {
@@ -76,4 +77,5 @@
 
   --dm-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   --dm-card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --card-glow: none;
 }

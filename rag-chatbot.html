@@ -164,7 +164,6 @@
       border-right: 1px solid var(--border);
       overflow: hidden;
       background: rgba(245, 241, 232, 0.85);
-      backdrop-filter: blur(12px);
     }
 
     .instructions-body {
@@ -254,7 +253,6 @@
     .tab-bar {
       display: flex;
       background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 10px;
       flex-shrink: 0;
@@ -315,7 +313,6 @@
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--muted);
@@ -907,6 +904,8 @@
 
     :root[data-theme="dark"] .tab-bar {
       background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     :root[data-theme="dark"] .tab-btn:hover {
