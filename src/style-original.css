@@ -1672,10 +1672,17 @@ footer a:hover {
   }
 }
 
-/* ── LARGE SCREENS: ≥1536px ── */
+/* ── LARGE DESKTOP: 1280px – 1535px ── */
+@media screen and (min-width: 1280px) {
+  html {
+    font-size: 1.05rem;
+  }
+}
+
+/* ── ULTRWIDE: ≥1536px ── */
 @media screen and (min-width: 1536px) {
   html {
-    font-size: 1.75rem;
+    font-size: 1.15rem;
   }
 }
 

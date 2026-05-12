@@ -2033,9 +2033,14 @@ footer a:hover {
     width: 100vw;
   }
 }
+@media screen and (min-width: 1280px) {
+  html {
+    font-size: 1.05rem;
+  }
+}
 @media screen and (min-width: 1536px) {
   html {
-    font-size: 1.75rem;
+    font-size: 1.15rem;
   }
 }
 .theme-toggle {
