@@ -934,26 +934,40 @@
 
     :root[data-theme="dark"] .btn-sm {
       background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border-color: var(--border);
       color: var(--muted);
     }
 
     :root[data-theme="dark"] .btn-sm:hover {
       background: rgba(163, 177, 138, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-color: var(--accent);
       color: var(--accent);
     }
 
     :root[data-theme="dark"] .expand-btn {
       background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     :root[data-theme="dark"] .expand-btn:hover {
       background: rgba(255, 255, 255, 0.12);
     }
 
+    :root[data-theme="dark"] .preview-card {
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
     :root[data-theme="dark"] .preview-header {
       background: linear-gradient(135deg, #121212 0%, #1A1A1A 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     :root[data-theme="dark"] .message-avatar {

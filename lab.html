@@ -399,7 +399,9 @@
       }
 
       :root[data-theme="dark"] .mini-chat {
-        background: var(--color-card);
+        background: rgba(20, 20, 20, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         box-shadow: var(--dm-card-shadow);
       }
 
@@ -409,6 +411,8 @@
 
       :root[data-theme="dark"] .mini-chat-header {
         background: linear-gradient(135deg, #121212 0%, #1A1A1A 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border-bottom-color: var(--color-border);
       }
 
@@ -422,6 +426,8 @@
 
       :root[data-theme="dark"] .mini-chat-messages {
         background: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         scrollbar-color: var(--color-text-gray) transparent;
       }
 
@@ -430,7 +436,9 @@
       }
 
       :root[data-theme="dark"] .mini-msg.bot {
-        background: #1A1A1A;
+        background: rgba(26, 26, 26, 0.85);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         color: var(--color-near-black);
         border-left-color: var(--color-blue);
       }
@@ -466,7 +474,9 @@
       }
 
       :root[data-theme="dark"] .mini-chat-input-row {
-        background: linear-gradient(to top, rgba(10, 10, 10, 0.3), var(--color-card));
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.3), rgba(20, 20, 20, 0.85));
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border-top-color: var(--color-border);
       }
 
@@ -486,7 +496,9 @@
       }
 
       :root[data-theme="dark"] .mini-chat-send {
-        background: var(--color-blue);
+        background: rgba(163, 177, 138, 0.88);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         color: #0F172A;
       }
 
