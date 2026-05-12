@@ -453,20 +453,6 @@ section {
   @apply mb-0;
 }
 
-.experience::before,
-.education::before,
-.reference::before {
-  @apply bg-dark-blue rounded-circle;
-  content: "";
-  position: absolute;
-  left: -3.125rem;
-  top: 0.3rem;
-  width: 12px;
-  height: 12px;
-  border: 2px solid white;
-  box-shadow: 0 0 0 2px #26428b;
-}
-
 /* SCROLL FADE-IN */
 
 .fade-in {
@@ -964,11 +950,6 @@ footer p {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes dot-pulse {
-  0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.15); }
-}
-
 /* ═══════════════════════════════════════════════
    INDEX — HERO LOAD ANIMATIONS
 ═══════════════════════════════════════════════ */
@@ -1095,24 +1076,9 @@ footer p {
   transform: translateY(0);
 }
 
-.experience.profile-anim-entry::before,
-.education.profile-anim-entry::before,
-.reference.profile-anim-entry::before {
-  transform: scale(0);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.experience.profile-anim-entry.scroll-visible::before,
-.education.profile-anim-entry.scroll-visible::before,
-.reference.profile-anim-entry.scroll-visible::before {
-  transform: scale(1);
-  opacity: 1;
-}
-
 /* ═══════════════════════════════════════════════
    MICRO-INTERACTIONS: BUTTONS
-═══════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 
 .btn {
   @apply relative overflow-hidden;
@@ -1200,50 +1166,6 @@ footer p {
 }
 
 /* ═══════════════════════════════════════════════
-   MICRO-INTERACTIONS: TIMELINE ENTRIES (PROFILE)
-═══════════════════════════════════════════════ */
-
-.experience,
-.education,
-.reference {
-  transition: none;
-}
-
-.experience::before,
-.education::before,
-.reference::before {
-  transition: transform 0.3s ease;
-}
-
-.experience:hover::before,
-.education:hover::before,
-.reference:hover::before {
-  transform: scale(1.17);
-}
-
-/* Higher specificity hover override for animated entries */
-.experience.profile-anim-entry:hover::before,
-.education.profile-anim-entry:hover::before,
-.reference.profile-anim-entry:hover::before {
-  transform: scale(1.17);
-}
-
-/* Current role: continuous pulse */
-.experience-current::before {
-  animation: dot-pulse 2s ease-in-out infinite;
-}
-
-.experience-current.profile-anim-entry::before {
-  transform: scale(1);
-  opacity: 1;
-  animation: dot-pulse 2s ease-in-out 0.6s infinite;
-}
-
-.experience-current:hover::before {
-  animation-play-state: paused;
-}
-
-/* ═══════════════════════════════════════════════
    MICRO-INTERACTIONS: FOOTER & CONTACT LINKS
 ═══════════════════════════════════════════════ */
 
@@ -1301,19 +1223,6 @@ footer a:hover {
     transition: none !important;
   }
 
-  .experience.profile-anim-entry::before,
-  .education.profile-anim-entry::before,
-  .reference.profile-anim-entry::before {
-    opacity: 1 !important;
-    transform: scale(1) !important;
-    transition: none !important;
-  }
-
-  .experience-current::before,
-  .experience-current.profile-anim-entry::before {
-    animation: none !important;
-  }
-
   .btn::before {
     transition: none !important;
   }
@@ -1368,12 +1277,6 @@ footer a:hover {
   .btn-send:active {
     transform: none !important;
   }
-
-  .experience::before,
-  .education::before,
-  .reference::before {
-    transition: none !important;
-  }
 }
 
 /* PRINT / PDF EXPORT */
@@ -1413,12 +1316,6 @@ footer a:hover {
   .profile-anim-entry {
     opacity: 1 !important;
     transform: none !important;
-  }
-
-  .experience.profile-anim-entry::before,
-  .education.profile-anim-entry::before {
-    opacity: 1 !important;
-    transform: scale(1) !important;
   }
 
   /* Profile: compact header layout */
@@ -1509,12 +1406,6 @@ footer a:hover {
     border-left: none !important;
     padding-left: 0 !important;
     margin-left: 0 !important;
-  }
-
-  .experience::before,
-  .education::before,
-  .reference::before {
-    display: none !important;
   }
 
   .experience,
@@ -1889,23 +1780,6 @@ footer a:hover {
 
 :root[data-theme="dark"] .experience-timeline {
   border-left-color: rgba(255, 255, 255, 0.15);
-}
-
-:root[data-theme="dark"] .experience::before,
-:root[data-theme="dark"] .education::before,
-:root[data-theme="dark"] .reference::before {
-  background-color: var(--color-blue);
-  border-color: var(--color-cream);
-  box-shadow: 0 0 0 2px var(--color-blue);
-}
-
-@keyframes dot-pulse-dark {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(163, 177, 138, 0.4); }
-  50% { box-shadow: 0 0 0 6px transparent; }
-}
-
-:root[data-theme="dark"] .experience-current::before {
-  animation-name: dot-pulse-dark;
 }
 
 :root[data-theme="dark"] .profile_pic_container img {

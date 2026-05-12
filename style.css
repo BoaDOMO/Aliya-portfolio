@@ -847,20 +847,6 @@ section {
 .reference:last-child {
   margin-bottom: calc(var(--spacing) * 0);
 }
-.experience::before,
-.education::before,
-.reference::before {
-  border-radius: var(--radius-circle);
-  background-color: var(--color-dark-blue);
-  content: "";
-  position: absolute;
-  left: -3.125rem;
-  top: 0.3rem;
-  width: 12px;
-  height: 12px;
-  border: 2px solid white;
-  box-shadow: 0 0 0 2px #26428b;
-}
 .fade-in {
   opacity: 0;
   transform: translateY(24px);
@@ -1428,14 +1414,6 @@ footer p {
     transform: translateY(0);
   }
 }
-@keyframes dot-pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-}
 .anim-hero-label {
   animation: hero-fade-down 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
 }
@@ -1523,19 +1501,6 @@ footer p {
   opacity: 1;
   transform: translateY(0);
 }
-.experience.profile-anim-entry::before,
-.education.profile-anim-entry::before,
-.reference.profile-anim-entry::before {
-  transform: scale(0);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.experience.profile-anim-entry.scroll-visible::before,
-.education.profile-anim-entry.scroll-visible::before,
-.reference.profile-anim-entry.scroll-visible::before {
-  transform: scale(1);
-  opacity: 1;
-}
 .btn {
   position: relative;
   overflow: hidden;
@@ -1617,37 +1582,6 @@ footer p {
 .skill-list li {
   cursor: default;
 }
-.experience,
-.education,
-.reference {
-  transition: none;
-}
-.experience::before,
-.education::before,
-.reference::before {
-  transition: transform 0.3s ease;
-}
-.experience:hover::before,
-.education:hover::before,
-.reference:hover::before {
-  transform: scale(1.17);
-}
-.experience.profile-anim-entry:hover::before,
-.education.profile-anim-entry:hover::before,
-.reference.profile-anim-entry:hover::before {
-  transform: scale(1.17);
-}
-.experience-current::before {
-  animation: dot-pulse 2s ease-in-out infinite;
-}
-.experience-current.profile-anim-entry::before {
-  transform: scale(1);
-  opacity: 1;
-  animation: dot-pulse 2s ease-in-out 0.6s infinite;
-}
-.experience-current:hover::before {
-  animation-play-state: paused;
-}
 footer a {
   transition: color 0.2s ease;
 }
@@ -1694,17 +1628,6 @@ footer a:hover {
     transform: none !important;
     transition: none !important;
   }
-  .experience.profile-anim-entry::before,
-  .education.profile-anim-entry::before,
-  .reference.profile-anim-entry::before {
-    opacity: 1 !important;
-    transform: scale(1) !important;
-    transition: none !important;
-  }
-  .experience-current::before,
-  .experience-current.profile-anim-entry::before {
-    animation: none !important;
-  }
   .btn::before {
     transition: none !important;
   }
@@ -1748,11 +1671,6 @@ footer a:hover {
   .btn-send:active {
     transform: none !important;
   }
-  .experience::before,
-  .education::before,
-  .reference::before {
-    transition: none !important;
-  }
 }
 @media print {
   @page {
@@ -1782,11 +1700,6 @@ footer a:hover {
   .profile-anim-entry {
     opacity: 1 !important;
     transform: none !important;
-  }
-  .experience.profile-anim-entry::before,
-  .education.profile-anim-entry::before {
-    opacity: 1 !important;
-    transform: scale(1) !important;
   }
   #profile {
     display: grid !important;
@@ -1858,11 +1771,6 @@ footer a:hover {
     border-left: none !important;
     padding-left: 0 !important;
     margin-left: 0 !important;
-  }
-  .experience::before,
-  .education::before,
-  .reference::before {
-    display: none !important;
   }
   .experience,
   .education {
@@ -2152,24 +2060,6 @@ footer a:hover {
 }
 :root[data-theme="dark"] .experience-timeline {
   border-left-color: rgba(255, 255, 255, 0.15);
-}
-:root[data-theme="dark"] .experience::before,
-:root[data-theme="dark"] .education::before,
-:root[data-theme="dark"] .reference::before {
-  background-color: var(--color-blue);
-  border-color: var(--color-cream);
-  box-shadow: 0 0 0 2px var(--color-blue);
-}
-@keyframes dot-pulse-dark {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(163, 177, 138, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 6px transparent;
-  }
-}
-:root[data-theme="dark"] .experience-current::before {
-  animation-name: dot-pulse-dark;
 }
 :root[data-theme="dark"] .profile_pic_container img {
   box-shadow: 0 0 0 6px rgba(163, 177, 138, 0.15);
