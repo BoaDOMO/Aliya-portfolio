@@ -1679,8 +1679,8 @@ footer a:hover {
   }
 }
 
-/* ── ULTRWIDE: ≥1536px ── */
-@media screen and (min-width: 1536px) {
+/* ── ULTRWIDE: ≥1920px ── */
+@media screen and (min-width: 1920px) {
   html {
     font-size: 1.15rem;
   }

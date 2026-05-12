@@ -215,7 +215,7 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 | Tablet landscape | 1023px    | Hamburger | 1rem      | 8-col (split)               |
 | Desktop          | 1279px    | Desktop   | 1rem      | 8-col (full)                |
 | Large desktop    | 1535px    | Desktop   | 1.05rem   | 8-col (constrained)         |
-| Ultrawide        | 1536px+   | Desktop   | 1.15rem   | 8-col (constrained, scaled) |
+| Ultrawide        | 1920px+   | Desktop   | 1.15rem   | 8-col (constrained, scaled) |
 
 ### Spacing Standard
 
