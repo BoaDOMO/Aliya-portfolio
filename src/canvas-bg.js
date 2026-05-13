@@ -17,14 +17,12 @@ class CanvasBackground {
   }
 
   detectTheme() {
-    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'constellations' : 'phyllotaxis';
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'constellations' : 'aurora';
   }
 
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    this.cx = this.canvas.width * 0.5;
-    this.cy = this.canvas.height * 0.5;
   }
 
   onThemeChange() {
@@ -67,16 +65,7 @@ class CanvasBackground {
 
       this.auroraPhase = 0;
     } else {
-      this.phylloCount = 350;
-      this.phylloScale = 4.5;
-      this.goldenAngle = 137.508 * Math.PI / 180;
-      this.phylloTime = 0;
-
-      this.points = [];
-      for (var i = 0; i < this.phylloCount; i++) {
-        var r = this.phylloScale * Math.sqrt(i);
-        this.points.push({ r: r, baseAngle: i * this.goldenAngle });
-      }
+      this.auroraPhase = 0;
     }
   }
 
@@ -93,6 +82,8 @@ class CanvasBackground {
   }
 
   update(dt) {
+    this.auroraPhase += dt * 0.0002;
+
     if (this.mode === 'constellations') {
       for (var i = 0; i < this.stars.length; i++) {
         var s = this.stars[i];
@@ -103,9 +94,6 @@ class CanvasBackground {
         if (s.y < 0) s.y += this.canvas.height;
         if (s.y > this.canvas.height) s.y -= this.canvas.height;
       }
-      this.auroraPhase += dt * 0.0002;
-    } else {
-      this.phylloTime += dt * 0.00015;
     }
   }
 
@@ -114,73 +102,30 @@ class CanvasBackground {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     if (this.mode === 'constellations') {
+      this.drawAurora(ctx, false);
       this.drawConstellations(ctx);
     } else {
-      this.drawPhyllotaxis(ctx);
+      this.drawAurora(ctx, true);
     }
   }
 
-  drawPhyllotaxis(ctx) {
-    var cx = this.cx;
-    var cy = this.cy;
+  drawAurora(ctx, warm) {
     var w = this.canvas.width;
     var h = this.canvas.height;
-
-    for (var i = 0; i < this.points.length; i++) {
-      var p = this.points[i];
-      var angle = p.baseAngle + this.phylloTime;
-      var x = cx + Math.cos(angle) * p.r;
-      var y = cy + Math.sin(angle) * p.r;
-
-      if (x < -20 || x > w + 20 || y < -20 || y > h + 20) continue;
-
-      ctx.beginPath();
-      ctx.arc(x, y, 1.2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(140, 140, 140, 0.45)';
-      ctx.fill();
-
-      if (i > 0 && i < this.points.length - 1) {
-        var next = this.points[i + 1];
-        var na = next.baseAngle + this.phylloTime;
-        var nx = cx + Math.cos(na) * next.r;
-        var ny = cy + Math.sin(na) * next.r;
-
-        var dx = nx - x;
-        var dy = ny - y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 40) {
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(nx, ny);
-          ctx.strokeStyle = 'rgba(140, 140, 140, ' + ((1 - dist / 40) * 0.12) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  drawConstellations(ctx) {
-    var stars = this.stars;
-    var w = this.canvas.width;
-    var h = this.canvas.height;
-    var cores = [];
-    var mediums = [];
-
-    for (var i = 0; i < stars.length; i++) {
-      var s = stars[i];
-      if (s.type === 'core') cores.push({ star: s, idx: i });
-      else if (s.type === 'medium') mediums.push({ star: s, idx: i });
-    }
-
-    // ── Aurora ──
     var ah = h * 0.35;
-    var layers = [
-      { offset: 0, amp: 60, speed: 1, color: 'rgba(30, 180, 120, ' },
-      { offset: 0.5, amp: 80, speed: 0.7, color: 'rgba(50, 130, 220, ' },
-      { offset: 1.2, amp: 50, speed: 1.3, color: 'rgba(140, 60, 200, ' }
-    ];
+    var alpha = warm ? 0.07 : 0.04;
+
+    var layers = warm
+      ? [
+          { offset: 0, amp: 60, speed: 1, color: 'rgba(220, 170, 80, ' },
+          { offset: 0.5, amp: 80, speed: 0.7, color: 'rgba(210, 140, 120, ' },
+          { offset: 1.2, amp: 50, speed: 1.3, color: 'rgba(200, 100, 140, ' }
+        ]
+      : [
+          { offset: 0, amp: 60, speed: 1, color: 'rgba(30, 180, 120, ' },
+          { offset: 0.5, amp: 80, speed: 0.7, color: 'rgba(50, 130, 220, ' },
+          { offset: 1.2, amp: 50, speed: 1.3, color: 'rgba(140, 60, 200, ' }
+        ];
 
     for (var l = 0; l < layers.length; l++) {
       var lay = layers[l];
@@ -195,8 +140,22 @@ class CanvasBackground {
       ctx.lineTo(w, ah * 0.7 + lay.offset * 20);
       ctx.lineTo(0, ah * 0.7 + lay.offset * 20);
       ctx.closePath();
-      ctx.fillStyle = lay.color + '0.04)';
+      ctx.fillStyle = lay.color + alpha + ')';
       ctx.fill();
+    }
+  }
+
+  drawConstellations(ctx) {
+    var stars = this.stars;
+    var w = this.canvas.width;
+    var h = this.canvas.height;
+    var cores = [];
+    var mediums = [];
+
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      if (s.type === 'core') cores.push({ star: s, idx: i });
+      else if (s.type === 'medium') mediums.push({ star: s, idx: i });
     }
 
     // ── Core → Core connections (nearest-2) ──
