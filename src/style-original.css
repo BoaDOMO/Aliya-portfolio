@@ -1619,6 +1619,11 @@ footer a:hover {
     gap: 0.75rem;
   }
 
+  .contact-info-list {
+    align-items: flex-start;
+    width: 100%;
+  }
+
   .contact-info-icon {
     width: 34px;
     height: 34px;

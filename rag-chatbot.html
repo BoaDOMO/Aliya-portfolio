@@ -127,16 +127,6 @@
       border: 1px solid rgba(24, 95, 165, 0.25);
     }
 
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--color-near-black);
-      padding: 0.25rem;
-      transition: color 200ms ease;
-    }
-
     .theme-toggle:hover {
       color: var(--color-blue);
     }
@@ -146,7 +136,7 @@
       position: relative;
       z-index: 5;
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 380px 1fr;
       flex: 1;
       overflow: hidden;
       gap: 1px;
@@ -207,6 +197,20 @@
       letter-spacing: 0.02em;
     }
 
+    .profile-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-gray);
+      line-height: 1.55;
+      margin-top: 0.6rem;
+      text-align: center;
+      max-width: 90%;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
     .profile-status {
       display: flex;
       align-items: center;
@@ -237,6 +241,16 @@
       height: 1px;
       background: var(--color-border);
       margin: 1rem 0;
+    }
+
+    .kb-label {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+      align-self: flex-start;
     }
 
     .profile-sections {
@@ -314,6 +328,15 @@
 
     .profile-console-link:hover {
       color: var(--color-blue);
+    }
+
+    .profile-hint {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--color-text-muted);
+      margin-top: 0.75rem;
+      text-align: center;
+      opacity: 0.7;
     }
 
     /* ── RIGHT PANEL ── */
@@ -982,6 +1005,8 @@
 
     :root[data-theme="dark"] .profile-company { color: var(--color-blue); }
 
+    :root[data-theme="dark"] .profile-tagline { color: var(--color-text-gray); }
+
     :root[data-theme="dark"] .profile-section-row:hover {
       background: rgba(163, 177, 138, 0.08);
       color: var(--color-blue);
@@ -1238,14 +1263,17 @@
         <div class="profile-avatar" id="profileAvatar">NF</div>
         <div class="profile-company" id="profileCompany">Nova Finance</div>
         <div class="profile-role" id="profileRole">AI Assistant</div>
+        <div class="profile-tagline" id="profileTagline"></div>
         <div class="profile-status">
           <span class="profile-status-dot"></span>
           Active
         </div>
         <div class="profile-divider"></div>
+        <div class="kb-label">Knowledge Base</div>
         <div class="profile-sections" id="profileSections">
           <!-- populated by JS -->
         </div>
+        <div class="profile-hint">Click a section to ask about it</div>
         <button class="profile-console-link" onclick="switchTab('code')">
           <i class="fa-solid fa-sliders"></i> Edit in Console
         </button>
@@ -1509,6 +1537,14 @@
       document.getElementById('profileAvatar').textContent = getInitials(company);
       document.getElementById('profileCompany').textContent = company;
       document.getElementById('profileRole').textContent = role;
+
+      const aboutText = data.kb.about || '';
+      const taglineEl = document.getElementById('profileTagline');
+      if (aboutText) {
+        taglineEl.textContent = aboutText.length > 100 ? aboutText.slice(0, 100).trim() + '…' : aboutText;
+      } else {
+        taglineEl.textContent = '';
+      }
 
       const sectionsContainer = document.getElementById('profileSections');
       sectionsContainer.innerHTML = '';
