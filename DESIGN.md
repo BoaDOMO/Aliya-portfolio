@@ -71,9 +71,10 @@ Defined in `:root` and `:root[data-theme="dark"]` blocks (not Tailwind theme tok
 | Timeline dots            | Dark blue                                          | Sage                                                                         |
 | Back-to-top button       | Dark blue                                          | Sage + frosted `blur(10px)` → hover `blur(14px)`                             |
 | Skill cards              | White + enhanced golden glow + warm crisp shadow   | `var(--color-card)` `#18181A` + subtle sage glow + glass border              |
-| Buttons (filled)         | Blue                                               | Sage `rgba(163, 177, 138, 0.88)` + frosted `blur(8px)`, text `#0F172A`       |
-| Buttons (filled hover)   | Black `#000000`                                    | Darker sage `#8A9E78`                                                        |
-| Buttons (outlined hover) | Fills dark                                         | Fills sage                                                                   |
+| Buttons (filled)         | Near-black `var(--color-near-black)`        | Sage `rgba(163, 177, 138, 0.88)` + frosted `blur(8px)`, glass border, text `#0F172A` |
+| Buttons (filled hover)   | Black `#000000` + warm layered shadow        | Darker sage `#8A9E78`                                                        |
+| Buttons (outlined)       | Near-black border/text, transparent           | Sage border/text, transparent                                                  |
+| Buttons (outlined hover) | Fills near-black                              | Fills frosted sage                                                              |
 | Contact form card        | White + enhanced golden glow + warm crisp shadow   | `var(--color-card)` + frosted `blur(14px)` + subtle sage glow                |
 | Form inputs              | Cream `#F5F1E8`                                    | `#1A1A1A`                                                                    |
 | Tagline / hero text      | `var(--color-text-muted)`                          | `var(--color-near-black)` (near-white)                                       |
@@ -100,10 +101,14 @@ Frosted glass is applied to the following elements in dark mode only:
 | Buttons (`.btn-color-1`, `.btn-color-2:hover`) | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
 | Back-to-top (`.back-to-top`)                   | `blur(10px)` → hover `blur(14px)` | `rgba(163, 177, 138, 0.85)`              |
 | Theme toggle (`.theme-toggle`)                 | `blur(8px)`                       | transparent border                       |
+| Contact send (`.btn-send`)                     | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
+| RAG send (`.send-btn`)                         | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
+| RAG tab active (`.tab-btn.active[data-tab="preview"]`) | `blur(8px`)              | `rgba(163, 177, 138, 0.88)`              |
+| RAG save (`.btn-code-primary`)                 | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
+| Lab mini-chat send (`.mini-chat-send`)         | `blur(6px)`                       | `rgba(163, 177, 138, 0.88)`              |
 | Chat widgets (`.mini-chat`, `.preview-card`)   | `blur(14px)`                      | `rgba(20, 20, 20, 0.85)`                 |
-| RAG panel (`.panel-instructions`)              | `blur(14px)`                      | `rgba(10, 10, 10, 0.85)`                 |
+| RAG instruction card (`.instruction-card`)     | `blur(14px)`                      | `rgba(22, 22, 24, 0.85)`                 |
 | RAG tab bar (`.tab-bar`)                       | `blur(8px)`                       | `rgba(255, 255, 255, 0.06)`              |
-| RAG expand button (`.expand-btn`)              | `blur(8px)`                       | `rgba(255, 255, 255, 0.06)`              |
 
 The consistent glass pattern uses:
 
@@ -213,8 +218,7 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 | Mobile           | 639px     | Hamburger | 0.875rem  | 1 column                    |
 | Tablet portrait  | 767px     | Hamburger | 1rem      | 8-col (stacked)             |
 | Tablet landscape | 1023px    | Hamburger | 1rem      | 8-col (split)               |
-| Desktop          | 1279px    | Desktop   | 1rem      | 8-col (full)                |
-| Large desktop    | 1535px    | Desktop   | 1.05rem   | 8-col (constrained)         |
+| Desktop          | 1919px    | Desktop   | 1rem      | 8-col (full, constrained)   |
 | Ultrawide        | 1920px+   | Desktop   | 1.15rem   | 8-col (constrained, scaled) |
 
 ### Spacing Standard
@@ -256,9 +260,11 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 ### Hero (Contact)
 
-- Two-column: photo + text left, form card right
+- Two-column: photo + text left, form card right (flex layout, vertically centered)
+- Fills remaining viewport height (`calc(100vh - 140px)`), matching index hero behavior
 - Photo zooms out → label fades down → heading bounces in → tagline fades up → info items slide in
 - Photo: 240px circle, no border in dark mode, shadow, hover scale(1.03)
+- Mobile: stacks vertically, contact info (PHONE/EMAIL/LINKEDIN) left-aligned
 
 ### Skill Cards (Profile)
 
@@ -273,12 +279,29 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - Current role dot pulses with sage glow in dark mode. All dots scale on hover
 - Sections: Skills on `#E6DECF`, Experience + Education on default cream
 
+### Buttons
+
+Three-tier system that maps to the warm glow/glass morphism design duality:
+
+| Tier | Light mode | Dark mode |
+|------|-------------|-----------|
+| **Primary** (filled) | Solid `var(--color-near-black)` bg, white text. Hover: darker + warm layered shadow | Frosted sage glass: `backdrop-filter: blur(8px)`, `border: 1px solid var(--color-border)`, `border-top: 1px solid rgba(255,255,255,0.12)`, `rgba(163,177,138,0.88)` bg, `#0F172A` text. Hover: solid `#8A9E78` |
+| **Secondary** (outlined) | `var(--color-near-black)` border/text, transparent bg. Hover: fills primary dark bg | Transparent, sage border/text. Hover: fills frosted sage primary |
+| **Ghost** (text/icon) | `var(--color-blue)` text, transparent. Hover: subtle blue tint bg | `var(--color-blue)` (sage) text, transparent. Hover: subtle sage glass bg |
+
+- **Active**: `scale(0.97)` press effect with reduced shadow
+- **Focus-visible**: `2px solid var(--color-blue)`, `2px offset` — on all button elements
+- **Disabled**: `opacity 0.5`, `cursor not-allowed`, no transform/shadow
+- **Reduced motion**: `transition: none`, `transform: none`, `backdrop-filter: none`
+
+All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-element, `.white 15%` gradient, slides in on hover).
+
 ### Contact Form
 
 - White card + enhanced golden glow + warm layered shadow light / `var(--color-card)` + subtle sage glow + frosted `blur(14px)` dark, rounded 20px, padding 3rem, 480px width
 - Inputs: `#F5F1E8` bg light / `#1A1A1A` bg dark, rounded 12px, monospace text
 - Floating labels transition from center to top on focus/fill
-- Send button: full-width, `#1A1A1A` light / sage dark, hover lift + shimmer, icon shifts on hover
+- Send button: full-width, `var(--color-near-black)` light / frosted sage glass dark, hover lift + shimmer, icon shifts on hover
 
 ### Back-to-Top
 
@@ -297,15 +320,15 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 - Standalone tester page (no main nav), but fully integrated with global design tokens
 - **Header**: branded mini-nav with "ALIYA KOY" logo (links to home) + breadcrumb `Lab / RAG Chatbot` + LIVE DEMO badge + theme toggle. Light: sage `var(--color-green)`. Dark: frosted navy `rgba(11,17,32,0.85)` + `blur(14px)` — matches main nav
-- **Layout**: full-viewport two-column grid (320px left + 1fr right), no scroll needed to reach chat
-- **Left panel (`.profile-card`)**: dynamic AI Profile Card — gradient initials avatar (derived from company name), company name in serif italic, role, pulsing "Active" status, 4 knowledge section rows with filled/empty dots, "Edit in Console" link pinned to bottom. Light: warm glow + layered shadow. Dark: frosted `rgba(22,22,24,0.85)` + `blur(14px)` + sage glow
+- **Layout**: full-viewport two-column grid (380px left + 1fr right), no scroll needed. Left and right panels both have `var(--spacing-4)` padding for consistent alignment
+- **Left panel (`.instruction-card`)**: instruction card explaining the RAG system — "What is this?" section, 3-step numbered guide with hover-highlighted step markers connected by a vertical line, "Try asking" section with 4 dynamic suggestion chips (KB-specific + fallbacks), "Edit in Console" link pinned at bottom. Light: warm glow + layered shadow + blue accent bar at top. Dark: frosted `rgba(22,22,24,0.85)` + `blur(14px)` + sage glow
 - **Chat card (`.preview-card`)**: same card treatment — warm golden glow + shadow light, frosted glass + sage glow dark. Header gradient cream→beige. Messages: user bubbles `var(--color-blue)`, bot bubbles `var(--bot-bg)`
 - **Console tab**: side-panel knowledge base editor restyled to site-native forms (cream inputs, blue focus rings, beige sidebar) instead of VS Code dark theme. Light: card glow. Dark: frosted glass
+- **Preview/Console tabs**: glass-morphism tab bar. Active states: light blue bg + white text, dark sage glass + `#0F172A` text
 - **Footer**: standard site copyright bar, sage background light, frosted navy glass dark
 - **Animations**: page-load fade-in (`.page-load-anim`), message slide-in, pulsing status dots
-- **Page-specific variables**: `--panel-alt`, `--success`, `--user-bg`, `--bot-bg`, `--input-bg`, `--sidebar-bg`, `--editor-bg`, `--editor-border`, `--accent`, `--text`
 - **Mobile**: left panel hidden, chat fills width, Console uses accordion sections, standard footer
-- **Dynamic**: profile card, chat header, and suggestion questions all update from Console changes (company name, role, KB sections)
+- **Dynamic**: suggestion chips, chat header, and bot persona all update from Console changes
 
 ## Animation Timing
 
