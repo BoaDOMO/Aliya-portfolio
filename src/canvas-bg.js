@@ -88,7 +88,6 @@ class CanvasBackground {
         if (s.y < 0) s.y += this.canvas.height;
         if (s.y > this.canvas.height) s.y -= this.canvas.height;
       }
-    }
   }
 
   draw() {
