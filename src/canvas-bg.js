@@ -17,7 +17,7 @@ class CanvasBackground {
   }
 
   detectTheme() {
-    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'constellations' : 'aurora';
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'constellations' : 'empty';
   }
 
   resize() {
@@ -33,19 +33,6 @@ class CanvasBackground {
   }
 
   initMode() {
-    if (!this.auroraLayers) {
-      this.auroraLayers = [];
-      var count = 3 + Math.floor(Math.random() * 2);
-      for (var i = 0; i < count; i++) {
-        this.auroraLayers.push({
-          amp: 40 + Math.random() * 40,
-          speed: 0.5 + Math.random() * 1,
-          freq: 0.002 + Math.random() * 0.003,
-          offset: Math.random() * 2
-        });
-      }
-    }
-
     if (this.mode === 'constellations') {
       this.stars = [];
       var w = this.canvas.width;
@@ -76,8 +63,6 @@ class CanvasBackground {
         });
       }
     }
-
-    this.auroraPhase = 0;
   }
 
   start() {
@@ -93,10 +78,8 @@ class CanvasBackground {
   }
 
   update(dt) {
-    this.auroraPhase += dt * 0.0002;
-
-    if (this.mode === 'constellations') {
-      for (var i = 0; i < this.stars.length; i++) {
+    if (this.mode !== 'constellations') return;
+    for (var i = 0; i < this.stars.length; i++) {
         var s = this.stars[i];
         s.x += s.vx;
         s.y += s.vy;
@@ -113,58 +96,8 @@ class CanvasBackground {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     if (this.mode === 'constellations') {
-      this.drawAurora(ctx, false);
       this.drawConstellations(ctx);
-    } else {
-      this.drawAurora(ctx, true);
     }
-  }
-
-  drawAurora(ctx, warm) {
-    var w = this.canvas.width;
-    var h = this.canvas.height;
-    var ah = h * 0.35;
-    var palette = warm
-      ? ['rgba(220, 170, 80, ', 'rgba(210, 140, 120, ', 'rgba(200, 100, 140, ', 'rgba(230, 190, 100, ']
-      : ['rgba(30, 180, 120, ', 'rgba(50, 130, 220, ', 'rgba(140, 60, 200, ', 'rgba(60, 200, 180, '];
-
-    ctx.save();
-    ctx.globalCompositeOperation = 'screen';
-
-    for (var pass = 0; pass < 2; pass++) {
-      ctx.filter = pass === 0 ? 'blur(3px)' : 'none';
-      var a1 = pass === 0 ? (warm ? '0.15' : '0.10') : (warm ? '0.08' : '0.04');
-      var a2 = pass === 0 ? (warm ? '0.06' : '0.04') : (warm ? '0.03' : '0.02');
-
-      for (var l = 0; l < this.auroraLayers.length; l++) {
-        var lay = this.auroraLayers[l];
-        var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
-        var bottomY = ah * 0.7 + lay.offset * 10;
-
-        ctx.beginPath();
-        ctx.moveTo(0, topBase);
-        for (var x = 0; x <= w; x += 20) {
-          var t1 = (x + this.auroraPhase * 100 * lay.speed) * lay.freq;
-          var t2 = (x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2;
-          var wave = (Math.abs(((t1 % 2) + 2) % 2 - 1) * 2 - 1) * lay.amp
-                   + (Math.abs(((t2 % 2) + 2) % 2 - 1) * 2 - 1) * lay.amp * 0.4;
-          ctx.lineTo(x, topBase + wave);
-        }
-        ctx.lineTo(w, bottomY);
-        ctx.lineTo(0, bottomY);
-        ctx.closePath();
-
-        var grad = ctx.createLinearGradient(0, topBase - lay.amp, 0, bottomY);
-        grad.addColorStop(0, palette[l % palette.length] + a1 + ')');
-        grad.addColorStop(0.4, palette[l % palette.length] + a2 + ')');
-        grad.addColorStop(1, palette[l % palette.length] + '0)');
-        ctx.fillStyle = grad;
-        ctx.fill();
-      }
-    }
-
-    ctx.filter = 'none';
-    ctx.restore();
   }
 
   drawConstellations(ctx) {
