@@ -132,8 +132,9 @@ class CanvasBackground {
     ctx.globalCompositeOperation = 'screen';
 
     for (var pass = 0; pass < 2; pass++) {
-      ctx.filter = pass === 0 ? 'blur(6px)' : 'none';
-      var alpha = pass === 0 ? (warm ? '0.12' : '0.08') : (warm ? '0.06' : '0.035');
+      ctx.filter = pass === 0 ? 'blur(3px)' : 'none';
+      var a1 = pass === 0 ? (warm ? '0.15' : '0.10') : (warm ? '0.08' : '0.04');
+      var a2 = pass === 0 ? (warm ? '0.06' : '0.04') : (warm ? '0.03' : '0.02');
 
       for (var l = 0; l < this.auroraLayers.length; l++) {
         var lay = this.auroraLayers[l];
@@ -143,15 +144,21 @@ class CanvasBackground {
         ctx.beginPath();
         ctx.moveTo(0, topBase);
         for (var x = 0; x <= w; x += 20) {
-          var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
-                   + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
+          var t1 = (x + this.auroraPhase * 100 * lay.speed) * lay.freq;
+          var t2 = (x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2;
+          var wave = (Math.abs(((t1 % 2) + 2) % 2 - 1) * 2 - 1) * lay.amp
+                   + (Math.abs(((t2 % 2) + 2) % 2 - 1) * 2 - 1) * lay.amp * 0.4;
           ctx.lineTo(x, topBase + wave);
         }
         ctx.lineTo(w, bottomY);
         ctx.lineTo(0, bottomY);
         ctx.closePath();
 
-        ctx.fillStyle = palette[l % palette.length] + alpha + ')';
+        var grad = ctx.createLinearGradient(0, topBase - lay.amp, 0, bottomY);
+        grad.addColorStop(0, palette[l % palette.length] + a1 + ')');
+        grad.addColorStop(0.4, palette[l % palette.length] + a2 + ')');
+        grad.addColorStop(1, palette[l % palette.length] + '0)');
+        ctx.fillStyle = grad;
         ctx.fill();
       }
     }
