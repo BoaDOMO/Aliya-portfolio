@@ -281,32 +281,6 @@
     }
 
     /* ── KB STATUS ── */
-    .kb-status {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      color: var(--color-text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--color-border);
-    }
-
-    .kb-status-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #22c55e;
-      flex-shrink: 0;
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-      50% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08); }
-    }
-
     .console-link {
       font-family: var(--font-mono);
       font-size: 0.6rem;
@@ -317,6 +291,7 @@
       border: none;
       cursor: pointer;
       padding: 0;
+      margin-top: auto;
       transition: opacity 200ms ease;
       display: inline-flex;
       align-items: center;
@@ -1217,7 +1192,6 @@
       .message.message-new { animation: none; }
       .typing-dot { animation: none; opacity: 0.6; }
       .preview-header-dot { animation: none; }
-      .kb-status-dot { animation: none; }
       .tab-btn.active { animation: none; }
       .suggestion-chip:hover { transform: none; }
       .btn-code-primary:hover { transform: none; }
@@ -1298,19 +1272,14 @@
 
         <div class="instruction-section">
           <div class="instruction-label">💡 Try asking</div>
-          <div class="chip-group" id="leftChips">
-            <!-- populated by JS -->
-          </div>
+        <div class="chip-group" id="leftChips">
+          <!-- populated by JS -->
         </div>
+      </div>
 
-        <div class="kb-status">
-          <span class="kb-status-dot"></span>
-          <span id="kbStatusText">Loading...</span>
-          <span style="flex:1"></span>
-          <button class="console-link" onclick="switchTab('code')">
-            <i class="fa-solid fa-sliders"></i> Edit in Console
-          </button>
-        </div>
+      <button class="console-link" onclick="switchTab('code')">
+        <i class="fa-solid fa-sliders"></i> Edit in Console
+      </button>
       </div>
     </div>
 
@@ -1563,27 +1532,30 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
-    // ── PROFILE CARD ──
+    // ── LEFT PANEL ──
     function initLeftPanel() {
       const company = data.persona.company || 'Nova Finance';
       const chipContainer = document.getElementById('leftChips');
       chipContainer.innerHTML = '';
 
-      const generalChips = [
+      const fallbackChips = [
         'What are your loan interest rates?',
         'How do I apply?',
       ];
 
-      const sectionChips = [];
+      const questions = [];
       KB_SECTIONS.forEach(section => {
         const hasContent = data.kb[section.key] && data.kb[section.key].trim().length > 0;
         if (hasContent) {
-          sectionChips.push(section.question.replace('{company}', company));
+          questions.push(section.question.replace('{company}', company));
         }
       });
 
-      const allChips = [...generalChips, ...sectionChips];
-      allChips.forEach(text => {
+      while (questions.length < 4 && fallbackChips.length) {
+        questions.push(fallbackChips.shift());
+      }
+
+      questions.slice(0, 4).forEach(text => {
         const chip = document.createElement('button');
         chip.className = 'suggestion-chip';
         chip.type = 'button';
@@ -1600,10 +1572,6 @@
         });
         chipContainer.appendChild(chip);
       });
-
-      const total = KB_SECTIONS.length;
-      const filled = KB_SECTIONS.filter(s => data.kb[s.key] && data.kb[s.key].trim().length > 0).length;
-      document.getElementById('kbStatusText').textContent = 'Knowledge base ready';
     }
 
     // ── TAB SWITCHING ──
