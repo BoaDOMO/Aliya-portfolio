@@ -1052,7 +1052,6 @@
     .code-editor-footer {
       padding: 0.75rem var(--spacing-3);
       background: var(--editor-bg);
-      border-top: 1px solid var(--color-border);
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -2398,6 +2397,11 @@
         (m.role === 'user' ? 'You: ' : 'Bot: ') + m.content
       ).join('\n\n');
       if (!text) return;
+
+      const btn = document.querySelector('.action-btn:last-child');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-regular fa-check-circle"></i> Copied!';
+
       navigator.clipboard.writeText(text).catch(() => {
         const ta = document.createElement('textarea');
         ta.value = text;
@@ -2406,6 +2410,8 @@
         document.execCommand('copy');
         ta.remove();
       });
+
+      setTimeout(function() { btn.innerHTML = orig; }, 1500);
     }
 
     function restoreChat() {
