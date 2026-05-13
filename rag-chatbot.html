@@ -135,14 +135,14 @@
       position: relative;
       z-index: 5;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 440px 1fr;
       flex: 1;
       overflow: hidden;
     }
 
     /* ── LEFT PANEL: INSTRUCTION CARD ── */
     .panel-profile {
-      padding: var(--spacing-4);
+      padding: var(--spacing-6) var(--spacing-2) var(--spacing-6) var(--spacing-4);
       display: flex;
       flex-direction: column;
     }
@@ -151,7 +151,7 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      padding: var(--spacing-4) var(--spacing-3);
+      padding: var(--spacing-4) var(--spacing-3) var(--spacing-2);
       background: var(--color-card);
       background-image: var(--card-glow);
       border: 1px solid var(--color-border);
@@ -172,7 +172,7 @@
     }
 
     .instruction-section {
-      margin-bottom: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
     }
 
     .instruction-section:last-of-type {
@@ -181,88 +181,129 @@
 
     .instruction-label {
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--color-blue);
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
-    .instruction-text {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--color-text-gray);
-      line-height: 1.65;
+    /* ── STATUS HEADER ── */
+    .status-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
 
-    .instruction-text strong {
-      color: var(--color-near-black);
+    .status-name {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
       font-weight: 600;
+      color: var(--color-near-black);
+      line-height: 1.2;
     }
 
-    /* ── STEP GROUP ── */
-    .step-group {
+    .status-role {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      line-height: 1.2;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      background: rgba(0,0,0,0.03);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2rem;
+      border: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .status-dot.retrieving { background: #eab308; }
+    .status-dot.generating { background: #3b82f6; }
+    .status-dot.offline { background: #9ca3af; }
+
+    /* ── PIPELINE ── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      padding: 0.25rem 0;
+    }
+
+    .pipeline-node {
       display: flex;
       flex-direction: column;
-      position: relative;
-      padding-left: 1.6rem;
-    }
-
-    .step-group::before {
-      content: '';
-      position: absolute;
-      left: 1.1rem;
-      top: 1.3rem;
-      bottom: 0.8rem;
-      width: 1.5px;
-      background: var(--color-border);
-    }
-
-    .step-row {
-      display: flex;
       align-items: center;
-      gap: 0.7rem;
-      padding: 0.5rem 0;
-      position: relative;
-    }
-
-    .step-marker {
-      position: absolute;
-      left: -1.6rem;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--color-card);
-      border: 1.5px solid var(--color-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.62rem;
-      color: var(--color-blue);
+      gap: 0.25rem;
       flex-shrink: 0;
-      z-index: 1;
-      transition: all 200ms ease;
     }
 
-    .step-row:hover .step-marker {
+    .pipeline-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      background: var(--color-card);
+      transition: all 300ms ease;
+      position: relative;
+    }
+
+    .pipeline-node.active .pipeline-dot {
+      border-color: var(--color-blue);
       background: var(--color-blue);
-      color: var(--color-card);
-      transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.15);
     }
 
-    .step-content {
+    .pipeline-node.done .pipeline-dot {
+      border-color: var(--color-blue);
+      background: var(--color-blue);
+    }
+
+    .pipeline-label {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--color-text-gray);
-      line-height: 1.4;
+      font-size: 0.55rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 300ms ease;
     }
 
-    .step-content strong {
-      color: var(--color-near-black);
-      font-weight: 600;
+    .pipeline-node.active .pipeline-label,
+    .pipeline-node.done .pipeline-label {
+      color: var(--color-blue);
+    }
+
+    .pipeline-line {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      margin: 0 0.2rem;
+      margin-bottom: 0.9rem;
+      transition: background 300ms ease;
+      min-width: 8px;
+    }
+
+    .pipeline-line.active {
+      background: var(--color-blue);
     }
 
     /* ── DIVIDER ── */
@@ -273,33 +314,136 @@
       margin: var(--spacing-2) 0;
     }
 
+    /* ── SESSION INFO ── */
+    .session-info {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-gray);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .session-info i {
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+
+    /* ── ACTIONS ── */
+    .actions-row {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .action-btn {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.08);
+      border: 1px solid rgba(24, 95, 165, 0.22);
+      border-radius: 8px;
+      padding: 0.35rem 0.5rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .action-btn:hover {
+      background: rgba(24, 95, 165, 0.15);
+      border-color: var(--color-blue);
+      transform: translateY(-1px);
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── MINI LOG ── */
+    .mini-log {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-gray);
+      margin-top: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .mini-log i {
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+
     /* ── CHIP GROUP ── */
     .chip-group {
       display: flex;
       flex-wrap: wrap;
       gap: 0.3rem;
+      padding-left: 0.75rem;
     }
 
-    /* ── KB STATUS ── */
-    .console-link {
+    /* ── CONSOLE BUTTON ── */
+    .console-btn {
+      width: 100%;
       font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--color-blue);
-      background: none;
+      color: var(--color-card);
+      background: var(--color-blue);
       border: none;
       cursor: pointer;
-      padding: 0;
-      margin-top: auto;
-      transition: opacity 200ms ease;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      transition: all 200ms ease;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: auto;
     }
 
-    .console-link:hover {
-      opacity: 0.7;
+    .console-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .console-btn.secondary {
+      background: transparent;
+      color: var(--color-blue);
+      border: 1px solid rgba(24, 95, 165, 0.25);
+    }
+
+    .console-btn.secondary:hover {
+      background: rgba(24, 95, 165, 0.05);
     }
 
     /* ── RIGHT PANEL ── */
@@ -308,7 +452,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      padding: var(--spacing-4);
+      padding: var(--spacing-6) var(--spacing-4) var(--spacing-6) var(--spacing-2);
     }
 
     /* ── TAB BAR ── */
@@ -565,12 +709,12 @@
     .suggestion-chip {
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       color: var(--color-blue);
       background: rgba(24, 95, 165, 0.08);
       border: 1px solid rgba(24, 95, 165, 0.22);
       border-radius: 2rem;
-      padding: 0.35rem 0.85rem;
+      padding: 0.35rem 0.85rem 0.35rem 1.25rem;
       margin: 0.2rem 0.2rem 0.2rem 0;
       cursor: pointer;
       transition: all 200ms ease;
@@ -962,25 +1106,37 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
     }
 
-    :root[data-theme="dark"] .step-marker {
-      background: transparent;
+    :root[data-theme="dark"] .status-name { color: var(--color-near-black); }
+    :root[data-theme="dark"] .status-badge { background: rgba(255,255,255,0.04); border-color: var(--color-border); }
+
+    :root[data-theme="dark"] .pipeline-dot {
+      background: rgba(22, 22, 24, 0.85);
+      border-color: var(--color-border);
+    }
+
+    :root[data-theme="dark"] .pipeline-node.active .pipeline-dot,
+    :root[data-theme="dark"] .pipeline-node.done .pipeline-dot {
       border-color: var(--color-blue);
-      color: var(--color-blue);
-    }
-
-    :root[data-theme="dark"] .step-row:hover .step-marker {
       background: var(--color-blue);
-      color: #0F172A;
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.2);
     }
 
-    :root[data-theme="dark"] .instruction-text,
-    :root[data-theme="dark"] .step-content {
-      color: var(--color-text-gray);
+    :root[data-theme="dark"] .action-btn {
+      color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.12);
+      border-color: rgba(24, 95, 165, 0.3);
+    }
+    :root[data-theme="dark"] .action-btn:hover {
+      background: rgba(24, 95, 165, 0.2);
     }
 
-    :root[data-theme="dark"] .instruction-text strong,
-    :root[data-theme="dark"] .step-content strong {
-      color: var(--color-near-black);
+    :root[data-theme="dark"] .stat-value { color: var(--color-near-black); }
+    :root[data-theme="dark"] .console-btn.secondary {
+      color: var(--color-blue);
+      border-color: rgba(163, 177, 138, 0.25);
+    }
+    :root[data-theme="dark"] .console-btn.secondary:hover {
+      background: rgba(163, 177, 138, 0.08);
     }
 
     :root[data-theme="dark"] .tab-bar {
@@ -1240,46 +1396,99 @@
 
   <main class="demo-body">
 
-    <!-- ── LEFT: INSTRUCTION CARD ── -->
+    <!-- ── LEFT: DASHBOARD ── -->
     <div class="panel-profile">
       <div class="instruction-card">
+
+        <!-- 1. System Status -->
         <div class="instruction-section">
-          <div class="instruction-label">🤖 What is this?</div>
-          <p class="instruction-text">
-            A <strong>RAG chatbot</strong> that answers questions using <strong>only your knowledge base</strong> — every response is grounded in the content you provide.
-          </p>
+          <div class="status-header">
+            <div class="status-info">
+              <div class="status-name" id="botName">Nova Finance AI</div>
+              <div class="status-role" id="botRole">AI Assistant</div>
+            </div>
+            <div class="status-badge" id="statusBadge">
+              <span class="status-dot" id="statusDot"></span>
+              <span class="status-label" id="statusLabel">Ready</span>
+            </div>
+          </div>
         </div>
 
+        <!-- 2. RAG Pipeline -->
         <div class="instruction-section">
-          <div class="instruction-label">⚡ How it works</div>
-          <div class="step-group">
-            <div class="step-row">
-              <div class="step-marker">1</div>
-              <div class="step-content"><strong>Edit</strong> your knowledge base in the Console tab</div>
+          <div class="instruction-label">RAG Pipeline</div>
+          <div class="pipeline">
+            <div class="pipeline-node" id="node-query">
+              <div class="pipeline-dot"></div>
+              <div class="pipeline-label">Query</div>
             </div>
-            <div class="step-row">
-              <div class="step-marker">2</div>
-              <div class="step-content"><strong>Save</strong> to update the AI assistant</div>
+            <div class="pipeline-line" id="line-1"></div>
+            <div class="pipeline-node" id="node-retriever">
+              <div class="pipeline-dot"></div>
+              <div class="pipeline-label">Retriever</div>
             </div>
-            <div class="step-row">
-              <div class="step-marker">3</div>
-              <div class="step-content"><strong>Switch</strong> to Preview and start chatting</div>
+            <div class="pipeline-line" id="line-2"></div>
+            <div class="pipeline-node" id="node-llm">
+              <div class="pipeline-dot"></div>
+              <div class="pipeline-label">LLM</div>
+            </div>
+            <div class="pipeline-line" id="line-3"></div>
+            <div class="pipeline-node" id="node-response">
+              <div class="pipeline-dot"></div>
+              <div class="pipeline-label">Response</div>
             </div>
           </div>
         </div>
 
         <div class="card-divider"></div>
 
+        <!-- 3. Session + Quick Actions -->
         <div class="instruction-section">
-          <div class="instruction-label">💡 Try asking</div>
-        <div class="chip-group" id="leftChips">
-          <!-- populated by JS -->
+          <div class="instruction-label">Session</div>
+          <div class="session-info" id="sessionInfo">
+            <i class="fa-regular fa-clock"></i>
+            <span id="sessionStartTime">Started just now</span>
+          </div>
+          <div class="actions-row">
+            <button class="action-btn" onclick="clearChat()">
+              <i class="fa-solid fa-rotate-right"></i> Reset
+            </button>
+            <button class="action-btn" onclick="copyLog()">
+              <i class="fa-regular fa-clipboard"></i> Copy Log
+            </button>
+          </div>
         </div>
-      </div>
 
-      <button class="console-link" onclick="switchTab('code')">
-        <i class="fa-solid fa-sliders"></i> Edit in Console
-      </button>
+        <div class="card-divider"></div>
+
+        <!-- 4. Session Stats -->
+        <div class="instruction-section">
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-value" id="statMessages">0</span>
+              <span class="stat-label">Messages</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statTime">—</span>
+              <span class="stat-label">Avg Time</span>
+            </div>
+          </div>
+          <div class="mini-log" id="miniLog"><i class="fa-solid fa-arrow-trend-up"></i> <span id="miniLogText">No queries yet</span></div>
+        </div>
+
+        <!-- 5. Suggestions -->
+        <div class="instruction-section">
+          <div class="instruction-label">Try asking</div>
+          <div class="chip-group" id="leftChips">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- 6. Generate New Company -->
+        <button class="console-btn secondary" onclick="generateNewCompany()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> New Company
+        </button>
+
       </div>
     </div>
 
@@ -1532,8 +1741,136 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
+    // ── DASHBOARD STATE ──
+    const responseTimes = [];
+    const sessionStart = Date.now();
+
+    function updateSessionInfo() {
+      const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+      const mins = Math.floor(elapsed / 60);
+      const exchanges = Math.floor(data.chatHistory.filter(m => m.role === 'user').length);
+
+      let timeStr;
+      if (mins < 1) timeStr = 'Just now';
+      else if (mins < 60) timeStr = mins + 'm ago';
+      else timeStr = Math.floor(mins / 60) + 'h ago';
+
+      document.getElementById('sessionStartTime').textContent = timeStr + ' · ' + exchanges + ' exchange' + (exchanges !== 1 ? 's' : '');
+    }
+
+    function updateStatus(status) {
+      const dot = document.getElementById('statusDot');
+      const label = document.getElementById('statusLabel');
+      const map = {
+        ready: { cls: '', text: 'Ready' },
+        retrieving: { cls: 'retrieving', text: 'Retrieving…' },
+        generating: { cls: 'generating', text: 'Generating…' },
+        offline: { cls: 'offline', text: 'Offline' }
+      };
+      const s = map[status] || map.ready;
+      dot.className = 'status-dot ' + s.cls;
+      label.textContent = s.text;
+    }
+
+    function updatePipeline(stage) {
+      const nodes = ['query', 'retriever', 'llm', 'response'];
+      const lines = ['line-1', 'line-2', 'line-3'];
+      nodes.forEach((n, i) => {
+        const el = document.getElementById('node-' + n);
+        el.classList.remove('active', 'done');
+        if (i < stage) el.classList.add('done');
+        if (i === stage) el.classList.add('active');
+      });
+      lines.forEach((l, i) => {
+        document.getElementById(l).classList.toggle('active', i < stage);
+      });
+    }
+
+    function resetPipeline() {
+      updatePipeline(-1);
+    }
+
+    function updateStats() {
+      const msgCount = Math.floor(data.chatHistory.filter(m => m.role === 'user').length);
+      document.getElementById('statMessages').textContent = msgCount;
+      const avg = responseTimes.length
+        ? (responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length / 1000).toFixed(1) + 's'
+        : '—';
+      document.getElementById('statTime').textContent = avg;
+      const lastTime = responseTimes.length
+        ? (responseTimes[responseTimes.length - 1] / 1000).toFixed(1) + 's'
+        : '—';
+      document.getElementById('miniLogText').textContent = responseTimes.length
+        ? 'Last: ' + lastTime + ' · ' + msgCount + ' total'
+        : 'No queries yet';
+      updateSessionInfo();
+    }
+
+    function updateDashboard() {
+      const company = data.persona.company || 'Nova Finance';
+      const role = data.persona.role || company + ' AI Assistant';
+      document.getElementById('botName').textContent = role;
+      document.getElementById('botRole').textContent = company;
+      updateSessionInfo();
+      updateStats();
+    }
+
+    // ── GENERATE NEW COMPANY ──
+    async function generateNewCompany() {
+      const name = prompt('Enter company name:', '');
+      if (!name || !name.trim()) return;
+
+      updateStatus('retrieving');
+      updatePipeline(0);
+
+      try {
+        updatePipeline(1);
+        const res = await fetch('/api/generate-kb', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ companyName: name.trim() })
+        });
+
+        updateStatus('generating');
+        updatePipeline(2);
+
+        const kb = await res.json();
+
+        if (!res.ok) {
+          throw new Error(kb.error || 'Generation failed');
+        }
+
+        updatePipeline(3);
+
+        data.persona.company = kb.company || name.trim();
+        data.persona.role = kb.role || (name.trim() + ' AI Assistant');
+        data.persona.instructions = kb.instructions || data.persona.instructions;
+        data.kb.about = kb.about || '';
+        data.kb.products = kb.products || '';
+        data.kb.faq = kb.faq || '';
+        data.kb.policies = kb.policies || '';
+        data.chatHistory = [];
+
+        saveToStorage();
+        loadEditors();
+        initLeftPanel();
+        updateChatBotName();
+        switchTab('code');
+
+        setTimeout(() => {
+          updateStatus('ready');
+          resetPipeline();
+        }, 800);
+      } catch (err) {
+        updateStatus('offline');
+        resetPipeline();
+        alert('Failed to generate: ' + err.message);
+      }
+    }
+
     // ── LEFT PANEL ──
     function initLeftPanel() {
+      updateDashboard();
       const company = data.persona.company || 'Nova Finance';
       const chipContainer = document.getElementById('leftChips');
       chipContainer.innerHTML = '';
@@ -1718,12 +2055,19 @@
       addMessage("user", question);
       data.chatHistory.push({ role: "user", content: question });
       saveToStorage();
+      updateStats();
 
       const typingId = showTyping();
       isLoading = true;
       document.getElementById("sendBtn").disabled = true;
 
+      updateStatus('retrieving');
+      updatePipeline(0);
+
+      const startTime = performance.now();
+
       try {
+        updatePipeline(1);
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1737,19 +2081,34 @@
           }),
         });
 
+        updateStatus('generating');
+        updatePipeline(2);
+
         const responseData = await res.json();
         removeTyping(typingId);
+
+        updatePipeline(3);
 
         if (res.ok) {
           addMessage("bot", responseData.answer);
           data.chatHistory.push({ role: "assistant", content: responseData.answer });
+          responseTimes.push(performance.now() - startTime);
+          if (responseTimes.length > 10) responseTimes.shift();
         } else {
           addMessage("bot", responseData.error || "Something went wrong. Please try again.");
         }
         saveToStorage();
+        updateStats();
+
+        setTimeout(() => {
+          updateStatus('ready');
+          resetPipeline();
+        }, 800);
       } catch {
         removeTyping(typingId);
         addMessage("bot", "Could not reach the server. Please check your connection and try again.");
+        updateStatus('offline');
+        resetPipeline();
       }
 
       isLoading = false;
@@ -1809,6 +2168,22 @@
       container.innerHTML = "";
       const company = data.persona.company || "Nova Finance";
       addMessage("bot", `Chat cleared. I'm the ${company} AI assistant — ask me anything about our products and services.`);
+      updateStats();
+    }
+
+    function copyLog() {
+      const text = data.chatHistory.map(m =>
+        (m.role === 'user' ? 'You: ' : 'Bot: ') + m.content
+      ).join('\n\n');
+      if (!text) return;
+      navigator.clipboard.writeText(text).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      });
     }
 
     function restoreChat() {

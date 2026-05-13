@@ -1,0 +1,94 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ./index.html
+      - generic [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ./lab.html
+        - generic [ref=e7]: /
+        - generic [ref=e8]: RAG Chatbot
+    - generic [ref=e9]:
+      - generic [ref=e10]: LIVE DEMO
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 
+  - main [ref=e13]:
+    - generic [ref=e15]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: Nova Finance AI Assistant
+          - generic [ref=e20]: Nova Finance
+        - generic [ref=e23]: Ready
+      - generic [ref=e24]:
+        - generic [ref=e25]: RAG Pipeline
+        - generic [ref=e26]:
+          - generic [ref=e29]: Query
+          - generic [ref=e33]: Retriever
+          - generic [ref=e37]: LLM
+          - generic [ref=e41]: Response
+      - generic [ref=e43]:
+        - generic [ref=e44]: Knowledge Base
+        - generic [ref=e45]:
+          - generic [ref=e46]: 4 sections loaded
+          - generic [ref=e47]:
+            - generic "About" [ref=e48] [cursor=pointer]
+            - generic "Products" [ref=e49] [cursor=pointer]
+            - generic "FAQ" [ref=e50] [cursor=pointer]
+            - generic "Policies" [ref=e51] [cursor=pointer]
+        - button " Edit Knowledge Base" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+          - text: Edit Knowledge Base
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: "0"
+            - generic [ref=e59]: Messages
+          - generic [ref=e60]:
+            - generic [ref=e61]: —
+            - generic [ref=e62]: Avg Time
+        - generic [ref=e63]:
+          - generic [ref=e64]: 
+          - generic [ref=e65]: No queries yet
+      - generic [ref=e66]:
+        - generic [ref=e67]: Try asking
+        - generic [ref=e68]:
+          - button "What does Nova Finance do?" [ref=e69] [cursor=pointer]
+          - button "What products does Nova Finance offer?" [ref=e70] [cursor=pointer]
+          - button "What are common questions about Nova Finance?" [ref=e71] [cursor=pointer]
+          - button "What are Nova Finance's policies?" [ref=e72] [cursor=pointer]
+      - button " Open Console" [ref=e73] [cursor=pointer]:
+        - generic [ref=e74]: 
+        - text: Open Console
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - button " Preview" [ref=e77] [cursor=pointer]:
+          - generic [ref=e78]: 
+          - text: Preview
+        - button " Console" [ref=e79] [cursor=pointer]:
+          - generic [ref=e80]: 
+          - text: Console
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - generic [ref=e86]:
+            - generic [ref=e87]: Nova Finance AI
+            - generic [ref=e88]: Powered by Gemini
+          - button "Clear chat" [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]: 
+        - generic [ref=e93]:
+          - generic [ref=e95]: 
+          - generic [ref=e96]:
+            - text: Hi! I'm the
+            - strong [ref=e97]: Nova Finance
+            - text: AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
+            - generic [ref=e98]:
+              - button "What are your loan interest rates?" [ref=e99] [cursor=pointer]
+              - button "How do I apply?" [ref=e100] [cursor=pointer]
+              - button "What documents do I need?" [ref=e101] [cursor=pointer]
+              - button "Can I repay early?" [ref=e102] [cursor=pointer]
+        - generic [ref=e103]:
+          - textbox "Ask a question..." [ref=e104]
+          - button "Send message" [ref=e105] [cursor=pointer]:
+            - generic [ref=e106]: 
+      - text:         
+  - contentinfo [ref=e107]:
+    - paragraph [ref=e108]: Copyright © 2026 Aliya Koy. All Rights Reserved.
