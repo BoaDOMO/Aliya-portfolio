@@ -2413,6 +2413,8 @@
       if (data.chatHistory.length === 0) return;
 
       container.innerHTML = "";
+      var company = data.persona.company || 'Nova Finance';
+      addMessage('bot', "Hi! I'm the " + company + " AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.", false);
       data.chatHistory.forEach(msg => {
         if (msg.role === 'user') addMessage('user', msg.content, false);
         else if (msg.role === 'assistant') addMessage('bot', msg.content, false);
