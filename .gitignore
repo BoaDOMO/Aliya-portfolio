@@ -1,3 +1,5 @@
 node_modules/
 .DS_Store
-.env
+.env.playwright-mcp
+rag*-chat*.png
+index-1680.png
