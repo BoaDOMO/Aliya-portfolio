@@ -626,12 +626,12 @@ footer p {
 
 .page-hero {
   @apply flex flex-col items-center justify-center text-center min-h-[86vh] gap-5;
-  padding: var(--spacing-8) 5%;
+  padding: var(--spacing-8) 0;
 }
 
 .page-hero-sm {
   @apply min-h-[40vh] gap-3;
-  padding: var(--spacing-16) 5% var(--spacing-8);
+  padding: var(--spacing-16) 0 var(--spacing-8);
 }
 
 .lab-hero {
@@ -640,10 +640,8 @@ footer p {
   align-items: flex-start;
   text-align: left;
   justify-content: center;
-  padding: var(--spacing-10) 5%;
+  padding: var(--spacing-10) 0;
 }
-
-/* NEURAL LINKS EFFECT */
 
 .neural-links-canvas {
   @apply absolute top-0 left-0 w-full h-full pointer-events-none opacity-50;
@@ -702,7 +700,7 @@ footer p {
   gap: var(--spacing-14);
   align-items: center;
   min-height: 80vh;
-  padding: var(--spacing-16) 5% var(--spacing-10);
+  padding: var(--spacing-16) 0 var(--spacing-10);
 }
 
 .contact-hero-photo {
@@ -1669,13 +1667,6 @@ footer a:hover {
   .menu-links {
     left: -100vw;
     width: 100vw;
-  }
-}
-
-/* ── LARGE DESKTOP: 1280px – 1535px ── */
-@media screen and (min-width: 1280px) {
-  html {
-    font-size: 1.05rem;
   }
 }
 

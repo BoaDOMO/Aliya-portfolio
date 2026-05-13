@@ -1067,12 +1067,12 @@ footer p {
   justify-content: center;
   gap: var(--spacing-5);
   text-align: center;
-  padding: var(--spacing-8) 5%;
+  padding: var(--spacing-8) 0;
 }
 .page-hero-sm {
   min-height: 40vh;
   gap: var(--spacing-3);
-  padding: var(--spacing-16) 5% var(--spacing-8);
+  padding: var(--spacing-16) 0 var(--spacing-8);
 }
 .lab-hero {
   position: relative;
@@ -1081,7 +1081,7 @@ footer p {
   align-items: flex-start;
   text-align: left;
   justify-content: center;
-  padding: var(--spacing-10) 5%;
+  padding: var(--spacing-10) 0;
 }
 .neural-links-canvas {
   pointer-events: none;
@@ -1155,7 +1155,7 @@ footer p {
   gap: var(--spacing-14);
   align-items: center;
   min-height: 80vh;
-  padding: var(--spacing-16) 5% var(--spacing-10);
+  padding: var(--spacing-16) 0 var(--spacing-10);
 }
 .contact-hero-photo {
   flex-shrink: 0;
@@ -2031,11 +2031,6 @@ footer a:hover {
   .menu-links {
     left: -100vw;
     width: 100vw;
-  }
-}
-@media screen and (min-width: 1280px) {
-  html {
-    font-size: 1.05rem;
   }
 }
 @media screen and (min-width: 1920px) {
