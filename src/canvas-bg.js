@@ -33,6 +33,19 @@ class CanvasBackground {
   }
 
   initMode() {
+    if (!this.auroraLayers) {
+      this.auroraLayers = [];
+      var count = 3 + Math.floor(Math.random() * 2);
+      for (var i = 0; i < count; i++) {
+        this.auroraLayers.push({
+          amp: 40 + Math.random() * 40,
+          speed: 0.5 + Math.random() * 1,
+          freq: 0.002 + Math.random() * 0.003,
+          offset: Math.random() * 2
+        });
+      }
+    }
+
     if (this.mode === 'constellations') {
       this.stars = [];
       var w = this.canvas.width;
@@ -62,11 +75,9 @@ class CanvasBackground {
           size: Math.random() * 0.5 + 0.3, type: 'field'
         });
       }
-
-      this.auroraPhase = 0;
-    } else {
-      this.auroraPhase = 0;
     }
+
+    this.auroraPhase = 0;
   }
 
   start() {
@@ -114,33 +125,24 @@ class CanvasBackground {
     var h = this.canvas.height;
     var ah = h * 0.35;
     var alpha = warm ? 0.07 : 0.04;
+    var palette = warm
+      ? ['rgba(220, 170, 80, ', 'rgba(210, 140, 120, ', 'rgba(200, 100, 140, ', 'rgba(230, 190, 100, ']
+      : ['rgba(30, 180, 120, ', 'rgba(50, 130, 220, ', 'rgba(140, 60, 200, ', 'rgba(60, 200, 180, '];
 
-    var layers = warm
-      ? [
-          { offset: 0, amp: 60, speed: 1, color: 'rgba(220, 170, 80, ' },
-          { offset: 0.5, amp: 80, speed: 0.7, color: 'rgba(210, 140, 120, ' },
-          { offset: 1.2, amp: 50, speed: 1.3, color: 'rgba(200, 100, 140, ' }
-        ]
-      : [
-          { offset: 0, amp: 60, speed: 1, color: 'rgba(30, 180, 120, ' },
-          { offset: 0.5, amp: 80, speed: 0.7, color: 'rgba(50, 130, 220, ' },
-          { offset: 1.2, amp: 50, speed: 1.3, color: 'rgba(140, 60, 200, ' }
-        ];
-
-    for (var l = 0; l < layers.length; l++) {
-      var lay = layers[l];
+    for (var l = 0; l < this.auroraLayers.length; l++) {
+      var lay = this.auroraLayers[l];
       ctx.beginPath();
-      ctx.moveTo(0, ah * (1 + lay.offset * 0.15) + Math.sin(this.auroraPhase * lay.speed) * 20);
+      ctx.moveTo(0, ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20);
       for (var x = 0; x <= w; x += 20) {
-        var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * 0.003) * lay.amp
-                 + Math.sin((x + this.auroraPhase * 60 * lay.speed) * 0.007) * lay.amp * 0.4;
-        var y = ah * (1 + lay.offset * 0.15) + wave;
+        var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
+                 + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
+        var y = ah * (1 + lay.offset * 0.1) + wave;
         ctx.lineTo(x, y);
       }
-      ctx.lineTo(w, ah * 0.7 + lay.offset * 20);
-      ctx.lineTo(0, ah * 0.7 + lay.offset * 20);
+      ctx.lineTo(w, ah * 0.7 + lay.offset * 10);
+      ctx.lineTo(0, ah * 0.7 + lay.offset * 10);
       ctx.closePath();
-      ctx.fillStyle = lay.color + alpha + ')';
+      ctx.fillStyle = palette[l % palette.length] + alpha + ')';
       ctx.fill();
     }
   }
