@@ -729,7 +729,8 @@ footer p {
 }
 
 .contact-hero-text {
-  @apply flex flex-col text-left gap-5;
+  @apply flex flex-col text-left;
+  gap: var(--spacing-4);
 }
 
 .contact-hero-text .hero-name {
@@ -742,7 +743,8 @@ footer p {
 }
 
 .contact-info-list {
-  @apply flex flex-col gap-4 mt-6;
+  @apply flex flex-col gap-4;
+  margin-top: var(--spacing-4);
 }
 
 .contact-info-item {

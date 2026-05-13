@@ -1182,8 +1182,8 @@ footer p {
 .contact-hero-text {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-5);
   text-align: left;
+  gap: var(--spacing-4);
 }
 .contact-hero-text .hero-name {
   font-size: 4.5rem;
@@ -1193,10 +1193,10 @@ footer p {
   max-width: 450px;
 }
 .contact-info-list {
-  margin-top: var(--spacing-6);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
+  margin-top: var(--spacing-4);
 }
 .contact-info-item {
   display: flex;
