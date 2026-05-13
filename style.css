@@ -1155,7 +1155,7 @@ footer p {
   align-items: center;
   gap: var(--spacing-10);
   min-height: calc(100vh - 140px);
-  padding: var(--spacing-6) 0 var(--spacing-8);
+  padding: 2rem 0;
 }
 .contact-hero-photo {
   flex-shrink: 0;
@@ -1183,7 +1183,7 @@ footer p {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: var(--spacing-4);
+  gap: 1rem;
 }
 .contact-hero-text .hero-name {
   font-size: 4.5rem;
@@ -1986,7 +1986,7 @@ footer a:hover {
     text-align: center;
     gap: var(--spacing-4);
     min-height: auto;
-    padding: var(--spacing-8) 5%;
+    padding: 2rem 5%;
   }
   .contact-hero-photo {
     width: 140px;
