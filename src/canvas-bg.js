@@ -41,13 +41,8 @@ class CanvasBackground {
           amp: 40 + Math.random() * 40,
           speed: 0.5 + Math.random() * 1,
           freq: 0.002 + Math.random() * 0.003,
-          offset: Math.random() * 2,
-          rays: []
+          offset: Math.random() * 2
         });
-        var last = this.auroraLayers[this.auroraLayers.length - 1];
-        for (var r = 0; r < 40 + Math.floor(Math.random() * 30); r++) {
-          last.rays.push({ xf: Math.random(), len: 10 + Math.random() * 50 });
-        }
       }
     }
 
@@ -136,52 +131,32 @@ class CanvasBackground {
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
 
-    // Aurora bands
-    for (var l = 0; l < this.auroraLayers.length; l++) {
-      var lay = this.auroraLayers[l];
-      var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
-      var bottomY = ah * 0.7 + lay.offset * 10;
+    for (var pass = 0; pass < 2; pass++) {
+      ctx.filter = pass === 0 ? 'blur(6px)' : 'none';
+      var alpha = pass === 0 ? (warm ? '0.12' : '0.08') : (warm ? '0.06' : '0.035');
 
-      ctx.beginPath();
-      ctx.moveTo(0, topBase);
-      for (var x = 0; x <= w; x += 20) {
-        var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
-                 + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
-        ctx.lineTo(x, topBase + wave);
+      for (var l = 0; l < this.auroraLayers.length; l++) {
+        var lay = this.auroraLayers[l];
+        var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
+        var bottomY = ah * 0.7 + lay.offset * 10;
+
+        ctx.beginPath();
+        ctx.moveTo(0, topBase);
+        for (var x = 0; x <= w; x += 20) {
+          var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
+                   + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
+          ctx.lineTo(x, topBase + wave);
+        }
+        ctx.lineTo(w, bottomY);
+        ctx.lineTo(0, bottomY);
+        ctx.closePath();
+
+        ctx.fillStyle = palette[l % palette.length] + alpha + ')';
+        ctx.fill();
       }
-      ctx.lineTo(w, bottomY);
-      ctx.lineTo(0, bottomY);
-      ctx.closePath();
-
-      var grad = ctx.createLinearGradient(0, topBase - lay.amp, 0, bottomY);
-      var a1 = warm ? '0.10' : '0.06';
-      var a2 = warm ? '0.04' : '0.025';
-      grad.addColorStop(0, palette[l % palette.length] + a1 + ')');
-      grad.addColorStop(0.4, palette[l % palette.length] + a2 + ')');
-      grad.addColorStop(1, palette[l % palette.length] + '0)');
-      ctx.fillStyle = grad;
-      ctx.fill();
     }
 
-    // 3. Vertical rays (aurora curtain)
     ctx.filter = 'none';
-    ctx.lineWidth = 1;
-    for (var l = 0; l < this.auroraLayers.length; l++) {
-      var lay = this.auroraLayers[l];
-      var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
-      ctx.strokeStyle = palette[l % palette.length] + (warm ? '0.035' : '0.025') + ')';
-      ctx.beginPath();
-      for (var r = 0; r < lay.rays.length; r++) {
-        var ray = lay.rays[r];
-        var x = ray.xf * w;
-        var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
-                 + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
-        ctx.moveTo(x, topBase + wave);
-        ctx.lineTo(x, topBase + wave + ray.len);
-      }
-      ctx.stroke();
-    }
-
     ctx.restore();
   }
 
