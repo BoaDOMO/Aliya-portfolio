@@ -141,19 +141,10 @@
       gap: 1px;
     }
 
-    /* ── LEFT PANEL: AI PROFILE CARD ── */
-    .panel-profile {
+    /* ── LEFT PANEL: INSTRUCTION CARD ── */
+    .instruction-card {
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
-      padding: var(--spacing-4) var(--spacing-3);
-    }
-
-    .profile-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
       flex: 1;
       padding: var(--spacing-4) var(--spacing-3);
       background: var(--color-card);
@@ -161,181 +152,155 @@
       border: 1px solid var(--color-border);
       border-radius: 14px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
-      gap: 0;
-    }
-
-    .profile-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--color-blue), var(--color-dark-blue));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-body);
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: #fff;
-      flex-shrink: 0;
-      margin-bottom: 0.85rem;
-    }
-
-    .profile-company {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-style: italic;
-      color: var(--color-blue);
-      line-height: 1.3;
-    }
-
-    .profile-role {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--color-text-muted);
-      margin-top: 0.15rem;
-      letter-spacing: 0.02em;
-    }
-
-    .profile-tagline {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--color-text-gray);
-      line-height: 1.55;
-      margin-top: 0.6rem;
-      text-align: center;
-      max-width: 90%;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+      position: relative;
       overflow: hidden;
     }
 
-    .profile-status {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.75rem;
+    .instruction-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue), var(--color-dark-blue));
+    }
+
+    .instruction-section {
+      margin-bottom: var(--spacing-3);
+    }
+
+    .instruction-section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .instruction-label {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--color-text-muted);
-      letter-spacing: 0.05em;
-    }
-
-    .profile-status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
-      animation: statusPulse 2.5s ease-in-out infinite;
-    }
-
-    @keyframes statusPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-      50% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08); }
-    }
-
-    .profile-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--color-border);
-      margin: 1rem 0;
-    }
-
-    .kb-label {
-      font-family: var(--font-mono);
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: 0.5rem;
-      align-self: flex-start;
-    }
-
-    .profile-sections {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    .profile-section-row {
+      color: var(--color-blue);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.55rem 0.6rem;
-      border-radius: 8px;
-      cursor: pointer;
+      gap: 0.35rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .instruction-text {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       color: var(--color-text-gray);
-      transition: all 150ms ease;
+      line-height: 1.65;
     }
 
-    .profile-section-row:hover {
-      background: rgba(24, 95, 165, 0.06);
-      color: var(--color-blue);
-      padding-left: 0.85rem;
-      padding-right: 0.35rem;
+    .instruction-text strong {
+      color: var(--color-near-black);
+      font-weight: 600;
     }
 
-    .profile-section-row .section-arrow {
-      font-size: 0.6rem;
-      color: var(--color-text-muted);
-      transition: transform 150ms ease, color 150ms ease;
+    /* ── STEP GROUP ── */
+    .step-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-left: 1.6rem;
     }
 
-    .profile-section-row:hover .section-arrow {
-      color: var(--color-blue);
-      transform: translateX(2px);
-    }
-
-    .profile-section-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .profile-section-dot.filled {
-      background: #22c55e;
-    }
-
-    .profile-section-dot.empty {
+    .step-group::before {
+      content: '';
+      position: absolute;
+      left: 1.1rem;
+      top: 1.3rem;
+      bottom: 0.8rem;
+      width: 1.5px;
       background: var(--color-border);
     }
 
-    .profile-section-label {
+    .step-row {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.7rem;
+      padding: 0.5rem 0;
+      position: relative;
     }
 
-    .profile-console-link {
-      margin-top: auto;
-      padding-top: 1.25rem;
-      font-family: var(--font-mono);
+    .step-marker {
+      position: absolute;
+      left: -1.6rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--color-card);
+      border: 1.5px solid var(--color-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      transition: color 150ms ease;
-      background: none;
-      border: none;
-    }
-
-    .profile-console-link:hover {
       color: var(--color-blue);
+      flex-shrink: 0;
+      z-index: 1;
+      transition: all 200ms ease;
     }
 
-    .profile-hint {
+    .step-row:hover .step-marker {
+      background: var(--color-blue);
+      color: var(--color-card);
+      transform: scale(1.1);
+    }
+
+    .step-content {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-text-gray);
+      line-height: 1.4;
+    }
+
+    .step-content strong {
+      color: var(--color-near-black);
+      font-weight: 600;
+    }
+
+    /* ── DIVIDER ── */
+    .card-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--color-border), transparent);
+      margin: var(--spacing-2) 0;
+    }
+
+    /* ── CHIP GROUP ── */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    /* ── KB STATUS ── */
+    .kb-status {
       font-family: var(--font-mono);
       font-size: 0.58rem;
       color: var(--color-text-muted);
-      margin-top: 0.75rem;
-      text-align: center;
-      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .kb-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+      50% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08); }
     }
 
     /* ── RIGHT PANEL ── */
@@ -990,7 +955,7 @@
       border-color: rgba(163, 177, 138, 0.25);
     }
 
-    :root[data-theme="dark"] .profile-card {
+    :root[data-theme="dark"] .instruction-card {
       background: rgba(22, 22, 24, 0.85);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -998,24 +963,26 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
     }
 
-    :root[data-theme="dark"] .profile-avatar {
-      background: linear-gradient(135deg, var(--color-blue), rgba(163, 177, 138, 0.6));
-    }
-
-    :root[data-theme="dark"] .profile-company { color: var(--color-blue); }
-
-    :root[data-theme="dark"] .profile-tagline { color: var(--color-text-gray); }
-
-    :root[data-theme="dark"] .profile-section-row:hover {
-      background: rgba(163, 177, 138, 0.08);
+    :root[data-theme="dark"] .step-marker {
+      background: transparent;
+      border-color: var(--color-blue);
       color: var(--color-blue);
     }
 
-    :root[data-theme="dark"] .profile-section-row:hover .section-arrow {
-      color: var(--color-blue);
+    :root[data-theme="dark"] .step-row:hover .step-marker {
+      background: var(--color-blue);
+      color: #0F172A;
     }
 
-    :root[data-theme="dark"] .profile-console-link:hover { color: var(--color-blue); }
+    :root[data-theme="dark"] .instruction-text,
+    :root[data-theme="dark"] .step-content {
+      color: var(--color-text-gray);
+    }
+
+    :root[data-theme="dark"] .instruction-text strong,
+    :root[data-theme="dark"] .step-content strong {
+      color: var(--color-near-black);
+    }
 
     :root[data-theme="dark"] .tab-bar {
       background: rgba(255, 255, 255, 0.06);
@@ -1226,13 +1193,12 @@
       .message.message-new { animation: none; }
       .typing-dot { animation: none; opacity: 0.6; }
       .preview-header-dot { animation: none; }
-      .profile-status-dot { animation: none; }
+      .kb-status-dot { animation: none; }
       .tab-btn.active { animation: none; }
       .suggestion-chip:hover { transform: none; }
       .btn-code-primary:hover { transform: none; }
       .send-btn:hover { transform: none; }
-      .profile-section-row:hover { padding-left: 0.6rem; padding-right: 0.6rem; }
-      .profile-section-row:hover .section-arrow { transform: none; }
+      .step-row:hover .step-marker { transform: none; }
     }
 
     /* ── MOBILE ── */
@@ -1276,26 +1242,47 @@
 
   <main class="demo-body">
 
-    <!-- ── LEFT: AI PROFILE CARD ── -->
+    <!-- ── LEFT: INSTRUCTION CARD ── -->
     <div class="panel-profile">
-      <div class="profile-card" id="profileCard">
-        <div class="profile-avatar" id="profileAvatar">NF</div>
-        <div class="profile-company" id="profileCompany">Nova Finance</div>
-        <div class="profile-role" id="profileRole">AI Assistant</div>
-        <div class="profile-tagline" id="profileTagline"></div>
-        <div class="profile-status">
-          <span class="profile-status-dot"></span>
-          Active
+      <div class="instruction-card">
+        <div class="instruction-section">
+          <div class="instruction-label">🤖 What is this?</div>
+          <p class="instruction-text">
+            A <strong>RAG chatbot</strong> that answers questions using <strong>only your knowledge base</strong> — every response is grounded in the content you provide.
+          </p>
         </div>
-        <div class="profile-divider"></div>
-        <div class="kb-label">Knowledge Base</div>
-        <div class="profile-sections" id="profileSections">
-          <!-- populated by JS -->
+
+        <div class="instruction-section">
+          <div class="instruction-label">⚡ How it works</div>
+          <div class="step-group">
+            <div class="step-row">
+              <div class="step-marker">1</div>
+              <div class="step-content"><strong>Edit</strong> your knowledge base in the Console tab</div>
+            </div>
+            <div class="step-row">
+              <div class="step-marker">2</div>
+              <div class="step-content"><strong>Save</strong> to update the AI assistant</div>
+            </div>
+            <div class="step-row">
+              <div class="step-marker">3</div>
+              <div class="step-content"><strong>Switch</strong> to Preview and start chatting</div>
+            </div>
+          </div>
         </div>
-        <div class="profile-hint">Click a section to ask about it</div>
-        <button class="profile-console-link" onclick="switchTab('code')">
-          <i class="fa-solid fa-sliders"></i> Edit in Console
-        </button>
+
+        <div class="card-divider"></div>
+
+        <div class="instruction-section">
+          <div class="instruction-label">💡 Try asking</div>
+          <div class="chip-group" id="leftChips">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="kb-status">
+          <span class="kb-status-dot"></span>
+          <span id="kbStatusText">Loading...</span>
+        </div>
       </div>
     </div>
 
@@ -1532,7 +1519,7 @@
 
       activeFile = data.activeFile || 'persona';
       loadEditors();
-      updateProfile();
+      initLeftPanel();
       updateChatBotName();
       restoreChat();
 
@@ -1549,40 +1536,33 @@
     }
 
     // ── PROFILE CARD ──
-    function updateProfile() {
+    function initLeftPanel() {
       const company = data.persona.company || 'Nova Finance';
-      const role = data.persona.role || 'AI Assistant';
+      const chipContainer = document.getElementById('leftChips');
+      chipContainer.innerHTML = '';
 
-      document.getElementById('profileAvatar').textContent = getInitials(company);
-      document.getElementById('profileCompany').textContent = company;
-      document.getElementById('profileRole').textContent = role;
+      const generalChips = [
+        'What are your loan interest rates?',
+        'How do I apply?',
+      ];
 
-      const aboutText = data.kb.about || '';
-      const taglineEl = document.getElementById('profileTagline');
-      if (aboutText) {
-        taglineEl.textContent = aboutText.length > 100 ? aboutText.slice(0, 100).trim() + '…' : aboutText;
-      } else {
-        taglineEl.textContent = '';
-      }
-
-      const sectionsContainer = document.getElementById('profileSections');
-      sectionsContainer.innerHTML = '';
-
+      const sectionChips = [];
       KB_SECTIONS.forEach(section => {
         const hasContent = data.kb[section.key] && data.kb[section.key].trim().length > 0;
-        const row = document.createElement('div');
-        row.className = 'profile-section-row';
-        row.innerHTML = `
-          <span class="profile-section-label">
-            <span class="profile-section-dot ${hasContent ? 'filled' : 'empty'}"></span>
-            ${section.label}
-          </span>
-          <span class="section-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-        `;
-        const question = section.question.replace('{company}', company);
-        row.addEventListener('click', () => {
+        if (hasContent) {
+          sectionChips.push(section.question.replace('{company}', company));
+        }
+      });
+
+      const allChips = [...generalChips, ...sectionChips];
+      allChips.forEach(text => {
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.type = 'button';
+        chip.textContent = text;
+        chip.addEventListener('click', () => {
           const input = document.getElementById('chatInput');
-          input.value = question;
+          input.value = text;
           if (document.getElementById('tab-preview').classList.contains('active')) {
             sendMessage();
           } else {
@@ -1590,8 +1570,12 @@
             setTimeout(sendMessage, 100);
           }
         });
-        sectionsContainer.appendChild(row);
+        chipContainer.appendChild(chip);
       });
+
+      const total = KB_SECTIONS.length;
+      const filled = KB_SECTIONS.filter(s => data.kb[s.key] && data.kb[s.key].trim().length > 0).length;
+      document.getElementById('kbStatusText').textContent = `${filled} of ${total} articles loaded`;
     }
 
     // ── TAB SWITCHING ──
@@ -1673,7 +1657,7 @@
 
       saveToStorage();
       updateChatBotName();
-      updateProfile();
+      initLeftPanel();
       showSaveStatus();
     }
 
