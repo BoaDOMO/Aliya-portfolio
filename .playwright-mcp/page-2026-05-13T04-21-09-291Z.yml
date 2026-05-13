@@ -1,0 +1,95 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ./index.html
+      - generic [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ./lab.html
+        - generic [ref=e7]: /
+        - generic [ref=e8]: RAG Chatbot
+    - generic [ref=e9]:
+      - generic [ref=e10]: LIVE DEMO
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 
+  - main [ref=e13]:
+    - generic [ref=e15]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: Nova Finance AI Assistant
+          - generic [ref=e20]: TestCorp
+        - generic [ref=e23]: Offline
+      - generic [ref=e24]:
+        - generic [ref=e25]: RAG Pipeline
+        - generic [ref=e26]:
+          - generic [ref=e29]: Query
+          - generic [ref=e33]: Retriever
+          - generic [ref=e37]: LLM
+          - generic [ref=e41]: Response
+      - generic [ref=e43]:
+        - generic [ref=e44]: Knowledge Base
+        - generic [ref=e45]:
+          - generic [ref=e46]: 4 sections loaded
+          - generic [ref=e47]:
+            - generic "About" [ref=e48] [cursor=pointer]
+            - generic "Products" [ref=e49] [cursor=pointer]
+            - generic "FAQ" [ref=e50] [cursor=pointer]
+            - generic "Policies" [ref=e51] [cursor=pointer]
+        - button " Edit Knowledge Base" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+          - text: Edit Knowledge Base
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: "1"
+          - generic [ref=e59]: Messages
+        - generic [ref=e60]:
+          - generic [ref=e61]: —
+          - generic [ref=e62]: Avg Time
+      - generic [ref=e63]:
+        - generic [ref=e64]: Try asking
+        - generic [ref=e65]:
+          - button "What does TestCorp do?" [ref=e66] [cursor=pointer]
+          - button "What products does TestCorp offer?" [ref=e67] [cursor=pointer]
+          - button "What are common questions about TestCorp?" [ref=e68] [cursor=pointer]
+          - button "What are TestCorp's policies?" [ref=e69] [cursor=pointer]
+      - button " Open Console" [ref=e70] [cursor=pointer]:
+        - generic [ref=e71]: 
+        - text: Open Console
+    - generic [ref=e72]:
+      - generic [ref=e73]:
+        - button " Preview" [ref=e74] [cursor=pointer]:
+          - generic [ref=e75]: 
+          - text: Preview
+        - button " Console" [ref=e76] [cursor=pointer]:
+          - generic [ref=e77]: 
+          - text: Console
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e83]:
+            - generic [ref=e84]: TestCorp AI
+            - generic [ref=e85]: Powered by Gemini
+          - button "Clear chat" [ref=e87] [cursor=pointer]:
+            - generic [ref=e88]: 
+        - generic [ref=e89]:
+          - generic [ref=e90]:
+            - generic [ref=e92]: 
+            - generic [ref=e93]:
+              - text: Hi! I'm the
+              - strong [ref=e94]: Nova Finance
+              - text: AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
+              - generic [ref=e95]:
+                - button "What are your loan interest rates?" [ref=e96] [cursor=pointer]
+                - button "How do I apply?" [ref=e97] [cursor=pointer]
+                - button "What documents do I need?" [ref=e98] [cursor=pointer]
+                - button "Can I repay early?" [ref=e99] [cursor=pointer]
+          - generic [ref=e107]: What are your interest rates?
+          - generic [ref=e108]:
+            - generic [ref=e110]: 
+            - generic [ref=e111]: Could not reach the server. Please check your connection and try again.
+        - generic [ref=e100]:
+          - textbox "Ask a question..." [active] [ref=e101]
+          - button "Send message" [ref=e102] [cursor=pointer]:
+            - generic [ref=e103]: 
+      - text:         
+  - contentinfo [ref=e104]:
+    - paragraph [ref=e105]: Copyright © 2026 Aliya Koy. All Rights Reserved.

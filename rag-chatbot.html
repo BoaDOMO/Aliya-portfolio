@@ -172,7 +172,7 @@
     }
 
     .instruction-section {
-      margin-bottom: var(--spacing-4);
+      margin-bottom: var(--spacing-3);
     }
 
     .instruction-section:last-of-type {
@@ -444,6 +444,128 @@
 
     .console-btn.secondary:hover {
       background: rgba(24, 95, 165, 0.05);
+    }
+
+    /* ── COMPANY PICKER ── */
+    .company-picker-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .company-picker-overlay.open { display: flex; }
+
+    .company-picker-modal {
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: var(--spacing-4);
+      max-width: 560px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .company-picker-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue), var(--color-dark-blue));
+    }
+
+    .company-picker-title {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      margin-bottom: 0.15rem;
+    }
+
+    .company-picker-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: var(--spacing-3);
+    }
+
+    .company-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.65rem 0.3rem;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 200ms ease;
+      text-align: center;
+    }
+
+    .company-card:hover {
+      border-color: var(--color-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.1);
+    }
+
+    .company-card:active {
+      transform: translateY(0);
+      background: rgba(24, 95, 165, 0.06);
+    }
+
+    .company-card-icon { font-size: 1.3rem; line-height: 1; }
+
+    .company-card-name {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      line-height: 1.15;
+    }
+
+    .company-card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .picker-cancel {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0.4rem 1rem;
+      transition: all 200ms ease;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .picker-cancel:hover {
+      border-color: var(--color-blue);
+      color: var(--color-blue);
     }
 
     /* ── RIGHT PANEL ── */
@@ -1130,6 +1252,25 @@
       background: rgba(24, 95, 165, 0.2);
     }
 
+    :root[data-theme="dark"] .company-picker-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+
+    :root[data-theme="dark"] .company-picker-modal {
+      background: rgba(22, 22, 24, 0.95);
+      backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+    }
+
+    :root[data-theme="dark"] .company-card {
+      background: rgba(22, 22, 24, 0.8);
+    }
+
+    :root[data-theme="dark"] .company-card:hover {
+      border-color: var(--color-blue);
+    }
+
     :root[data-theme="dark"] .stat-value { color: var(--color-near-black); }
     :root[data-theme="dark"] .console-btn.secondary {
       color: var(--color-blue);
@@ -1484,9 +1625,9 @@
           </div>
         </div>
 
-        <!-- 6. Generate New Company -->
-        <button class="console-btn secondary" onclick="generateNewCompany()">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> New Company
+        <!-- 6. Try a different company -->
+        <button class="console-btn secondary" onclick="showTemplatePicker()">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i> Try a different company?
         </button>
 
       </div>
@@ -1815,57 +1956,79 @@
       updateStats();
     }
 
-    // ── GENERATE NEW COMPANY ──
-    async function generateNewCompany() {
-      const name = prompt('Enter company name:', '');
-      if (!name || !name.trim()) return;
+    // ── COMPANY TEMPLATES ──
+    const TEMPLATES = [
+      { icon: '🏦', company: 'Nova Finance', tag: 'Finance', role: 'Nova Finance AI Assistant', instructions: 'You are a helpful AI customer service assistant for Nova Finance, a digital-first microfinance institution in Cambodia. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate. Do not make up information.', about: 'Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces.', products: 'Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month\n\nBusiness Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month\n\nNova Savings Account: 5.5% annual interest | Minimum deposit $50\n\nNova Digital Wallet: Free instant transfers | 0.5% cashback on purchases', faq: 'Q: How do I apply for a loan?\nA: Apply online at novafinance.com.kh or through the Nova Finance mobile app.\n\nQ: What documents do I need?\nA: Valid Cambodian National ID or Passport and last 3 months of bank statements.\n\nQ: How long does approval take?\nA: Within 4 business hours.\n\nQ: Can I repay my loan early?\nA: Yes, with no early repayment penalties.\n\nQ: How do I contact support?\nA: Hotline 023 456 789 or email support@novafinance.com.kh.', policies: 'Eligibility: Applicants must be aged 18–65 with a minimum monthly income of $250.\n\nData Privacy: Compliant with Cambodian Law on Data Privacy.\n\nSecurity: AES-256 encryption with quarterly security audits.' },
+      { icon: '🌿', company: 'GreenLeaf Organics', tag: 'E-commerce', role: 'GreenLeaf Organics AI Assistant', instructions: 'You are a helpful AI assistant for GreenLeaf Organics, an online organic grocery store. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate.', about: 'GreenLeaf Organics is an online marketplace for organic and sustainably sourced groceries, founded in 2021. We deliver fresh produce, pantry staples, and eco-friendly household products across major cities.', products: 'Organic Produce Box: $35/week | Seasonal fruits and vegetables | Free delivery\n\nPantry Starter Pack: $60 | Grains, spices, oils, and legumes\n\nMeal Kit Subscription: $45/week | 3 recipes with pre-portioned ingredients\n\nEco-Home Bundle: $25 | Bamboo utensils, beeswax wraps, compostable bags', faq: 'Q: Where do you deliver?\nA: We deliver to all major metropolitan areas. Check your zip code on our website.\n\nQ: What is your return policy?\nA: We guarantee freshness. Report any issues within 24 hours for a full refund.\n\nQ: How often do subscriptions renew?\nA: Weekly subscriptions auto-renew every Monday. Skip or cancel anytime.\n\nQ: Do you offer wholesale?\nA: Yes, for restaurants and cafes ordering $200+.', policies: 'Eligibility: Delivery available within city limits. Minimum order $20.\n\nReturns: Perishable items must be reported within 24 hours. Non-perishables within 7 days.\n\nPrivacy: We never share customer data with third parties.' },
+      { icon: '🏨', company: 'Skyline Hotels', tag: 'Hospitality', role: 'Skyline Hotels AI Assistant', instructions: 'You are a helpful concierge AI for Skyline Hotels, a luxury hotel chain. Answer questions based ONLY on the knowledge base provided. Be polite, professional, and accurate.', about: 'Skyline Hotels is a luxury hotel chain with 12 properties across Southeast Asia, established in 2015. We specialize in boutique accommodations with rooftop infinity pools, fine dining, and curated local experiences.', products: 'Skyline Suite: $350/night | City view | King bed | 24h butler service\n\nDeluxe Room: $180/night | Partial skyline view | Premium amenities\n\nSpa Package: $120 | 60-min massage + sauna access + herbal tea\n\nAirport Transfer: $40 | Luxury sedan | Complimentary Wi-Fi', faq: 'Q: What time is check-in/check-out?\nA: Check-in from 3 PM, check-out by 11 AM.\n\nQ: Do you allow pets?\nA: Yes, small pets under 10kg are welcome with a $50 cleaning fee.\n\nQ: Is breakfast included?\nA: Yes, complimentary buffet breakfast from 6:30 to 10:30 AM daily.\n\nQ: Can I cancel my booking?\nA: Free cancellation up to 48 hours before check-in.', policies: 'Check-in: 3 PM. Early check-in subject to availability.\n\nCancellation: Free up to 48 hours. 50% charge within 24 hours.\n\nSmoking: Strictly non-smoking in rooms. Designated areas on level 3.' },
+      { icon: '🤖', company: 'Acme Robotics', tag: 'Technology', role: 'Acme Robotics AI Assistant', instructions: 'You are a helpful AI assistant for Acme Robotics, a robotics manufacturing company. Answer questions based ONLY on the knowledge base provided. Be precise and technical where appropriate.', about: 'Acme Robotics designs and manufactures industrial and consumer robotics solutions. Founded in 2018, we serve over 200 manufacturing facilities globally with automation systems and home companion robots.', products: 'PickBot 3000: $12,000 | Industrial arm robot | 50kg payload | 6-axis movement\n\nHomeMate: $899 | Home companion robot | Voice-controlled | Navigation mapping\n\nWarehouse Drone System: $25,000 | Inventory scanning | Autonomous fleet\n\nRobot Kit: $149 | DIY educational kit | 20 programmable modules', faq: 'Q: What is the warranty period?\nA: 2 years for industrial robots, 1 year for consumer products.\n\nQ: Do you provide training?\nA: Yes, free online training for all industrial robot purchases.\n\nQ: Can HomeMate integrate with smart home systems?\nA: Yes, compatible with Alexa, Google Home, and Apple HomeKit.\n\nQ: What is the lead time?\nA: Consumer products ship within 5 days. Industrial robots within 30 days.', policies: 'Warranty: 2 years industrial, 1 year consumer. Extended warranty available.\n\nReturns: Unopened products returned within 30 days for full refund.\n\nCompliance: All products meet ISO 10218 safety standards.' },
+      { icon: '💪', company: 'Pulse Fitness', tag: 'Fitness', role: 'Pulse Fitness AI Assistant', instructions: 'You are a helpful AI assistant for Pulse Fitness, a modern gym and wellness chain. Answer questions based ONLY on the knowledge base provided. Be motivating and concise.', about: 'Pulse Fitness is a modern fitness chain with 25 locations across the country, founded in 2019. We offer state-of-the-art equipment, group classes, personal training, and nutritional counseling.', products: 'Premium Membership: $79/month | Unlimited classes | Gym access | Sauna\n\nBasic Plan: $39/month | Gym access during staffed hours | Locker included\n\nPersonal Training: $60/session | 1-on-1 coaching | Customized workout plan\n\nNutrition Plan: $49/month | Weekly meal plans | Dietitian consultation', faq: 'Q: What are your hours?\nA: Most locations are open 5 AM to 11 PM, 7 days a week.\n\nQ: Is there a joining fee?\nA: Currently waived — sign up online for $0 enrollment.\n\nQ: Can I freeze my membership?\nA: Yes, freeze for up to 3 months at $10/month.\n\nQ: Do you have a student discount?\nA: Yes, 20% off with valid student ID.', policies: 'Membership: Month-to-month or annual. 30-day cancellation notice.\n\nGuest Policy: Members may bring one guest per visit. $10 guest fee.\n\nCode of Conduct: Respectful behavior required. Violation may result in membership termination.' },
+      { icon: '☕', company: 'Brew & Bean', tag: 'Food & Beverage', role: 'Brew & Bean AI Assistant', instructions: 'You are a helpful AI assistant for Brew & Bean, a specialty coffee roastery and cafe chain. Answer questions based ONLY on the knowledge base provided. Be warm and friendly.', about: 'Brew & Bean is a specialty coffee company founded in 2017, with 15 cafes and an online bean subscription service. We source single-origin beans directly from farmers and roast them in small batches.', products: 'Coffee Subscription: $24/month | 12oz single-origin | Free shipping | Roasted weekly\n\nEspresso Blend: $16/bag | Medium-dark roast | Chocolate & caramel notes\n\nCafe Gift Card: $25-$100 | Redeemable at all locations | Never expires\n\nBrew Kit: $45 | Pour-over set + 4oz sampler + grinder', faq: 'Q: Where do you source your beans?\nA: Direct trade from Ethiopia, Colombia, Guatemala, and Vietnam.\n\nQ: How fresh is the coffee?\nA: Roasted within 48 hours of shipping. Best within 30 days.\n\nQ: Do you have dairy-free options?\nA: Yes, oat, almond, and soy milk available at all cafes.\n\nQ: Can I cancel my subscription?\nA: Yes, cancel or pause anytime before the 1st of the month.', policies: 'Shipping: Free on orders over $30. Delivered within 3-5 business days.\n\nReturns: Not satisfied? 100% satisfaction guarantee within 14 days.\n\nCafe Policy: Laptop-friendly until 4 PM. Free Wi-Fi with purchase.' },
+      { icon: '☁️', company: 'CloudHive', tag: 'SaaS', role: 'CloudHive AI Assistant', instructions: 'You are a helpful AI assistant for CloudHive, a cloud infrastructure and DevOps platform. Answer questions based ONLY on the knowledge base provided. Be technical and precise.', about: 'CloudHive provides cloud infrastructure, DevOps tools, and managed hosting solutions for startups and mid-size businesses. Founded in 2020, we serve over 5,000 businesses across 40 countries.', products: 'Hive Starter: $29/month | 2 vCPUs | 4GB RAM | 50GB SSD | 1TB transfer\n\nHive Pro: $99/month | 4 vCPUs | 16GB RAM | 200GB SSD | 5TB transfer\n\nManaged Kubernetes: $199/month | 3-node cluster | Auto-scaling | Monitoring\n\nDevOps Pipeline: $49/month | CI/CD | Git integration | Deploy previews', faq: 'Q: What is your uptime SLA?\nA: 99.95% uptime guarantee across all paid plans.\n\nQ: Do you offer a free tier?\nA: Yes, Hive Free plan includes 1 vCPU, 1GB RAM, 10GB SSD.\n\nQ: Can I migrate from AWS/GCP?\nA: Yes, we offer free migration assistance for Pro plans and above.\n\nQ: What support options are available?\nA: 24/7 live chat, email support, and phone support for Enterprise.', policies: 'SLA: 99.95% uptime. Credits issued for downtime exceeding monthly threshold.\n\nSecurity: SOC 2 Type II certified. Data encrypted at rest and in transit.\n\nCancellation: Cancel anytime. Data exported within 30 days.' },
+      { icon: '🎨', company: 'Artisan Studio', tag: 'Creative', role: 'Artisan Studio AI Assistant', instructions: 'You are a helpful AI assistant for Artisan Studio, a creative agency offering design, branding, and digital marketing services. Answer questions based ONLY on the knowledge base provided. Be creative and professional.', about: 'Artisan Studio is a full-service creative agency founded in 2016. We specialize in branding, web design, illustration, and social media strategy for startups and established businesses.', products: 'Brand Identity Package: $3,500 | Logo + color palette + typography + brand guidelines\n\nWebsite Design: $5,000+ | Custom design | 5 pages | Responsive | CMS integration\n\nSocial Media Kit: $1,200/month | 12 posts | 4 stories | Analytics report\n\nIllustration Pack: $800 | 10 custom illustrations | Commercial license', faq: 'Q: How long does a brand identity project take?\nA: Typically 3-4 weeks including research, concepting, and revisions.\n\nQ: Do you offer revisions?\nA: Yes, each package includes 2 rounds of revisions at no extra cost.\n\nQ: What file formats do you deliver?\nA: AI, EPS, PDF, PNG, SVG — all source files included.\n\nQ: Can you work within a specific brand style?\nA: Absolutely. We adapt to your existing brand or build from scratch.', policies: 'Pricing: 50% deposit to start, 50% upon delivery.\n\nRevisions: 2 rounds included per project. Additional rounds at $100/hr.\n\nLicensing: Full commercial rights upon final payment. Portfolio showcase reserved.' },
+      { icon: '🚗', company: 'EcoRide', tag: 'Transportation', role: 'EcoRide AI Assistant', instructions: 'You are a helpful AI assistant for EcoRide, an electric scooter and bike sharing service. Answer questions based ONLY on the knowledge base provided. Be friendly and helpful.', about: 'EcoRide is a micro-mobility company offering electric scooter and bike sharing services in 30+ cities. Founded in 2022, we provide affordable, eco-friendly last-mile transportation with a fleet of 50,000+ vehicles.', products: 'Pay-Per-Ride: $1 unlock + $0.30/min | No commitment | Park anywhere in zone\n\nDay Pass: $15 | Unlimited 30-min rides for 24 hours | Best for tourists\n\nMonthly Commuter: $49 | 120 minutes daily | Priority parking | Discounted unlocks\n\nStudent Plan: $29/month | 60 minutes daily | Valid student email required', faq: 'Q: How do I unlock a scooter?\nA: Download the EcoRide app, scan the QR code on the vehicle.\n\nQ: Where can I park?\nA: Park in designated zones marked in the app. Never block sidewalks.\n\nQ: What happens if I park outside a zone?\nA: A $5 out-of-zone fee applies. Repeated violations may result in a ban.\n\nQ: Are helmets provided?\nA: Helmet locks are available on select scooters. We recommend bringing your own.', policies: 'Age Requirement: Minimum 18 years old with valid ID.\n\nRiding Rules: Follow traffic laws. No riding on sidewalks. Max speed 20 km/h.\n\nDamage Policy: Report damage immediately. Users responsible for negligence.' },
+      { icon: '🏥', company: 'MedFlow', tag: 'Healthcare', role: 'MedFlow AI Assistant', instructions: 'You are a helpful AI assistant for MedFlow, a telemedicine and healthcare platform. Answer questions based ONLY on the knowledge base provided. Be professional, empathetic, and accurate.', about: 'MedFlow is a digital healthcare platform connecting patients with licensed physicians via video consultation. Founded in 2020, we have facilitated over 500,000 consultations with a network of 2,000+ doctors across 15 specialties.', products: 'General Consultation: $49 | 15-min video call | Prescription if needed\n\nSpecialist Visit: $89 | 20-min video call | Cardiology, dermatology, etc.\n\nMental Health Session: $65 | 30-min therapy | Licensed psychologist\n\nAnnual Checkup Plan: $199 | 2 general + 1 specialist visit | Lab test coordination', faq: 'Q: How quickly can I see a doctor?\nA: Average wait time is under 10 minutes for general consultations.\n\nQ: Do you accept insurance?\nA: Yes, we accept most major insurance plans. Check your coverage in the app.\n\nQ: Can I get a prescription?\nA: Yes, doctors can prescribe medication electronically to your pharmacy.\n\nQ: What if I need a follow-up?\nA: Follow-up consultations are 20% off within 30 days of your first visit.', policies: 'Privacy: HIPAA compliant. All consultations are encrypted and confidential.\n\nCancellation: Free cancellation up to 2 hours before appointment.\n\nRefund: Full refund if doctor is unable to address your concern.' },
+    ];
+
+    function showTemplatePicker() {
+      const overlay = document.getElementById('companyPickerOverlay');
+      const grid = document.getElementById('companyGrid');
+      grid.innerHTML = '';
+      TEMPLATES.forEach(function(t, i) {
+        var card = document.createElement('div');
+        card.className = 'company-card';
+        card.innerHTML = '<div class="company-card-icon">' + t.icon + '</div><div class="company-card-name">' + t.company + '</div><div class="company-card-tag">' + t.tag + '</div>';
+        card.onclick = function() { loadTemplate(i); };
+        grid.appendChild(card);
+      });
+      overlay.classList.add('open');
+    }
+
+    function closeTemplatePicker(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('companyPickerOverlay').classList.remove('open');
+    }
+
+    function loadTemplate(index) {
+      var t = TEMPLATES[index];
+      if (!t) return;
+      closeTemplatePicker();
 
       updateStatus('retrieving');
       updatePipeline(0);
 
-      try {
+      setTimeout(function() {
         updatePipeline(1);
-        const res = await fetch('/api/generate-kb', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ companyName: name.trim() })
-        });
 
-        updateStatus('generating');
-        updatePipeline(2);
-
-        const kb = await res.json();
-
-        if (!res.ok) {
-          throw new Error(kb.error || 'Generation failed');
-        }
-
-        updatePipeline(3);
-
-        data.persona.company = kb.company || name.trim();
-        data.persona.role = kb.role || (name.trim() + ' AI Assistant');
-        data.persona.instructions = kb.instructions || data.persona.instructions;
-        data.kb.about = kb.about || '';
-        data.kb.products = kb.products || '';
-        data.kb.faq = kb.faq || '';
-        data.kb.policies = kb.policies || '';
+        data.persona.company = t.company;
+        data.persona.role = t.role;
+        data.persona.instructions = t.instructions;
+        data.kb.about = t.about;
+        data.kb.products = t.products;
+        data.kb.faq = t.faq;
+        data.kb.policies = t.policies;
         data.chatHistory = [];
 
-        saveToStorage();
-        loadEditors();
-        initLeftPanel();
-        updateChatBotName();
-        switchTab('code');
+        setTimeout(function() {
+          updateStatus('generating');
+          updatePipeline(2);
 
-        setTimeout(() => {
-          updateStatus('ready');
-          resetPipeline();
-        }, 800);
-      } catch (err) {
-        updateStatus('offline');
-        resetPipeline();
-        alert('Failed to generate: ' + err.message);
-      }
+          setTimeout(function() {
+            updatePipeline(3);
+
+            saveToStorage();
+            loadEditors();
+            initLeftPanel();
+            updateChatBotName();
+            switchTab('code');
+
+            setTimeout(function() {
+              updateStatus('ready');
+              resetPipeline();
+            }, 400);
+          }, 200);
+        }, 200);
+      }, 200);
     }
 
     // ── LEFT PANEL ──
@@ -2265,5 +2428,16 @@
       });
     })();
   </script>
+
+  <!-- ── COMPANY PICKER MODAL ── -->
+  <div class="company-picker-overlay" id="companyPickerOverlay" onclick="closeTemplatePicker(event)">
+    <div class="company-picker-modal" onclick="event.stopPropagation()">
+      <div class="company-picker-title">Try a different company?</div>
+      <div class="company-picker-subtitle">Pick a pre-built company to explore</div>
+      <div class="company-grid" id="companyGrid"></div>
+      <button class="picker-cancel" onclick="closeTemplatePicker()">Cancel</button>
+    </div>
+  </div>
+
 </body>
 </html>
