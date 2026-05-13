@@ -136,34 +136,31 @@ class CanvasBackground {
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
 
-    for (var pass = 0; pass < 2; pass++) {
-      ctx.filter = pass === 0 ? 'blur(6px)' : 'none';
-      var a1 = pass === 0 ? (warm ? 0.14 : 0.10) : (warm ? 0.07 : 0.04);
-      var a2 = pass === 0 ? (warm ? 0.08 : 0.05) : (warm ? 0.03 : 0.02);
+    // Aurora bands
+    for (var l = 0; l < this.auroraLayers.length; l++) {
+      var lay = this.auroraLayers[l];
+      var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
+      var bottomY = ah * 0.7 + lay.offset * 10;
 
-      for (var l = 0; l < this.auroraLayers.length; l++) {
-        var lay = this.auroraLayers[l];
-        var topBase = ah * (1 + lay.offset * 0.1) + Math.sin(this.auroraPhase * lay.speed) * 20;
-        var bottomY = ah * 0.7 + lay.offset * 10;
-
-        ctx.beginPath();
-        ctx.moveTo(0, topBase);
-        for (var x = 0; x <= w; x += 20) {
-          var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
-                   + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
-          ctx.lineTo(x, topBase + wave);
-        }
-        ctx.lineTo(w, bottomY);
-        ctx.lineTo(0, bottomY);
-        ctx.closePath();
-
-        var grad = ctx.createLinearGradient(0, topBase - lay.amp, 0, bottomY);
-        grad.addColorStop(0, palette[l % palette.length] + a1 + ')');
-        grad.addColorStop(0.4, palette[l % palette.length] + a2 + ')');
-        grad.addColorStop(1, palette[l % palette.length] + '0)');
-        ctx.fillStyle = grad;
-        ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(0, topBase);
+      for (var x = 0; x <= w; x += 20) {
+        var wave = Math.sin((x + this.auroraPhase * 100 * lay.speed) * lay.freq) * lay.amp
+                 + Math.sin((x + this.auroraPhase * 60 * lay.speed) * lay.freq * 2) * lay.amp * 0.4;
+        ctx.lineTo(x, topBase + wave);
       }
+      ctx.lineTo(w, bottomY);
+      ctx.lineTo(0, bottomY);
+      ctx.closePath();
+
+      var grad = ctx.createLinearGradient(0, topBase - lay.amp, 0, bottomY);
+      var a1 = warm ? '0.10' : '0.06';
+      var a2 = warm ? '0.04' : '0.025';
+      grad.addColorStop(0, palette[l % palette.length] + a1 + ')');
+      grad.addColorStop(0.4, palette[l % palette.length] + a2 + ')');
+      grad.addColorStop(1, palette[l % palette.length] + '0)');
+      ctx.fillStyle = grad;
+      ctx.fill();
     }
 
     // 3. Vertical rays (aurora curtain)
