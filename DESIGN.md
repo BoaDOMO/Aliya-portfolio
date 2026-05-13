@@ -320,15 +320,22 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
 
 - Standalone tester page (no main nav), but fully integrated with global design tokens
 - **Header**: branded mini-nav with "ALIYA KOY" logo (links to home) + breadcrumb `Lab / RAG Chatbot` + LIVE DEMO badge + theme toggle. Light: sage `var(--color-green)`. Dark: frosted navy `rgba(11,17,32,0.85)` + `blur(14px)` — matches main nav
-- **Layout**: full-viewport two-column grid (380px left + 1fr right), no scroll needed. Left and right panels both have `var(--spacing-4)` padding for consistent alignment
-- **Left panel (`.instruction-card`)**: instruction card explaining the RAG system — "What is this?" section, 3-step numbered guide with hover-highlighted step markers connected by a vertical line, "Try asking" section with 4 dynamic suggestion chips (KB-specific + fallbacks), "Edit in Console" link pinned at bottom. Light: warm glow + layered shadow + blue accent bar at top. Dark: frosted `rgba(22,22,24,0.85)` + `blur(14px)` + sage glow
-- **Chat card (`.preview-card`)**: same card treatment — warm golden glow + shadow light, frosted glass + sage glow dark. Header gradient cream→beige. Messages: user bubbles `var(--color-blue)`, bot bubbles `var(--bot-bg)`
-- **Console tab**: side-panel knowledge base editor restyled to site-native forms (cream inputs, blue focus rings, beige sidebar) instead of VS Code dark theme. Light: card glow. Dark: frosted glass
+- **Layout**: full-viewport two-column grid (440px left + 1fr right), no scroll needed. Both panels have `48px` top/bottom and `16px` inner-gap padding for consistent alignment. The inner gap between panels is `32px` (16px right padding on left panel + 16px left padding on right panel)
+- **Left panel (`.instruction-card`)**: dashboard-style sidebar with no-tutorial-approach. 6 sections:
+  - **System Status**: Bot name + company name from persona data, live status dot (Ready / Retrieving / Generating / Offline) in a pill badge
+  - **RAG Pipeline**: 4-node horizontal flow (Query → Retriever → LLM → Response). Nodes are 18px circles with labels below, connected by flex-grow lines. Nodes light up blue sequentially during active queries and reset after response. Connector lines also animate. Idle: muted gray. Active: blue fill + glow ring. Status label updates: "Retrieving…" → "Generating…" → "Ready"
+  - **Session + Quick Actions**: Relative session timer ("Just now · 0 exchanges") with clock icon. Two action buttons: Reset (clears chat) and Copy Log (copies conversation to clipboard, shows "Copied!" feedback for 1.5s). Both use `.action-btn` style — flex-1, blue tint bg, blue border, 8px radius
+  - **Session Stats**: Inline row showing Messages count + Avg Response Time. Mini log below: "Last: 1.2s · 3 total" or "No queries yet"
+  - **Suggestion Chips**: "Try asking" section with 4 dynamic chips (KB-specific questions + fallbacks). Chips use blue tint bg, pill shape, `0.65rem` mono font. Text inside has left indent (1.25rem left padding vs 0.85rem right). Chips are left-aligned within card with `0.75rem` group padding
+  - **Company Picker**: "Try a different company?" button at bottom — opens a modal overlay with 10 pre-built companies. Each company card shows emoji + name + industry tag in a 4-column grid. Cards have hover lift + blue border. Selected card: blue border + blue tint bg. Confirm button fades in on selection (uses `visibility` + `opacity` for stable layout). Cancel + Confirm sit centered together with `0.4rem` gap. Clicking Confirm loads template instantly (no API call), animates pipeline, switches to Preview tab
+- **Chat card (`.preview-card`)**: same card treatment — warm golden glow + shadow light, frosted glass + sage glow dark. Header gradient cream→beige. Messages: user bubbles `var(--color-blue)`, bot bubbles `var(--bot-bg)`. Welcome message is dynamic — reads from `data.persona.company` on every render (both fresh load and history restore)
+- **Console tab**: side-panel knowledge base editor restyled to site-native forms (cream inputs, blue focus rings, beige sidebar) instead of VS Code dark theme. Light: card glow. Dark: frosted glass. Footer has no border-top — seamless blend with editor body
+- **Templates**: 10 pre-built companies stored client-side in JS (`TEMPLATES` array). Industries: Finance, E-commerce, Hospitality, Technology, Fitness, Food & Beverage, SaaS, Creative, Transportation, Healthcare. Each has full persona + KB (about, products, FAQ, policies). Zero API calls — instant swap on selection
 - **Preview/Console tabs**: glass-morphism tab bar. Active states: light blue bg + white text, dark sage glass + `#0F172A` text
 - **Footer**: standard site copyright bar, sage background light, frosted navy glass dark
-- **Animations**: page-load fade-in (`.page-load-anim`), message slide-in, pulsing status dots
+- **Animations**: page-load fade-in (`.page-load-anim`), message slide-in, pulsing status dots, pipeline sequential light-up (200ms intervals), modal fade-in with `backdrop-filter: blur(4px)`
 - **Mobile**: left panel hidden, chat fills width, Console uses accordion sections, standard footer
-- **Dynamic**: suggestion chips, chat header, and bot persona all update from Console changes
+- **Dynamic**: suggestion chips, chat header, welcome message, dashboard stats, session timer, and bot persona all update from Console changes and template loads
 
 ## Animation Timing
 
