@@ -1622,6 +1622,7 @@ footer a:hover {
   .contact-info-list {
     align-items: flex-start;
     width: 100%;
+    text-align: left;
   }
 
   .contact-info-icon {
