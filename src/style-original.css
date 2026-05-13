@@ -378,7 +378,7 @@ section {
 
 .btn-color-1,
 .btn-color-2 {
-  border: rgb(53, 53, 53) 0.1rem solid;
+  border: var(--color-near-black) 0.1rem solid;
 }
 
 .btn-color-1:hover,
@@ -388,12 +388,13 @@ section {
 
 .btn-color-1,
 .btn-color-2:hover {
-  background: rgb(53, 53, 53);
+  background: var(--color-near-black);
   color: white;
 }
 
 .btn-color-1:hover {
-  background: rgb(0, 0, 0);
+  background: #000000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05);
 }
 
 .btn-color-2 {
@@ -401,7 +402,7 @@ section {
 }
 
 .btn-color-2:hover {
-  border: rgb(255, 255, 255) 0.1rem solid;
+  border-color: transparent;
 }
 
 /* SKILLS */
@@ -607,19 +608,19 @@ footer p {
   line-height: 1.6;
 }
 
-.ai-demo-btn {
+.btn.ai-demo-btn {
   @apply shrink-0 flex items-center;
   gap: 0.5rem;
-  background: #185FA5 !important;
-  border-color: #185FA5 !important;
-  color: white !important;
-  width: auto !important;
-  padding: 0.75rem 1.5rem !important;
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+  color: white;
+  width: auto;
+  padding: 0.75rem 1.5rem;
 }
 
-.ai-demo-btn:hover {
-  background: #0d4f8c !important;
-  border-color: #0d4f8c !important;
+.btn.ai-demo-btn:hover {
+  background: #000;
+  border-color: #000;
 }
 
 /* PAGE HERO */
@@ -687,9 +688,9 @@ footer p {
   @apply flex gap-4 justify-center mt-2;
 }
 
-.hero-btn {
-  width: auto !important;
-  padding: 0.85rem 2rem !important;
+.btn.hero-btn {
+  width: auto;
+  padding: 0.85rem 2rem;
 }
 
 /* CONTACT HERO */
@@ -1170,6 +1171,12 @@ footer p {
   transition: transform 0.1s ease;
 }
 
+.btn:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
 /* ═══════════════════════════════════════════════
    MICRO-INTERACTIONS: NAV LINKS
 ═══════════════════════════════════════════════ */
@@ -1343,6 +1350,14 @@ footer a:hover {
 
   .btn-send:active {
     transform: none !important;
+  }
+
+  .btn, button, .btn::before, button::before {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
 
@@ -1580,8 +1595,8 @@ footer a:hover {
     max-width: 280px;
   }
 
-  .hero-btn {
-    width: 100% !important;
+  .btn.hero-btn {
+    width: 100%;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -1666,7 +1681,7 @@ footer a:hover {
   }
 
   .btn-container .btn {
-    width: 12rem !important;
+    width: 12rem;
   }
 
   .menu-links {
@@ -1834,7 +1849,7 @@ footer a:hover {
 
 :root[data-theme="dark"] .btn-color-1,
 :root[data-theme="dark"] .btn-color-2 {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-border);
 }
 
 :root[data-theme="dark"] .btn-color-1,
@@ -1842,6 +1857,8 @@ footer a:hover {
   background: rgba(163, 177, 138, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: #0F172A;
 }
 
@@ -1879,15 +1896,15 @@ footer a:hover {
   color: var(--color-text-gray);
 }
 
-:root[data-theme="dark"] .ai-demo-btn {
-  background: var(--color-blue) !important;
-  border-color: var(--color-blue) !important;
-  color: #0F172A !important;
+:root[data-theme="dark"] .btn.ai-demo-btn {
+  background: var(--color-blue);
+  border-color: var(--color-blue);
+  color: #0F172A;
 }
 
-:root[data-theme="dark"] .ai-demo-btn:hover {
-  background: #8A9E78 !important;
-  border-color: #8A9E78 !important;
+:root[data-theme="dark"] .btn.ai-demo-btn:hover {
+  background: #8A9E78;
+  border-color: #8A9E78;
 }
 
 :root[data-theme="dark"] .hero-content-box {
@@ -1970,8 +1987,17 @@ footer a:hover {
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
 
+:root[data-theme="dark"] .btn-send {
+  background: rgba(163, 177, 138, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #0F172A;
+}
+
 :root[data-theme="dark"] .btn-send:hover {
-  background: var(--color-blue);
+  background: #8A9E78;
   color: #0F172A;
   box-shadow: 0 4px 20px rgba(163, 177, 138, 0.3);
 }

@@ -28,7 +28,6 @@
       --sidebar-bg: rgba(245, 241, 232, 0.5);
       --editor-bg: var(--panel-alt);
       --editor-border: var(--color-border);
-      --accent: var(--color-blue);
       --text: var(--color-near-black);
     }
 
@@ -123,7 +122,7 @@
       padding: 0.2rem 0.6rem;
       border-radius: 2rem;
       background: rgba(24, 95, 165, 0.1);
-      color: var(--accent);
+      color: var(--color-blue);
       border: 1px solid rgba(24, 95, 165, 0.25);
     }
 
@@ -380,9 +379,9 @@
     .tab-btn:hover { color: var(--color-near-black); background: rgba(0, 0, 0, 0.04); }
 
     .tab-btn.active[data-tab="preview"] {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #0F172A;
+      background: var(--color-blue);
+      border-color: var(--color-blue);
+      color: #fff;
       font-weight: 500;
     }
 
@@ -499,9 +498,9 @@
     }
 
     .btn-sm:hover {
-      border-color: var(--accent);
+      border-color: var(--color-blue);
       background: rgba(163, 177, 138, 0.1);
-      color: var(--accent);
+      color: var(--color-blue);
     }
 
     .btn-sm .btn-text { display: none; }
@@ -549,7 +548,7 @@
       align-items: center;
       justify-content: center;
       font-size: 0.75rem;
-      color: var(--accent);
+      color: var(--color-blue);
       flex-shrink: 0;
     }
 
@@ -603,7 +602,7 @@
       display: inline-block;
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--accent);
+      color: var(--color-blue);
       background: rgba(24, 95, 165, 0.08);
       border: 1px solid rgba(24, 95, 165, 0.22);
       border-radius: 2rem;
@@ -615,7 +614,7 @@
 
     .suggestion-chip:hover {
       background: rgba(24, 95, 165, 0.15);
-      border-color: var(--accent);
+      border-color: var(--color-blue);
       transform: translateY(-1px);
     }
 
@@ -660,7 +659,7 @@
       width: 38px;
       height: 38px;
       font-family: var(--font-body);
-      background: var(--accent);
+      background: var(--color-blue);
       color: white;
       border: none;
       border-radius: 50%;
@@ -875,7 +874,7 @@
     }
 
     .btn-code-primary {
-      background: var(--accent);
+      background: var(--color-blue);
       color: white;
     }
 
@@ -1026,7 +1025,14 @@
 
     :root[data-theme="dark"] .tab-btn:hover { background: rgba(255, 255, 255, 0.08); color: var(--color-near-black); }
 
-    :root[data-theme="dark"] .tab-btn.active[data-tab="preview"] { color: #0F172A; }
+    :root[data-theme="dark"] .tab-btn.active[data-tab="preview"] {
+      background: rgba(163, 177, 138, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
+    }
     :root[data-theme="dark"] .tab-btn.active[data-tab="preview"]:hover {
       background: #8A9E78;
       border-color: #8A9E78;
@@ -1034,7 +1040,10 @@
 
     :root[data-theme="dark"] .tab-btn.active[data-tab="code"] {
       background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       color: var(--color-near-black);
     }
     :root[data-theme="dark"] .tab-btn.active[data-tab="code"]:hover { background: rgba(255, 255, 255, 0.18); }
@@ -1107,7 +1116,14 @@
       box-shadow: 0 0 0 3px rgba(163, 177, 138, 0.1);
     }
 
-    :root[data-theme="dark"] .send-btn { color: #0F172A; }
+    :root[data-theme="dark"] .send-btn {
+      background: rgba(163, 177, 138, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
+    }
     :root[data-theme="dark"] .send-btn:hover {
       background: #8A9E78;
       box-shadow: 0 4px 12px rgba(163, 177, 138, 0.3);
@@ -1150,6 +1166,9 @@
       background: rgba(163, 177, 138, 0.88);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
     }
 
     :root[data-theme="dark"] .btn-code-primary:hover {
@@ -1315,10 +1334,10 @@
               <div class="message-bubble" id="welcomeMessage">
                 Hi! I'm the <strong>Nova Finance</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
                 <div class="suggestions">
-                  <span class="suggestion-chip" onclick="useSuggestion(this)">What are your loan interest rates?</span>
-                  <span class="suggestion-chip" onclick="useSuggestion(this)">How do I apply?</span>
-                  <span class="suggestion-chip" onclick="useSuggestion(this)">What documents do I need?</span>
-                  <span class="suggestion-chip" onclick="useSuggestion(this)">Can I repay early?</span>
+                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">What are your loan interest rates?</button>
+                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">How do I apply?</button>
+                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">What documents do I need?</button>
+                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">Can I repay early?</button>
                 </div>
               </div>
             </div>

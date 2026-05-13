@@ -113,9 +113,9 @@
         border: 1px solid rgba(24, 95, 165, 0.22);
       }
 
-      .btn-cta {
-        width: auto !important;
-        padding: 0.9rem 2rem !important;
+      .btn.btn-cta {
+        width: auto;
+        padding: 0.9rem 2rem;
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -347,7 +347,7 @@
         font-size: 0.82rem;
         font-weight: 500;
         padding: 0.55rem 1.1rem;
-        background: #185FA5;
+        background: var(--color-blue);
         color: white;
         border: none;
         border-radius: 8px;
@@ -357,7 +357,7 @@
       }
 
       .mini-chat-send:hover {
-        background: #0d4f8c;
+        background: #000;
         transform: translateY(-1px);
         box-shadow: 0 3px 10px rgba(24, 95, 165, 0.25);
       }
@@ -519,6 +519,8 @@
         background: rgba(163, 177, 138, 0.88);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
+        border: 1px solid var(--color-border);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
         color: #0F172A;
       }
 
@@ -619,9 +621,9 @@
             <div class="mini-chat-messages" id="miniChatMessages">
               <div class="mini-msg bot">Hi! Ask me anything about Nova Finance — loans, rates, eligibility, or how to apply.
                 <div class="mini-suggestions">
-                  <span class="mini-suggestion-chip" onclick="miniUseSuggestion(this)">Loan rates?</span>
-                  <span class="mini-suggestion-chip" onclick="miniUseSuggestion(this)">How to apply?</span>
-                  <span class="mini-suggestion-chip" onclick="miniUseSuggestion(this)">Early repayment?</span>
+                  <button class="mini-suggestion-chip" type="button" onclick="miniUseSuggestion(this)">Loan rates?</button>
+                  <button class="mini-suggestion-chip" type="button" onclick="miniUseSuggestion(this)">How to apply?</button>
+                  <button class="mini-suggestion-chip" type="button" onclick="miniUseSuggestion(this)">Early repayment?</button>
                 </div>
               </div>
             </div>
