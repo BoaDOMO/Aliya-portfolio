@@ -2085,6 +2085,7 @@
         data.kb.policies = t.policies;
         data.chatHistory = [];
         updateWelcomeMessage();
+        addMessage('bot', 'Switched to ' + t.company + '. Your chat has been reset for the new company.', false);
 
         setTimeout(function() {
           updateStatus('generating');
