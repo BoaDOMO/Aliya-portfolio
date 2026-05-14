@@ -602,6 +602,51 @@
       color: var(--color-blue);
     }
 
+    /* ── SWITCH CONFIRM MODAL ── */
+    .switch-confirm-modal {
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: var(--spacing-4);
+      max-width: 340px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .switch-confirm-modal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue), var(--color-dark-blue));
+    }
+
+    .switch-confirm-title {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      margin-bottom: 0.4rem;
+    }
+
+    .switch-confirm-text {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-text-gray);
+      line-height: 1.55;
+      margin-bottom: var(--spacing-3);
+    }
+
+    :root[data-theme="dark"] .switch-confirm-modal {
+      background: rgba(22,22,24,0.95);
+      backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+
     /* ── RIGHT PANEL ── */
     .panel-main {
       position: relative;
@@ -2026,6 +2071,7 @@
     ];
 
     var selectedTemplateIndex = -1;
+    var pendingSwitchIndex = -1;
 
     function showTemplatePicker() {
       selectedTemplateIndex = -1;
@@ -2063,7 +2109,19 @@
     function confirmTemplate() {
       if (selectedTemplateIndex < 0) return;
       var name = TEMPLATES[selectedTemplateIndex].company;
-      if (!confirm('Switch to ' + name + '? This will clear your current chat.')) return;
+      document.getElementById('switchConfirmText').textContent = 'Switch to ' + name + '? This will clear your current chat.';
+      document.getElementById('switchConfirmOverlay').classList.add('open');
+    }
+
+    function hideConfirmModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('switchConfirmOverlay').classList.remove('open');
+      pendingSwitchIndex = -1;
+    }
+
+    function proceedWithSwitch() {
+      if (selectedTemplateIndex < 0) return;
+      document.getElementById('switchConfirmOverlay').classList.remove('open');
       loadTemplate(selectedTemplateIndex);
     }
 
@@ -2528,6 +2586,18 @@
       <div class="picker-actions">
         <button class="picker-cancel" onclick="closeTemplatePicker()">Cancel</button>
         <button class="picker-confirm" id="pickerConfirm" onclick="confirmTemplate()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SWITCH CONFIRM MODAL ── -->
+  <div class="company-picker-overlay" id="switchConfirmOverlay" onclick="hideConfirmModal(event)">
+    <div class="switch-confirm-modal" onclick="event.stopPropagation()">
+      <div class="switch-confirm-title">Switch company?</div>
+      <div class="switch-confirm-text" id="switchConfirmText">Switching will clear your current chat.</div>
+      <div class="picker-actions">
+        <button class="picker-cancel" onclick="hideConfirmModal()">Cancel</button>
+        <button class="picker-confirm" id="switchConfirmBtn" onclick="proceedWithSwitch()">Switch</button>
       </div>
     </div>
   </div>
