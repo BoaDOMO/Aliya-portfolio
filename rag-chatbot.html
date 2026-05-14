@@ -2062,6 +2062,8 @@
 
     function confirmTemplate() {
       if (selectedTemplateIndex < 0) return;
+      var name = TEMPLATES[selectedTemplateIndex].company;
+      if (!confirm('Switch to ' + name + '? This will clear your current chat.')) return;
       loadTemplate(selectedTemplateIndex);
     }
 
