@@ -347,7 +347,7 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
   - 100 stars in 3 tiers: 15 core (2–3.5px, slow drift), 30 medium (1–1.8px, medium drift), 55 field (0.3–0.8px, fastest)
   - Stars have random `hue` for subtle warm/cool color variation
   - Twinkle: each star's alpha pulses via unique `sin(time * speed + phase)` — varies per star
-  - Shooting stars: spawn from left edge every 5–13s, random color/speed/duration/width — streak lasts 0.8–2.5s
+  - Shooting stars: spawn every 5–13s from either left or right edge (50/50 chance), random color/speed/duration/width — streak lasts 0.8–2.5s
   - Connections removed (stars are standalone)
   - Star count scales with viewport area (`Math.min(200, w * h / 13000)`), capped at 200
   - Nebula gradient: `rgba(30,10,45,0.5)` → `rgba(18,12,30,0.3)` → transparent — single `fillRect()`

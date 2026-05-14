@@ -137,14 +137,18 @@ class CanvasBackground {
         this.nextShootTimer -= dt;
         if (this.nextShootTimer <= 0) {
           var angle = (Math.random() - 0.5) * 0.7;
+          var fromRight = Math.random() < 0.5;
+          var angle = fromRight
+            ? Math.PI + (Math.random() - 0.5) * 0.7
+            : (Math.random() - 0.5) * 0.7;
           var speed = 3 + Math.random() * 4;
           var colors = [
             '255, 245, 220', '255, 230, 120', '255, 190, 100',
             '200, 220, 255', '255, 255, 255'
           ];
           this.shootingStar = {
-            x: -10,
-            y: 0.1 + Math.random() * 0.8 * this.canvas.height,
+            x: fromRight ? this.canvas.width + 10 : -10,
+            y: 0.05 + Math.random() * 0.9 * this.canvas.height,
             dx: Math.cos(angle) * speed,
             dy: Math.sin(angle) * speed,
             life: 0.8 + Math.random() * 1.7,
