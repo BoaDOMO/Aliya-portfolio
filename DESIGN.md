@@ -327,15 +327,37 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
   - **Session + Quick Actions**: Relative session timer ("Just now · 0 exchanges") with clock icon. Two action buttons: Reset (clears chat) and Copy Log (copies conversation to clipboard, shows "Copied!" feedback for 1.5s). Both use `.action-btn` style — flex-1, blue tint bg, blue border, 8px radius
   - **Session Stats**: Inline row showing Messages count + Avg Response Time. Mini log below: "Last: 1.2s · 3 total" or "No queries yet"
   - **Suggestion Chips**: "Try asking" section with 4 dynamic chips (KB-specific questions + fallbacks). Chips use blue tint bg, pill shape, `0.65rem` mono font. Text inside has left indent (1.25rem left padding vs 0.85rem right). Chips are left-aligned within card with `0.75rem` group padding
-  - **Company Picker**: "Try a different company?" button at bottom — opens a modal overlay with 10 pre-built companies. Each company card shows emoji + name + industry tag in a 4-column grid. Cards have hover lift + blue border. Selected card: blue border + blue tint bg. Confirm button fades in on selection (uses `visibility` + `opacity` for stable layout). Cancel + Confirm sit centered together with `0.4rem` gap. Clicking Confirm loads template instantly (no API call), animates pipeline, switches to Preview tab
+   - **Company Picker**: "Try a different company?" button at bottom of left panel (desktop) or "↔ Company" button in tab bar (mobile). Opens a modal overlay with 12 pre-built companies. Each company card shows emoji + name + industry tag in a 4-column grid. Cards have hover lift + blue border. Selected card: blue border + blue tint bg. Confirm button fades in on selection (uses `visibility` + `opacity` for stable layout). Cancel + Confirm sit centered together with `0.4rem` gap. Subtle notice below title: *"Pick a pre-built company to explore. Switching will clear your current chat."* Clicking Confirm loads template instantly (no API call), animates pipeline, adds reset notice, switches to Preview tab
 - **Chat card (`.preview-card`)**: same card treatment — warm golden glow + shadow light, frosted glass + sage glow dark. Header gradient cream→beige. Messages: user bubbles `var(--color-blue)`, bot bubbles `var(--bot-bg)`. Welcome message is dynamic — reads from `data.persona.company` on every render (both fresh load and history restore)
 - **Console tab**: side-panel knowledge base editor restyled to site-native forms (cream inputs, blue focus rings, beige sidebar) instead of VS Code dark theme. Light: card glow. Dark: frosted glass. Footer has no border-top — seamless blend with editor body
-- **Templates**: 10 pre-built companies stored client-side in JS (`TEMPLATES` array). Industries: Finance, E-commerce, Hospitality, Technology, Fitness, Food & Beverage, SaaS, Creative, Transportation, Healthcare. Each has full persona + KB (about, products, FAQ, policies). Zero API calls — instant swap on selection
+- **Templates**: 12 pre-built companies stored client-side in JS (`TEMPLATES` array). Industries: Finance, E-commerce, Hospitality, Technology, Fitness, Food & Beverage, SaaS, Creative, Transportation, Healthcare, Education, Telecom. Each has full persona + KB (about, products, FAQ, policies). Zero API calls — instant swap on selection
 - **Preview/Console tabs**: glass-morphism tab bar. Active states: light blue bg + white text, dark sage glass + `#0F172A` text
 - **Footer**: standard site copyright bar, sage background light, frosted navy glass dark
 - **Animations**: page-load fade-in (`.page-load-anim`), message slide-in, pulsing status dots, pipeline sequential light-up (200ms intervals), modal fade-in with `backdrop-filter: blur(4px)`
-- **Mobile**: left panel hidden, chat fills width, Console uses accordion sections, standard footer
+- **Mobile**: left panel hidden, chat fills width, Console uses accordion sections, "↔ Company" button in tab bar for company switching, standard footer
 - **Dynamic**: suggestion chips, chat header, welcome message, dashboard stats, session timer, and bot persona all update from Console changes and template loads
+
+### Canvas Background
+
+- Powered by `src/canvas-bg.js` — a vanilla JS `CanvasBackground` class that manages a full-viewport `<canvas>` element behind all content
+- Fixed `position: fixed`, `z-index: 0`, `pointer-events: none` — never interferes with interaction
+- Auto-initializes on `DOMContentLoaded` via `new CanvasBackground(canvas)`
+- **Theme detection**: reads `data-theme` attribute on `<html>` via `MutationObserver` — switches modes instantly when user toggles theme
+- **Dark mode (constellations)**:
+  - 100 stars in 3 tiers: 15 core (2–3.5px, slow drift), 30 medium (1–1.8px, medium drift), 55 field (0.3–0.8px, fastest)
+  - Stars have random `hue` for subtle warm/cool color variation
+  - Twinkle: each star's alpha pulses via unique `sin(time * speed + phase)` — varies per star
+  - Shooting stars: spawn from left edge every 5–13s, random color/speed/duration/width — streak lasts 0.8–2.5s
+  - Connections removed (stars are standalone)
+  - Star count scales with viewport area (`Math.min(200, w * h / 13000)`), capped at 200
+  - Nebula gradient: `rgba(30,10,45,0.5)` → `rgba(18,12,30,0.3)` → transparent — single `fillRect()`
+- **Light mode (warm glow)**:
+  - Corner Overlap gradient: gold `rgba(255,235,200,0.3)` → fade → transparent, from top-right to bottom-left
+  - `multiply` blend mode reacts with the cream `#F5F1E8` page background
+  - Subtle vignette: radial gradient darkening corners (`rgba(100,70,50,0.06–0.09)`)
+  - Gentle pulse: whole gradient breathes via `sin()` oscillation of overlay alpha
+- **Performance**: no blur, no blend modes (multiply is lightweight), no per-frame particle systems in light mode — runs at 60fps on all devices
+- **Pages**: integrated on index.html, lab.html, contact.html, rag-chatbot.html. Excluded from profile.html
 
 ## Animation Timing
 
