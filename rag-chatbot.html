@@ -2092,7 +2092,9 @@
         data.kb.policies = t.policies;
         data.chatHistory = [];
         updateWelcomeMessage();
+        document.getElementById('chatMessages').innerHTML = '';
         addMessage('bot', 'Switched to ' + t.company + '. Your chat has been reset for the new company.', false);
+        addMessage('bot', "Hi! I'm the " + t.company + " AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.", false);
 
         setTimeout(function() {
           updateStatus('generating');
