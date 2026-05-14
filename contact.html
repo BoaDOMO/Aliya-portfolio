@@ -20,8 +20,16 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      #bgCanvas {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 0; pointer-events: none;
+      }
+    </style>
   </head>
   <body class="main-wrapper">
+
+    <canvas id="bgCanvas"></canvas>
 
     <div id="nav">
       <nav id="desktop-nav">
@@ -132,6 +140,12 @@
       <i class="fa-solid fa-chevron-up"></i>
     </button>
 
+    <script src="src/canvas-bg.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        new CanvasBackground(document.getElementById('bgCanvas'));
+      });
+    </script>
     <script src="script.js"></script>
     <script>
       (function () {
