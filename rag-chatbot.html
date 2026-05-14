@@ -1796,7 +1796,7 @@
               </div>
               <div class="field-group">
                 <label class="field-label">System Instructions</label>
-                <textarea class="field-textarea" id="mobilePersonaInstructions" rows="6" placeholder="Define how the AI should behave..."></textarea>
+                <textarea class="field-textarea" id="mobilePersonaInstructions" rows="6" maxlength="5000" placeholder="Define how the AI should behave..."></textarea>
               </div>
             </div>
           </div>
@@ -1807,7 +1807,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="accordion-body">
-              <textarea class="field-textarea" id="mobileKbAbout" rows="8" placeholder="About the company..."></textarea>
+              <textarea class="field-textarea" id="mobileKbAbout" rows="8" maxlength="5000" placeholder="About the company..."></textarea>
             </div>
           </div>
 
@@ -1817,7 +1817,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="accordion-body">
-              <textarea class="field-textarea" id="mobileKbProducts" rows="8" placeholder="Products and services..."></textarea>
+              <textarea class="field-textarea" id="mobileKbProducts" rows="8" maxlength="5000" placeholder="Products and services..."></textarea>
             </div>
           </div>
 
@@ -1827,7 +1827,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="accordion-body">
-              <textarea class="field-textarea" id="mobileKbFaq" rows="8" placeholder="Frequently asked questions..."></textarea>
+              <textarea class="field-textarea" id="mobileKbFaq" rows="8" maxlength="5000" placeholder="Frequently asked questions..."></textarea>
             </div>
           </div>
 
@@ -1837,7 +1837,7 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="accordion-body">
-              <textarea class="field-textarea" id="mobileKbPolicies" rows="8" placeholder="Company policies..."></textarea>
+              <textarea class="field-textarea" id="mobileKbPolicies" rows="8" maxlength="5000" placeholder="Company policies..."></textarea>
             </div>
           </div>
 
@@ -2205,13 +2205,13 @@
           </div>
           <div class="field-group">
             <label class="field-label">System Instructions</label>
-            <textarea class="field-textarea" id="personaInstructions" rows="12" placeholder="Define how the AI should behave...">${escapeHtml(data.persona.instructions)}</textarea>
+            <textarea class="field-textarea" id="personaInstructions" rows="12" maxlength="5000" placeholder="Define how the AI should behave...">${escapeHtml(data.persona.instructions)}</textarea>
           </div>
         `;
       } else {
         const rows = fileName === 'faq' ? 18 : (fileName === 'products' ? 14 : 12);
         body.innerHTML = `
-          <textarea class="field-textarea" id="kb-${fileName}" rows="${rows}" placeholder="Enter ${labels[fileName].toLowerCase()} content...">${escapeHtml(data.kb[fileName])}</textarea>
+          <textarea class="field-textarea" id="kb-${fileName}" rows="${rows}" maxlength="5000" placeholder="Enter ${labels[fileName].toLowerCase()} content...">${escapeHtml(data.kb[fileName])}</textarea>
         `;
       }
     }
