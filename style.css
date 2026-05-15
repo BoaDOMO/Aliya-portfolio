@@ -1953,8 +1953,8 @@ footer a:hover {
     font-size: 0.875rem;
   }
   .grid-container {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
   section {
     padding: var(--spacing-8) 5%;
@@ -1985,7 +1985,7 @@ footer a:hover {
     font-size: 2rem;
   }
   .hero-content-box {
-    padding: 2rem 0.75rem;
+    padding: 2rem 0.5rem;
   }
   .hero-btns {
     flex-direction: column;
