@@ -488,6 +488,8 @@ h1 {
   font-weight: var(--font-weight-normal);
   color: var(--color-blue);
   font-style: italic;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 h2,
 h3,
@@ -498,6 +500,8 @@ h6 {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-gray);
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 h1:hover,
 h2:hover,
