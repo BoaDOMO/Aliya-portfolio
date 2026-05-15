@@ -1953,8 +1953,8 @@ footer a:hover {
     font-size: 0.875rem;
   }
   .grid-container {
-    padding-left: var(--spacing-2);
-    padding-right: var(--spacing-2);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   section {
     padding: var(--spacing-8) 5%;
