@@ -1952,10 +1952,6 @@ footer a:hover {
   html {
     font-size: 0.875rem;
   }
-  .grid-container {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
   section {
     padding: var(--spacing-8) 5%;
   }
@@ -1975,7 +1971,7 @@ footer a:hover {
     padding: var(--spacing-12) 5% var(--spacing-6);
   }
   .lab-hero {
-    padding: var(--spacing-16) 0 var(--spacing-6);
+    padding: var(--spacing-16) 5% var(--spacing-6);
     align-items: center;
   }
   .hero-name {
@@ -1985,7 +1981,7 @@ footer a:hover {
     font-size: 2rem;
   }
   .hero-content-box {
-    padding: 2rem 0.75rem;
+    padding: 2rem 8px;
   }
   .hero-btns {
     flex-direction: column;
