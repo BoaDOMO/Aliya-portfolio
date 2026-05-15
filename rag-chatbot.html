@@ -1788,11 +1788,11 @@
             <div class="accordion-body">
               <div class="field-group">
                 <label class="field-label">Company Name</label>
-                <input class="field-input" id="mobilePersonaCompany" placeholder="e.g. Nova Finance" />
+                <input class="field-input" id="mobilePersonaCompany" maxlength="100" placeholder="e.g. Nova Finance" />
               </div>
               <div class="field-group">
                 <label class="field-label">AI Role / Title</label>
-                <input class="field-input" id="mobilePersonaRole" placeholder="e.g. Customer Service Assistant" />
+                <input class="field-input" id="mobilePersonaRole" maxlength="150" placeholder="e.g. Customer Service Assistant" />
               </div>
               <div class="field-group">
                 <label class="field-label">System Instructions</label>
@@ -2197,11 +2197,11 @@
         body.innerHTML = `
           <div class="field-group">
             <label class="field-label">Company Name</label>
-            <input class="field-input" id="personaCompany" value="${escapeHtml(data.persona.company)}" placeholder="e.g. Nova Finance" />
+            <input class="field-input" id="personaCompany" maxlength="100" value="${escapeHtml(data.persona.company)}" placeholder="e.g. Nova Finance" />
           </div>
           <div class="field-group">
             <label class="field-label">AI Role / Title</label>
-            <input class="field-input" id="personaRole" value="${escapeHtml(data.persona.role)}" placeholder="e.g. Customer Service Assistant" />
+            <input class="field-input" id="personaRole" maxlength="150" value="${escapeHtml(data.persona.role)}" placeholder="e.g. Customer Service Assistant" />
           </div>
           <div class="field-group">
             <label class="field-label">System Instructions</label>
@@ -2221,8 +2221,8 @@
       const isMobile = window.innerWidth <= 768;
 
       if (isMobile) {
-        data.persona.company = document.getElementById('mobilePersonaCompany').value.trim();
-        data.persona.role = document.getElementById('mobilePersonaRole').value.trim();
+        data.persona.company = document.getElementById('mobilePersonaCompany').value.trim().slice(0, 100);
+        data.persona.role = document.getElementById('mobilePersonaRole').value.trim().slice(0, 150);
         data.persona.instructions = document.getElementById('mobilePersonaInstructions').value.trim();
         data.kb.about = document.getElementById('mobileKbAbout').value.trim();
         data.kb.products = document.getElementById('mobileKbProducts').value.trim();
@@ -2230,8 +2230,8 @@
         data.kb.policies = document.getElementById('mobileKbPolicies').value.trim();
       } else {
         if (activeFile === 'persona') {
-          data.persona.company = document.getElementById('personaCompany').value.trim();
-          data.persona.role = document.getElementById('personaRole').value.trim();
+          data.persona.company = document.getElementById('personaCompany').value.trim().slice(0, 100);
+          data.persona.role = document.getElementById('personaRole').value.trim().slice(0, 150);
           data.persona.instructions = document.getElementById('personaInstructions').value.trim();
         } else {
           const textarea = document.getElementById('kb-' + activeFile);
