@@ -7,25 +7,6 @@ class CanvasBackground {
     this.lastTime = 0;
     this.lightComboIndex = -1;
 
-    this.isVisible = true;
-    this.visibilityHandler = () => { this.isVisible = !document.hidden; };
-    document.addEventListener('visibilitychange', this.visibilityHandler);
-
-    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    this.reducedMotionHandler = (e) => {
-      this.reducedMotion = e.matches;
-      if (e.matches) {
-        this.stop();
-        this.lastTime = 0;
-        this.update(16);
-        this.draw();
-      } else {
-        this.start();
-      }
-    };
-    this.reducedMotionQuery.addEventListener('change', this.reducedMotionHandler);
-
     this.resize();
     window.addEventListener('resize', () => this.resize());
 
@@ -120,26 +101,9 @@ class CanvasBackground {
     }
   }
 
-  stop() {
-    if (this.animId) {
-      cancelAnimationFrame(this.animId);
-      this.animId = null;
-    }
-  }
-
   start() {
-    if (this.reducedMotion) {
-      this.update(16);
-      this.draw();
-      return;
-    }
-
     var self = this;
     function loop(time) {
-      if (!self.isVisible) {
-        self.animId = requestAnimationFrame(loop);
-        return;
-      }
       var dt = self.lastTime ? time - self.lastTime : 16;
       self.lastTime = time;
       self.update(dt);
@@ -273,11 +237,7 @@ class CanvasBackground {
   }
 
   destroy() {
-    this.stop();
+    if (this.animId) cancelAnimationFrame(this.animId);
     if (this.observer) this.observer.disconnect();
-    if (this.reducedMotionQuery) {
-      this.reducedMotionQuery.removeEventListener('change', this.reducedMotionHandler);
-    }
-    document.removeEventListener('visibilitychange', this.visibilityHandler);
   }
 }

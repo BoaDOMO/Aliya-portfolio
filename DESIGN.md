@@ -256,7 +256,6 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 - Left-aligned
 - Dark blue content box (`#26428b` light / `rgba(163, 177, 138, 0.08)` dark) with white text, rounded 12px, frosted blur in dark mode only
-- Card padding: `2.5rem 3rem` desktop, reduces to `2rem 1.5rem` on mobile (≤639px) to prevent awkward heading wraps
 - Label blurs in → heading fades up → underline draws → tagline fades up → card fades up
 
 ### Hero (Contact)

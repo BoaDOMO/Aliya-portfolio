@@ -2,21 +2,9 @@ function toggleMenu() {
   const menu = document.querySelector(".menu-links");
   const icon = document.querySelector(".hamburger-icon");
   const body = document.body;
-
   menu.classList.toggle("open");
   icon.classList.toggle("open");
   body.classList.toggle("scroll-lock");
-
-  let overlay = document.querySelector(".menu-overlay");
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.className = "menu-overlay";
-    overlay.addEventListener("click", toggleMenu);
-    document.body.appendChild(overlay);
-    requestAnimationFrame(() => overlay.classList.add("visible"));
-  } else {
-    overlay.classList.toggle("visible");
-  }
 }
 
 const observer = new IntersectionObserver(
@@ -138,40 +126,14 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
     .forEach((el) => timelineObs.observe(el));
 })();
 
-// Back-to-top button with scroll progress ring
+// Back-to-top button
 (function () {
-  var btn = document.getElementById("backToTop");
+  const btn = document.getElementById("backToTop");
   if (!btn) return;
-
-  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 44 44");
-  svg.style.cssText = "position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none;";
-
-  var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  circle.setAttribute("cx", "22");
-  circle.setAttribute("cy", "22");
-  circle.setAttribute("r", "18");
-  circle.setAttribute("fill", "none");
-  circle.setAttribute("stroke-width", "2");
-  circle.style.stroke = "var(--color-blue)";
-  circle.style.strokeDasharray = (2 * Math.PI * 18).toString();
-  circle.style.strokeDashoffset = (2 * Math.PI * 18).toString();
-  circle.style.transition = "stroke-dashoffset 0.1s linear";
-
-  svg.appendChild(circle);
-  btn.appendChild(svg);
-  btn.style.position = "relative";
-
-  window.addEventListener("scroll", function () {
-    var scrollTop = window.scrollY;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var progress = docHeight > 0 ? scrollTop / docHeight : 0;
-    var circumference = 2 * Math.PI * 18;
-    circle.style.strokeDashoffset = (circumference * (1 - progress)).toString();
-    btn.classList.toggle("visible", scrollTop > 300);
+  window.addEventListener("scroll", () => {
+    btn.classList.toggle("visible", window.scrollY > 300);
   }, { passive: true });
-
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();

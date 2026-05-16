@@ -16,17 +16,1547 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAG Chatbot — Aliya Koy</title>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=2" />
-  <link rel="stylesheet" href="src/rag-chatbot.css" />
+  <link rel="stylesheet" href="style.css" />
   <style>
     #bgCanvas {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       z-index: 0; pointer-events: none;
     }
   </style>
-  
+  <style>
+    :root {
+      --panel-alt: rgba(245, 241, 232, 0.6);
+      --success: #16a34a;
+      --user-bg: var(--color-blue);
+      --bot-bg: #F0ECE5;
+      --input-bg: #F5F2ED;
+      --sidebar-bg: rgba(245, 241, 232, 0.5);
+      --editor-bg: var(--panel-alt);
+      --editor-border: var(--color-border);
+      --text: var(--color-near-black);
+    }
+
+    :root[data-theme="dark"] {
+      --panel-alt: rgba(10, 10, 10, 0.6);
+      --success: #34D399;
+      --user-bg: var(--color-blue);
+      --bot-bg: #1A1A1A;
+      --input-bg: #1A1A1A;
+      --sidebar-bg: rgba(22, 22, 24, 0.6);
+      --editor-bg: rgba(22, 22, 24, 0.4);
+      --editor-border: var(--color-border);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .demo-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-4);
+      background: var(--color-green);
+      flex-shrink: 0;
+      height: 70px;
+    }
+
+    .demo-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .demo-logo {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-near-black);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .demo-logo:hover {
+      opacity: 0.65;
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: var(--color-near-black);
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--color-near-black);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .header-breadcrumb a:hover {
+      color: var(--color-text-muted);
+      text-decoration: none;
+    }
+
+    .header-breadcrumb span {
+      color: var(--color-text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .demo-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      background: rgba(24, 95, 165, 0.1);
+      color: var(--color-blue);
+      border: 1px solid rgba(24, 95, 165, 0.25);
+    }
+
+    .theme-toggle:hover {
+      color: var(--color-blue);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .demo-body {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── LEFT PANEL: INSTRUCTION CARD ── */
+    .panel-profile {
+      padding: var(--spacing-6) var(--spacing-2) var(--spacing-6) var(--spacing-4);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .instruction-card {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: var(--spacing-4) var(--spacing-3) var(--spacing-2);
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .instruction-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue), var(--color-dark-blue));
+    }
+
+    .instruction-section {
+      margin-bottom: var(--spacing-3);
+    }
+
+    .instruction-section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .instruction-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* ── STATUS HEADER ── */
+    .status-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .status-name {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      line-height: 1.2;
+    }
+
+    .status-role {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      line-height: 1.2;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      background: rgba(0,0,0,0.03);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2rem;
+      border: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .status-dot.retrieving { background: #eab308; }
+    .status-dot.generating { background: #3b82f6; }
+    .status-dot.offline { background: #9ca3af; }
+
+    /* ── PIPELINE ── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      padding: 0.25rem 0;
+    }
+
+    .pipeline-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .pipeline-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      background: var(--color-card);
+      transition: all 300ms ease;
+      position: relative;
+    }
+
+    .pipeline-node.active .pipeline-dot {
+      border-color: var(--color-blue);
+      background: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.15);
+    }
+
+    .pipeline-node.done .pipeline-dot {
+      border-color: var(--color-blue);
+      background: var(--color-blue);
+    }
+
+    .pipeline-label {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 300ms ease;
+    }
+
+    .pipeline-node.active .pipeline-label,
+    .pipeline-node.done .pipeline-label {
+      color: var(--color-blue);
+    }
+
+    .pipeline-line {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      margin: 0 0.2rem;
+      margin-bottom: 0.9rem;
+      transition: background 300ms ease;
+      min-width: 8px;
+    }
+
+    .pipeline-line.active {
+      background: var(--color-blue);
+    }
+
+    /* ── DIVIDER ── */
+    .card-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--color-border), transparent);
+      margin: var(--spacing-2) 0;
+    }
+
+    /* ── SESSION INFO ── */
+    .session-info {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-gray);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .session-info i {
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+
+    /* ── ACTIONS ── */
+    .actions-row {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .action-btn {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.08);
+      border: 1px solid rgba(24, 95, 165, 0.22);
+      border-radius: 8px;
+      padding: 0.35rem 0.5rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .action-btn:hover {
+      background: rgba(24, 95, 165, 0.15);
+      border-color: var(--color-blue);
+      transform: translateY(-1px);
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: flex;
+      gap: var(--spacing-3);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── MINI LOG ── */
+    .mini-log {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-gray);
+      margin-top: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .mini-log i {
+      font-size: 0.55rem;
+      opacity: 0.7;
+    }
+
+    /* ── CHIP GROUP ── */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      padding-left: 0.75rem;
+    }
+
+    /* ── CONSOLE BUTTON ── */
+    .console-btn {
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-card);
+      background: var(--color-blue);
+      border: none;
+      cursor: pointer;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      transition: all 200ms ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: auto;
+    }
+
+    .console-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .console-btn.secondary {
+      background: transparent;
+      color: var(--color-blue);
+      border: 1px solid rgba(24, 95, 165, 0.25);
+    }
+
+    .console-btn.secondary:hover {
+      background: rgba(24, 95, 165, 0.05);
+    }
+
+    /* ── COMPANY PICKER ── */
+    .company-picker-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .company-picker-overlay.open { display: flex; }
+
+    .company-picker-modal {
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: var(--spacing-4);
+      max-width: 560px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .company-picker-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-blue), var(--color-dark-blue));
+    }
+
+    .company-picker-title {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      margin-bottom: 0.15rem;
+    }
+
+    .company-picker-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: var(--spacing-3);
+    }
+
+    .company-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.65rem 0.3rem;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 200ms ease;
+      text-align: center;
+    }
+
+    .company-card:hover {
+      border-color: var(--color-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.1);
+    }
+
+    .company-card:active {
+      transform: translateY(0);
+      background: rgba(24, 95, 165, 0.06);
+    }
+
+    .company-card.selected {
+      border-color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.06);
+    }
+
+    .picker-actions {
+      display: flex;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .picker-confirm {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-card);
+      background: var(--color-blue);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0.4rem 1rem;
+      transition: opacity 200ms ease;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .picker-confirm.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .company-card-icon { font-size: 1.3rem; line-height: 1; }
+
+    .company-card-name {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-near-black);
+      line-height: 1.15;
+    }
+
+    .company-card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .picker-cancel {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0.4rem 1rem;
+      transition: all 200ms ease;
+    }
+
+    .picker-cancel:hover {
+      border-color: var(--color-blue);
+      color: var(--color-blue);
+    }
+
+    .switching-notice {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--spacing-3);
+    }
+
+    /* ── RIGHT PANEL ── */
+    .panel-main {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: var(--spacing-6) var(--spacing-4) var(--spacing-6) var(--spacing-2);
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      flex-shrink: 0;
+      padding: 0.3rem;
+      gap: 0.5rem;
+      margin-bottom: var(--spacing-3);
+      width: fit-content;
+    }
+
+    .tab-btn {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      padding: 0.55rem 1.1rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: all 150ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover { color: var(--color-near-black); background: rgba(0, 0, 0, 0.04); }
+
+    .tab-btn.active[data-tab="preview"] {
+      background: var(--color-blue);
+      border-color: var(--color-blue);
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .tab-btn.active[data-tab="preview"]:hover {
+      background: #0d4f8c;
+      border-color: #0d4f8c;
+    }
+
+    .tab-btn.active[data-tab="code"] {
+      background: var(--color-near-black);
+      border-color: var(--color-near-black);
+      color: white;
+      font-weight: 500;
+    }
+
+    .tab-btn.active[data-tab="code"]:hover { opacity: 0.85; }
+
+    .tab-content {
+      display: none;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .tab-content.active { display: flex; flex-direction: column; }
+
+    /* ── PREVIEW TAB: CHAT CARD ── */
+    .preview-card {
+      display: flex;
+      flex-direction: column;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      height: 100%;
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: box-shadow 300ms ease;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-beige) 50%, #E8DDD1 100%);
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .preview-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .preview-header-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+      animation: headerPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes headerPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+      50% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08); }
+    }
+
+    .preview-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .preview-header-name {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--color-near-black);
+      line-height: 1.2;
+    }
+
+    .preview-header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .preview-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-sm {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--color-text-muted);
+    }
+
+    .btn-sm:hover {
+      border-color: var(--color-blue);
+      background: rgba(163, 177, 138, 0.1);
+      color: var(--color-blue);
+    }
+
+    .btn-sm .btn-text { display: none; }
+    .btn-sm:hover .btn-text { display: inline; }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 85%;
+    }
+
+    .message.message-new {
+      animation: messageSlideIn 0.3s ease-out;
+    }
+
+    @keyframes messageSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message.bot { align-self: flex-start; }
+
+    .message-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(24, 95, 165, 0.1);
+      border: 1px solid rgba(24, 95, 165, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--color-blue);
+      flex-shrink: 0;
+    }
+
+    .message-bubble {
+      padding: 0.65rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .message.bot .message-bubble {
+      background: var(--bot-bg);
+      border: 1px solid var(--color-border);
+      border-top-left-radius: 4px;
+      color: var(--color-near-black);
+    }
+
+    .message.user .message-bubble {
+      background: var(--user-bg);
+      color: white;
+      border-top-right-radius: 4px;
+      box-shadow: 0 2px 8px rgba(24, 95, 165, 0.15);
+    }
+
+    .message.system {
+      align-self: center;
+      max-width: 100%;
+    }
+
+    .message.system .message-bubble {
+      background: rgba(22, 163, 74, 0.08);
+      border: 1px solid rgba(22, 163, 74, 0.2);
+      color: var(--success);
+      font-size: 0.72rem;
+      border-radius: 2rem;
+      padding: 0.3rem 1rem;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.6rem;
+      padding: 0.65rem;
+      background: rgba(24, 95, 165, 0.04);
+      border-radius: 10px;
+      border: 1px solid rgba(24, 95, 165, 0.08);
+    }
+
+    .suggestion-chip {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.08);
+      border: 1px solid rgba(24, 95, 165, 0.22);
+      border-radius: 2rem;
+      padding: 0.35rem 0.85rem 0.35rem 1.25rem;
+      margin: 0.2rem 0.2rem 0.2rem 0;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .suggestion-chip:hover {
+      background: rgba(24, 95, 165, 0.15);
+      border-color: var(--color-blue);
+      transform: translateY(-1px);
+    }
+
+    .suggestion-chip:active {
+      transform: translateY(0);
+      background: rgba(24, 95, 165, 0.2);
+    }
+
+    .chat-input-area {
+      padding: var(--spacing-2) var(--spacing-3);
+      border-top: 1px solid var(--color-border);
+      background: linear-gradient(to top, var(--panel-alt), var(--color-card));
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .chat-input {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--color-near-black);
+      background: var(--input-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      resize: none;
+      line-height: 1.5;
+      max-height: 120px;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .chat-input:focus {
+      border-color: rgba(24, 95, 165, 0.4);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.08);
+    }
+    .chat-input::placeholder { color: var(--color-text-muted); }
+
+    .send-btn {
+      width: 38px;
+      height: 38px;
+      font-family: var(--font-body);
+      background: var(--color-blue);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 200ms ease;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover {
+      background: #0d4f8c;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.35);
+    }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.55rem 0.85rem;
+      background: var(--bot-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      border-top-left-radius: 4px;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-text-muted);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    @keyframes tabPop {
+      from { transform: scale(0.95); }
+      to { transform: scale(1); }
+    }
+
+    .tab-btn.active {
+      animation: tabPop 200ms ease-out;
+    }
+
+    /* ── CODE TAB ── */
+    .code-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
+      background: var(--color-card);
+      background-image: var(--card-glow);
+    }
+
+    .code-sidebar {
+      width: 180px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .code-sidebar-header {
+      padding: 0.9rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .code-file-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    .code-file-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--color-text-gray);
+      cursor: pointer;
+      transition: all 150ms ease;
+      border-left: 3px solid transparent;
+    }
+
+    .code-file-item:hover {
+      background: rgba(24, 95, 165, 0.05);
+      color: var(--color-blue);
+    }
+
+    .code-file-item.active {
+      background: rgba(24, 95, 165, 0.08);
+      border-left-color: var(--color-blue);
+      color: var(--color-blue);
+      font-weight: 500;
+    }
+
+    .code-editor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--editor-bg);
+    }
+
+    .code-editor-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--spacing-3);
+    }
+
+    .code-editor-footer {
+      padding: 0.75rem var(--spacing-3);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FORM FIELDS ── */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .field-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .field-input {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--color-near-black);
+      background: var(--input-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      width: 100%;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .field-input:focus {
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+    }
+    .field-input::placeholder { color: var(--color-text-muted); }
+
+    .field-textarea {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--color-near-black);
+      background: var(--input-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      resize: vertical;
+      min-height: 180px;
+      outline: none;
+      line-height: 1.7;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+      width: 100%;
+    }
+
+    .field-textarea:focus {
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+    }
+    .field-textarea::placeholder { color: var(--color-text-muted); }
+
+    .btn-code {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+    }
+
+    .btn-code-primary {
+      background: var(--color-blue);
+      color: white;
+    }
+
+    .btn-code-primary:hover {
+      background: #0d4f8c;
+      box-shadow: 0 4px 16px rgba(24, 95, 165, 0.25);
+      transform: translateY(-1px);
+    }
+    .btn-code-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .status-msg {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    .status-msg.visible { opacity: 1; }
+    .status-msg.error { color: #dc2626; }
+
+    /* ── CODE TAB (MOBILE ACCORDION) ── */
+    .mobile-accordion {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 0;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--color-card);
+      background-image: var(--card-glow);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      background: var(--panel-alt);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--color-near-black);
+      transition: background 150ms ease;
+    }
+
+    .accordion-header:hover { background: rgba(24, 95, 165, 0.06); }
+
+    .accordion-header i { font-size: 0.7rem; color: var(--color-text-muted); transition: transform 200ms ease; }
+    .accordion-item.open .accordion-header i { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 1rem;
+      background: var(--color-card);
+    }
+
+    .accordion-item.open .accordion-body { display: block; }
+
+    .accordion-body .field-textarea {
+      min-height: 140px;
+      margin-bottom: 0.5rem;
+    }
+
+    .accordion-save-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* ── FOOTER ── */
+    .demo-footer {
+      flex-shrink: 0;
+      text-align: center;
+      padding: var(--spacing-2) var(--spacing-4);
+      background: var(--color-green);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-near-black);
+    }
+
+    /* ═══════════════════════════════════════
+       DARK MODE OVERRIDES
+       ═══════════════════════════════════════ */
+
+    :root[data-theme="dark"] .demo-header {
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    :root[data-theme="dark"] .demo-logo { color: var(--color-near-black); }
+
+    :root[data-theme="dark"] .header-breadcrumb a { color: var(--color-near-black); }
+    :root[data-theme="dark"] .header-breadcrumb a:hover { color: var(--color-blue); }
+
+    :root[data-theme="dark"] .theme-toggle { color: var(--color-near-black); }
+    :root[data-theme="dark"] .theme-toggle:hover { color: var(--color-blue); }
+
+    :root[data-theme="dark"] .demo-badge {
+      background: rgba(163, 177, 138, 0.1);
+      border-color: rgba(163, 177, 138, 0.25);
+    }
+
+    :root[data-theme="dark"] .instruction-card {
+      background: rgba(22, 22, 24, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    :root[data-theme="dark"] .status-name { color: var(--color-near-black); }
+    :root[data-theme="dark"] .status-badge { background: rgba(255,255,255,0.04); border-color: var(--color-border); }
+
+    :root[data-theme="dark"] .pipeline-dot {
+      background: rgba(22, 22, 24, 0.85);
+      border-color: var(--color-border);
+    }
+
+    :root[data-theme="dark"] .pipeline-node.active .pipeline-dot,
+    :root[data-theme="dark"] .pipeline-node.done .pipeline-dot {
+      border-color: var(--color-blue);
+      background: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.2);
+    }
+
+    :root[data-theme="dark"] .action-btn {
+      color: var(--color-blue);
+      background: rgba(24, 95, 165, 0.12);
+      border-color: rgba(24, 95, 165, 0.3);
+    }
+    :root[data-theme="dark"] .action-btn:hover {
+      background: rgba(24, 95, 165, 0.2);
+    }
+
+    :root[data-theme="dark"] .company-picker-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+
+    :root[data-theme="dark"] .company-picker-modal {
+      background: rgba(22, 22, 24, 0.95);
+      backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+    }
+
+    :root[data-theme="dark"] .company-card {
+      background: rgba(22, 22, 24, 0.8);
+    }
+
+    :root[data-theme="dark"] .company-card:hover {
+      border-color: var(--color-blue);
+    }
+
+    :root[data-theme="dark"] .stat-value { color: var(--color-near-black); }
+    :root[data-theme="dark"] .console-btn.secondary {
+      color: var(--color-blue);
+      border-color: rgba(163, 177, 138, 0.25);
+    }
+    :root[data-theme="dark"] .console-btn.secondary:hover {
+      background: rgba(163, 177, 138, 0.08);
+    }
+
+    :root[data-theme="dark"] .tab-bar {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    :root[data-theme="dark"] .tab-btn:hover { background: rgba(255, 255, 255, 0.08); color: var(--color-near-black); }
+
+    :root[data-theme="dark"] .tab-btn.active[data-tab="preview"] {
+      background: rgba(163, 177, 138, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
+    }
+    :root[data-theme="dark"] .tab-btn.active[data-tab="preview"]:hover {
+      background: #8A9E78;
+      border-color: #8A9E78;
+    }
+
+    :root[data-theme="dark"] .tab-btn.active[data-tab="code"] {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--color-near-black);
+    }
+    :root[data-theme="dark"] .tab-btn.active[data-tab="code"]:hover { background: rgba(255, 255, 255, 0.18); }
+
+    :root[data-theme="dark"] .preview-card {
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    :root[data-theme="dark"] .preview-header {
+      background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-card) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    :root[data-theme="dark"] .btn-sm {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-color: var(--color-border);
+      color: var(--color-text-muted);
+    }
+
+    :root[data-theme="dark"] .btn-sm:hover {
+      background: rgba(163, 177, 138, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-color: var(--color-blue);
+      color: var(--color-blue);
+    }
+
+    :root[data-theme="dark"] .message-avatar {
+      background: rgba(163, 177, 138, 0.12);
+      border-color: rgba(163, 177, 138, 0.2);
+    }
+
+    :root[data-theme="dark"] .message.user .message-bubble {
+      color: #0F172A;
+      box-shadow: 0 2px 8px rgba(163, 177, 138, 0.15);
+    }
+
+    :root[data-theme="dark"] .message.system .message-bubble {
+      background: rgba(52, 211, 153, 0.08);
+      border-color: rgba(52, 211, 153, 0.2);
+    }
+
+    :root[data-theme="dark"] .suggestions {
+      background: rgba(163, 177, 138, 0.04);
+      border-color: rgba(163, 177, 138, 0.08);
+    }
+
+    :root[data-theme="dark"] .suggestion-chip {
+      background: rgba(163, 177, 138, 0.08);
+      border-color: rgba(163, 177, 138, 0.2);
+    }
+
+    :root[data-theme="dark"] .suggestion-chip:hover {
+      background: rgba(163, 177, 138, 0.15);
+    }
+
+    :root[data-theme="dark"] .suggestion-chip:active {
+      background: rgba(163, 177, 138, 0.25);
+    }
+
+    :root[data-theme="dark"] .chat-input:focus {
+      border-color: rgba(163, 177, 138, 0.4);
+      box-shadow: 0 0 0 3px rgba(163, 177, 138, 0.1);
+    }
+
+    :root[data-theme="dark"] .send-btn {
+      background: rgba(163, 177, 138, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
+    }
+    :root[data-theme="dark"] .send-btn:hover {
+      background: #8A9E78;
+      box-shadow: 0 4px 12px rgba(163, 177, 138, 0.3);
+    }
+
+    :root[data-theme="dark"] .code-layout {
+      background: rgba(22, 22, 24, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background-image: var(--card-glow-dark);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    :root[data-theme="dark"] .code-sidebar {
+      background: rgba(22, 22, 24, 0.6);
+    }
+
+    :root[data-theme="dark"] .code-editor {
+      background: rgba(22, 22, 24, 0.4);
+    }
+
+    :root[data-theme="dark"] .code-file-item { color: var(--color-text-gray); }
+    :root[data-theme="dark"] .code-file-item:hover {
+      background: rgba(163, 177, 138, 0.08);
+      color: var(--color-blue);
+    }
+    :root[data-theme="dark"] .code-file-item.active {
+      background: rgba(163, 177, 138, 0.12);
+      border-left-color: var(--color-blue);
+      color: var(--color-blue);
+    }
+
+    :root[data-theme="dark"] .field-input:focus,
+    :root[data-theme="dark"] .field-textarea:focus {
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(163, 177, 138, 0.12);
+    }
+
+    :root[data-theme="dark"] .btn-code-primary {
+      background: rgba(163, 177, 138, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--color-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #0F172A;
+    }
+
+    :root[data-theme="dark"] .btn-code-primary:hover {
+      background: #8A9E78;
+      box-shadow: 0 4px 16px rgba(163, 177, 138, 0.25);
+    }
+
+    :root[data-theme="dark"] .accordion-item {
+      background: rgba(22, 22, 24, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    :root[data-theme="dark"] .accordion-header {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    :root[data-theme="dark"] .accordion-header:hover {
+      background: rgba(163, 177, 138, 0.08);
+    }
+
+    :root[data-theme="dark"] .accordion-body {
+      background: transparent;
+    }
+
+    :root[data-theme="dark"] .accordion-header i { color: var(--color-text-muted); }
+
+    :root[data-theme="dark"] .demo-footer {
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--color-border);
+    }
+
+    :root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    :root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.22); }
+
+    .code-sidebar::-webkit-scrollbar-thumb,
+    .code-editor-body::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.08); }
+    .code-sidebar::-webkit-scrollbar-thumb:hover,
+    .code-editor-body::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.15); }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .message.message-new { animation: none; }
+      .typing-dot { animation: none; opacity: 0.6; }
+      .preview-header-dot { animation: none; }
+      .tab-btn.active { animation: none; }
+      .suggestion-chip:hover { transform: none; }
+      .btn-code-primary:hover { transform: none; }
+      .send-btn:hover { transform: none; }
+      .step-row:hover .step-marker { transform: none; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      body { overflow: auto; height: auto; }
+      .demo-body { grid-template-columns: 1fr; height: auto; }
+      .panel-profile { display: none; }
+      .tab-btn.mobile-only { display: inline-flex; }
+      .panel-main { padding: 1rem 1.5rem; min-height: 100vh; }
+      .code-layout { display: none; }
+      .mobile-accordion { display: flex; }
+      .tab-bar { overflow-x: auto; margin-bottom: 1rem; }
+      .tab-btn { flex-shrink: 0; }
+      .preview-card { max-width: 100%; height: calc(100vh - 160px); margin: 0; }
+      .chat-messages { min-height: 300px; }
+      .btn-sm .btn-text { display: inline; }
+    }
+
+    @media (min-width: 769px) {
+      body { height: 100vh; overflow: hidden; }
+      .mobile-accordion { display: none !important; }
+      .tab-btn.mobile-only { display: none !important; }
+    }
+  </style>
 </head>
 <body class="main-wrapper page-load-anim">
 
@@ -330,11 +1860,671 @@
   </footer>
 
   <script src="src/canvas-bg.js"></script>
-  <script src="src/rag-chatbot.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      new CanvasBackground(document.getElementById('bgCanvas'));
+    });
+  </script>
+  <script>
+    // ── DATA MODEL ──
+    const STORAGE_KEY = 'rag_chatbot_state';
 
-  
-  
-  <script src="src/theme-toggle.js"></script>
+    const DEFAULT_DATA = {
+      persona: {
+        company: "Nova Finance",
+        role: "Nova Finance AI Assistant",
+        instructions: "You are a helpful AI customer service assistant for Nova Finance, a digital-first microfinance institution in Cambodia. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate. Do not make up information."
+      },
+      kb: {
+        about: "Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces. Our mission is to make financial services accessible, fast, and fair for every Cambodian. We operate fully digitally — no physical branches required.",
+        products: "Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month (flat rate) | Disbursed within 24 hours after approval.\n\nBusiness Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month (flat rate) | Disbursed in 1–3 business days.\n\nNova Savings Account: 5.5% annual interest | Minimum deposit $50 | No monthly fees | Free ATM withdrawals up to 5 times per month.\n\nNova Digital Wallet: Free instant transfers between Nova accounts | 0.5% cashback on all purchases | QR code payments accepted at over 10,000 merchants.",
+        faq: "Q: How do I apply for a loan?\nA: Apply online at novafinance.com.kh or through the Nova Finance mobile app (available on iOS and Android).\n\nQ: What documents do I need?\nA: Valid Cambodian National ID or Passport, last 3 months of bank statements or salary slips, and proof of address.\n\nQ: How long does approval take?\nA: Our team reviews applications within 4 business hours. You will receive an SMS and email notification upon decision.\n\nQ: Can I repay my loan early?\nA: Yes. Nova Finance charges no early repayment penalties. You can settle your loan at any time.\n\nQ: What happens if I miss a payment?\nA: A late fee of 0.5% of the outstanding balance applies per day after the due date. Contact our support team before your due date if you need assistance.\n\nQ: Can I have two loans at the same time?\nA: Yes, if your first loan is in good standing and your total outstanding balance does not exceed your approved credit limit.\n\nQ: How do I contact customer support?\nA: Hotline: 023 456 789 (8am–8pm daily) | Email: support@novafinance.com.kh | In-app live chat.",
+        policies: "Eligibility: Applicants must be aged 18–65, hold a valid Cambodian National ID or valid work permit, have a minimum monthly income of $250, and have no active loan defaults at any financial institution.\n\nData Privacy: Customer data is processed in compliance with Cambodian Law on Data Privacy. Data is used solely for loan assessment, account management, and regulatory reporting. We do not sell customer data to third parties.\n\nSecurity: All data is encrypted using AES-256 encryption. Servers are located in Cambodia and undergo quarterly security audits."
+      },
+      chatHistory: [],
+      activeTab: 'preview',
+      activeFile: 'persona'
+    };
+
+    let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    let activeFile = 'persona';
+    let isLoading = false;
+    const sessionId = Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+
+    const KB_SECTIONS = [
+      { key: 'about', label: 'About', question: 'What does {company} do?' },
+      { key: 'products', label: 'Products', question: 'What products does {company} offer?' },
+      { key: 'faq', label: 'FAQ', question: 'What are common questions about {company}?' },
+      { key: 'policies', label: 'Policies', question: 'What are {company}\'s policies?' },
+    ];
+
+    // ── HELPERS ──
+    function getInitials(name) {
+      if (!name) return 'AI';
+      return name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    // ── INIT ──
+    function init() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          data = { ...DEFAULT_DATA, ...parsed };
+          if (parsed.persona) data.persona = { ...DEFAULT_DATA.persona, ...parsed.persona };
+          if (parsed.kb) data.kb = { ...DEFAULT_DATA.kb, ...parsed.kb };
+        } catch (e) {}
+      }
+
+      activeFile = data.activeFile || 'persona';
+      loadEditors();
+      initLeftPanel();
+      updateChatBotName();
+      restoreChat();
+      updateWelcomeMessage();
+
+      if (data.activeTab === 'code') {
+        switchTab('code');
+      }
+
+      selectFile(activeFile);
+    }
+
+    function saveToStorage() {
+      data.activeFile = activeFile;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    // ── DASHBOARD STATE ──
+    const responseTimes = [];
+    const sessionStart = Date.now();
+
+    function updateSessionInfo() {
+      const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+      const mins = Math.floor(elapsed / 60);
+      const exchanges = Math.floor(data.chatHistory.filter(m => m.role === 'user').length);
+
+      let timeStr;
+      if (mins < 1) timeStr = 'Just now';
+      else if (mins < 60) timeStr = mins + 'm ago';
+      else timeStr = Math.floor(mins / 60) + 'h ago';
+
+      document.getElementById('sessionStartTime').textContent = timeStr + ' · ' + exchanges + ' exchange' + (exchanges !== 1 ? 's' : '');
+    }
+
+    function updateStatus(status) {
+      const dot = document.getElementById('statusDot');
+      const label = document.getElementById('statusLabel');
+      const map = {
+        ready: { cls: '', text: 'Ready' },
+        retrieving: { cls: 'retrieving', text: 'Retrieving…' },
+        generating: { cls: 'generating', text: 'Generating…' },
+        offline: { cls: 'offline', text: 'Offline' }
+      };
+      const s = map[status] || map.ready;
+      dot.className = 'status-dot ' + s.cls;
+      label.textContent = s.text;
+    }
+
+    function updatePipeline(stage) {
+      const nodes = ['query', 'retriever', 'llm', 'response'];
+      const lines = ['line-1', 'line-2', 'line-3'];
+      nodes.forEach((n, i) => {
+        const el = document.getElementById('node-' + n);
+        el.classList.remove('active', 'done');
+        if (i < stage) el.classList.add('done');
+        if (i === stage) el.classList.add('active');
+      });
+      lines.forEach((l, i) => {
+        document.getElementById(l).classList.toggle('active', i < stage);
+      });
+    }
+
+    function resetPipeline() {
+      updatePipeline(-1);
+    }
+
+    function updateStats() {
+      const msgCount = Math.floor(data.chatHistory.filter(m => m.role === 'user').length);
+      document.getElementById('statMessages').textContent = msgCount;
+      const avg = responseTimes.length
+        ? (responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length / 1000).toFixed(1) + 's'
+        : '—';
+      document.getElementById('statTime').textContent = avg;
+      const lastTime = responseTimes.length
+        ? (responseTimes[responseTimes.length - 1] / 1000).toFixed(1) + 's'
+        : '—';
+      document.getElementById('miniLogText').textContent = responseTimes.length
+        ? 'Last: ' + lastTime + ' · ' + msgCount + ' total'
+        : 'No queries yet';
+      updateSessionInfo();
+    }
+
+    function updateDashboard() {
+      const company = data.persona.company || 'Nova Finance';
+      const role = data.persona.role || company + ' AI Assistant';
+      document.getElementById('botName').textContent = role;
+      document.getElementById('botRole').textContent = company;
+      updateSessionInfo();
+      updateStats();
+    }
+
+    function updateWelcomeMessage() {
+      var el = document.getElementById('welcomeMessage');
+      if (!el) return;
+      var name = data.persona.company || 'Nova Finance';
+      el.innerHTML = 'Hi! I\'m the <strong>' + name + '</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what\'s in the knowledge base.';
+    }
+
+    // ── COMPANY TEMPLATES ──
+    const TEMPLATES = [
+      { icon: '🏦', company: 'Nova Finance', tag: 'Finance', role: 'Nova Finance AI Assistant', instructions: 'You are a helpful AI customer service assistant for Nova Finance, a digital-first microfinance institution in Cambodia. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate. Do not make up information.', about: 'Nova Finance is a digital-first microfinance institution founded in 2020, headquartered in Phnom Penh, Cambodia. Licensed by the National Bank of Cambodia, we serve over 50,000 customers across 25 provinces.', products: 'Personal Loan: $200–$10,000 | 3–36 months | From 1.2% per month\n\nBusiness Loan: $1,000–$50,000 | 6–60 months | From 1.0% per month\n\nNova Savings Account: 5.5% annual interest | Minimum deposit $50\n\nNova Digital Wallet: Free instant transfers | 0.5% cashback on purchases', faq: 'Q: How do I apply for a loan?\nA: Apply online at novafinance.com.kh or through the Nova Finance mobile app.\n\nQ: What documents do I need?\nA: Valid Cambodian National ID or Passport and last 3 months of bank statements.\n\nQ: How long does approval take?\nA: Within 4 business hours.\n\nQ: Can I repay my loan early?\nA: Yes, with no early repayment penalties.\n\nQ: How do I contact support?\nA: Hotline 023 456 789 or email support@novafinance.com.kh.', policies: 'Eligibility: Applicants must be aged 18–65 with a minimum monthly income of $250.\n\nData Privacy: Compliant with Cambodian Law on Data Privacy.\n\nSecurity: AES-256 encryption with quarterly security audits.' },
+      { icon: '🌿', company: 'GreenLeaf Organics', tag: 'E-commerce', role: 'GreenLeaf Organics AI Assistant', instructions: 'You are a helpful AI assistant for GreenLeaf Organics, an online organic grocery store. Answer questions based ONLY on the knowledge base provided. Be concise, friendly, and accurate.', about: 'GreenLeaf Organics is an online marketplace for organic and sustainably sourced groceries, founded in 2021. We deliver fresh produce, pantry staples, and eco-friendly household products across major cities.', products: 'Organic Produce Box: $35/week | Seasonal fruits and vegetables | Free delivery\n\nPantry Starter Pack: $60 | Grains, spices, oils, and legumes\n\nMeal Kit Subscription: $45/week | 3 recipes with pre-portioned ingredients\n\nEco-Home Bundle: $25 | Bamboo utensils, beeswax wraps, compostable bags', faq: 'Q: Where do you deliver?\nA: We deliver to all major metropolitan areas. Check your zip code on our website.\n\nQ: What is your return policy?\nA: We guarantee freshness. Report any issues within 24 hours for a full refund.\n\nQ: How often do subscriptions renew?\nA: Weekly subscriptions auto-renew every Monday. Skip or cancel anytime.\n\nQ: Do you offer wholesale?\nA: Yes, for restaurants and cafes ordering $200+.', policies: 'Eligibility: Delivery available within city limits. Minimum order $20.\n\nReturns: Perishable items must be reported within 24 hours. Non-perishables within 7 days.\n\nPrivacy: We never share customer data with third parties.' },
+      { icon: '🏨', company: 'Skyline Hotels', tag: 'Hospitality', role: 'Skyline Hotels AI Assistant', instructions: 'You are a helpful concierge AI for Skyline Hotels, a luxury hotel chain. Answer questions based ONLY on the knowledge base provided. Be polite, professional, and accurate.', about: 'Skyline Hotels is a luxury hotel chain with 12 properties across Southeast Asia, established in 2015. We specialize in boutique accommodations with rooftop infinity pools, fine dining, and curated local experiences.', products: 'Skyline Suite: $350/night | City view | King bed | 24h butler service\n\nDeluxe Room: $180/night | Partial skyline view | Premium amenities\n\nSpa Package: $120 | 60-min massage + sauna access + herbal tea\n\nAirport Transfer: $40 | Luxury sedan | Complimentary Wi-Fi', faq: 'Q: What time is check-in/check-out?\nA: Check-in from 3 PM, check-out by 11 AM.\n\nQ: Do you allow pets?\nA: Yes, small pets under 10kg are welcome with a $50 cleaning fee.\n\nQ: Is breakfast included?\nA: Yes, complimentary buffet breakfast from 6:30 to 10:30 AM daily.\n\nQ: Can I cancel my booking?\nA: Free cancellation up to 48 hours before check-in.', policies: 'Check-in: 3 PM. Early check-in subject to availability.\n\nCancellation: Free up to 48 hours. 50% charge within 24 hours.\n\nSmoking: Strictly non-smoking in rooms. Designated areas on level 3.' },
+      { icon: '🤖', company: 'Acme Robotics', tag: 'Technology', role: 'Acme Robotics AI Assistant', instructions: 'You are a helpful AI assistant for Acme Robotics, a robotics manufacturing company. Answer questions based ONLY on the knowledge base provided. Be precise and technical where appropriate.', about: 'Acme Robotics designs and manufactures industrial and consumer robotics solutions. Founded in 2018, we serve over 200 manufacturing facilities globally with automation systems and home companion robots.', products: 'PickBot 3000: $12,000 | Industrial arm robot | 50kg payload | 6-axis movement\n\nHomeMate: $899 | Home companion robot | Voice-controlled | Navigation mapping\n\nWarehouse Drone System: $25,000 | Inventory scanning | Autonomous fleet\n\nRobot Kit: $149 | DIY educational kit | 20 programmable modules', faq: 'Q: What is the warranty period?\nA: 2 years for industrial robots, 1 year for consumer products.\n\nQ: Do you provide training?\nA: Yes, free online training for all industrial robot purchases.\n\nQ: Can HomeMate integrate with smart home systems?\nA: Yes, compatible with Alexa, Google Home, and Apple HomeKit.\n\nQ: What is the lead time?\nA: Consumer products ship within 5 days. Industrial robots within 30 days.', policies: 'Warranty: 2 years industrial, 1 year consumer. Extended warranty available.\n\nReturns: Unopened products returned within 30 days for full refund.\n\nCompliance: All products meet ISO 10218 safety standards.' },
+      { icon: '💪', company: 'Pulse Fitness', tag: 'Fitness', role: 'Pulse Fitness AI Assistant', instructions: 'You are a helpful AI assistant for Pulse Fitness, a modern gym and wellness chain. Answer questions based ONLY on the knowledge base provided. Be motivating and concise.', about: 'Pulse Fitness is a modern fitness chain with 25 locations across the country, founded in 2019. We offer state-of-the-art equipment, group classes, personal training, and nutritional counseling.', products: 'Premium Membership: $79/month | Unlimited classes | Gym access | Sauna\n\nBasic Plan: $39/month | Gym access during staffed hours | Locker included\n\nPersonal Training: $60/session | 1-on-1 coaching | Customized workout plan\n\nNutrition Plan: $49/month | Weekly meal plans | Dietitian consultation', faq: 'Q: What are your hours?\nA: Most locations are open 5 AM to 11 PM, 7 days a week.\n\nQ: Is there a joining fee?\nA: Currently waived — sign up online for $0 enrollment.\n\nQ: Can I freeze my membership?\nA: Yes, freeze for up to 3 months at $10/month.\n\nQ: Do you have a student discount?\nA: Yes, 20% off with valid student ID.', policies: 'Membership: Month-to-month or annual. 30-day cancellation notice.\n\nGuest Policy: Members may bring one guest per visit. $10 guest fee.\n\nCode of Conduct: Respectful behavior required. Violation may result in membership termination.' },
+      { icon: '☕', company: 'Brew & Bean', tag: 'Food & Beverage', role: 'Brew & Bean AI Assistant', instructions: 'You are a helpful AI assistant for Brew & Bean, a specialty coffee roastery and cafe chain. Answer questions based ONLY on the knowledge base provided. Be warm and friendly.', about: 'Brew & Bean is a specialty coffee company founded in 2017, with 15 cafes and an online bean subscription service. We source single-origin beans directly from farmers and roast them in small batches.', products: 'Coffee Subscription: $24/month | 12oz single-origin | Free shipping | Roasted weekly\n\nEspresso Blend: $16/bag | Medium-dark roast | Chocolate & caramel notes\n\nCafe Gift Card: $25-$100 | Redeemable at all locations | Never expires\n\nBrew Kit: $45 | Pour-over set + 4oz sampler + grinder', faq: 'Q: Where do you source your beans?\nA: Direct trade from Ethiopia, Colombia, Guatemala, and Vietnam.\n\nQ: How fresh is the coffee?\nA: Roasted within 48 hours of shipping. Best within 30 days.\n\nQ: Do you have dairy-free options?\nA: Yes, oat, almond, and soy milk available at all cafes.\n\nQ: Can I cancel my subscription?\nA: Yes, cancel or pause anytime before the 1st of the month.', policies: 'Shipping: Free on orders over $30. Delivered within 3-5 business days.\n\nReturns: Not satisfied? 100% satisfaction guarantee within 14 days.\n\nCafe Policy: Laptop-friendly until 4 PM. Free Wi-Fi with purchase.' },
+      { icon: '☁️', company: 'CloudHive', tag: 'SaaS', role: 'CloudHive AI Assistant', instructions: 'You are a helpful AI assistant for CloudHive, a cloud infrastructure and DevOps platform. Answer questions based ONLY on the knowledge base provided. Be technical and precise.', about: 'CloudHive provides cloud infrastructure, DevOps tools, and managed hosting solutions for startups and mid-size businesses. Founded in 2020, we serve over 5,000 businesses across 40 countries.', products: 'Hive Starter: $29/month | 2 vCPUs | 4GB RAM | 50GB SSD | 1TB transfer\n\nHive Pro: $99/month | 4 vCPUs | 16GB RAM | 200GB SSD | 5TB transfer\n\nManaged Kubernetes: $199/month | 3-node cluster | Auto-scaling | Monitoring\n\nDevOps Pipeline: $49/month | CI/CD | Git integration | Deploy previews', faq: 'Q: What is your uptime SLA?\nA: 99.95% uptime guarantee across all paid plans.\n\nQ: Do you offer a free tier?\nA: Yes, Hive Free plan includes 1 vCPU, 1GB RAM, 10GB SSD.\n\nQ: Can I migrate from AWS/GCP?\nA: Yes, we offer free migration assistance for Pro plans and above.\n\nQ: What support options are available?\nA: 24/7 live chat, email support, and phone support for Enterprise.', policies: 'SLA: 99.95% uptime. Credits issued for downtime exceeding monthly threshold.\n\nSecurity: SOC 2 Type II certified. Data encrypted at rest and in transit.\n\nCancellation: Cancel anytime. Data exported within 30 days.' },
+      { icon: '🎨', company: 'Artisan Studio', tag: 'Creative', role: 'Artisan Studio AI Assistant', instructions: 'You are a helpful AI assistant for Artisan Studio, a creative agency offering design, branding, and digital marketing services. Answer questions based ONLY on the knowledge base provided. Be creative and professional.', about: 'Artisan Studio is a full-service creative agency founded in 2016. We specialize in branding, web design, illustration, and social media strategy for startups and established businesses.', products: 'Brand Identity Package: $3,500 | Logo + color palette + typography + brand guidelines\n\nWebsite Design: $5,000+ | Custom design | 5 pages | Responsive | CMS integration\n\nSocial Media Kit: $1,200/month | 12 posts | 4 stories | Analytics report\n\nIllustration Pack: $800 | 10 custom illustrations | Commercial license', faq: 'Q: How long does a brand identity project take?\nA: Typically 3-4 weeks including research, concepting, and revisions.\n\nQ: Do you offer revisions?\nA: Yes, each package includes 2 rounds of revisions at no extra cost.\n\nQ: What file formats do you deliver?\nA: AI, EPS, PDF, PNG, SVG — all source files included.\n\nQ: Can you work within a specific brand style?\nA: Absolutely. We adapt to your existing brand or build from scratch.', policies: 'Pricing: 50% deposit to start, 50% upon delivery.\n\nRevisions: 2 rounds included per project. Additional rounds at $100/hr.\n\nLicensing: Full commercial rights upon final payment. Portfolio showcase reserved.' },
+      { icon: '🚗', company: 'EcoRide', tag: 'Transportation', role: 'EcoRide AI Assistant', instructions: 'You are a helpful AI assistant for EcoRide, an electric scooter and bike sharing service. Answer questions based ONLY on the knowledge base provided. Be friendly and helpful.', about: 'EcoRide is a micro-mobility company offering electric scooter and bike sharing services in 30+ cities. Founded in 2022, we provide affordable, eco-friendly last-mile transportation with a fleet of 50,000+ vehicles.', products: 'Pay-Per-Ride: $1 unlock + $0.30/min | No commitment | Park anywhere in zone\n\nDay Pass: $15 | Unlimited 30-min rides for 24 hours | Best for tourists\n\nMonthly Commuter: $49 | 120 minutes daily | Priority parking | Discounted unlocks\n\nStudent Plan: $29/month | 60 minutes daily | Valid student email required', faq: 'Q: How do I unlock a scooter?\nA: Download the EcoRide app, scan the QR code on the vehicle.\n\nQ: Where can I park?\nA: Park in designated zones marked in the app. Never block sidewalks.\n\nQ: What happens if I park outside a zone?\nA: A $5 out-of-zone fee applies. Repeated violations may result in a ban.\n\nQ: Are helmets provided?\nA: Helmet locks are available on select scooters. We recommend bringing your own.', policies: 'Age Requirement: Minimum 18 years old with valid ID.\n\nRiding Rules: Follow traffic laws. No riding on sidewalks. Max speed 20 km/h.\n\nDamage Policy: Report damage immediately. Users responsible for negligence.' },
+      { icon: '🏥', company: 'MedFlow', tag: 'Healthcare', role: 'MedFlow AI Assistant', instructions: 'You are a helpful AI assistant for MedFlow, a telemedicine and healthcare platform. Answer questions based ONLY on the knowledge base provided. Be professional, empathetic, and accurate.', about: 'MedFlow is a digital healthcare platform connecting patients with licensed physicians via video consultation. Founded in 2020, we have facilitated over 500,000 consultations with a network of 2,000+ doctors across 15 specialties.', products: 'General Consultation: $49 | 15-min video call | Prescription if needed\n\nSpecialist Visit: $89 | 20-min video call | Cardiology, dermatology, etc.\n\nMental Health Session: $65 | 30-min therapy | Licensed psychologist\n\nAnnual Checkup Plan: $199 | 2 general + 1 specialist visit | Lab test coordination', faq: 'Q: How quickly can I see a doctor?\nA: Average wait time is under 10 minutes for general consultations.\n\nQ: Do you accept insurance?\nA: Yes, we accept most major insurance plans. Check your coverage in the app.\n\nQ: Can I get a prescription?\nA: Yes, doctors can prescribe medication electronically to your pharmacy.\n\nQ: What if I need a follow-up?\nA: Follow-up consultations are 20% off within 30 days of your first visit.', policies: 'Privacy: HIPAA compliant. All consultations are encrypted and confidential.\n\nCancellation: Free cancellation up to 2 hours before appointment.\n\nRefund: Full refund if doctor is unable to address your concern.' },
+      { icon: '📚', company: 'LearnPath', tag: 'Education', role: 'LearnPath AI Assistant', instructions: 'You are a helpful AI assistant for LearnPath, an online learning platform. Answer questions based ONLY on the knowledge base provided. Be encouraging, clear, and accurate.', about: 'LearnPath is an online education platform founded in 2019, offering 500+ courses in tech, design, and business. We serve over 200,000 students worldwide with self-paced learning, live workshops, and career coaching.', products: 'Individual Plan: $29/month | Unlimited access to all courses | Certificates\n\nTeam Plan: $99/month per seat | Team dashboard | Progress tracking\n\nBootcamp: $1,499 | 12-week intensive | Mentor-led | Career support\n\nWorkshop Pass: $199 | Access to 10 live workshops | Recording included', faq: 'Q: Can I learn at my own pace?\nA: Yes, all courses are self-paced with lifetime access.\n\nQ: Do you offer refunds?\nA: Full refund within 14 days if you\'re not satisfied.\n\nQ: Are courses accredited?\nA: Our certificates are recognized by over 1,000 partner companies.\n\nQ: Can I switch plans?\nA: Yes, upgrade or downgrade anytime. Changes apply next billing cycle.', policies: 'Refund: Full refund within 14 days of purchase.\n\nAccess: Lifetime access to purchased courses. Plan access continues while subscribed.\n\nPrivacy: Student data is never shared with third parties.' },
+      { icon: '📡', company: 'WaveConnect', tag: 'Telecom', role: 'WaveConnect AI Assistant', instructions: 'You are a helpful AI assistant for WaveConnect, a telecommunications provider. Answer questions based ONLY on the knowledge base provided. Be friendly, clear, and accurate.', about: 'WaveConnect is a telecommunications provider offering mobile, fiber internet, and TV services across 15 countries. Founded in 2010, we serve over 10 million customers with 5G coverage in 200+ cities.', products: 'Mobile Plan: $25/month | Unlimited calls | 50GB 5G data | Roaming included\n\nFiber Internet: $45/month | 500Mbps | Unlimited data | Free installation\n\nTV Bundle: $60/month | 120 channels | Netflix included | 2 set-top boxes\n\nFamily Combo: $75/month | Mobile + Fiber + TV | Save $55/month', faq: 'Q: What is your 5G coverage area?\nA: Check our coverage map at waveconnect.com/coverage.\n\nQ: Is there a contract?\nA: No, all plans are month-to-month with no lock-in contract.\n\nQ: How do I pay my bill?\nA: Pay via the WaveConnect app, website, or auto-pay.\n\nQ: What happens if I exceed my data limit?\nA: Speeds are throttled to 1Mbps. You can purchase top-up data anytime.', policies: 'Cancellation: No fees. Cancel anytime with 30 days notice.\n\nEquipment: Return routers and set-top boxes within 14 days of cancellation.\n\nFair Usage: Unlimited plans subject to fair usage policy — 500GB/month for home internet.' },
+    ];
+
+    var selectedTemplateIndex = -1;
+
+    function showTemplatePicker() {
+      selectedTemplateIndex = -1;
+      var overlay = document.getElementById('companyPickerOverlay');
+      var grid = document.getElementById('companyGrid');
+      var confirmBtn = document.getElementById('pickerConfirm');
+      confirmBtn.classList.remove('visible');
+      grid.innerHTML = '';
+      TEMPLATES.forEach(function(t, i) {
+        var card = document.createElement('div');
+        card.className = 'company-card';
+        card.innerHTML = '<div class="company-card-icon">' + t.icon + '</div><div class="company-card-name">' + t.company + '</div><div class="company-card-tag">' + t.tag + '</div>';
+        card.onclick = function() { selectTemplate(i); };
+        grid.appendChild(card);
+      });
+      overlay.classList.add('open');
+    }
+
+    function selectTemplate(index) {
+      selectedTemplateIndex = index;
+      var cards = document.querySelectorAll('.company-card');
+      cards.forEach(function(c, i) {
+        c.classList.toggle('selected', i === index);
+      });
+      document.getElementById('pickerConfirm').classList.add('visible');
+    }
+
+    function closeTemplatePicker(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('companyPickerOverlay').classList.remove('open');
+      document.getElementById('pickerConfirm').classList.remove('visible');
+      selectedTemplateIndex = -1;
+    }
+
+    function confirmTemplate() {
+      if (selectedTemplateIndex < 0) return;
+      loadTemplate(selectedTemplateIndex);
+    }
+
+    function loadTemplate(index) {
+      var t = TEMPLATES[index];
+      if (!t) return;
+      closeTemplatePicker();
+
+      updateStatus('retrieving');
+      updatePipeline(0);
+
+      setTimeout(function() {
+        updatePipeline(1);
+
+        data.persona.company = t.company;
+        data.persona.role = t.role;
+        data.persona.instructions = t.instructions;
+        data.kb.about = t.about;
+        data.kb.products = t.products;
+        data.kb.faq = t.faq;
+        data.kb.policies = t.policies;
+        data.chatHistory = [];
+        updateWelcomeMessage();
+        document.getElementById('chatMessages').innerHTML = '';
+        addMessage('bot', 'Switched to ' + t.company + '. Your chat has been reset for the new company.', false);
+        addMessage('bot', "Hi! I'm the " + t.company + " AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.", false);
+
+        setTimeout(function() {
+          updateStatus('generating');
+          updatePipeline(2);
+
+          setTimeout(function() {
+            updatePipeline(3);
+
+            saveToStorage();
+            loadEditors();
+            initLeftPanel();
+            updateChatBotName();
+            selectFile(activeFile);
+            switchTab('preview');
+
+            setTimeout(function() {
+              updateStatus('ready');
+              resetPipeline();
+            }, 400);
+          }, 200);
+        }, 200);
+      }, 200);
+    }
+
+    // ── LEFT PANEL ──
+    function initLeftPanel() {
+      updateDashboard();
+      const company = data.persona.company || 'Nova Finance';
+      const chipContainer = document.getElementById('leftChips');
+      chipContainer.innerHTML = '';
+
+      const fallbackChips = [
+        'What are your loan interest rates?',
+        'How do I apply?',
+      ];
+
+      const questions = [];
+      KB_SECTIONS.forEach(section => {
+        const hasContent = data.kb[section.key] && data.kb[section.key].trim().length > 0;
+        if (hasContent) {
+          questions.push(section.question.replace('{company}', company));
+        }
+      });
+
+      while (questions.length < 4 && fallbackChips.length) {
+        questions.push(fallbackChips.shift());
+      }
+
+      questions.slice(0, 4).forEach(text => {
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.type = 'button';
+        chip.textContent = text;
+        chip.addEventListener('click', () => {
+          const input = document.getElementById('chatInput');
+          input.value = text;
+          if (document.getElementById('tab-preview').classList.contains('active')) {
+            sendMessage();
+          } else {
+            switchTab('preview');
+            setTimeout(sendMessage, 100);
+          }
+        });
+        chipContainer.appendChild(chip);
+      });
+    }
+
+    // ── TAB SWITCHING ──
+    function switchTab(tabName) {
+      data.activeTab = tabName;
+      saveToStorage();
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tabName);
+      });
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.toggle('active', c.id === 'tab-' + tabName);
+      });
+    }
+
+    // ── FILE SELECTION (DESKTOP) ──
+    function selectFile(fileName) {
+      activeFile = fileName;
+      data.activeFile = fileName;
+
+      document.querySelectorAll('.code-file-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.file === fileName);
+      });
+
+      const labels = {
+        persona: 'Persona',
+        about: 'About',
+        products: 'Products',
+        faq: 'FAQ',
+        policies: 'Policies'
+      };
+
+      const body = document.getElementById('editorBody');
+      if (fileName === 'persona') {
+        body.innerHTML = `
+          <div class="field-group">
+            <label class="field-label">Company Name</label>
+            <input class="field-input" id="personaCompany" maxlength="100" value="${escapeHtml(data.persona.company)}" placeholder="e.g. Nova Finance" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">AI Role / Title</label>
+            <input class="field-input" id="personaRole" maxlength="150" value="${escapeHtml(data.persona.role)}" placeholder="e.g. Customer Service Assistant" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">System Instructions</label>
+            <textarea class="field-textarea" id="personaInstructions" rows="12" maxlength="5000" placeholder="Define how the AI should behave...">${escapeHtml(data.persona.instructions)}</textarea>
+          </div>
+        `;
+      } else {
+        const rows = fileName === 'faq' ? 18 : (fileName === 'products' ? 14 : 12);
+        body.innerHTML = `
+          <textarea class="field-textarea" id="kb-${fileName}" rows="${rows}" maxlength="5000" placeholder="Enter ${labels[fileName].toLowerCase()} content...">${escapeHtml(data.kb[fileName])}</textarea>
+        `;
+      }
+    }
+
+    // ── SAVE ──
+    function saveData() {
+      const isMobile = window.innerWidth <= 768;
+
+      if (isMobile) {
+        data.persona.company = document.getElementById('mobilePersonaCompany').value.trim().slice(0, 100);
+        data.persona.role = document.getElementById('mobilePersonaRole').value.trim().slice(0, 150);
+        data.persona.instructions = document.getElementById('mobilePersonaInstructions').value.trim();
+        data.kb.about = document.getElementById('mobileKbAbout').value.trim();
+        data.kb.products = document.getElementById('mobileKbProducts').value.trim();
+        data.kb.faq = document.getElementById('mobileKbFaq').value.trim();
+        data.kb.policies = document.getElementById('mobileKbPolicies').value.trim();
+      } else {
+        if (activeFile === 'persona') {
+          data.persona.company = document.getElementById('personaCompany').value.trim().slice(0, 100);
+          data.persona.role = document.getElementById('personaRole').value.trim().slice(0, 150);
+          data.persona.instructions = document.getElementById('personaInstructions').value.trim();
+        } else {
+          const textarea = document.getElementById('kb-' + activeFile);
+          if (textarea) data.kb[activeFile] = textarea.value.trim();
+        }
+      }
+
+      saveToStorage();
+      updateChatBotName();
+      initLeftPanel();
+      showSaveStatus();
+    }
+
+    function showSaveStatus() {
+      const id = window.innerWidth <= 768 ? 'mobileSaveStatus' : 'saveStatus';
+      const el = document.getElementById(id);
+      el.classList.add('visible');
+      setTimeout(() => el.classList.remove('visible'), 2000);
+    }
+
+    function updateChatBotName() {
+      const name = data.persona.company || 'Nova Finance';
+      document.getElementById('chatBotName').textContent = name + ' AI';
+    }
+
+    // ── MOBILE ACCORDION ──
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    }
+
+    function loadEditors() {
+      document.getElementById('mobilePersonaCompany').value = data.persona.company;
+      document.getElementById('mobilePersonaRole').value = data.persona.role;
+      document.getElementById('mobilePersonaInstructions').value = data.persona.instructions;
+      document.getElementById('mobileKbAbout').value = data.kb.about;
+      document.getElementById('mobileKbProducts').value = data.kb.products;
+      document.getElementById('mobileKbFaq').value = data.kb.faq;
+      document.getElementById('mobileKbPolicies').value = data.kb.policies;
+    }
+
+    // ── CHAT ──
+    function collectKB() {
+      const parts = [
+        { label: "About", key: "about" },
+        { label: "Products & Services", key: "products" },
+        { label: "FAQ", key: "faq" },
+        { label: "Policies", key: "policies" },
+      ];
+      return parts
+        .map(p => {
+          const val = data.kb[p.key].trim();
+          return val ? `## ${p.label}\n${val}` : "";
+        })
+        .filter(Boolean)
+        .join("\n\n");
+    }
+
+    function getPersona() {
+      return data.persona.instructions.trim();
+    }
+
+    async function sendMessage() {
+      if (isLoading) return;
+      const input = document.getElementById("chatInput");
+      const question = input.value.trim();
+      if (!question) return;
+
+      input.value = "";
+      input.style.height = "auto";
+
+      addMessage("user", question);
+      data.chatHistory.push({ role: "user", content: question });
+      saveToStorage();
+      updateStats();
+
+      const typingId = showTyping();
+      isLoading = true;
+      document.getElementById("sendBtn").disabled = true;
+
+      updateStatus('retrieving');
+      updatePipeline(0);
+
+      const startTime = performance.now();
+
+      try {
+        updatePipeline(1);
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question,
+            knowledgeBase: collectKB(),
+            persona: getPersona(),
+            history: data.chatHistory.slice(-10),
+            sessionId,
+            companyName: data.persona.company,
+          }),
+        });
+
+        updateStatus('generating');
+        updatePipeline(2);
+
+        const responseData = await res.json();
+        removeTyping(typingId);
+
+        updatePipeline(3);
+
+        if (res.ok) {
+          addMessage("bot", responseData.answer);
+          data.chatHistory.push({ role: "assistant", content: responseData.answer });
+          responseTimes.push(performance.now() - startTime);
+          if (responseTimes.length > 10) responseTimes.shift();
+        } else {
+          addMessage("bot", responseData.error || "Something went wrong. Please try again.");
+        }
+        saveToStorage();
+        updateStats();
+
+        setTimeout(() => {
+          updateStatus('ready');
+          resetPipeline();
+        }, 800);
+      } catch {
+        removeTyping(typingId);
+        addMessage("bot", "Could not reach the server. Please check your connection and try again.");
+        updateStatus('offline');
+        resetPipeline();
+      }
+
+      isLoading = false;
+      document.getElementById("sendBtn").disabled = false;
+    }
+
+    function addMessage(role, content, animate = true) {
+      const container = document.getElementById("chatMessages");
+      const el = document.createElement("div");
+      el.className = `message ${role}${animate ? " message-new" : ""}`;
+
+      if (role === "bot") {
+        el.innerHTML = `
+          <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="message-bubble">${escapeHtml(content)}</div>
+        `;
+      } else if (role === "user") {
+        el.innerHTML = `<div class="message-bubble">${escapeHtml(content)}</div>`;
+      } else {
+        el.innerHTML = `<div class="message-bubble">${content}</div>`;
+      }
+
+      container.appendChild(el);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function showTyping() {
+      const container = document.getElementById("chatMessages");
+      const id = "typing-" + Date.now();
+      const el = document.createElement("div");
+      el.id = id;
+      el.className = "message bot message-new";
+      el.innerHTML = `
+        <div class="message-avatar"><i class="fa-solid fa-robot"></i></div>
+        <div class="message-bubble">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      `;
+      container.appendChild(el);
+      container.scrollTop = container.scrollHeight;
+      return id;
+    }
+
+    function removeTyping(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    function clearChat() {
+      data.chatHistory = [];
+      saveToStorage();
+      const container = document.getElementById("chatMessages");
+      container.innerHTML = "";
+      const company = data.persona.company || "Nova Finance";
+      addMessage("bot", `Chat cleared. I'm the ${company} AI assistant — ask me anything about our products and services.`);
+      updateStats();
+    }
+
+    function copyLog() {
+      const text = data.chatHistory.map(m =>
+        (m.role === 'user' ? 'You: ' : 'Bot: ') + m.content
+      ).join('\n\n');
+      if (!text) return;
+
+      const btn = document.querySelector('.action-btn:last-child');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-regular fa-check-circle"></i> Copied!';
+
+      navigator.clipboard.writeText(text).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      });
+
+      setTimeout(function() { btn.innerHTML = orig; }, 1500);
+    }
+
+    function restoreChat() {
+      const container = document.getElementById("chatMessages");
+      if (data.chatHistory.length === 0) return;
+
+      container.innerHTML = "";
+      var company = data.persona.company || 'Nova Finance';
+      addMessage('bot', "Hi! I'm the " + company + " AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.", false);
+      data.chatHistory.forEach(msg => {
+        if (msg.role === 'user') addMessage('user', msg.content, false);
+        else if (msg.role === 'assistant') addMessage('bot', msg.content, false);
+      });
+    }
+
+    function handleKey(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function autoResize(el) {
+      el.style.height = "auto";
+      el.style.height = Math.min(el.scrollHeight, 120) + "px";
+    }
+
+    function useSuggestion(chip) {
+      const input = document.getElementById("chatInput");
+      input.value = chip.textContent;
+      input.focus();
+      if (document.getElementById('tab-preview').classList.contains('active')) {
+        sendMessage();
+      } else {
+        switchTab('preview');
+        setTimeout(sendMessage, 100);
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // ── INIT ──
+    init();
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      function updateIcons() {
+        var theme = root.getAttribute('data-theme');
+        var isDark = theme === 'dark';
+          document.querySelectorAll('.theme-toggle i').forEach(function (icon) {
+            if (isDark) {
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            } else {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            }
+        });
+      }
+
+      updateIcons();
+
+      document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var current = root.getAttribute('data-theme');
+          var next = current === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          updateIcons();
+        });
+      });
+    })();
+  </script>
 
   <!-- ── COMPANY PICKER MODAL ── -->
   <div class="company-picker-overlay" id="companyPickerOverlay" onclick="closeTemplatePicker(event)">
