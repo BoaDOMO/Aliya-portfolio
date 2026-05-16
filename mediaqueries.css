@@ -1,1 +1,89 @@
-# media queries migrated to style.css
+@media screen and (max-width: 2560px) {
+  html {
+    font-size: 1.75rem;
+  }
+}
+@media screen and (max-width: 1920px) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+  .profile_pic_container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 2rem;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  #desktop-nav {
+    display: none;
+  }
+  #hamburger-nav {
+    display: flex;
+  }
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #desktop-nav {
+    display: none;
+  }
+  #hamburger-nav {
+    display: flex;
+  }
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #desktop-nav {
+    display: none;
+  }
+  #hamburger-nav {
+    display: flex;
+  }
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+}
+@media screen and (max-width: 768px) {
+  #desktop-nav {
+    display: none;
+  }
+  #hamburger-nav {
+    display: flex;
+  }
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  html {
+    font-size: 0.875rem;
+  }
+  #desktop-nav {
+    display: none;
+  }
+  #hamburger-nav {
+    display: flex;
+  }
+  #profile {
+    display: block;
+    height: fit-content;
+  }
+}
