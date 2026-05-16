@@ -336,6 +336,9 @@
   .flex-shrink {
     flex-shrink: 1;
   }
+  .flex-grow {
+    flex-grow: 1;
+  }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
@@ -488,7 +491,6 @@ h1 {
   font-weight: var(--font-weight-normal);
   color: var(--color-blue);
   font-style: italic;
-  text-wrap: balance;
 }
 h2,
 h3,
@@ -499,7 +501,6 @@ h6 {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-gray);
-  text-wrap: balance;
 }
 h1:hover,
 h2:hover,
@@ -740,10 +741,6 @@ section {
 #skills,
 #education {
   background-color: var(--color-beige);
-  padding: 2rem 0;
-}
-#experience {
-  padding: 2rem 0;
 }
 .first-section {
   padding-top: var(--spacing-10);
@@ -1159,9 +1156,9 @@ footer p {
 .contact-hero {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: var(--spacing-10);
   min-height: calc(100vh - 140px);
-  padding: 2rem 0;
+  padding: var(--spacing-6) 0 var(--spacing-8);
 }
 .contact-hero-photo {
   flex-shrink: 0;
@@ -1189,7 +1186,7 @@ footer p {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 1rem;
+  gap: var(--spacing-4);
 }
 .contact-hero-text .hero-name {
   font-size: 4.5rem;
@@ -1955,11 +1952,6 @@ footer a:hover {
   section {
     padding: var(--spacing-8) 5%;
   }
-  #skills,
-  #experience,
-  #education {
-    padding: 2rem 5%;
-  }
   .first-section {
     padding-top: var(--spacing-12);
   }
@@ -1972,6 +1964,9 @@ footer a:hover {
   }
   .lab-hero {
     padding: var(--spacing-16) 5% var(--spacing-6);
+  }
+  .lab-hero .hero-content-box {
+    padding: 2rem 1.5rem;
   }
   .hero-name {
     font-size: 2.75rem;
@@ -1997,7 +1992,7 @@ footer a:hover {
     text-align: center;
     gap: var(--spacing-4);
     min-height: auto;
-    padding: 2rem 5%;
+    padding: var(--spacing-8) 5%;
   }
   .contact-hero-photo {
     width: 140px;
