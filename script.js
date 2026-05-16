@@ -2,9 +2,26 @@ function toggleMenu() {
   const menu = document.querySelector(".menu-links");
   const icon = document.querySelector(".hamburger-icon");
   const body = document.body;
+  const isOpen = menu.classList.contains("open");
   menu.classList.toggle("open");
   icon.classList.toggle("open");
   body.classList.toggle("scroll-lock");
+  let overlay = document.getElementById("hamburgerOverlay");
+  if (!isOpen) {
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "hamburgerOverlay";
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => overlay.classList.add("active"));
+    } else {
+      overlay.classList.add("active");
+    }
+    overlay.onclick = function () {
+      toggleMenu();
+    };
+  } else {
+    if (overlay) overlay.classList.remove("active");
+  }
 }
 
 const observer = new IntersectionObserver(
@@ -126,14 +143,50 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
     .forEach((el) => timelineObs.observe(el));
 })();
 
-// Back-to-top button
+// Back-to-top button with progress ring
 (function () {
   const btn = document.getElementById("backToTop");
   if (!btn) return;
-  window.addEventListener("scroll", () => {
-    btn.classList.toggle("visible", window.scrollY > 300);
-  }, { passive: true });
-  btn.addEventListener("click", () => {
+  const size = 44, stroke = 2.5;
+  const r = (size - stroke * 2) / 2;
+  const circ = 2 * Math.PI * r;
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 " + size + " " + size);
+  svg.setAttribute("class", "btt-ring");
+  const bg = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  bg.setAttribute("cx", size / 2);
+  bg.setAttribute("cy", size / 2);
+  bg.setAttribute("r", r);
+  bg.setAttribute("fill", "none");
+  bg.setAttribute("stroke", "currentColor");
+  bg.setAttribute("stroke-width", stroke * 0.6 + "");
+  bg.setAttribute("opacity", "0.15");
+  const fg = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  fg.setAttribute("id", "bttRingFg");
+  fg.setAttribute("cx", size / 2);
+  fg.setAttribute("cy", size / 2);
+  fg.setAttribute("r", r);
+  fg.setAttribute("fill", "none");
+  fg.setAttribute("stroke", "currentColor");
+  fg.setAttribute("stroke-width", stroke + "");
+  fg.setAttribute("stroke-linecap", "round");
+  fg.setAttribute("stroke-dasharray", circ + "");
+  fg.setAttribute("stroke-dashoffset", circ + "");
+  fg.setAttribute("transform", "rotate(-90 " + size / 2 + " " + size / 2 + ")");
+  svg.appendChild(bg);
+  svg.appendChild(fg);
+  btn.insertBefore(svg, btn.firstChild);
+  function update() {
+    var scrollTop = window.scrollY;
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? scrollTop / docH : 0;
+    btn.classList.toggle("visible", scrollTop > 300);
+    fg.setAttribute("stroke-dashoffset", circ - pct * circ + "");
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+  update();
+  btn.addEventListener("click", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();

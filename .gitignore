@@ -3,3 +3,4 @@ node_modules/
 .env.playwright-mcp
 rag*-chat*.png
 index-1680.png
+.playwright-mcp/

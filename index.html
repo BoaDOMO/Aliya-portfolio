@@ -17,8 +17,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aliya Koy</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="mediaqueries.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="stylesheet" href="style.css?v=2" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
       #bgCanvas {
@@ -103,36 +103,6 @@
       });
     </script>
     <script src="script.js"></script>
-    <script>
-      (function () {
-        var root = document.documentElement;
-
-        function updateIcons() {
-          var theme = root.getAttribute('data-theme');
-          var isDark = theme === 'dark';
-          document.querySelectorAll('.theme-toggle i').forEach(function (icon) {
-            if (isDark) {
-              icon.classList.remove('fa-moon');
-              icon.classList.add('fa-sun');
-            } else {
-              icon.classList.remove('fa-sun');
-              icon.classList.add('fa-moon');
-            }
-          });
-        }
-
-        updateIcons();
-
-        document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var current = root.getAttribute('data-theme');
-            var next = current === 'dark' ? 'light' : 'dark';
-            root.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            updateIcons();
-          });
-        });
-      })();
-    </script>
+    <script src="src/theme-toggle.js"></script>
   </body>
 </html>

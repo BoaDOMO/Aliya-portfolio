@@ -102,8 +102,11 @@ class CanvasBackground {
   }
 
   start() {
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) return;
     var self = this;
     function loop(time) {
+      if (self.paused) return;
       var dt = self.lastTime ? time - self.lastTime : 16;
       self.lastTime = time;
       self.update(dt);
@@ -111,6 +114,27 @@ class CanvasBackground {
       self.animId = requestAnimationFrame(loop);
     }
     this.animId = requestAnimationFrame(loop);
+    this.paused = false;
+    var onVis = function () {
+      if (document.hidden) {
+        self.paused = true;
+        if (self.animId) cancelAnimationFrame(self.animId);
+      } else {
+        self.paused = false;
+        self.lastTime = 0;
+        self.animId = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener('visibilitychange', onVis);
+    this._visHandler = onVis;
+    this._rmHandler = function () { self.stop(); };
+    mq.addEventListener('change', this._rmHandler);
+  }
+
+  stop() {
+    this.paused = true;
+    if (this.animId) cancelAnimationFrame(this.animId);
+    this.animId = null;
   }
 
   update(dt) {
@@ -237,7 +261,9 @@ class CanvasBackground {
   }
 
   destroy() {
-    if (this.animId) cancelAnimationFrame(this.animId);
+    this.stop();
     if (this.observer) this.observer.disconnect();
+    if (this._visHandler) document.removeEventListener('visibilitychange', this._visHandler);
+    if (this._rmHandler) window.matchMedia('(prefers-reduced-motion: reduce)').removeEventListener('change', this._rmHandler);
   }
 }
