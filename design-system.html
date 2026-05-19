@@ -74,6 +74,7 @@
               <button class="ds-tab active" data-tab="colors">🎨 Colors</button>
               <button class="ds-tab" data-tab="typography">🔤 Typography</button>
               <button class="ds-tab" data-tab="effects">✨ Effects</button>
+              <button class="ds-tab" data-tab="accessibility">♿ Accessibility</button>
               <button class="ds-tab" data-tab="export">📤 Export</button>
             </div>
 
@@ -140,10 +141,10 @@
               </div>
               <div class="ds-section-label">Font Size Scale</div>
               <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem">
-                <label style="font-size:0.75rem;color:rgb(85,85,85)">Body base:</label>
+                <label style="font-size:0.75rem;color:var(--color-text-gray)">Body base:</label>
                 <input type="text" class="ds-input ds-input-sm" id="dsBaseFontSize" value="16" style="width:60px" />
-                <span style="font-size:0.72rem;color:rgb(120,120,120)">px</span>
-                <label style="font-size:0.75rem;color:rgb(85,85,85);margin-left:0.5rem">Scale:</label>
+                <span style="font-size:0.72rem;color:var(--color-text-muted)">px</span>
+                <label style="font-size:0.75rem;color:var(--color-text-gray);margin-left:0.5rem">Scale:</label>
                 <select class="ds-select" id="dsTypeScale">
                   <option value="compact">Compact</option>
                   <option value="default" selected>Default</option>
@@ -158,7 +159,7 @@
             <div class="ds-panel" id="panel-effects">
               <div class="ds-section-label">Border Radius</div>
               <div class="ds-slider-row">
-                <span style="font-size:0.75rem;color:rgb(85,85,85)">Base:</span>
+                <span style="font-size:0.75rem;color:var(--color-text-gray)">Base:</span>
                 <input type="range" class="ds-slider" id="dsRadiusSlider" min="2" max="24" value="8" step="1" />
                 <span class="ds-slider-val" id="dsRadiusVal">8px</span>
               </div>
@@ -173,16 +174,23 @@
               <div class="ds-shadow-preview" id="dsShadowPreview"></div>
             </div>
 
+            <div class="ds-panel" id="panel-accessibility">
+              <div id="dsAccessibilityContent"></div>
+            </div>
+
             <div class="ds-panel" id="panel-export">
               <div class="ds-format-toggle">
                 <button class="ds-format-btn active" data-format="css">CSS</button>
                 <button class="ds-format-btn" data-format="tailwind">Tailwind</button>
+                <button class="ds-format-btn" data-format="scss">SCSS</button>
+                <button class="ds-format-btn" data-format="json">JSON</button>
               </div>
               <pre class="ds-output" id="dsCodeOutput">:root { }</pre>
               <div class="ds-actions">
                 <button class="ds-btn ds-btn-primary" id="dsCopyBtn"><i class="fa-regular fa-clipboard"></i> Copy</button>
                 <button class="ds-btn" id="dsDownloadBtn"><i class="fa-solid fa-download"></i> Download</button>
                 <button class="ds-btn" id="dsPrintBtn"><i class="fa-solid fa-print"></i> Print</button>
+                <button class="ds-btn" id="dsShareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
               </div>
               <div class="ds-preset-row">
                 <select class="ds-select" id="dsPresetSelect" style="flex:1;max-width:200px">
@@ -893,62 +901,39 @@ var FALLBACK_FONTS = [
     }
 
     function updatePreview() {
-      try {
-        var hex = getPrimaryHex();
-        var headingFont = DS.headingFont;
-        var bodyFont = DS.bodyFont;
-        var isDark = DS.previewDark;
-        var scale = generateScale(hex);
-        var p900 = scale.find(function (s) { return s.name === 900; });
-        var p200 = scale.find(function (s) { return s.name === 200; });
-        var p500 = scale.find(function (s) { return s.name === 500; });
-        var p50 = scale.find(function (s) { return s.name === 50; });
-        var card = document.getElementById('dsLiveCard');
-        var icon = document.getElementById('dsLiveIcon');
-        var btn = document.getElementById('dsLiveBtn');
-        var tags = document.getElementById('dsLiveTags');
-        var body = document.querySelector('.ds-live-card-body');
-        var title = document.querySelector('.ds-live-card-header-title');
-        if (!card) return;
-        if (isDark) {
-          card.style.background = p900 ? p900.hex : '#18181A';
-          card.style.color = p50 ? p50.hex : '#F3F4F6';
-          icon.style.background = p500 ? p500.hex : hex;
-          title.style.color = p50 ? p50.hex : '#F3F4F6';
-          if (body) body.style.color = p200 ? p200.hex : '#9CA3AF';
-          btn.style.background = p200 ? p200.hex : '#9CA3AF';
-          btn.style.color = p900 ? p900.hex : '#0A0A0A';
-          tags.querySelectorAll('.ds-live-card-tag').forEach(function (tag) {
-            tag.style.background = 'transparent';
-            tag.style.color = p200 ? p200.hex : '#9CA3AF';
-            tag.style.borderColor = p200 ? p200.hex : 'rgba(255,255,255,0.1)';
-          });
-        } else {
-          card.style.background = '';
-          card.style.color = '';
-          icon.style.background = p500 ? p500.hex : hex;
-          title.style.color = '';
-          if (body) body.style.color = '';
-          btn.style.background = hex;
-          btn.style.color = 'white';
-          tags.querySelectorAll('.ds-live-card-tag').forEach(function (tag) {
-            tag.style.background = p50 ? p50.hex : '#e8edf5';
-            tag.style.color = p500 ? p500.hex : hex;
-            tag.style.borderColor = 'transparent';
-          });
-        }
-        card.style.borderRadius = getRadius('lg');
-        card.style.fontFamily = bodyFont;
-        title.style.fontFamily = headingFont;
-      } catch (e) {}
+      // Legacy function - kept for compatibility
+      // Preview is now handled by the right-side renderPreview() functions
+    }
+
+    function highlightCode(code, format) {
+      var escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      var lines = escaped.split('\n');
+      var html = lines.map(function(line, i) {
+        var colored = line
+          .replace(/(--[\w-]+)/g, '<span class="hl-prop">$1</span>')
+          .replace(/(#[0-9a-f]{6}|#[0-9a-f]{3})/gi, '<span class="hl-hex">$1</span>')
+          .replace(/\/\*[\s\S]*?\*\//g, function(m) { return '<span class="hl-comment">' + m + '</span>'; })
+          .replace(/@\w+/g, '<span class="hl-keyword">$1</span>')
+          .replace(/(\d+\.?\d*)(px|rem|em|%)/g, '<span class="hl-unit">$1$2</span>')
+          .replace(/:root|@theme/g, '<span class="hl-selector">$1</span>')
+          .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="hl-string">$1</span>')
+          .replace(/(\$\w+)/g, '<span class="hl-var">$1</span>');
+        var num = (i + 1).toString().padStart(3, ' ');
+        return '<span class="hl-ln">' + num + '</span>' + colored;
+      }).join('\n');
+      return html;
     }
 
     function updateExport() {
       var primaryHex = getPrimaryHex();
-      var isTailwind = DS.format === 'tailwind';
       var states = getStateColors();
       var headingFont = DS.headingFont;
       var bodyFont = DS.bodyFont;
+      var fmt = DS.format;
+      var isTailwind = fmt === 'tailwind';
+      var isSCSS = fmt === 'scss';
+      var isJSON = fmt === 'json';
+
       function P(name) { return '--' + name; }
       var base = DS.baseFontSize;
       var ratio = { compact: 1.2, default: 1.25, spacious: 1.333 }[DS.typeScale] || 1.25;
@@ -976,67 +961,117 @@ var FALLBACK_FONTS = [
         var map = { sm: '0 1px 3px rgba(0,0,0,' + s.a + '), 0 1px 2px rgba(0,0,0,' + (s.a * 0.5) + ')', md: '0 4px 12px rgba(0,0,0,' + s.b + '), 0 2px 4px rgba(0,0,0,' + (s.b * 0.5) + ')', lg: '0 10px 30px rgba(0,0,0,' + s.c + '), 0 4px 10px rgba(0,0,0,' + (s.c * 0.5) + ')' };
         return map[name];
       }
+
+      if (isJSON) {
+        var t = { color: {}, typography: {}, effects: {}, spacing: {} };
+        var pScale = generateScale(primaryHex);
+        t.color.primary = primaryHex;
+        pScale.forEach(function (s) {
+          t.color['primary-' + s.name] = s.hex;
+        });
+        if (DS.colors.length > 1) {
+          DS.colors.slice(1).forEach(function (c, i) {
+            var label = 'color-' + (i + 2);
+            var cScale = generateScale(c.hex);
+            t.color[label] = c.hex;
+            cScale.forEach(function (s) {
+              t.color[label + '-' + s.name] = s.hex;
+            });
+          });
+        }
+        var neutrals = generateNeutralScale(DS.neutralMode, DS.customNeutralHue);
+        neutrals.forEach(function (s) {
+          t.color['neutral-' + s.name] = s.hex;
+        });
+        ['default', 'hover', 'active', 'disabled', 'success', 'error', 'warning', 'info'].forEach(function (k) {
+          t.color[k] = states[k];
+        });
+        t.typography['font-display'] = headingFont;
+        t.typography['font-body'] = bodyFont;
+        Object.keys(fontSizes).forEach(function (k) {
+          t.typography['font-size-' + k] = fontSizes[k];
+        });
+        spacings.forEach(function (i, idx) {
+          t.spacing['spacing-' + i] = spacingVals[idx] + 'rem';
+        });
+        ['sm', 'md', 'lg', 'xl', 'pill', 'full'].forEach(function (k) {
+          t.effects['radius-' + k] = getEksRadius(k);
+        });
+        ['sm', 'md', 'lg'].forEach(function (k) {
+          t.effects['shadow-' + k] = getEksShadow(k);
+        });
+        document.getElementById('dsCodeOutput').textContent = JSON.stringify({ tokens: t }, null, 2);
+        return;
+      }
+
       var lines = [];
-      var open = isTailwind ? '@theme {' : ':root {';
-      lines.push(open);
+      var pref = isSCSS ? '$' : '  ';
+      var cmt = isSCSS ? '//' : '  /*';
+      if (isSCSS) {
+        lines.push(cmt + ' Design System Tokens');
+      } else {
+        lines.push(isTailwind ? '@theme {' : ':root {');
+      }
       var pScale = generateScale(primaryHex);
-      lines.push('  /* -- Primary -- */');
-      lines.push('  ' + P('color-primary') + ': ' + primaryHex + ';');
+      lines.push(isSCSS ? cmt + ' Primary' : cmt + ' -- Primary -- */');
+      lines.push(pref + 'color-primary: ' + primaryHex + ';');
       pScale.forEach(function (s) {
-        lines.push('  ' + P('color-primary-' + s.name) + ': ' + s.hex + ';');
+        lines.push(pref + 'color-primary-' + s.name + ': ' + s.hex + ';');
       });
       if (DS.colors.length > 1) {
         lines.push('');
-        lines.push('  /* -- Additional Colors -- */');
+        lines.push(isSCSS ? cmt + ' Additional Colors' : cmt + ' -- Additional Colors -- */');
         DS.colors.slice(1).forEach(function (c, i) {
           var label = 'color-' + (i + 2);
           var cScale = generateScale(c.hex);
-          lines.push('  ' + P(label) + ': ' + c.hex + ';');
+          lines.push(pref + label + ': ' + c.hex + ';');
           cScale.forEach(function (s) {
-            lines.push('  ' + P(label + '-' + s.name) + ': ' + s.hex + ';');
+            lines.push(pref + label + '-' + s.name + ': ' + s.hex + ';');
           });
         });
       }
       var neutrals = generateNeutralScale(DS.neutralMode, DS.customNeutralHue);
       lines.push('');
-      lines.push('  /* -- Neutral Palette -- */');
+      lines.push(isSCSS ? cmt + ' Neutral Palette' : cmt + ' -- Neutral Palette -- */');
       neutrals.forEach(function (s) {
-        lines.push('  ' + P('color-neutral-' + s.name) + ': ' + s.hex + ';');
+        lines.push(pref + 'color-neutral-' + s.name + ': ' + s.hex + ';');
       });
       lines.push('');
-      lines.push('  /* -- Interactive States -- */');
+      lines.push(isSCSS ? cmt + ' Interactive States' : cmt + ' -- Interactive States -- */');
       ['default', 'hover', 'active', 'disabled'].forEach(function (k) {
-        lines.push('  ' + P('color-' + k) + ': ' + states[k] + ';');
+        lines.push(pref + 'color-' + k + ': ' + states[k] + ';');
       });
       lines.push('');
-      lines.push('  /* -- Semantic Colors -- */');
+      lines.push(isSCSS ? cmt + ' Semantic Colors' : cmt + ' -- Semantic Colors -- */');
       ['success', 'error', 'warning', 'info'].forEach(function (k) {
-        lines.push('  ' + P('color-' + k) + ': ' + states[k] + ';');
+        lines.push(pref + 'color-' + k + ': ' + states[k] + ';');
       });
       lines.push('');
-      lines.push('  /* -- Typography -- */');
-      lines.push('  ' + P('font-display') + ': ' + headingFont + ';');
-      lines.push('  ' + P('font-body') + ': ' + bodyFont + ';');
+      lines.push(isSCSS ? cmt + ' Typography' : cmt + ' -- Typography -- */');
+      lines.push(pref + 'font-display: ' + headingFont + ';');
+      lines.push(pref + 'font-body: ' + bodyFont + ';');
       Object.keys(fontSizes).forEach(function (k) {
-        lines.push('  ' + P('font-size-' + k) + ': ' + fontSizes[k] + ';');
+        lines.push(pref + 'font-size-' + k + ': ' + fontSizes[k] + ';');
       });
       lines.push('');
-      lines.push('  /* -- Spacing (8px base) -- */');
+      lines.push(isSCSS ? cmt + ' Spacing (8px base)' : cmt + ' -- Spacing (8px base) -- */');
       spacings.forEach(function (i, idx) {
-        lines.push('  ' + P('spacing-' + i) + ': ' + spacingVals[idx] + 'rem;');
+        lines.push(pref + 'spacing-' + i + ': ' + spacingVals[idx] + 'rem;');
       });
       lines.push('');
-      lines.push('  /* -- Border Radius -- */');
+      lines.push(isSCSS ? cmt + ' Border Radius' : cmt + ' -- Border Radius -- */');
       ['sm', 'md', 'lg', 'xl', 'pill', 'full'].forEach(function (k) {
-        lines.push('  ' + P('radius-' + k) + ': ' + getEksRadius(k) + ';');
+        lines.push(pref + 'radius-' + k + ': ' + getEksRadius(k) + ';');
       });
       lines.push('');
-      lines.push('  /* -- Shadows -- */');
+      lines.push(isSCSS ? cmt + ' Shadows' : cmt + ' -- Shadows -- */');
       ['sm', 'md', 'lg'].forEach(function (k) {
-        lines.push('  ' + P('shadow-' + k) + ': ' + getEksShadow(k) + ';');
+        lines.push(pref + 'shadow-' + k + ': ' + getEksShadow(k) + ';');
       });
-      lines.push('}');
-      document.getElementById('dsCodeOutput').textContent = lines.join('\n');
+      if (!isSCSS) lines.push('}');
+      var code = lines.join('\n');
+      var highlighted = highlightCode(code, fmt);
+      document.getElementById('dsCodeOutput').innerHTML = highlighted;
     }
 
     function onFontChange() {
@@ -1404,6 +1439,133 @@ var FALLBACK_FONTS = [
       document.getElementById('dsPreviewBody').innerHTML = previewFrame(html);
     }
 
+    function renderAccessibility() {
+      var el = document.getElementById('dsAccessibilityContent');
+      var primary = getPrimaryHex();
+      var states = getStateColors();
+      var pScale = generateScale(primary);
+      var neutrals = generateNeutralScale(DS.neutralMode, DS.customNeutralHue);
+
+      var allColors = [
+        { name: 'Primary 500', hex: primary },
+        { name: 'Primary 900', hex: dsFind(pScale, 900) },
+        { name: 'Primary 200', hex: dsFind(pScale, 200) },
+        { name: 'Primary 50', hex: dsFind(pScale, 50) },
+        { name: 'Neutral 900', hex: dsFind(neutrals, 900) },
+        { name: 'Neutral 100', hex: dsFind(neutrals, 100) },
+        { name: 'White', hex: '#ffffff' },
+        { name: 'Near Black', hex: '#1a1a1a' },
+      ];
+      STATE_KEYS.forEach(function(k) { allColors.push({ name: k.charAt(0).toUpperCase() + k.slice(1), hex: states[k] }); });
+
+      var displayColors = allColors.slice(0, 10);
+
+      function matrixRow(label, rowColors) {
+        var html = '<tr><td class="is-header">' + label + '</td>';
+        rowColors.forEach(function(c) {
+          var ratio = getContrastRatio(label === 'White' ? '#ffffff' : states.default, c.hex);
+          if (label === 'White') ratio = getContrastRatio('#ffffff', c.hex);
+          else if (label === 'Near Black') ratio = getContrastRatio('#1a1a1a', c.hex);
+          var wcag = getWCAG(ratio);
+          var cls = wcag.AAA ? 'pass' : (wcag.AA ? 'pass aa' : 'fail');
+          html += '<td><span class="ds-contrast-cell ' + cls + '">' + ratio.toFixed(1) + '</span></td>';
+        });
+        html += '</tr>';
+        return html;
+      }
+
+      var matrixHTML = '<div class="ds-access-section"><h3>Contrast Matrix</h3><div class="ds-contrast-matrix-toggle">' +
+        ['all', 'primary', 'neutrals', 'states'].map(function(v) {
+          return '<button class="' + (v === 'all' ? 'active' : '') + '" data-matrix="' + v + '">' +
+            v.charAt(0).toUpperCase() + v.slice(1) + '</button>';
+        }).join('') +
+        '</div><table class="ds-contrast-matrix"><thead><tr><th></th>' +
+        displayColors.map(function(c) { return '<th title="' + c.hex + '">' + c.name + '</th>'; }).join('') +
+        '</tr></thead><tbody>' +
+        displayColors.map(function(fg) { return matrixRow(fg.name, displayColors); }).join('') +
+        '</tbody></table></div>';
+
+      var cbModes = [
+        { id: 'none', label: 'Normal' },
+        { id: 'protanopia', label: 'Protanopia' },
+        { id: 'deuteranopia', label: 'Deuteranopia' },
+        { id: 'tritanopia', label: 'Tritanopia' },
+        { id: 'protanomaly', label: 'Protanomaly' },
+        { id: 'deuteranomaly', label: 'Deuteranomaly' },
+        { id: 'tritanomaly', label: 'Tritanomaly' },
+        { id: 'achromatopsia', label: 'Achromatopsia' },
+      ];
+      var cbFilters = {
+        none: '', protanopia: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        deuteranopia: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        tritanopia: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        protanomaly: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.817,0.183,0,0,0 0.333,0.667,0,0,0 0,0.125,0.875,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        deuteranomaly: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.8,0.2,0,0,0 0.258,0.742,0,0,0 0,0.142,0.858,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        tritanomaly: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.967,0.033,0,0,0 0,0.733,0.267,0,0 0,0.183,0.817,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+        achromatopsia: 'filter:url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'cb\'><feColorMatrix type=\'matrix\' values=\'0.299,0.587,0.114,0,0 0.299,0.587,0.114,0,0 0.299,0.587,0.114,0,0 0,0,0,1,0\'/></filter></svg>#cb")',
+      };
+
+      var cbHTML = '<div class="ds-access-section"><h3>Color Blindness Simulation</h3><div class="ds-cb-grid">';
+      cbModes.forEach(function(m) {
+        cbHTML += '<div class="ds-cb-mode' + (m.id === 'none' ? ' active' : '') + '" data-cb="' + m.id + '">' +
+          '<div class="ds-cb-preview" style="' + cbFilters[m.id] + '">' +
+            '<span class="cb-swatch" style="background:' + primary + '"></span>' +
+            '<span class="cb-swatch" style="background:' + states.success + '"></span>' +
+            '<span class="cb-swatch" style="background:' + states.error + '"></span>' +
+            '<span class="cb-swatch" style="background:' + states.warning + '"></span>' +
+          '</div>' +
+          '<div class="ds-cb-mode-label">' + m.label + '</div></div>';
+      });
+      cbHTML += '</div></div>';
+
+      var contrastPass = getContrastRatio(primary, '#ffffff') >= 4.5;
+      var largeTextPass = getContrastRatio(primary, '#ffffff') >= 3;
+      var checklist = [
+        { label: 'Color contrast ratio \u2265 4.5:1 for body text (primary on white)', pass: contrastPass },
+        { label: 'Color contrast ratio \u2265 3:1 for large text (primary on white)', pass: largeTextPass },
+        { label: 'Focus indicators visible on interactive elements', pass: true },
+        { label: 'Color is not the sole means of conveying information', pass: false },
+        { label: 'Touch targets are at least 44\u00D744px', pass: true },
+        { label: 'Text can be resized up to 200% without loss of content', pass: true },
+      ];
+      var checkHTML = '<div class="ds-access-section"><h3>WCAG 2.1 Quick Check</h3><div class="ds-checklist">';
+      checklist.forEach(function(item) {
+        checkHTML += '<div class="ds-checklist-item ' + (item.pass ? 'pass' : 'fail') + '">' +
+          '<span class="check ' + (item.pass ? 'pass' : 'fail') + '">' + (item.pass ? '\u2713' : '\u2717') + '</span>' +
+          item.label + '</div>';
+      });
+      checkHTML += '</div></div>';
+
+      var recs = [];
+      if (!contrastPass) recs.push('Increase primary color contrast for body text on white backgrounds.');
+      if (getContrastRatio(states.warning, '#ffffff') < 3) recs.push('Warning color needs better contrast. Consider darkening it.');
+      if (!largeTextPass) recs.push('Large text contrast is below 3:1. Consider a darker primary for headings.');
+      recs.push('Add visible focus indicators to all interactive elements for keyboard navigation.');
+      recs.push('Consider adding underlines to links within body text for color-independent identification.');
+
+      var recHTML = '<div class="ds-access-section"><h3>Recommendations</h3>';
+      recs.forEach(function(r) {
+        recHTML += '<div class="ds-rec"><strong>\u2139\uFE0F</strong> ' + r + '</div>';
+      });
+      recHTML += '</div>';
+
+      el.innerHTML = matrixHTML + cbHTML + checkHTML + recHTML;
+
+      el.querySelector('.ds-contrast-matrix-toggle').addEventListener('click', function(e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        this.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+
+      el.querySelector('.ds-cb-grid').addEventListener('click', function(e) {
+        var mode = e.target.closest('.ds-cb-mode');
+        if (!mode) return;
+        this.querySelectorAll('.ds-cb-mode').forEach(function(m) { m.classList.remove('active'); });
+        mode.classList.add('active');
+      });
+    }
+
     /* -- INIT -- */
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -1422,6 +1584,32 @@ var FALLBACK_FONTS = [
       updateAll();
       populatePresetSelect();
 
+      /* -- RESTORE FROM URL -- */
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var dsParam = params.get('ds');
+        if (dsParam) {
+          var restored = deserializeState(dsParam);
+          if (restored) {
+            document.getElementById('dsHeadingFont').value = DS.headingFont;
+            document.getElementById('dsBodyFont').value = DS.bodyFont;
+            document.getElementById('dsBaseFontSize').value = DS.baseFontSize;
+            document.getElementById('dsTypeScale').value = DS.typeScale;
+            document.getElementById('dsRadiusSlider').value = DS.baseRadius;
+            document.getElementById('dsRadiusVal').textContent = DS.baseRadius + 'px';
+            document.getElementById('dsNeutralMode').value = DS.neutralMode;
+            document.getElementById('dsNeutralHueWrap').style.display = DS.neutralMode === 'custom' ? '' : 'none';
+            document.querySelectorAll('.ds-format-btn').forEach(function(b) {
+              b.classList.toggle('active', b.dataset.format === DS.format);
+            });
+            document.querySelectorAll('.ds-intensity-btn').forEach(function(b) {
+              b.classList.toggle('active', b.dataset.intensity === DS.shadowIntensity);
+            });
+            updateAll();
+          }
+        }
+      })();
+
       /* -- TABS -- */
 
       document.querySelectorAll('.ds-tab').forEach(function (tab) {
@@ -1432,6 +1620,7 @@ var FALLBACK_FONTS = [
           document.getElementById('panel-' + this.dataset.tab).classList.add('active');
           if (this.dataset.tab === 'effects') updateEffects();
           if (this.dataset.tab === 'export') updateExport();
+          if (this.dataset.tab === 'accessibility') renderAccessibility();
         });
       });
 
@@ -1847,6 +2036,19 @@ var FALLBACK_FONTS = [
         window.print();
       });
 
+      /* -- SHARE -- */
+
+      document.getElementById('dsShareBtn').addEventListener('click', function() {
+        var encoded = serializeState();
+        if (!encoded) { alert('Could not encode state.'); return; }
+        var url = window.location.origin + window.location.pathname + '?ds=' + encodeURIComponent(encoded);
+        navigator.clipboard.writeText(url).then(function() {
+          var orig = document.getElementById('dsShareBtn').innerHTML;
+          document.getElementById('dsShareBtn').innerHTML = '<i class="fa-regular fa-check"></i> Copied!';
+          setTimeout(function() { document.getElementById('dsShareBtn').innerHTML = orig; }, 2000);
+        }).catch(function() { alert('Share URL: ' + url); });
+      });
+
       /* -- PRESETS -- */
 
       document.getElementById('dsSavePreset').addEventListener('click', function () {
@@ -1930,6 +2132,54 @@ var FALLBACK_FONTS = [
       });
 
     });
+
+    /* -- URL SHARING -- */
+
+    function serializeState() {
+      var data = {
+        c: DS.colors.map(function(c) { return c.hex; }),
+        n: DS.neutralMode,
+        h: DS.customNeutralHue,
+        hf: DS.headingFont,
+        bf: DS.bodyFont,
+        f: DS.format,
+        s: DS.stateOverrides,
+        bs: DS.baseFontSize,
+        ts: DS.typeScale,
+        br: DS.baseRadius,
+        ro: DS.radiusOverrides,
+        si: DS.shadowIntensity,
+        so: DS.shadowOverrides,
+        vt: DS.visTextVal,
+        vb: DS.visBgVal,
+      };
+      try {
+        var compressed = btoa(JSON.stringify(data));
+        return compressed;
+      } catch (e) { return null; }
+    }
+
+    function deserializeState(str) {
+      try {
+        var data = JSON.parse(atob(str));
+        if (data.c) DS.colors = data.c.map(function(h) { return { hex: h }; });
+        if (data.n) DS.neutralMode = data.n;
+        if (data.h !== undefined) DS.customNeutralHue = data.h;
+        if (data.hf) DS.headingFont = data.hf;
+        if (data.bf) DS.bodyFont = data.bf;
+        if (data.f) DS.format = data.f;
+        if (data.s) DS.stateOverrides = data.s;
+        if (data.bs) DS.baseFontSize = data.bs;
+        if (data.ts) DS.typeScale = data.ts;
+        if (data.br) DS.baseRadius = data.br;
+        if (data.ro) DS.radiusOverrides = data.ro;
+        if (data.si) DS.shadowIntensity = data.si;
+        if (data.so) DS.shadowOverrides = data.so;
+        if (data.vt) DS.visTextVal = data.vt;
+        if (data.vb) DS.visBgVal = data.vb;
+        return true;
+      } catch (e) { return false; }
+    }
   </script>
 
 </body>
