@@ -96,7 +96,6 @@ Frosted glass is applied to the following elements in dark mode only:
 | Nav (`#nav`)                                   | `blur(14px)`                      | `rgba(11, 17, 32, 0.85)`                 |
 | Footer                                         | `blur(14px)`                      | `rgba(11, 17, 32, 0.85)`                 |
 | Skill cards (`.skill-category`)                | `blur(12px)` → hover `blur(24px)` | `var(--color-card)` + `--card-glow-dark` |
-| AI demo cards (`.ai-demo-card`)                | `blur(10px)` → hover `blur(20px)` | `var(--color-card)` + `--card-glow-dark` |
 | Contact form card (`.contact-form-card`)       | `blur(14px)`                      | `var(--color-card)` + `--card-glow-dark` |
 | Buttons (`.btn-color-1`, `.btn-color-2:hover`) | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
 | Back-to-top (`.back-to-top`)                   | `blur(10px)` → hover `blur(14px)` | `rgba(163, 177, 138, 0.85)`              |
@@ -128,7 +127,6 @@ Light mode cards get the opposite treatment of dark mode's frosted glass — war
 | Element                                     | Effect                                     | Implementation                                                                                                                        |
 | ------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Skill cards (`.skill-category`)             | Enhanced golden glow + warm layered shadow | `--card-glow` (enhanced golden) + `box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03)` |
-| AI demo cards (`.ai-demo-card`)             | Enhanced golden glow + warm layered shadow | Same pattern                                                                                                                          |
 | Contact form card (`.contact-form-card`)    | Enhanced golden glow + warm layered shadow | Same pattern                                                                                                                          |
 | Project sections (`.project-section:hover`) | Layered hover shadow                       | `0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05)`                                               |
 | Hero content box (`.hero-content-box`)      | Solid dark blue                            | No frosted effect — backdrop blur only in dark mode                                                                                   |
@@ -206,9 +204,8 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 
 ### Layout
 
-- **Grid**: 8-column CSS grid system
+- **Grid**: 8-column CSS grid (via `grid-template-columns: repeat(8, 1fr)` on sections directly, no wrapper class)
 - **Container**: `max-width: 1200px`, centered, `2rem` (32px) side padding
-- **Grid classes**: `.grid-8` for the grid, `.col-span-{1-8}` for column spans
 - **Spacing scale**: 8px base. See `--spacing-*` tokens in `src/tokens.css`
 
 ### Breakpoints
@@ -240,12 +237,23 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - Logo hover: opacity 0.65, translateY(-1px) light / near-white dark
 - Link hover: opacity 0.6 (desktop), background shift (mobile)
 
+### Hamburger Overlay
+
+- When hamburger menu opens, a `#hamburgerOverlay` `<div>` is dynamically created by `toggleMenu()` in `script.js` and appended to `body`
+- Fixed fullscreen (`inset: 0`), `z-index: 80` (below `.menu-links` at 90, above page content)
+- Light: `rgba(0, 0, 0, 0.4)`; Dark: `rgba(0, 0, 0, 0.6)`
+- Fades in via CSS `opacity` + `transition: opacity 0.3s ease`
+- `pointer-events: none` when hidden, `auto` when active
+- Tapping the overlay calls `toggleMenu()` to close the menu
+- Removed from DOM? No — overlay element persists in DOM while menu is open, is hidden via class removal
+
 ### Theme Toggle
 
 - Desktop: `<li>` in `.nav-links`, last position
 - Mobile/hamburger: sits alongside `.hamburger-icon` in a flex row with `gap: 1.25rem`
 - Icon swaps `fa-moon` ↔ `fa-sun` on click
-- All theme toggle icons stay in sync via `querySelectorAll('.theme-toggle i')`
+- All theme toggle icons stay in sync via shared `src/theme-toggle.js` — listens on all `.theme-toggle i` elements
+- Logic deduplicated into single file, loaded on all pages after `script.js`
 
 ### Hero (Home)
 
@@ -254,8 +262,9 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
 ### Hero (Lab)
 
-- Left-aligned
+- Left-aligned, `position: relative`, `overflow: hidden`
 - Dark blue content box (`#26428b` light / `rgba(163, 177, 138, 0.08)` dark) with white text, rounded 12px, frosted blur in dark mode only
+- Neural links particle canvas (`#neuralCanvas`) layered below as `position: absolute`, `z-index: -1`, `pointer-events: none`
 - Label blurs in → heading fades up → underline draws → tagline fades up → card fades up
 
 ### Hero (Contact)
@@ -306,7 +315,9 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
 ### Back-to-Top
 
 - 44px circle, `#26428b` light / `var(--color-blue)` dark, fixed bottom-right
-- Hidden by default, visible after 300px scroll
+- Hidden by default (`opacity: 0`, `pointer-events: none`), visible after 300px scroll
+- **Progress ring**: SVG ring injected via JS on page load. Background circle (thin, 15% opacity) + foreground circle that fills proportionally to scroll progress (0–100% `stroke-dashoffset`). Updates on `scroll` and `resize` (both passive). Foreground circle starts at 3 o'clock via `rotate(-90)`, uses `stroke-linecap: round`
+- Dark mode: ring stroke uses `var(--color-blue)` (sage)
 
 ### Project Card (Lab)
 
@@ -357,11 +368,21 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
   - Subtle vignette: radial gradient darkening corners (`rgba(100,70,50,0.06–0.09)`)
   - Gentle pulse: whole gradient breathes via `sin()` oscillation of overlay alpha
 - **Performance**: no blur, no blend modes (multiply is lightweight), no per-frame particle systems in light mode — runs at 60fps on all devices
+- **Reduced motion**: checks `window.matchMedia('(prefers-reduced-motion: reduce)')` before starting animation — exits early if true. Listens for runtime changes via `change` event and calls `stop()` to cancel the animation loop
+- **Page Visibility**: listens on `document.visibilitychange`. When hidden: sets `paused = true`, cancels `requestAnimationFrame`. When visible: resets timestamp, restarts the loop. Prevents CPU waste while tab is backgrounded
 - **Pages**: integrated on index.html, lab.html, contact.html, rag-chatbot.html. Excluded from profile.html
+
+## Touch Device Feedback
+
+A `@media (hover: none)` query adds tactile feedback for touch devices where hover states have no effect:
+
+- `.btn:active`, `.btn-send:active`, `.back-to-top:active`, `.skill-category:active`: `scale(0.97)` with `transition: transform 0.1s ease`
+
+This replaces hover-based visual feedback (lift, shadow, shimmer) with a compress-on-press response that feels native on touch screens. The reduced-motion media query disables this transform.
 
 ## Animation Timing
 
-All entrance animations use `cubic-bezier(0.16, 1, 0.3, 1)` easing. Reduced motion media query disables all animations.
+All entrance animations use `cubic-bezier(0.16, 1, 0.3, 1)` easing. The `prefers-reduced-motion: reduce` media query disables all CSS animations (`animation: none !important`, `transition: none !important`) and prevents the canvas background from starting. A secondary catch-all in dark mode sets `animation-duration: 0.01ms !important` for any missed elements.
 
 ## Icons
 
@@ -372,5 +393,17 @@ Currently uses **Font Awesome 6.5** via CDN. Free/regular/brand sets used for:
 
 ## Images
 
-- `/assets/profile-pic.jpg` — Profile photo, circular crop
-- `/assets/profile-pic.png` — Same photo, PNG format
+- `/assets/profile-pic.jpg` — Profile photo, circular crop. Only image asset — all other images (10 PNGs, resume PDF) removed to reduce page weight from ~1.2MB to ~150KB
+
+## External CSS/JS Files
+
+Inline `<style>` and `<script>` blocks extracted into cacheable external files:
+
+| File | Origin | Size |
+|------|--------|------|
+| `src/theme-toggle.js` | Shared theme toggle logic (was inline on every page) | 828 B |
+| `src/rag-chatbot.css` | Extracted from `rag-chatbot.html` inline `<style>` (~1,142 lines) | 31 KB |
+| `src/rag-chatbot.js` | Extracted from `rag-chatbot.html` inline `<script>` (~710 lines) | 18 KB |
+| `src/lab.css` | Extracted from `lab.html` inline `<style>` (~340 lines) | 7 KB |
+
+All pages now preconnect to `cdnjs.cloudflare.com` in `<head>` for faster Font Awesome delivery. Stylesheet references include cache-busting query parameter (`style.css?v=2`).

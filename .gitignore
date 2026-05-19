@@ -4,3 +4,10 @@ node_modules/
 rag*-chat*.png
 index-1680.png
 .playwright-mcp/
+
+.opencode/
+
+# Test artifacts
+canvas-test*
+moirai-logo-preview.png
+*.snapshot.yml
