@@ -6,5 +6,58 @@
       "command": ["npx", "@playwright/mcp@latest"],
       "enabled": true
     }
+  },
+  "agent": {
+    "plan": {
+      "description": "Research, spec, implementation plan — read-only",
+      "model": "opencode/deepseek-v4-flash-free",
+      "prompt": "{file:.opencode/prompts/plan.txt}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "websearch": "allow",
+        "webfetch": "allow"
+      }
+    },
+    "ui-designer": {
+      "description": "Design per DESIGN.md + frontend-design skill",
+      "mode": "subagent",
+      "model": "opencode-go/qwen3.6-plus",
+      "prompt": "{file:.opencode/prompts/ui.txt}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    },
+    "coder": {
+      "description": "Implementation per plan + UI spec",
+      "mode": "subagent",
+      "model": "opencode/deepseek-v4-flash-free",
+      "prompt": "{file:.opencode/prompts/coder.txt}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    },
+    "tester": {
+      "description": "Run tests, Playwright visual verification",
+      "mode": "subagent",
+      "model": "opencode-go/qwen3.6-plus",
+      "prompt": "{file:.opencode/prompts/tester.txt}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    },
+    "guardrail": {
+      "description": "Lint, build, security, quality, session log",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free",
+      "prompt": "{file:.opencode/prompts/guardrail.txt}",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow"
+      }
+    }
   }
 }

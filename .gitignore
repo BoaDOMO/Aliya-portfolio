@@ -11,3 +11,8 @@ index-1680.png
 canvas-test*
 moirai-logo-preview.png
 *.snapshot.yml
+
+# Design system test screenshots
+ds-*.png
+01-full-page.png
+preview-sample.png
