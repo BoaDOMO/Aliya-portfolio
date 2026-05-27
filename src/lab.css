@@ -399,7 +399,7 @@
       }
 
       :root[data-theme="dark"] .mini-chat-header {
-        background: linear-gradient(135deg, #121212 0%, var(--color-near-black) 100%);
+        background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-card) 100%);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border-bottom-color: var(--color-border);
@@ -483,6 +483,7 @@
       :root[data-theme="dark"] .mini-chat-input::placeholder {
         color: var(--color-text-muted);
       }
+
 
       :root[data-theme="dark"] .mini-chat-send {
         background: var(--color-sage-glass);
