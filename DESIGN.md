@@ -182,49 +182,238 @@ Everything that is blue in light mode turns to sage (`#A3B18A`) in dark mode. Th
 
 All font stacks are defined as CSS custom properties in `src/tokens.css` — never hardcoded:
 
-| Token            | Font Stack                                                                      | Usage                                                     |
-| ---------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `--font-body`    | `-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif` | Body, nav, buttons, headings (h2-h6), UI text             |
-| `--font-display` | `Georgia, serif`                                                                | Hero name (h1) — italic, `#185FA5` light / `#A3B18A` dark |
-| `--font-mono`    | `ui-monospace, "SF Mono", Menlo, monospace`                                     | Labels, code, dates, body text (p, li), chat messages     |
+| Token            | Font Stack                                                       | Usage                                         |
+| ---------------- | ---------------------------------------------------------------- | --------------------------------------------- |
+| `--font-display` | `"Archivo Narrow", "Arial Narrow", sans-serif`                   | Hero name (h1), bold display typography       |
+| `--font-body`    | `"Inter", system-ui, -apple-system, sans-serif`                  | Body, nav, buttons, headings (h2-h6), UI text |
+| `--font-mono`    | `"JetBrains Mono", ui-monospace, monospace`                      | Labels, code, dates, body text (p, li), chat  |
 
-| Element                  | Font               | Notes                                                                |
-| ------------------------ | ------------------ | -------------------------------------------------------------------- |
-| Body text (p, li)        | `var(--font-mono)` | 0.9375rem, `rgb(85, 85, 85)` light / `#9CA3AF` dark                  |
-| Section titles (.title)  | `var(--font-mono)` | 1.5rem, uppercase, 0.1em tracking                                    |
-| Hero label               | `var(--font-mono)` | 0.75rem, uppercase, 0.2em tracking, `#185FA5` light / `#A3B18A` dark |
-| Company name (.name1)    | `var(--font-body)` | Bold, `#26428b` light / `#A3B18A` dark                               |
-| Role (.name2)            | `var(--font-body)` | Italic, `rgb(120, 120, 120)` light / `#9CA3AF` dark                  |
-| Footer text              | `var(--font-body)` | 14px, 500 weight, `#1A1A1A` light / `#9CA3AF` dark                   |
-| Demo title (RAG chatbot) | `var(--font-body)` | 20px, 600 weight                                                     |
+### Type Scale (Linen)
 
-**Google Fonts:** None. All font stacks are system-native — no external font dependencies are loaded.
+Tokens defined in `src/tokens.css` under the `@theme` block. The scale follows the [plan/linen-system.css](plan/linen-system.css) reference with extra extended tokens.
+
+**Reference tokens (px-based):**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--text-display-xl` | 120px | Hero display — largest heading |
+| `--text-display-lg` | 88px | Large display heading |
+| `--text-headline-lg` | 56px | Section headline |
+| `--text-headline-md` | 28px | Card titles, section subheadings |
+| `--text-headline-sm` | 18px | Emphasis text, skill category titles |
+| `--text-body-md` | 16px | Taglines, form inputs, body copy |
+| `--text-body-sm` | 14px | Nav links, buttons, footer |
+| `--text-label-sm` | 11px | Breadcrumbs, pills, tags, uppercase labels |
+| `--text-mono-sm` | 11px | Meta data, pill tags, figure captions |
+
+**Extended tokens (beyond Linen reference, rem-based):**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--text-caption` | 0.625rem (10px) | Dashboard labels, pipeline, status badges |
+| `--text-label-lg` | 0.75rem (12px) | Project labels, tab buttons, CV text |
+| `--text-body-xs` | 0.82rem (13px) | Chat bubbles, compact input |
+| `--text-heading-sm` | 1.25rem (20px) | Nav logo, small section headings |
+| `--text-heading` | 1.5rem (24px) | Project titles mobile, preview headings |
+| `--text-heading-lg` | 2rem (32px) | Project titles, page-hero-sm |
+| `--text-headline` | 2.5rem (40px) | Hero mobile, profile hero |
+| `--text-display` | 4rem (64px) | Hero name desktop |
+
+**Google Fonts:** Archivo Narrow (400–700), Inter (400–600), JetBrains Mono (400–500). Loaded via `@import` in `src/tailwind.css`.
+
+### Leading Tokens
+
+Defined in `:root` in `src/tokens.css`:
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--leading-tight` | 0.92 | Display heading line-height |
+| `--leading-snug` | 1.0 | Large headline line-height |
+| `--leading-normal` | 1.3 | Small headline line-height |
+| `--leading-relaxed` | 1.55 | Body text line-height |
+
+### Typography Utility Classes
+
+Defined in `src/typography.css`. Framework-agnostic CSS classes consuming the tokens above:
+
+| Class | Font | Size | line-height | tracking |
+|-------|------|------|-------------|----------|
+| `.t-display-xl` | Archivo Narrow 700 | `clamp(72px, 11vw, 120px)` | `--leading-tight` | `--track-display` |
+| `.t-display-lg` | Archivo Narrow 700 | `clamp(56px, 8vw, 88px)` | `--leading-snug` | `--track-display` |
+| `.t-headline-lg` | Archivo Narrow 700 | 56px | `--leading-snug` | `--track-display` |
+| `.t-headline-md` | Archivo Narrow 600 | 28px | 1.1 | — |
+| `.t-headline-sm` | Inter 500 | 18px | `--leading-normal` | — |
+| `.t-body` | Inter 400 | 16px | `--leading-relaxed` | — |
+| `.t-body-sm` | Inter 400 | 14px | `--leading-relaxed` | — |
+| `.t-label` | Inter 500 | 11px | — | `--track-label` + uppercase |
+| `.t-mono` | JetBrains Mono 400 | 11px | — | `--track-mono` |
+
+### Base Styles
+
+Defined in `src/style-original.css`:
+
+- **`body`** — `line-height: var(--leading-relaxed)` with `-webkit-font-smoothing: antialiased` and `text-rendering: optimizeLegibility`
+- **`a`** — `border-bottom: 1px solid currentColor` (subtle hairline), hover: `text-blue underline` with `0.5rem` offset
+- **`::selection`** — `background: var(--color-near-black); color: var(--color-cream)`
+- **`hr`** — `border: 0; border-top: 1px solid var(--color-border); margin: 0`
+- **`:focus-visible`** — `outline: 2px solid var(--color-near-black); outline-offset: 2px`
 
 ## Layout
 
 ### Layout
 
-- **Grid**: 8-column CSS grid (via `grid-template-columns: repeat(8, 1fr)` on sections directly, no wrapper class)
-- **Container**: `max-width: 1200px`, centered, `2rem` (32px) side padding
-- **Spacing scale**: 8px base. See `--spacing-*` tokens in `src/tokens.css`
+- **Grid options**: 8-column (`--grid-template-columns-8`) and 12-column (`--grid-template-columns-12`) CSS grids available
+- **Layout primitives**: `.l-grid` (12-col), `.l-stack` (flex column), `.l-row` (flex row), `.l-page` (page container), `.l-rule` (hairline divider), `.eyebrow` (uppercase label)
+- **Container**: `max-width: var(--width-page)` (1280px), centered, `var(--page-padding)` (40px) side padding
+- **Spacing scale**: 8px base (`--spacing-*` tokens) with Linen aliases (`--space-xs` through `--space-3xl`)
+- **Size tokens**: Context-specific component sizes (`--size-dot`, `--size-photo`, `--width-form`, etc.)
 
 ### Breakpoints
 
 | Name             | Max Width | Nav       | Font Size | Grid                        |
 | ---------------- | --------- | --------- | --------- | --------------------------- |
-| Mobile           | 639px     | Hamburger | 0.875rem  | 1 column                    |
-| Tablet portrait  | 767px     | Hamburger | 1rem      | 8-col (stacked)             |
-| Tablet landscape | 1023px    | Hamburger | 1rem      | 8-col (split)               |
-| Desktop          | 1919px    | Desktop   | 1rem      | 8-col (full, constrained)   |
-| Ultrawide        | 1920px+   | Desktop   | 1.15rem   | 8-col (constrained, scaled) |
+| Mobile           | 639px     | Hamburger | `--text-body-sm` | 1 column              |
+| Tablet portrait  | 767px     | Hamburger | `--text-body` | Variable                    |
+| Tablet landscape | 1023px    | Hamburger | `--text-body` | Variable                    |
+| Desktop          | 1919px    | Desktop   | `--text-body` | 8-col / 12-col available    |
+| Ultrawide        | 1920px+   | Desktop   | `--text-body-lg` | Scaled variant            |
 
 ### Spacing Standard
 
 All spacing uses the 8px scale defined in `--spacing-*` tokens:
 
-- Section padding: `--spacing-10` (80px) top/bottom, `--spacing-4` (32px) sides
+- Section padding: `--spacing-10` (80px) top/bottom, `--page-padding` (40px) sides
 - Card padding: `--spacing-5` (40px) or `--spacing-6` (48px)
 - Component gaps: `--spacing-2` through `--spacing-4` (16px–32px)
+
+## Token Reference
+
+### Color Tokens
+
+Defined in `src/tokens.css` under `@theme`:
+
+| Token | Light | Dark | Usage |
+|-------|-------|------|-------|
+| `--color-cream` | `#F5F1E8` | `#0A0A0A` | Page background base |
+| `--color-beige` | `#E6DECF` | `#161618` | Alternate section backgrounds |
+| `--color-green` | `#9CAF88` | `#0D0D0D` | Nav/footer background |
+| `--color-blue` | `#185FA5` | `#A3B18A` | Primary accent, links, headings |
+| `--color-dark-blue` | `#26428b` | `#A3B18A` | Skill icons, timeline dots |
+| `--color-near-black` | `#1A1A1A` | `#F3F4F6` | Strong text, button bg |
+| `--color-text-gray` | `rgb(85,85,85)` | `#9CA3AF` | Body text |
+| `--color-text-muted` | `rgb(120,120,120)` | `#6B7280` | Secondary text, dates |
+| `--color-label-gray` | `#999999` | `#6B7280` | Form labels |
+| `--color-card` | `#FFFFFF` | `#18181A` | Card backgrounds |
+| `--color-border` | `rgba(0,0,0,0.08)` | `rgba(255,255,255,0.06)` | Borders, dividers |
+| `--color-red` | `#d32f2f` | `#EF4444` | Error states |
+
+### Size Tokens
+
+Defined in `:root` in `src/tokens.css`. Context-specific component dimensions:
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--size-dot` | 8px | Timeline dots, status indicators |
+| `--size-icon` | 16px | Inline icons |
+| `--size-icon-md` | 30px | Medium icons |
+| `--size-icon-lg` | 32px | Large icons |
+| `--size-btn-icon` | 38px | Icon buttons |
+| `--size-backtotop` | 44px | Back-to-top button |
+| `--size-photo-sm` | 140px | Small profile photo |
+| `--size-photo-md` | 200px | Medium profile photo |
+| `--size-photo` | 240px | Hero profile photo |
+| `--width-tagline` | 480px | Hero tagline max-width |
+| `--width-hero-box` | 800px | Lab hero content box |
+| `--width-form-sm` | 420px | Compact form width |
+| `--width-form` | 480px | Contact form width |
+| `--width-page` | 1280px | Page container max-width |
+| `--height-chat` | 380px | Chat widget height |
+| `--height-textarea` | 160px | Textarea height |
+| `--height-nav` | 70px | Nav bar height |
+
+### Radius Tokens
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--radius-pill` | 2rem | Pill badges, tags |
+| `--radius-card` | 12px | Cards, inputs |
+| `--radius-form` | 20px | Contact form card |
+| `--radius-input` | 12px | Form inputs |
+| `--radius-circle` | 50% | Circular elements |
+
+### Tracking Tokens
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--track-display` | -0.01em | Display heading letter-spacing |
+| `--track-label` | 0.14em | Uppercase label letter-spacing |
+| `--track-mono` | 0.04em | Monospace body text letter-spacing |
+
+### Spacing Aliases (Linen)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--space-xs` | 4px | Micro gaps |
+| `--space-sm` | 8px | Tight gaps, icon margins |
+| `--space-md` | 16px | Default component gap |
+| `--space-lg` | 24px | Section element gaps |
+| `--space-xl` | 32px | Large gaps |
+| `--space-2xl` | 48px | Section padding, card gaps |
+| `--space-3xl` | 72px | Wide section spacing |
+
+### Grid Tokens
+
+| Token | Value |
+|-------|-------|
+| `--grid-template-columns-8` | `repeat(8, minmax(0, 1fr))` |
+| `--grid-template-columns-12` | `repeat(12, minmax(0, 1fr))` |
+| `--grid-column-span-1` through `--grid-column-span-8` | Span 1–8 columns (8-col grid) |
+| `--grid-column-span-9` through `--grid-column-span-12` | Span 9–12 columns (12-col grid) |
+
+### Layout Aliases
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--page-padding` | 2.5rem (40px), shrinks to 24px at ≤768px | Page-level side padding |
+| `--gutter` | var(--spacing-4), shrinks to 16px at ≤768px | Standard grid gutter |
+| `--page-max` | 1280px | Page container max-width |
+
+## Layout Primitives
+
+CSS classes defined in `src/style-original.css` for consistent page layout:
+
+| Class | CSS | Usage |
+|-------|-----|-------|
+| `.l-page` | `max-width: var(--width-page); margin: 0 auto; padding: 0 var(--page-padding)` | Page-level centered container |
+| `.l-grid` | `display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--spacing-4)` | 12-column responsive grid |
+| `.l-stack` | `display: flex; flex-direction: column; gap: var(--spacing-2)` | Vertical stack with consistent gap |
+| `.l-row` | `display: flex; align-items: center; gap: var(--spacing-2)` | Horizontal row with consistent gap |
+| `.l-rule` | `height: 1px; background: var(--color-border); width: 100%; border: 0` | Hairline divider |
+| `.eyebrow` | `font: var(--font-mono) var(--text-caption); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--color-label-gray)` | Uppercase label above headings |
+| `.grid-container` | `max-width: var(--width-page); margin: 0 auto; padding: 0 var(--page-padding); width: 100%` | Original page container (used by existing sections) |
+| `.hamburger-row` | `display: flex; align-items: center; gap: var(--space-lg)` | Hamburger icon + theme toggle row |
+
+### Section Hairline Rule
+
+```css
+section + section {
+  border-top: 1px solid var(--color-border);
+}
+```
+
+Automatically adds a hairline separator between adjacent sections. No class needed — applies globally to all `section` elements that follow another `section`.
+
+### Canvas Background
+
+```css
+#bgCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+```
+
+Defined in `src/style-original.css`. Auto-initialized via `src/canvas-bg.js` — no inline script needed on any page.
 
 ## Components
 
@@ -233,7 +422,7 @@ All spacing uses the 8px scale defined in `--spacing-*` tokens:
 - Desktop (`#desktop-nav`): Logo left, links right with 2rem gap
 - Mobile (`#hamburger-nav`): Shown at ≤1024px. Hamburger icon (3 lines → X when open). Menu slides in from left (100vw, top 70px, `#9CAF88` light / `#0B1120` dark bg)
 - Menu-links container has no `py-8` padding — links start flush at top
-- Active page link: 4px dot below via `::after`
+- Active page indicator: 4px blue dot below via `::after` (desktop), 3px blue left accent bar via `border-left` (mobile hamburger menu)
 - Logo hover: opacity 0.65, translateY(-1px) light / near-white dark
 - Link hover: opacity 0.6 (desktop), background shift (mobile)
 
@@ -352,7 +541,7 @@ All buttons that extend `.btn` inherit the shimmer overlay (`::before` pseudo-el
 
 - Powered by `src/canvas-bg.js` — a vanilla JS `CanvasBackground` class that manages a full-viewport `<canvas>` element behind all content
 - Fixed `position: fixed`, `z-index: 0`, `pointer-events: none` — never interferes with interaction
-- Auto-initializes on `DOMContentLoaded` via `new CanvasBackground(canvas)`
+- **Auto-initializes** — if a `<canvas id="bgCanvas">` element exists, `canvas-bg.js` instantiates itself on `DOMContentLoaded`. No inline init script needed on any page.
 - **Theme detection**: reads `data-theme` attribute on `<html>` via `MutationObserver` — switches modes instantly when user toggles theme
 - **Dark mode (constellations)**:
   - 100 stars in 3 tiers: 15 core (2–3.5px, slow drift), 30 medium (1–1.8px, medium drift), 55 field (0.3–0.8px, fastest)
@@ -405,5 +594,24 @@ Inline `<style>` and `<script>` blocks extracted into cacheable external files:
 | `src/rag-chatbot.css` | Extracted from `rag-chatbot.html` inline `<style>` (~1,142 lines) | 31 KB |
 | `src/rag-chatbot.js` | Extracted from `rag-chatbot.html` inline `<script>` (~710 lines) | 18 KB |
 | `src/lab.css` | Extracted from `lab.html` inline `<style>` (~340 lines) | 7 KB |
+| `src/mini-chatbot.js` | Extracted from `lab.html` inline `<script>` (~161 lines) | 4 KB |
+| `src/contact.js` | Extracted from `contact.html` inline `<script>` (~32 lines) | 1 KB |
+| `src/canvas-bg.js` | Auto-init added — no inline init script needed on any page | 8 KB |
+| `src/typography.css` | Linen typography utility classes (`.t-display-xl`, `.t-body`, etc.) | 2 KB |
+
+### Inline Patterns Eliminated
+
+After extraction, inline code on main pages is limited to:
+
+| Pattern | Status | Reason |
+|---------|--------|--------|
+| Theme detection IIFE (`<head>`) | **Kept inline** | Must run before first paint to prevent FOUC |
+| `onclick` handlers on interactive elements | **Eliminated** | Replaced with `addEventListener` in external JS files |
+| `style=""` attributes on demo widgets | **Eliminated** (lab) / **kept** (design-system) | Lab color scale → CSS classes; design-system is WIP |
+| `#bgCanvas` `<style>` block | **Eliminated** | Moved to `src/style-original.css` |
+| Canvas init `<script>` | **Eliminated** | Auto-init added to `src/canvas-bg.js` |
+| Experience toggle CSS + JS | **Eliminated** | Moved to `src/style-original.css` + `script.js` |
+| Hamburger row `style=""` | **Eliminated** | Replaced with `.hamburger-row` class |
+| Hamburger nav `onclick` | **Eliminated** | Replaced with `addEventListener` in `script.js` |
 
 All pages now preconnect to `cdnjs.cloudflare.com` in `<head>` for faster Font Awesome delivery. Stylesheet references include cache-busting query parameter (`style.css?v=2`).

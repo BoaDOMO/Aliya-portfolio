@@ -267,3 +267,17 @@ class CanvasBackground {
     if (this._rmHandler) window.matchMedia('(prefers-reduced-motion: reduce)').removeEventListener('change', this._rmHandler);
   }
 }
+
+// Auto-init if canvas element exists
+(function () {
+  var el = document.getElementById('bgCanvas');
+  if (el) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        new CanvasBackground(el);
+      });
+    } else {
+      new CanvasBackground(el);
+    }
+  }
+})();

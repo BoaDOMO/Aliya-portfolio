@@ -12,9 +12,30 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-red: #d32f2f;
 
-  --font-body: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
-  --font-display: Georgia, serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ── Linen Reference Type Scale ── */
+  --text-display-xl: 120px;
+  --text-display-lg: 88px;
+  --text-headline-lg: 56px;
+  --text-headline-md: 28px;
+  --text-headline-sm: 18px;
+  --text-body-md: 16px;
+  --text-body-sm: 14px;
+  --text-label-sm: 11px;
+  --text-mono-sm: 11px;
+
+  /* ── Extended tokens (beyond Linen reference) ── */
+  --text-caption: 0.625rem;    /* 10px — pipeline, badges, dash labels */
+  --text-label-lg: 0.75rem;    /* 12px — project labels, tabs, CV */
+  --text-body-xs: 0.82rem;     /* 13px — chat bubbles, compact input */
+  --text-heading-sm: 1.25rem;  /* 20px — nav logo, section headings */
+  --text-heading: 1.5rem;      /* 24px — project title mobile */
+  --text-heading-lg: 2rem;     /* 32px — project titles, hero-sm */
+  --text-headline: 2.5rem;     /* 40px — hero mobile, profile hero */
+  --text-display: 4rem;        /* 64px — hero name desktop */
 
   --radius-pill: 2rem;
   --radius-card: 12px;
@@ -39,6 +60,15 @@
   --spacing-20: 10rem;    /* 160px */
   --spacing-24: 12rem;    /* 192px */
 
+  /* ── Linen Spacing Aliases ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 72px;
+
   /* ── 8-Column Grid Tokens ── */
   --grid-template-columns-8: repeat(8, minmax(0, 1fr));
   --grid-column-span-1: span 1 / span 1;
@@ -49,12 +79,54 @@
   --grid-column-span-6: span 6 / span 6;
   --grid-column-span-7: span 7 / span 7;
   --grid-column-span-8: span 8 / span 8;
+
+  /* ── 12-Column Grid Tokens ── */
+  --grid-template-columns-12: repeat(12, minmax(0, 1fr));
+  --grid-column-span-9: span 9 / span 9;
+  --grid-column-span-10: span 10 / span 10;
+  --grid-column-span-11: span 11 / span 11;
+  --grid-column-span-12: span 12 / span 12;
 }
 
 :root {
   color-scheme: light;
   --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
   --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
+
+  /* ── Size Tokens ── */
+  --size-dot: 8px;
+  --size-icon: 16px;
+  --size-icon-md: 30px;
+  --size-icon-lg: 32px;
+  --size-btn-icon: 38px;
+  --size-backtotop: 44px;
+  --size-photo-sm: 140px;
+  --size-photo-md: 200px;
+  --size-photo: 240px;
+  --width-tagline: 480px;
+  --width-hero-box: 800px;
+  --width-form-sm: 420px;
+  --width-form: 480px;
+  --width-page: 1280px;
+  --height-chat: 380px;
+  --height-textarea: 160px;
+  --height-nav: 70px;
+
+  /* ── Layout Tokens ── */
+  --page-padding: 2.5rem;
+  --gutter: var(--spacing-4);
+  --page-max: 1280px;
+
+  /* ── Leading Tokens ── */
+  --leading-tight: 0.92;
+  --leading-snug: 1;
+  --leading-normal: 1.3;
+  --leading-relaxed: 1.55;
+
+  /* ── Tracking Tokens ── */
+  --track-display: -0.01em;
+  --track-label: 0.14em;
+  --track-mono: 0.04em;
 }
 
 :root[data-theme="dark"] {
@@ -81,4 +153,9 @@
   --dm-card-hover-shadow: 0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --card-glow: none;
   --card-glow-dark: radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%);
+
+  /* ── Tracking Tokens ── */
+  --track-display: -0.01em;
+  --track-label: 0.14em;
+  --track-mono: 0.04em;
 }

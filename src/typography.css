@@ -1,0 +1,78 @@
+/* ============================================================
+   Linen Typography Utilities
+   ============================================================ */
+
+.t-display-xl,
+.t-display-lg,
+.t-headline-lg,
+.t-headline-md {
+  font-family: var(--font-display);
+  color: var(--color-near-black);
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: var(--track-display);
+}
+
+.t-display-xl {
+  font-size: clamp(72px, 11vw, var(--text-display-xl));
+  line-height: var(--leading-tight);
+}
+
+.t-display-lg {
+  font-size: clamp(56px, 8vw, var(--text-display-lg));
+  line-height: var(--leading-snug);
+}
+
+.t-headline-lg {
+  font-size: var(--text-headline-lg);
+  line-height: var(--leading-snug);
+}
+
+.t-headline-md {
+  font-size: var(--text-headline-md);
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.t-headline-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-headline-sm);
+  line-height: var(--leading-normal);
+  font-weight: 500;
+  color: var(--color-near-black);
+  margin: 0;
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-gray);
+  margin: 0;
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-gray);
+  margin: 0;
+}
+
+.t-label {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: var(--track-mono);
+  color: var(--color-text-muted);
+  margin: 0;
+}

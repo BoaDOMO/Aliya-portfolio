@@ -612,4 +612,107 @@ function escapeHtml(text) {
     .replace(/'/g, "&#039;");
 }
 
+// ── Event Listener Wiring ──
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Reset button
+    var resetBtn = document.getElementById('btnReset');
+    if (resetBtn) resetBtn.addEventListener('click', clearChat);
+
+    // Copy log button
+    var copyBtn = document.getElementById('btnCopyLog');
+    if (copyBtn) copyBtn.addEventListener('click', copyLog);
+
+    // Company picker buttons
+    var companyBtns = document.querySelectorAll('#btnCompanyPicker, #tabCompanyPicker');
+    companyBtns.forEach(function (el) {
+      el.addEventListener('click', showTemplatePicker);
+    });
+
+    // Tab buttons
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        switchTab(el.dataset.tab);
+      });
+    });
+
+    // Clear chat header button
+    var clearHeader = document.getElementById('btnClearChatHeader');
+    if (clearHeader) clearHeader.addEventListener('click', clearChat);
+
+    // Suggestion chips
+    document.querySelectorAll('.suggestion-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        useSuggestion(chip);
+      });
+    });
+
+    // Chat textarea
+    var chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+      chatInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+      chatInput.addEventListener('input', function () {
+        chatInput.style.height = 'auto';
+        chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
+      });
+    }
+
+    // Send button
+    var sendBtn = document.getElementById('sendBtn');
+    if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+
+    // File list items
+    document.querySelectorAll('.code-file-item').forEach(function (el) {
+      el.addEventListener('click', function () {
+        selectFile(el.dataset.file);
+      });
+    });
+
+    // Save button (desktop)
+    var saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) saveBtn.addEventListener('click', saveData);
+
+    // Accordion headers
+    document.querySelectorAll('.accordion-header').forEach(function (header) {
+      header.addEventListener('click', function () {
+        toggleAccordion(header);
+      });
+    });
+
+    // Mobile save button
+    var mobileSave = document.getElementById('btnMobileSave');
+    if (mobileSave) mobileSave.addEventListener('click', saveData);
+
+    // Company picker overlay
+    var overlay = document.getElementById('companyPickerOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target !== e.currentTarget) return;
+        closeTemplatePicker(e);
+      });
+    }
+
+    // Company picker modal — stop propagation
+    var modal = document.querySelector('.company-picker-modal');
+    if (modal) {
+      modal.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+    }
+
+    // Pickercancel/confirm
+    var cancelBtn = document.getElementById('btnPickerCancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', closeTemplatePicker);
+
+    var confirmBtn = document.getElementById('pickerConfirm');
+    if (confirmBtn) confirmBtn.addEventListener('click', confirmTemplate);
+  });
+})();
+
 init();

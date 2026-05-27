@@ -41,7 +41,7 @@
         }
 
         .project-title {
-          font-size: 1.9rem;
+          font-size: var(--text-heading-lg);
         }
       }
 
@@ -52,20 +52,20 @@
         }
 
         .project-title {
-          font-size: 1.6rem;
+          font-size: var(--text-heading);
         }
       }
 
       .project-label {
         font-family: var(--font-body);
-        font-size: 0.75rem;
+        font-size: var(--text-label-lg);
         letter-spacing: 0.15em;
         text-transform: uppercase;
         color: #185FA5;
       }
 
       .project-title {
-        font-size: 2.25rem;
+        font-size: var(--text-heading-lg);
         color: #26428b;
       }
 
@@ -81,8 +81,8 @@
 
       .tech-pill {
         font-family: var(--font-mono);
-        font-size: 0.72rem;
-        padding: 0.3rem 0.85rem;
+        font-size: var(--text-label-sm);
+        padding: var(--space-xs) var(--space-md);
         border-radius: 2rem;
         background: rgba(24, 95, 165, 0.08);
         color: #185FA5;
@@ -91,11 +91,11 @@
 
       .btn.btn-cta {
         width: auto;
-        padding: 0.9rem 2rem;
+        padding: var(--space-md) var(--space-xl);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        font-size: 0.95rem;
+        gap: var(--space-sm);
+        font-size: var(--text-body-sm);
       }
 
       .mini-chat {
@@ -116,15 +116,15 @@
       .mini-chat-header {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        padding: 0.85rem 1.1rem;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-md);
         background: linear-gradient(135deg, #F5F1E8 0%, #EDE6DF 50%, #E8DDD1 100%);
         border-bottom: 1px solid #ede9e2;
       }
 
       .mini-chat-dot {
-        width: 9px;
-        height: 9px;
+        width: var(--size-dot);
+        height: var(--size-dot);
         border-radius: 50%;
         background: #22c55e;
         flex-shrink: 0;
@@ -140,14 +140,14 @@
       .mini-chat-header-info {
         display: flex;
         flex-direction: column;
-        gap: 0.05rem;
+        gap: var(--space-xs);
         flex: 1;
         min-width: 0;
       }
 
       .mini-chat-label {
         font-family: var(--font-body);
-        font-size: 0.9rem;
+        font-size: var(--text-body-sm);
         font-weight: 500;
         color: rgb(45, 45, 45);
         text-align: left;
@@ -156,30 +156,30 @@
 
       .mini-chat-subtitle {
         font-family: var(--font-mono);
-        font-size: 0.65rem;
+        font-size: var(--text-caption);
         color: rgb(140, 140, 140);
         letter-spacing: 0.02em;
       }
 
       .mini-chat-live {
         font-family: var(--font-body);
-        font-size: 0.7rem;
+        font-size: var(--text-label-sm);
         font-weight: 500;
         color: #22c55e;
         letter-spacing: 0.04em;
         background: rgba(34, 197, 94, 0.08);
-        padding: 0.15rem 0.5rem;
+        padding: var(--space-xs) var(--space-sm);
         border-radius: 2rem;
         flex-shrink: 0;
       }
 
       .mini-chat-messages {
-        height: 380px;
+        height: var(--height-chat);
         overflow-y: auto;
-        padding: 1rem;
+        padding: var(--space-md);
         display: flex;
         flex-direction: column;
-        gap: 0.6rem;
+        gap: var(--space-sm);
         scrollbar-width: thin;
         scrollbar-color: #e0dcd6 transparent;
         background: linear-gradient(180deg, rgba(245, 241, 232, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
@@ -192,10 +192,10 @@
 
       .mini-msg {
         max-width: 82%;
-        padding: 0.6rem 0.9rem;
+        padding: var(--space-sm) var(--space-md);
         border-radius: 14px;
         font-family: var(--font-mono);
-        font-size: 0.8rem;
+        font-size: var(--text-body-xs);
         line-height: 1.55;
         text-align: left;
         word-break: break-word;
@@ -230,13 +230,13 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 16px;
-        height: 16px;
+        width: var(--size-icon);
+        height: var(--size-icon);
         border-radius: 50%;
         background: rgba(24, 95, 165, 0.1);
         color: #185FA5;
         font-size: 0.5rem;
-        margin-right: 0.35rem;
+        margin-right: var(--space-xs);
         flex-shrink: 0;
         vertical-align: middle;
       }
@@ -244,18 +244,18 @@
       .mini-suggestions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-top: 0.65rem;
+        gap: var(--space-xs);
+        margin-top: var(--space-sm);
       }
 
       .mini-suggestion-chip {
         font-family: var(--font-mono);
-        font-size: 0.7rem;
+        font-size: var(--text-label-sm);
         color: #185FA5;
         background: rgba(24, 95, 165, 0.07);
         border: 1px solid rgba(24, 95, 165, 0.18);
         border-radius: 2rem;
-        padding: 0.25rem 0.65rem;
+        padding: var(--space-xs) var(--space-sm);
         cursor: pointer;
         transition: all 200ms ease;
       }
@@ -271,9 +271,9 @@
       }
 
       .mini-cta {
-        margin-top: 0.75rem;
+        margin-top: var(--space-sm);
         font-family: var(--font-body);
-        font-size: 0.75rem;
+        font-size: var(--text-label-lg);
         text-align: center;
       }
 
@@ -292,8 +292,8 @@
       .mini-chat-input-row {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1rem;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
         border-top: 1px solid #ede9e2;
         background: linear-gradient(to top, rgba(245, 241, 232, 0.4), #ffffff);
       }
@@ -301,12 +301,12 @@
       .mini-chat-input {
         flex: 1;
         font-family: var(--font-mono);
-        font-size: 0.8rem;
+        font-size: var(--text-body-xs);
         color: rgb(45, 45, 45);
         background: #f5f2ed;
         border: 1px solid #e5e1da;
         border-radius: 8px;
-        padding: 0.55rem 0.8rem;
+        padding: var(--space-sm);
         outline: none;
         transition: border-color 200ms ease, box-shadow 200ms ease;
       }
@@ -319,9 +319,9 @@
 
       .mini-chat-send {
         font-family: var(--font-body);
-        font-size: 0.82rem;
+        font-size: var(--text-body-xs);
         font-weight: 500;
-        padding: 0.55rem 1.1rem;
+        padding: var(--space-sm) var(--space-md);
         background: var(--color-blue);
         color: white;
         border: none;
@@ -341,9 +341,9 @@
 
       .mini-typing {
         display: inline-flex;
-        gap: 4px;
+        gap: var(--space-xs);
         align-items: center;
-        padding: 0.45rem 0.7rem;
+        padding: var(--space-xs) var(--space-sm);
         background: #eeebe5;
         border-radius: 12px;
         border-bottom-left-radius: 4px;
@@ -504,4 +504,60 @@
 
       :root[data-theme="dark"] .mini-typing-dot {
         background: var(--color-text-gray);
+      }
+
+      /* ── Color Scale Widget ── */
+      .color-scale-card {
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: var(--space-md);
+      }
+
+      .color-scale-header {
+        display: flex;
+        gap: var(--space-sm);
+        align-items: center;
+        margin-bottom: var(--space-md);
+      }
+
+      .color-scale-swatch {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #26428b;
+        flex-shrink: 0;
+      }
+
+      .color-scale-hex {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-near-black);
+      }
+
+      .color-scale-label {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+      }
+
+      .color-scale-row {
+        display: flex;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-sm);
+      }
+
+      .color-scale-bar {
+        flex: 1;
+        height: 16px;
+        border-radius: 3px;
+      }
+
+      .color-scale-caption {
+        font-size: 0.72rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+      }
+
+      .mini-cta-arrow {
+        font-size: 0.65rem;
       }

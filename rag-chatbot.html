@@ -7,12 +7,6 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css?v=2" />
-  <style>
-    #bgCanvas {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; pointer-events: none;
-    }
-  </style>
   <link rel="stylesheet" href="src/rag-chatbot.css" />
 </head>
 <body class="main-wrapper page-load-anim">
@@ -91,10 +85,10 @@
             <span id="sessionStartTime">Started just now</span>
           </div>
           <div class="actions-row">
-            <button class="action-btn" onclick="clearChat()">
+            <button class="action-btn" id="btnReset">
               <i class="fa-solid fa-rotate-right"></i> Reset
             </button>
-            <button class="action-btn" onclick="copyLog()">
+            <button class="action-btn" id="btnCopyLog">
               <i class="fa-regular fa-clipboard"></i> Copy Log
             </button>
           </div>
@@ -126,7 +120,7 @@
         </div>
 
         <!-- 6. Try a different company -->
-        <button class="console-btn secondary" onclick="showTemplatePicker()">
+        <button class="console-btn secondary" id="btnCompanyPicker">
           <i class="fa-solid fa-arrow-right-arrow-left"></i> Try a different company?
         </button>
 
@@ -136,13 +130,13 @@
     <!-- ── RIGHT: MAIN PANEL ── -->
     <div class="panel panel-main">
       <div class="tab-bar">
-        <button class="tab-btn active" data-tab="preview" onclick="switchTab('preview')">
+        <button class="tab-btn active" data-tab="preview">
           <i class="fa-solid fa-eye"></i> Preview
         </button>
-        <button class="tab-btn" data-tab="code" onclick="switchTab('code')">
+        <button class="tab-btn" data-tab="code">
           <i class="fa-solid fa-sliders"></i> Console
         </button>
-        <button class="tab-btn mobile-only" onclick="showTemplatePicker()">
+        <button class="tab-btn mobile-only" id="tabCompanyPicker">
           <i class="fa-solid fa-arrow-right-arrow-left"></i> Company
         </button>
       </div>
@@ -159,7 +153,7 @@
               </div>
             </div>
             <div class="preview-header-actions">
-              <button class="btn-sm" onclick="clearChat()" aria-label="Clear chat">
+              <button class="btn-sm" id="btnClearChatHeader" aria-label="Clear chat">
                 <i class="fa-solid fa-rotate-right"></i><span class="btn-text"> Clear chat</span>
               </button>
             </div>
@@ -171,10 +165,10 @@
               <div class="message-bubble" id="welcomeMessage">
                 Hi! I'm the <strong>Nova Finance</strong> AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
                 <div class="suggestions">
-                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">What are your loan interest rates?</button>
-                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">How do I apply?</button>
-                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">What documents do I need?</button>
-                  <button class="suggestion-chip" type="button" onclick="useSuggestion(this)">Can I repay early?</button>
+                  <button class="suggestion-chip" type="button">What are your loan interest rates?</button>
+                  <button class="suggestion-chip" type="button">How do I apply?</button>
+                  <button class="suggestion-chip" type="button">What documents do I need?</button>
+                  <button class="suggestion-chip" type="button">Can I repay early?</button>
                 </div>
               </div>
             </div>
@@ -186,10 +180,8 @@
               id="chatInput"
               placeholder="Ask a question..."
               rows="1"
-              onkeydown="handleKey(event)"
-              oninput="autoResize(this)"
             ></textarea>
-            <button class="send-btn" id="sendBtn" onclick="sendMessage()" aria-label="Send message">
+            <button class="send-btn" id="sendBtn" aria-label="Send message">
               <i class="fa-solid fa-paper-plane"></i>
             </button>
           </div>
@@ -202,19 +194,19 @@
           <div class="code-sidebar">
             <div class="code-sidebar-header">Knowledge Base</div>
             <div class="code-file-list" id="fileList">
-              <div class="code-file-item active" data-file="persona" onclick="selectFile('persona')">
+              <div class="code-file-item active" data-file="persona">
                 Persona
               </div>
-              <div class="code-file-item" data-file="about" onclick="selectFile('about')">
+              <div class="code-file-item" data-file="about">
                 About
               </div>
-              <div class="code-file-item" data-file="products" onclick="selectFile('products')">
+              <div class="code-file-item" data-file="products">
                 Products
               </div>
-              <div class="code-file-item" data-file="faq" onclick="selectFile('faq')">
+              <div class="code-file-item" data-file="faq">
                 FAQ
               </div>
-              <div class="code-file-item" data-file="policies" onclick="selectFile('policies')">
+              <div class="code-file-item" data-file="policies">
                 Policies
               </div>
             </div>
@@ -228,7 +220,7 @@
               <span class="status-msg" id="saveStatus">
                 <i class="fa-solid fa-circle-check"></i> Saved
               </span>
-              <button class="btn-code btn-code-primary" id="saveBtn" onclick="saveData()">
+              <button class="btn-code btn-code-primary" id="saveBtn">
                 <i class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
@@ -238,7 +230,7 @@
         <!-- Console Tab (Mobile Accordion) -->
         <div class="mobile-accordion" id="mobileAccordion">
           <div class="accordion-item open" data-mobile-file="persona">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-header">
               <span>Persona</span>
               <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -259,7 +251,7 @@
           </div>
 
           <div class="accordion-item" data-mobile-file="about">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-header">
               <span>About</span>
               <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -269,7 +261,7 @@
           </div>
 
           <div class="accordion-item" data-mobile-file="products">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-header">
               <span>Products</span>
               <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -279,7 +271,7 @@
           </div>
 
           <div class="accordion-item" data-mobile-file="faq">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-header">
               <span>FAQ</span>
               <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -289,7 +281,7 @@
           </div>
 
           <div class="accordion-item" data-mobile-file="policies">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-header">
               <span>Policies</span>
               <i class="fa-solid fa-chevron-down"></i>
             </div>
@@ -298,11 +290,11 @@
             </div>
           </div>
 
-          <div class="accordion-save-row" style="margin-top:0.5rem;">
-            <span class="status-msg" id="mobileSaveStatus" style="margin-right:0.75rem;">
+          <div class="accordion-save-row">
+            <span class="status-msg" id="mobileSaveStatus">
               <i class="fa-solid fa-circle-check"></i> Saved
             </span>
-            <button class="btn-code btn-code-primary" onclick="saveData()">
+            <button class="btn-code btn-code-primary" id="btnMobileSave">
               <i class="fa-solid fa-floppy-disk"></i> Save
             </button>
           </div>
@@ -317,23 +309,18 @@
   </footer>
 
   <script src="src/canvas-bg.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      new CanvasBackground(document.getElementById('bgCanvas'));
-    });
-  </script>
   <script src="src/rag-chatbot.js"></script>
   <script src="src/theme-toggle.js"></script>
 
   <!-- ── COMPANY PICKER MODAL ── -->
-  <div class="company-picker-overlay" id="companyPickerOverlay" onclick="closeTemplatePicker(event)">
-    <div class="company-picker-modal" onclick="event.stopPropagation()">
+  <div class="company-picker-overlay" id="companyPickerOverlay">
+    <div class="company-picker-modal">
       <div class="company-picker-title">Try a different company?</div>
       <div class="company-picker-subtitle">Pick a pre-built company to explore. Switching will clear your current chat.</div>
       <div class="company-grid" id="companyGrid"></div>
       <div class="picker-actions">
-        <button class="picker-cancel" onclick="closeTemplatePicker()">Cancel</button>
-        <button class="picker-confirm" id="pickerConfirm" onclick="confirmTemplate()">Confirm</button>
+        <button class="picker-cancel" id="btnPickerCancel">Cancel</button>
+        <button class="picker-confirm" id="pickerConfirm">Confirm</button>
       </div>
     </div>
   </div>

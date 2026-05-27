@@ -53,16 +53,16 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
 })();
 
 // Nav active dot — mark current page link
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   const filename = path.split("/").pop() || "index.html";
-  document.querySelectorAll("#desktop-nav .nav-links a").forEach((link) => {
+  document.querySelectorAll("#desktop-nav .nav-links a, .menu-links a").forEach(function (link) {
     const href = link.getAttribute("href").replace("./", "");
     if (filename === href || (!filename && href === "index.html")) {
       link.classList.add("nav-active");
     }
   });
-})();
+});
 
 // Index hero — split name into animated letter spans
 (function () {
@@ -278,5 +278,51 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
   window.addEventListener("resize", () => {
     resize();
     init();
+  });
+})();
+
+// ── Event Listener Wiring ──
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Hamburger toggle
+    document.querySelectorAll('.hamburger-icon').forEach(function (el) {
+      el.addEventListener('click', toggleMenu);
+    });
+
+    // Menu links close on click
+    document.querySelectorAll('.menu-links a').forEach(function (el) {
+      el.addEventListener('click', toggleMenu);
+    });
+
+    // Experience toggle
+    var expBtn = document.getElementById('experienceToggleBtn');
+    if (expBtn) {
+      expBtn.addEventListener('click', function () {
+        var extra = document.getElementById('experienceExtra');
+        var btn = document.getElementById('experienceToggleBtn');
+        var isOpen = extra.classList.toggle('open');
+        btn.classList.toggle('open');
+        btn.innerHTML = isOpen
+          ? 'Show less <i class="fa-solid fa-chevron-down"></i>'
+          : 'View all experiences <i class="fa-solid fa-chevron-down"></i>';
+      });
+    }
+
+    // Hero buttons — View Profile, Get in Touch
+    document.querySelectorAll('.hero-btn').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var href = el.getAttribute('data-href');
+        if (href) window.location.href = href;
+      });
+    });
+
+    // Lab CTA buttons
+    document.querySelectorAll('.btn-cta').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var href = el.getAttribute('data-href');
+        if (href) window.location.href = href;
+      });
+    });
   });
 })();
