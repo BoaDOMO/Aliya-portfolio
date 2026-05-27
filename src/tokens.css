@@ -11,6 +11,15 @@
   --color-card: #FFFFFF;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-red: #d32f2f;
+  --color-sage-hover: #8A9E78;
+  --color-blue-hover: #0d4f8c;
+  --color-dark-text: #0F172A;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-info: #2563eb;
+
+  --radius-sm: 8px;
+  --radius-lg: 16px;
 
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Archivo Narrow", "Arial Narrow", sans-serif;
@@ -92,6 +101,8 @@
   color-scheme: light;
   --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
   --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
+  --shadow-card-hover: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05);
 
   /* ── Size Tokens ── */
   --size-dot: 8px;
@@ -123,6 +134,28 @@
   --leading-normal: 1.3;
   --leading-relaxed: 1.55;
 
+  /* ── Glass Tokens ── */
+  --glass-border-top: rgba(255, 255, 255, 0.12);
+  --color-sage-glass: rgba(163, 177, 138, 0.88);
+  --color-nav-bg: rgba(11, 17, 32, 0.85);
+
+  /* ── Border-Width Tokens ── */
+  --border-width-input: 1.5px;
+  --border-width-active: 3px;
+  --border-width-timeline: 2px;
+
+  /* ── Shadow Tokens ── */
+  --shadow-focus-blue: 0 0 0 4px rgba(24, 95, 165, 0.1);
+  --shadow-focus-sage: 0 0 0 4px rgba(163, 177, 138, 0.15);
+  --shadow-focus-red: 0 0 0 4px rgba(211, 47, 47, 0.08);
+  --shadow-focus-red-dark: 0 0 0 4px rgba(239, 68, 68, 0.15);
+  --shadow-btt: 0 4px 16px rgba(38, 66, 139, 0.3);
+  --shadow-hero-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --shadow-photo: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-photo-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --shadow-btn-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-btn-active: 0 2px 8px rgba(0, 0, 0, 0.1);
+
   /* ── Tracking Tokens ── */
   --track-display: -0.01em;
   --track-label: 0.14em;
@@ -147,10 +180,18 @@
   --color-card: #18181A;
   --color-border: rgba(255, 255, 255, 0.06);
   --color-red: #EF4444;
+  --color-sage-hover: #8A9E78;
+  --color-blue-hover: #8A9E78;
+  --color-dark-text: #0F172A;
+  --color-success: #34D399;
+  --color-warning: #f59e0b;
+  --color-info: #60A5FA;
 
   --bg-gradient-dark: radial-gradient(ellipse at 50% 0%, #0f0f18 0%, #0A0A0A 50%, #050508 100%);
   --dm-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
   --dm-card-hover-shadow: 0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-card: var(--dm-card-shadow);
+  --shadow-card-hover: var(--dm-card-hover-shadow);
   --card-glow: none;
   --card-glow-dark: radial-gradient(ellipse at 50% 0%, rgba(163, 177, 138, 0.04), transparent 70%);
 
