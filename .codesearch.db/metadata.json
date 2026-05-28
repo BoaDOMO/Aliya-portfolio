@@ -1,9 +1,0 @@
-{
-  "dimensions": 384,
-  "indexed_at": "2026-05-27T00:42:15.687920+00:00",
-  "model_name": "AllMiniLML6V2Q",
-  "model_short_name": "minilm-l6-q",
-  "schema_version": 1,
-  "total_chunks": 545,
-  "total_files": 37
-}
