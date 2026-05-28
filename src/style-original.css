@@ -20,7 +20,7 @@ hr {
 
 html {
   @apply scroll-smooth;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
 }
 
 .main-wrapper {
@@ -91,7 +91,7 @@ main {
 }
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: var(--text-caption);
+  font-size: var(--text-label);
   font-weight: 500;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
@@ -196,7 +196,7 @@ h6:hover {
 
 .description {
   @apply font-mono my-2 list-none;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   padding-left: var(--space-xl);
 }
 
@@ -209,7 +209,7 @@ h6:hover {
   color: var(--color-dark-blue);
   position: absolute;
   left: -0.75rem;
-  font-size: var(--text-headline-sm);
+  font-size: var(--text-heading-sm);
   line-height: inherit;
 }
 
@@ -253,7 +253,7 @@ nav h2 {
 
 .nav-links {
   @apply flex gap-8 list-none;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
 }
 
 a {
@@ -311,7 +311,7 @@ a,
 
 .menu-links a {
   @apply block text-near-black font-body no-underline;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   padding: var(--space-md) var(--space-xl);
   border-bottom: 1px solid var(--color-border);
 }
@@ -397,7 +397,7 @@ section + section {
   transition: all 300ms ease;
   padding: var(--spacing-2);
   width: 8rem;
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
 }
 
 .btn-color-1,
@@ -467,7 +467,7 @@ section + section {
 
 .skill-category-title {
   @apply font-body text-dark-blue uppercase tracking-widest mb-0;
-  font-size: var(--text-headline-sm);
+  font-size: var(--text-heading-sm);
   transition: all 0.4s ease;
 }
 
@@ -493,7 +493,7 @@ section + section {
 
 .skill-list li {
   @apply font-mono text-text-gray flex items-center gap-2;
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   padding: var(--spacing-1) 0;
   border-bottom: 1px solid var(--color-border);
 }
@@ -550,7 +550,7 @@ footer {
 
 footer p {
   @apply font-medium text-near-black font-body;
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
 }
 
 /* BACK-TO-TOP BUTTON */
@@ -562,7 +562,7 @@ footer p {
   width: 44px;
   height: 44px;
   border: none;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   box-shadow: var(--shadow-btt);
   opacity: 0;
   transform: translateY(8px);
@@ -658,7 +658,7 @@ footer p {
 
 .hero-tagline {
   @apply font-mono text-text-muted;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   max-width: var(--width-tagline);
   line-height: 1.65;
 }
@@ -728,7 +728,7 @@ footer p {
 
 .contact-info-item {
   @apply flex items-center gap-4 font-body text-near-black;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   transition: transform 0.25s ease;
 }
 
@@ -741,7 +741,7 @@ footer p {
   width: 40px;
   height: 40px;
   background: rgba(24, 95, 165, 0.08);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   transition: background 0.25s ease, transform 0.25s ease;
 }
 
@@ -757,12 +757,12 @@ footer p {
 
 .contact-info-label {
   @apply font-mono uppercase text-label-gray tracking-[0.12em];
-  font-size: var(--text-caption);
+  font-size: var(--text-label);
 }
 
 .contact-info-item a {
   @apply text-near-black;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   transition: color 0.2s ease;
 }
 
@@ -840,7 +840,7 @@ footer p {
   left: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   letter-spacing: 0;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
@@ -855,7 +855,7 @@ footer p {
   @apply uppercase text-blue bg-card;
   top: 0;
   transform: translateY(-50%);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   letter-spacing: 0.08em;
   padding: 0 var(--space-xs);
 }
@@ -865,7 +865,7 @@ footer p {
   @apply w-full bg-cream rounded-input font-mono text-near-black;
   border: var(--border-width-input) solid var(--color-border);
   padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.2s ease;
 }
 
@@ -902,7 +902,7 @@ footer p {
   border: none;
   border-radius: var(--radius-pill);
   padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   gap: var(--space-sm);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   margin-top: var(--space-sm);
@@ -1397,7 +1397,7 @@ footer a:hover {
 
   .title {
     padding-bottom: 0.3rem !important;
-    font-size: var(--text-headline-sm) !important;
+    font-size: var(--text-heading-sm) !important;
   }
 
   #skills {
@@ -1422,12 +1422,12 @@ footer a:hover {
   }
 
   .skill-category-title {
-    font-size: var(--text-label-lg) !important;
+    font-size: var(--text-body) !important;
     margin-bottom: 0.5rem !important;
   }
 
   .skill-list li {
-    font-size: var(--text-label-lg) !important;
+    font-size: var(--text-body) !important;
     padding: 0.2rem 0 !important;
   }
 
@@ -1448,11 +1448,11 @@ footer a:hover {
   }
 
   .description li {
-    font-size: var(--text-body-xs) !important;
+    font-size: var(--text-body) !important;
   }
 
   .name3 {
-    font-size: var(--text-label-lg) !important;
+    font-size: var(--text-body) !important;
   }
 }
 /* ── Linen Token Overrides: Tablet ── */
@@ -1511,7 +1511,7 @@ footer a:hover {
 /* ── MOBILE: ≤639px ── */
 @media screen and (max-width: 639px) {
   html {
-    font-size: var(--text-body-sm);
+    font-size: var(--text-body);
   }
 
   section {
@@ -1601,7 +1601,7 @@ footer a:hover {
   .contact-info-icon {
     width: 34px;
     height: 34px;
-    font-size: var(--text-label-lg);
+    font-size: var(--text-body);
     border-radius: 10px;
   }
 
@@ -1643,7 +1643,7 @@ footer a:hover {
 /* ── ULTRWIDE: ≥1920px ── */
 @media screen and (min-width: 1920px) {
   html {
-    font-size: var(--text-headline-sm);
+    font-size: var(--text-heading-sm);
   }
 }
 
@@ -1654,7 +1654,7 @@ footer a:hover {
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   color: var(--color-near-black);
   transition: background 0.2s ease, border-color 0.2s ease;
   display: inline-flex;

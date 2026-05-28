@@ -29,14 +29,14 @@
 }
 
 .t-headline-md {
-  font-size: var(--text-headline-md);
+  font-size: var(--text-headline-sm);
   line-height: 1.1;
   font-weight: 600;
 }
 
 .t-headline-sm {
   font-family: var(--font-body);
-  font-size: var(--text-headline-sm);
+  font-size: var(--text-heading-sm);
   line-height: var(--leading-normal);
   font-weight: 500;
   color: var(--color-near-black);
@@ -45,7 +45,7 @@
 
 .t-body {
   font-family: var(--font-body);
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   line-height: var(--leading-relaxed);
   color: var(--color-text-gray);
   margin: 0;
@@ -53,7 +53,7 @@
 
 .t-body-sm {
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   line-height: var(--leading-relaxed);
   color: var(--color-text-gray);
   margin: 0;
@@ -61,7 +61,7 @@
 
 .t-label {
   font-family: var(--font-body);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   font-weight: 500;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
@@ -71,7 +71,7 @@
 
 .t-mono {
   font-family: var(--font-mono);
-  font-size: var(--text-mono-sm);
+  font-size: var(--text-mono);
   letter-spacing: var(--track-mono);
   color: var(--color-text-muted);
   margin: 0;
