@@ -1412,7 +1412,8 @@ footer p {
   --tw-font-weight: var(--font-weight-bold);
   font-weight: var(--font-weight-bold);
   color: var(--color-blue);
-  font-size: var(--text-display);
+  font-style: italic;
+  font-size: var(--text-headline-lg);
 }
 .page-hero-sm .hero-name {
   font-size: var(--text-headline);
@@ -1470,7 +1471,7 @@ footer p {
   gap: var(--spacing-4);
 }
 .contact-hero-text .hero-name {
-  font-size: var(--text-display);
+  font-size: var(--text-headline-lg);
 }
 .contact-hero-text .hero-tagline {
   text-align: left;
@@ -2193,7 +2194,7 @@ footer a:hover {
     height: var(--size-photo-md);
   }
   .contact-hero-text .hero-name {
-    font-size: var(--text-display);
+    font-size: var(--text-headline-lg);
   }
   .contact-form-card {
     width: 420px;
