@@ -196,22 +196,34 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 
 ### Type Scale
 
-All tokens defined in `src/tokens.css` under the `@theme` block. Values in `rem` on a **4px sub-grid for type**, 8px grid for everything else. Scale follows the [plan/linen-system.css](plan/linen-system.css) reference.
+Tokens defined in `src/tokens.css` in the `:root` block (not `@theme` — Tailwind v4's `@theme` processing drops some token names, so `:root` guarantees runtime access).
 
-| Token | rem | px | Usage |
-|-------|-----|----|-------|
-| `--text-display-xl` | 7.5rem | 120px | Hero display — largest heading |
-| `--text-display-lg` | 5.5rem | 88px | Large display heading |
-| `--text-headline-lg` | 3.5rem | 56px | Section headline, hero name desktop |
-| `--text-headline` | 2.5rem | 40px | Hero mobile, profile hero |
-| `--text-heading-lg` | 2rem | 32px | Project titles, page-hero-sm |
-| `--text-headline-sm` | 1.75rem | 28px | Card titles, section subheadings |
-| `--text-heading` | 1.5rem | 24px | Project titles mobile, preview headings |
-| `--text-heading-sm` | 1.25rem | 20px | Nav logo, small section headings |
-| `--text-body` | 1rem | 16px | Taglines, nav, buttons, footer, body copy |
-| `--text-label` | 0.75rem | 12px | Project labels, tab buttons, uppercase labels |
-| `--text-mono` | 0.75rem | 12px | Meta data, pill tags, figure captions |
-| `--text-caption` | 0.5rem | 8px | Pipeline badges, status dots, dash labels |
+**Reference tokens (from plan/linen-system.css):**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--text-display-xl` | 120px | Hero display — largest heading |
+| `--text-display-lg` | 88px | Large display heading |
+| `--text-headline-lg` | 56px | Section headline |
+| `--text-headline-md` | 28px | Card titles, section subheadings |
+| `--text-headline-sm` | 18px | Emphasis text, skill category titles |
+| `--text-body-md` | 16px | Taglines, form inputs, body copy |
+| `--text-body-sm` | 14px | Nav links, buttons, footer |
+| `--text-label-sm` | 11px | Breadcrumbs, pills, tags, uppercase labels |
+| `--text-mono-sm` | 11px | Meta data, pill tags, figure captions |
+
+**Extended tokens (beyond Linen reference):**
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--text-caption` | 10px | Dashboard labels, pipeline, status badges |
+| `--text-label-lg` | 12px | Project labels, tab buttons, CV text |
+| `--text-body-xs` | 13px | Chat bubbles, compact input |
+| `--text-heading-sm` | 20px | Nav logo, small section headings |
+| `--text-heading` | 24px | Project titles mobile, preview headings |
+| `--text-heading-lg` | 32px | Project titles, page-hero-sm |
+| `--text-headline` | 40px | Hero mobile, profile hero |
+| `--text-display` | 64px | Hero name desktop |
 
 ### Typography Utility Classes
 
@@ -221,13 +233,13 @@ Defined in `src/typography.css`. Framework-agnostic CSS classes consuming the to
 |-------|------|------|-------------|----------|
 | `.t-display-xl` | Archivo Narrow 700 | `clamp(72px, 11vw, var(--text-display-xl))` | `--leading-tight` | `--track-display` |
 | `.t-display-lg` | Archivo Narrow 700 | `clamp(56px, 8vw, var(--text-display-lg))` | `--leading-snug` | `--track-display` |
-| `.t-headline-lg` | Archivo Narrow 700 | `var(--text-headline-lg)` (56px) | `--leading-snug` | `--track-display` |
-| `.t-headline-md` | Archivo Narrow 600 | `var(--text-heading-sm)` (20px) | 1.1 | — |
-| `.t-headline-sm` | Inter 500 | `var(--text-heading-sm)` (20px) | `--leading-normal` | — |
-| `.t-body` | Inter 400 | `var(--text-body)` (16px) | `--leading-relaxed` | — |
-| `.t-body-sm` | Inter 400 | `var(--text-body)` (16px) | `--leading-relaxed` | — |
-| `.t-label` | Inter 500 | `var(--text-label)` (12px) | — | `--track-label` + uppercase |
-| `.t-mono` | JetBrains Mono 400 | `var(--text-mono)` (12px) | — | `--track-mono` |
+| `.t-headline-lg` | Archivo Narrow 700 | 56px | `--leading-snug` | `--track-display` |
+| `.t-headline-md` | Archivo Narrow 600 | 28px | 1.1 | — |
+| `.t-headline-sm` | Inter 500 | 18px | `--leading-normal` | — |
+| `.t-body` | Inter 400 | 16px | `--leading-relaxed` | — |
+| `.t-body-sm` | Inter 400 | 14px | `--leading-relaxed` | — |
+| `.t-label` | Inter 500 | 11px | — | `--track-label` + uppercase |
+| `.t-mono` | JetBrains Mono 400 | 11px | — | `--track-mono` |
 
 ### Base Styles
 
