@@ -18,38 +18,38 @@
   --color-warning: #d97706;
   --color-info: #2563eb;
 
-  --radius-sm: 8px;
-  --radius-lg: 16px;
+  --radius-sm: 0.5rem;    /* 8px */
+  --radius-lg: 1rem;        /* 16px */
 
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Archivo Narrow", "Arial Narrow", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* ── Linen Reference Type Scale ── */
-  --text-display-xl: 120px;
-  --text-display-lg: 88px;
-  --text-headline-lg: 56px;
-  --text-headline-md: 28px;
-  --text-headline-sm: 18px;
-  --text-body-md: 16px;
-  --text-body-sm: 14px;
-  --text-label-sm: 11px;
-  --text-mono-sm: 11px;
+  --text-display-xl: 7.5rem;   /* 120px */
+  --text-display-lg: 5.5rem;   /* 88px */
+  --text-headline-lg: 3.5rem;  /* 56px */
+  --text-headline-md: 1.75rem; /* 28px */
+  --text-headline-sm: 1.25rem; /* 20px */
+  --text-body-md: 1rem;        /* 16px */
+  --text-body-sm: 1rem;        /* 16px */
+  --text-label-sm: 0.75rem;    /* 12px */
+  --text-mono-sm: 0.75rem;     /* 12px */
 
   /* ── Extended tokens (beyond Linen reference) ── */
-  --text-caption: 0.625rem;    /* 10px — pipeline, badges, dash labels */
+  --text-caption: 0.5rem;      /* 8px — pipeline, badges, dash labels */
   --text-label-lg: 0.75rem;    /* 12px — project labels, tabs, CV */
-  --text-body-xs: 0.82rem;     /* 13px — chat bubbles, compact input */
+  --text-body-xs: 0.75rem;     /* 12px — chat bubbles, compact input */
   --text-heading-sm: 1.25rem;  /* 20px — nav logo, section headings */
   --text-heading: 1.5rem;      /* 24px — project title mobile */
   --text-heading-lg: 2rem;     /* 32px — project titles, hero-sm */
   --text-headline: 2.5rem;     /* 40px — hero mobile, profile hero */
   --text-display: 4rem;        /* 64px — hero name desktop */
 
-  --radius-pill: 2rem;
-  --radius-card: 12px;
-  --radius-form: 20px;
-  --radius-input: 12px;
+  --radius-pill: 2rem;       /* 32px */
+  --radius-card: 1rem;        /* 16px */
+  --radius-form: 1.5rem;      /* 24px */
+  --radius-input: 0.5rem;     /* 8px */
   --radius-circle: 50%;
 
   /* ── 8px Spacing Scale ── */
@@ -101,27 +101,27 @@
   color-scheme: light;
   --bg-gradient-light: radial-gradient(ellipse at 50% 30%, #FCF8F0 0%, #F5F1E8 50%, #EDE6DF 100%);
   --card-glow: radial-gradient(ellipse at 50% 0%, rgba(255, 235, 200, 0.65) 0%, rgba(255, 240, 225, 0.3) 40%, transparent 80%);
-  --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.03);
-  --shadow-card-hover: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05);
+  --shadow-card: 0 0 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.04), 0 16px 32px rgba(0,0,0,0.03);
+  --shadow-card-hover: 0 0 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.05);
 
   /* ── Size Tokens ── */
-  --size-dot: 8px;
-  --size-icon: 16px;
-  --size-icon-md: 30px;
-  --size-icon-lg: 32px;
-  --size-btn-icon: 38px;
-  --size-backtotop: 44px;
-  --size-photo-sm: 140px;
-  --size-photo-md: 200px;
-  --size-photo: 240px;
-  --width-tagline: 480px;
-  --width-hero-box: 800px;
-  --width-form-sm: 420px;
-  --width-form: 480px;
-  --width-page: 1280px;
-  --height-chat: 380px;
-  --height-textarea: 160px;
-  --height-nav: 70px;
+  --size-dot: 0.5rem;          /* 8px */
+  --size-icon: 1rem;           /* 16px */
+  --size-icon-md: 2rem;        /* 32px */
+  --size-icon-lg: 2rem;        /* 32px */
+  --size-btn-icon: 2.5rem;     /* 40px */
+  --size-backtotop: 3rem;      /* 48px */
+  --size-photo-sm: 9rem;       /* 144px */
+  --size-photo-md: 12.5rem;    /* 200px */
+  --size-photo: 15rem;         /* 240px */
+  --width-tagline: 30rem;      /* 480px */
+  --width-hero-box: 50rem;     /* 800px */
+  --width-form-sm: 26rem;      /* 416px */
+  --width-form: 30rem;         /* 480px */
+  --width-page: 80rem;         /* 1280px */
+  --height-chat: 24rem;        /* 384px */
+  --height-textarea: 10rem;    /* 160px */
+  --height-nav: 4.5rem;        /* 72px */
 
   /* ── Layout Tokens ── */
   --page-padding: 2.5rem;
@@ -140,8 +140,8 @@
   --color-nav-bg: rgba(11, 17, 32, 0.85);
 
   /* ── Border-Width Tokens ── */
-  --border-width-input: 1.5px;
-  --border-width-active: 3px;
+  --border-width-input: 2px;
+  --border-width-active: 4px;
   --border-width-timeline: 2px;
 
   /* ── Shadow Tokens ── */
@@ -152,9 +152,9 @@
   --shadow-btt: 0 4px 16px rgba(38, 66, 139, 0.3);
   --shadow-hero-card: 0 8px 32px rgba(0, 0, 0, 0.15);
   --shadow-photo: 0 8px 32px rgba(0, 0, 0, 0.1);
-  --shadow-photo-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --shadow-photo-hover: 0 16px 40px rgba(0, 0, 0, 0.15);
   --shadow-btn-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
-  --shadow-btn-active: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-btn-active: 0 0 8px rgba(0, 0, 0, 0.1);
 
   /* ── Tracking Tokens ── */
   --track-display: -0.01em;
@@ -172,7 +172,7 @@
   --color-beige: #161618;
   --color-green: #0D0D0D;
   --color-blue: #A3B18A;
-  --color-dark-blue: #A3B18A;
+  --color-dark-blue: #8CA07A;
   --color-near-black: #F3F4F6;
   --color-text-gray: #9CA3AF;
   --color-text-muted: #6B7280;
