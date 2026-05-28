@@ -68,7 +68,7 @@ body {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-mono);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   color: var(--color-text-muted);
 }
 
@@ -176,7 +176,7 @@ body {
 
 .status-name {
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--color-near-black);
   line-height: 1.2;
@@ -343,7 +343,7 @@ body {
 
 .stat-value {
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--color-near-black);
 }
@@ -452,7 +452,7 @@ body {
 
 .company-picker-title {
   font-family: var(--font-body);
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--color-near-black);
   margin-bottom: var(--space-xs);
@@ -531,7 +531,7 @@ body {
 
 .company-card-name {
   font-family: var(--font-body);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   font-weight: 600;
   color: var(--color-near-black);
   line-height: 1.15;
@@ -591,7 +591,7 @@ body {
 
 .tab-btn {
   font-family: var(--font-body);
-  font-size: var(--text-label-lg);
+  font-size: var(--text-body);
   padding: var(--space-sm) var(--space-md);
   background: transparent;
   border: 1px solid transparent;
@@ -691,7 +691,7 @@ body {
 
 .preview-header-name {
   font-family: var(--font-body);
-  font-size: var(--text-body-md);
+  font-size: var(--text-body);
   font-weight: 500;
   color: var(--color-near-black);
   line-height: 1.2;
@@ -712,7 +712,7 @@ body {
 
 .btn-sm {
   font-family: var(--font-body);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-pill);
   cursor: pointer;
@@ -783,7 +783,7 @@ body {
 .message-bubble {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-card);
-  font-size: var(--text-body-xs);
+  font-size: var(--text-body);
   line-height: 1.6;
 }
 
@@ -810,7 +810,7 @@ body {
   background: rgba(22, 163, 74, 0.08);
   border: 1px solid rgba(22, 163, 74, 0.2);
   color: var(--success);
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   border-radius: var(--radius-pill);
   padding: var(--space-xs) var(--space-md);
 }
@@ -864,7 +864,7 @@ body {
 .chat-input {
   flex: 1;
   font-family: var(--font-mono);
-  font-size: var(--text-body-xs);
+  font-size: var(--text-body);
   color: var(--color-near-black);
   background: var(--input-bg);
   border: 1px solid var(--color-border);
@@ -895,7 +895,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   transition: all 200ms ease;
   flex-shrink: 0;
 }
@@ -985,7 +985,7 @@ body {
   align-items: center;
   padding: var(--space-sm) var(--space-md);
   font-family: var(--font-mono);
-  font-size: var(--text-label-lg);
+  font-size: var(--text-body);
   color: var(--color-text-gray);
   cursor: pointer;
   transition: all 150ms ease;
@@ -1044,7 +1044,7 @@ body {
 
 .field-input {
   font-family: var(--font-mono);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   color: var(--color-near-black);
   background: var(--input-bg);
   border: 1px solid var(--color-border);
@@ -1063,7 +1063,7 @@ body {
 
 .field-textarea {
   font-family: var(--font-mono);
-  font-size: var(--text-body-xs);
+  font-size: var(--text-body);
   color: var(--color-near-black);
   background: var(--input-bg);
   border: 1px solid var(--color-border);
@@ -1085,7 +1085,7 @@ body {
 
 .btn-code {
   font-family: var(--font-body);
-  font-size: var(--text-body-xs);
+  font-size: var(--text-body);
   letter-spacing: 0.04em;
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-pill);
@@ -1110,7 +1110,7 @@ body {
 .btn-code-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
 .status-msg {
-  font-size: var(--text-label-sm);
+  font-size: var(--text-label);
   color: var(--color-text-muted);
   display: flex;
   align-items: center;
@@ -1148,7 +1148,7 @@ body {
   background: var(--panel-alt);
   cursor: pointer;
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 500;
   color: var(--color-near-black);
   transition: background 150ms ease;
@@ -1156,7 +1156,7 @@ body {
 
 .accordion-header:hover { background: rgba(24, 95, 165, 0.06); }
 
-.accordion-header i { font-size: var(--text-label-sm); color: var(--color-text-muted); transition: transform 200ms ease; }
+.accordion-header i { font-size: var(--text-label); color: var(--color-text-muted); transition: transform 200ms ease; }
 .accordion-item.open .accordion-header i { transform: rotate(180deg); }
 
 .accordion-body {
@@ -1188,7 +1188,7 @@ body {
   padding: var(--spacing-2) var(--spacing-4);
   background: var(--color-green);
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 500;
   color: var(--color-near-black);
 }
