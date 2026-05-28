@@ -648,10 +648,7 @@ footer p {
 }
 
 .hero-name {
-  font-family: var(--font-display);
-  font-weight: 200;
-  font-style: italic;
-  color: var(--color-blue);
+  @apply font-display text-blue leading-tight font-bold;
   font-size: var(--text-display);
 }
 

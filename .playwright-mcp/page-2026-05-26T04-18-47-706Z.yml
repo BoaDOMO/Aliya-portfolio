@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - link "ALIYA KOY" [ref=e5] [cursor=pointer]:
+        - /url: ./index.html
+        - heading "ALIYA KOY" [level=2] [ref=e6]
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - link "Home" [ref=e10] [cursor=pointer]:
+            - /url: ./index.html
+        - listitem [ref=e11]:
+          - link "Profile" [ref=e12] [cursor=pointer]:
+            - /url: ./profile.html
+        - listitem [ref=e13]:
+          - link "Lab" [ref=e14] [cursor=pointer]:
+            - /url: ./lab.html
+        - listitem [ref=e15]:
+          - link "Contact" [ref=e16] [cursor=pointer]:
+            - /url: ./contact.html
+        - listitem [ref=e17]:
+          - button "Toggle theme" [ref=e18] [cursor=pointer]:
+            - generic [ref=e19]: 
+    - text: 
+  - main [ref=e20]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - img "Aliya Koy" [ref=e27]
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: GET IN TOUCH
+          - heading "Let's talk." [level=1] [ref=e30]
+          - paragraph [ref=e31]: Open to interesting work and good conversations.
+          - generic [ref=e32]:
+            - generic [ref=e33]:
+              - generic [ref=e34]:
+                - text: 097 725 93 72
+                - generic [ref=e35]: 
+              - generic [ref=e36]:
+                - generic [ref=e37]: PHONE
+                - link "097 725 93 72" [ref=e38] [cursor=pointer]:
+                  - /url: tel:0977259372
+            - generic [ref=e39]:
+              - generic [ref=e40]:
+                - text: aliyakoy365@gmail.com
+                - generic [ref=e41]: 
+              - generic [ref=e42]:
+                - generic [ref=e43]: EMAIL
+                - link "aliyakoy365@gmail.com" [ref=e44] [cursor=pointer]:
+                  - /url: mailto:aliyakoy365@gmail.com
+            - generic [ref=e45]:
+              - generic [ref=e46]:
+                - text: linkedin.com/in/aliya-koy
+                - generic [ref=e47]: 
+              - generic [ref=e48]:
+                - generic [ref=e49]: LINKEDIN
+                - link "linkedin.com/in/aliya-koy" [ref=e50] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/aliya-koy-b48b761b1/
+      - generic [ref=e52]:
+        - heading "Send a message" [level=2] [ref=e53]
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - textbox "Name" [ref=e57]:
+              - /placeholder: " "
+            - generic: Name
+          - generic [ref=e58]:
+            - textbox "Email" [ref=e59]:
+              - /placeholder: " "
+            - generic: Email
+          - generic [ref=e60]:
+            - textbox "Message" [ref=e61]:
+              - /placeholder: " "
+            - generic: Message
+          - button "Send message " [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: Send message
+            - generic [ref=e64]: 
+  - contentinfo [ref=e65]:
+    - paragraph [ref=e66]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+  - button "Back to top":
+    - img
+    - generic: 

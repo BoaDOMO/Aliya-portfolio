@@ -1,0 +1,105 @@
+- generic [ref=e2]:
+  - checkbox
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - navigation [ref=e5]:
+        - link "ALIYA KOY" [ref=e7] [cursor=pointer]:
+          - /url: ./index.html
+          - heading "ALIYA KOY" [level=2] [ref=e8]
+        - list [ref=e10]:
+          - listitem [ref=e11]:
+            - link "Home" [ref=e12] [cursor=pointer]:
+              - /url: ./index.html
+          - listitem [ref=e13]:
+            - link "Profile" [ref=e14] [cursor=pointer]:
+              - /url: ./profile.html
+          - listitem [ref=e15]:
+            - link "Lab" [ref=e16] [cursor=pointer]:
+              - /url: ./lab.html
+          - listitem [ref=e17]:
+            - link "Contact" [ref=e18] [cursor=pointer]:
+              - /url: ./contact.html
+          - listitem [ref=e19]:
+            - button "Toggle theme" [ref=e20] [cursor=pointer]:
+              - generic [ref=e21]: 
+      - text: 
+    - main [ref=e22]:
+      - generic [ref=e24]:
+        - heading "SKILLS" [level=2] [ref=e25]
+        - generic [ref=e26]:
+          - generic [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 
+            - heading "AI & Innovation" [level=3] [ref=e29]
+            - list:
+              - listitem [ref=e30]: → Conversational AI Design
+              - listitem [ref=e31]: → RAG Pipeline Development
+              - listitem [ref=e32]: → LLM Platform Evaluation
+              - listitem [ref=e33]: → AI Product Strategy
+          - generic [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: 
+            - heading "Product & Delivery" [level=3] [ref=e36]
+            - list:
+              - listitem [ref=e37]: → Digital Product Ownership
+              - listitem [ref=e38]: → Agile / Scrum Delivery
+              - listitem [ref=e39]: → Stakeholder Management
+              - listitem [ref=e40]: → Product Roadmapping
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 
+            - heading "Analysis & Design" [level=3] [ref=e43]
+            - list:
+              - listitem [ref=e44]: → Business Analysis
+              - listitem [ref=e45]: → Requirements Gathering
+              - listitem [ref=e46]: → UI/UX Design (Figma)
+              - listitem [ref=e47]: → User Journey Mapping
+      - generic [ref=e49]:
+        - heading "EXPERIENCE" [level=2] [ref=e50]
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - paragraph [ref=e53]: KB Prasac Bank
+            - paragraph [ref=e54]: — Senior Digital Product Owner (AI Lead)
+            - paragraph [ref=e55]: APRIL 2026 – PRESENT
+            - list [ref=e56]:
+              - listitem [ref=e57]: • Leading the development of an AI-powered conversational assistant for the bank mobile app.
+              - listitem [ref=e58]: • Responsible for LLM platform evaluation, RAG pipeline design, and integration planning.
+              - listitem [ref=e59]: • Driving cross-functional coordination and AI strategy to improve customer experience and operational efficiency.
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: Boost Capital (Cambodia) Co., Ltd.
+            - paragraph [ref=e62]: — Senior Product Specialist
+            - paragraph [ref=e63]: JUNE 2023 – JAN 2026 · 2 YRS 7 MOS
+            - list [ref=e64]:
+              - listitem [ref=e65]: • Led the design and optimization of chatbot solutions to improve customer engagement and streamline loan applications.
+              - listitem [ref=e66]: • Collaborated across product, marketing, and tech teams to ensure seamless user journeys aligned with campaign goals.
+              - listitem [ref=e67]: • Leveraged user data and feedback loops to enhance product features and support adoption metrics.
+          - generic [ref=e68]:
+            - paragraph [ref=e69]: Smart Axiata Co., Ltd.
+            - paragraph [ref=e70]: — VAS & DCB Product Specialist
+            - paragraph [ref=e71]: NOV 2021 – JUNE 2023 · 1 YR 7 MOS
+            - list [ref=e72]:
+              - listitem [ref=e73]: • Managed digital products like VAS Gaming and DCB (SmartPay) services, including partnerships with Leng Center, Google, Apple, and Coda DCB.
+              - listitem [ref=e74]: • Acted as a key liaison between internal teams and external partners, ensuring smooth product operations and performance.
+              - listitem [ref=e75]: • Led initiatives to identify and solve operational issues, propose marketing strategies, and enhance product features.
+              - listitem [ref=e76]: • Collaborated with potential partners to develop new digital services by analyzing business cases and technical feasibility.
+          - generic [ref=e77]:
+            - checkbox [ref=e78] [cursor=pointer]
+            - generic [ref=e79] [cursor=pointer]: View all experiences
+            - generic: • • • • • • • • • •
+      - generic [ref=e81]:
+        - heading "EDUCATION" [level=2] [ref=e82]
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - paragraph [ref=e85]: Asia Pacific International University
+            - paragraph [ref=e86]: — Bachelor of Science
+            - paragraph [ref=e87]: JUNE 2012 – JUNE 2016
+            - list [ref=e88]:
+              - listitem [ref=e89]: • Muaklek, Saraburi, Thailand
+          - generic [ref=e90]:
+            - paragraph [ref=e91]: Cambodia Adventist School
+            - paragraph [ref=e92]: — High School Diploma
+            - paragraph [ref=e93]: MAY 2009 – JUNE 2012
+            - list [ref=e94]:
+              - listitem [ref=e95]: • Phnom Penh, Cambodia
+    - contentinfo [ref=e96]:
+      - paragraph [ref=e97]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+    - button "Back to top":
+      - img
+      - generic: 

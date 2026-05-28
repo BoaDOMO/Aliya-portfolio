@@ -1,0 +1,43 @@
+- generic [active] [ref=e1] [box=0,0,1200,903]:
+  - generic [ref=e2] [box=0,0,1200,70]:
+    - navigation [ref=e3] [box=0,0,1200,70]:
+      - link "ALIYA KOY" [ref=e5] [cursor=pointer] [box=64,24,103,20]:
+        - /url: ./index.html
+        - heading "ALIYA KOY" [level=2] [ref=e6] [box=64,24,103,20]
+      - list [ref=e8] [box=666,19,470,32]:
+        - listitem [ref=e9] [box=666,19,35,32]:
+          - link "Home" [ref=e10] [cursor=pointer] [box=666,24,35,22]:
+            - /url: ./index.html
+        - listitem [ref=e11] [box=765,19,61,32]:
+          - link "Profile" [ref=e12] [cursor=pointer] [box=765,24,61,22]:
+            - /url: ./profile.html
+        - listitem [ref=e13] [box=889,19,26,32]:
+          - link "Lab" [ref=e14] [cursor=pointer] [box=889,24,26,22]:
+            - /url: ./lab.html
+        - listitem [ref=e15] [box=979,19,61,32]:
+          - link "Contact" [ref=e16] [cursor=pointer] [box=979,24,61,22]:
+            - /url: ./contact.html
+        - listitem [ref=e17] [box=1104,19,32,32]:
+          - button "Toggle theme" [ref=e18] [cursor=pointer] [box=1104,19,32,32]
+    - text: 
+  - main [ref=e20] [box=0,70,1200,764]:
+    - generic [ref=e22] [box=32,70,1136,764]:
+      - paragraph [ref=e23] [box=552,297,96,16]: HELLO, I'M
+      - heading "A l i y a K o y" [level=1] [ref=e24] [box=457,353,285,80]:
+        - generic [ref=e25] [box=457,353,43,80]: A
+        - generic [ref=e26] [box=500,353,18,80]: l
+        - generic [ref=e27] [box=519,353,19,80]: i
+        - generic [ref=e28] [box=538,353,36,80]: "y"
+        - generic [ref=e29] [box=573,353,37,80]: a
+        - generic [ref=e31] [box=628,353,44,80]: K
+        - generic [ref=e32] [box=672,353,34,80]: o
+        - generic [ref=e33] [box=707,353,36,80]: "y"
+      - paragraph [ref=e34] [box=412,473,376,26]: A small lab for things I want to build.
+      - generic [ref=e35] [box=426,555,348,52]:
+        - button "View Profile →" [ref=e36] [box=426,555,164,52]
+        - button "Get in Touch" [ref=e37] [box=622,555,152,52]
+  - contentinfo [ref=e38] [box=0,834,1200,69]:
+    - paragraph [ref=e39] [box=32,858,1136,21]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+  - button "Back to top" [box=1124,820,44,44]:
+    - img [box=1124,820,44,44]
+    - generic [box=1138,834,16,16]: 

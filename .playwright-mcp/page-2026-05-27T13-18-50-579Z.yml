@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - text: 
+    - navigation [ref=e3]:
+      - link "ALIYA KOY" [ref=e5] [cursor=pointer]:
+        - /url: ./index.html
+        - heading "ALIYA KOY" [level=2] [ref=e6]
+      - generic [ref=e7]:
+        - button "Toggle theme" [ref=e13] [cursor=pointer]:
+          - generic [ref=e14]: 
+        - generic [ref=e15]:
+          - listitem [ref=e16]:
+            - link "Home" [ref=e17] [cursor=pointer]:
+              - /url: ./index.html
+          - listitem [ref=e18]:
+            - link "Profile" [ref=e19] [cursor=pointer]:
+              - /url: ./profile.html
+          - listitem [ref=e20]:
+            - link "Lab" [ref=e21] [cursor=pointer]:
+              - /url: ./lab.html
+          - listitem [ref=e22]:
+            - link "Contact" [ref=e23] [cursor=pointer]:
+              - /url: ./contact.html
+  - main [ref=e24]:
+    - generic [ref=e27]:
+      - paragraph [ref=e28]: THE LAB
+      - heading "T h i n g s I ' m b u i l d i n g ." [level=1] [ref=e29]:
+        - generic [ref=e30]: T
+        - generic [ref=e31]: h
+        - generic [ref=e32]: i
+        - generic [ref=e33]: "n"
+        - generic [ref=e34]: g
+        - generic [ref=e35]: s
+        - generic [ref=e37]: I
+        - generic [ref=e38]: "'"
+        - generic [ref=e39]: m
+        - generic [ref=e41]: b
+        - generic [ref=e42]: u
+        - generic [ref=e43]: i
+        - generic [ref=e44]: l
+        - generic [ref=e45]: d
+        - generic [ref=e46]: i
+        - generic [ref=e47]: "n"
+        - generic [ref=e48]: g
+        - generic [ref=e49]: .
+      - paragraph [ref=e50]: Experiments, prototypes, and side projects.
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - paragraph [ref=e53]: PROJECT 01 — LIVE DEMO
+        - heading "RAG Chatbot — Nova Finance" [level=2] [ref=e54]
+        - paragraph [ref=e55]: An interactive RAG demo where the AI answers questions based only on a live knowledge base — the same architecture used in real-world enterprise AI assistants.
+        - generic [ref=e56]:
+          - generic [ref=e57]: Gemini
+          - generic [ref=e58]: RAG
+          - generic [ref=e59]: Vercel Functions
+          - generic [ref=e60]: Embeddings
+        - button "Try the full demo " [ref=e61]:
+          - text: Try the full demo
+          - generic [ref=e62]: 
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: Nova Finance AI
+            - generic [ref=e69]: Powered by Gemini
+          - generic [ref=e70]: Live
+        - generic [ref=e72]:
+          - text: Hi! Ask me anything about Nova Finance — loans, rates, eligibility, or how to apply.
+          - generic [ref=e73]:
+            - button "Loan rates?" [ref=e74] [cursor=pointer]
+            - button "How to apply?" [ref=e75] [cursor=pointer]
+            - button "Early repayment?" [ref=e76] [cursor=pointer]
+        - generic [ref=e77]:
+          - textbox "Ask a question..." [ref=e78]
+          - button "Send" [ref=e79] [cursor=pointer]
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - paragraph [ref=e82]: PROJECT 02 — LIVE DEMO
+        - heading "Design System Token Picker" [level=2] [ref=e83]
+        - paragraph [ref=e84]: A focused tool for generating design tokens. Pick a color, choose fonts, and export a full design system spec — CSS custom properties, Tailwind config, SCSS variables, or JSON.
+        - generic [ref=e85]:
+          - generic [ref=e86]: Vanilla JS
+          - generic [ref=e87]: Google Fonts
+          - generic [ref=e88]: WCAG
+        - button "Open Token Picker " [ref=e89]:
+          - text: Open Token Picker
+          - generic [ref=e90]: 
+      - generic [ref=e92]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: "#26428b"
+          - generic [ref=e97]: Primary · Scale 500
+        - generic [ref=e110]: 11-step color scale · AA ✓ AAA ✓
+  - contentinfo [ref=e111]:
+    - paragraph [ref=e112]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+  - button "Back to top":
+    - img
+    - generic: 

@@ -1,0 +1,166 @@
+- generic [ref=e2]:
+  - generic:
+    - status
+    - generic: Loading
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Uiverse Design Uiverse Design" [ref=e5] [cursor=pointer]:
+        - /url: /design
+        - img "Uiverse Design" [ref=e6]
+        - generic [ref=e7]: Uiverse Design
+      - generic [ref=e8]:
+        - navigation [ref=e9]:
+          - link "What is DESIGN.md?" [ref=e10] [cursor=pointer]:
+            - /url: /design/what-is-design
+          - link "How to use" [ref=e11] [cursor=pointer]:
+            - /url: /design/how-to-use-design-systems
+        - button "Log in / Sign up" [ref=e12] [cursor=pointer]:
+          - generic [ref=e13]: Log in / Sign up
+  - generic [ref=e15]:
+    - complementary [ref=e16]:
+      - heading "Linen" [level=1] [ref=e18]
+      - navigation [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: Pages
+          - link "Overview" [ref=e22] [cursor=pointer]:
+            - /url: /design/systems/linen
+          - generic [ref=e23]:
+            - generic [ref=e24]: Preview page
+            - img [ref=e25]
+        - generic [ref=e27]:
+          - generic [ref=e28]: css
+          - generic [ref=e29]:
+            - img "file-code icon" [ref=e31]
+            - generic [ref=e33]: system.css
+            - img [ref=e34]
+        - generic [ref=e36]:
+          - generic [ref=e37]: html
+          - generic [ref=e38]:
+            - img "file-code icon" [ref=e40]
+            - generic [ref=e42]: preview.html
+            - img [ref=e43]
+          - generic [ref=e45]:
+            - img "file-code icon" [ref=e47]
+            - generic [ref=e49]: cover.html
+            - img [ref=e50]
+        - generic [ref=e52]:
+          - generic [ref=e53]: root
+          - generic [ref=e54]:
+            - img "file-text icon" [ref=e56]
+            - generic [ref=e58]: DESIGN.md
+            - img [ref=e59]
+        - generic [ref=e61]:
+          - generic [ref=e62]: screenshots
+          - generic [ref=e63]:
+            - img "photo-image-default icon" [ref=e65]
+            - generic [ref=e67]: cover.png
+            - img [ref=e68]
+          - generic [ref=e70]:
+            - img "photo-image-default icon" [ref=e72]
+            - generic [ref=e74]: preview-desktop.png
+            - img [ref=e75]
+    - main [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - generic [ref=e86]: light
+              - generic [ref=e87]: Minimalist
+              - generic [ref=e88]: Editorial
+              - generic [ref=e89]: Swiss
+              - generic [ref=e90]: Hairline
+              - generic [ref=e91]: Cream
+              - generic [ref=e92]: Typographic
+            - generic [ref=e93]:
+              - heading "Linen" [level=2] [ref=e94]
+              - paragraph [ref=e95]: An ultra-minimalist editorial design system built on warm cream paper, hairline rules, and a single ink color. Layouts breathe through generous whitespace and a tall architectural display face.
+            - link "Sign in to access" [ref=e98] [cursor=pointer]:
+              - /url: /design/systems/linen?auth=1&next=%2Fsystems%2Flinen
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - generic [ref=e107]: Design system preview
+              - link "Card cover screenshot of the generated design-system specimen." [ref=e108] [cursor=pointer]:
+                - /url: https://storage.uiverse.io/design-systems/linen/images/2026-05-24T09-53-00-106Z/cover.png
+                - img "Card cover screenshot of the generated design-system specimen." [ref=e109]
+            - generic [ref=e110]:
+              - button "Show Design system preview" [pressed] [ref=e111]
+              - button "Show Website preview section 1" [ref=e112]
+              - button "Show Website preview section 2" [ref=e113]
+              - button "Show Website preview section 3" [ref=e114]
+        - generic [ref=e115]:
+          - paragraph [ref=e116]: Concept
+          - paragraph [ref=e117]: Linen is a quiet, editorial system inspired by printed brand books and Swiss-grid posters. Everything sits on a warm linen-cream surface, separated only by hairline rules and held together by one near-black ink. There are no shadows, no gradients, no rounded corners; hierarchy comes entirely from typography scale, weight, and negative space.
+        - generic [ref=e118]:
+          - img [ref=e120]
+          - heading "Sign in to access" [level=3] [ref=e122]
+          - paragraph [ref=e123]: Create a free account or sign in to view and download this design system.
+          - link "Sign in to access" [ref=e124] [cursor=pointer]:
+            - /url: /design/systems/linen?auth=1&next=%2Fsystems%2Flinen
+  - contentinfo [ref=e125]:
+    - generic [ref=e126]:
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - link "Uiverse Design Uiverse Design" [ref=e129] [cursor=pointer]:
+            - /url: /design
+            - img "Uiverse Design" [ref=e130]
+            - text: Uiverse Design
+          - paragraph [ref=e131]: Framework-agnostic design systems with portable CSS, DESIGN.md guidance, and components. Built for AI-assisted workflows.
+          - generic [ref=e132]:
+            - link "GitHub" [ref=e133] [cursor=pointer]:
+              - /url: https://github.com/uiverse-io
+              - img "GitHub" [ref=e134]
+            - link "X" [ref=e136] [cursor=pointer]:
+              - /url: https://x.com/uiverse_io
+              - img "X" [ref=e137]
+            - link "Discord" [ref=e139] [cursor=pointer]:
+              - /url: https://discord.gg/uiverse
+              - img "Discord" [ref=e140]
+        - generic [ref=e142]:
+          - heading "Product" [level=3] [ref=e143]
+          - list [ref=e144]:
+            - listitem [ref=e145]:
+              - link "Design systems" [ref=e146] [cursor=pointer]:
+                - /url: /design
+            - listitem [ref=e147]:
+              - link "What is DESIGN.md?" [ref=e148] [cursor=pointer]:
+                - /url: /design/what-is-design
+            - listitem [ref=e149]:
+              - link "How to use" [ref=e150] [cursor=pointer]:
+                - /url: /design/how-to-use-design-systems
+            - listitem [ref=e151]:
+              - link "Uiverse.io" [ref=e152] [cursor=pointer]:
+                - /url: https://uiverse.io
+        - generic [ref=e153]:
+          - heading "Resources" [level=3] [ref=e154]
+          - list [ref=e155]:
+            - listitem [ref=e156]:
+              - link "Documentation" [ref=e157] [cursor=pointer]:
+                - /url: /design/what-is-design
+            - listitem [ref=e158]:
+              - link "Setup tutorial" [ref=e159] [cursor=pointer]:
+                - /url: /design/how-to-use-design-systems
+            - listitem [ref=e160]:
+              - link "Component library" [ref=e161] [cursor=pointer]:
+                - /url: https://uiverse.io/elements
+            - listitem [ref=e162]:
+              - link "Blog" [ref=e163] [cursor=pointer]:
+                - /url: https://uiverse.io/blog
+        - generic [ref=e164]:
+          - heading "Company" [level=3] [ref=e165]
+          - list [ref=e166]:
+            - listitem [ref=e167]:
+              - link "Terms of service" [ref=e168] [cursor=pointer]:
+                - /url: https://app.termly.io/document/terms-of-service/bdc0e7cf-cb88-4f24-9cb5-13761e20dedb
+            - listitem [ref=e169]:
+              - link "Privacy policy" [ref=e170] [cursor=pointer]:
+                - /url: https://app.termly.io/document/privacy-policy/fe317b39-7972-4f85-b7c6-d4f562e429d4
+      - generic [ref=e171]:
+        - paragraph [ref=e172]:
+          - text: 2026 Pixel Galaxies. All rights reserved. —
+          - link "Uiverse.io" [ref=e173] [cursor=pointer]:
+            - /url: https://uiverse.io
+        - generic [ref=e174]:
+          - link "Terms" [ref=e175] [cursor=pointer]:
+            - /url: https://app.termly.io/document/terms-of-service/bdc0e7cf-cb88-4f24-9cb5-13761e20dedb
+          - link "Privacy" [ref=e176] [cursor=pointer]:
+            - /url: https://app.termly.io/document/privacy-policy/fe317b39-7972-4f85-b7c6-d4f562e429d4

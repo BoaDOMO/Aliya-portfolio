@@ -190,7 +190,7 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 
 | Token            | Font Stack                                                       | Usage                                         |
 | ---------------- | ---------------------------------------------------------------- | --------------------------------------------- |
-| `--font-display` | `"Archivo Narrow", "Arial Narrow", sans-serif` → `"Inter", system-ui, -apple-system, sans-serif` (moved to Inter) | Hero name (h1), bold display typography (now Inter thin italic for hero) |
+| `--font-display` | `"Archivo Narrow", "Arial Narrow", sans-serif` | Hero name (h1), bold display typography |
 | `--font-body`    | `"Inter", system-ui, -apple-system, sans-serif`                  | Body, nav, buttons, headings (h2-h6), UI text |
 | `--font-mono`    | `"JetBrains Mono", ui-monospace, monospace`                      | Labels, code, dates, body text (p, li), chat  |
 

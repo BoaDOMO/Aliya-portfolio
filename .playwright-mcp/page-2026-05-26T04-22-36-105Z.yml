@@ -1,0 +1,91 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ./index.html
+      - navigation [ref=e5]:
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "Lab" [ref=e8] [cursor=pointer]:
+              - /url: ./lab.html
+          - listitem [ref=e9]: RAG Chatbot
+    - generic [ref=e10]:
+      - generic [ref=e11]: LIVE DEMO
+      - button "Toggle theme" [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: 
+  - main [ref=e14]:
+    - generic [ref=e16]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: Nova Finance AI Assistant
+          - generic [ref=e21]: Nova Finance
+        - generic [ref=e24]: Ready
+      - generic [ref=e25]:
+        - generic [ref=e26]: RAG Pipeline
+        - list [ref=e27]:
+          - listitem [ref=e28]: Query
+          - listitem [ref=e29]: Retriever
+          - listitem [ref=e30]: LLM
+          - listitem [ref=e31]: Response
+      - generic [ref=e33]:
+        - generic [ref=e34]: Session
+        - generic [ref=e35]:
+          - generic [ref=e36]: 
+          - generic [ref=e37]: Just now · 0 exchanges
+        - generic [ref=e38]:
+          - button " Reset" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]: 
+            - text: Reset
+          - button " Copy Log" [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 
+            - text: Copy Log
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]: Messages
+            - generic [ref=e48]: "0"
+          - generic [ref=e49]:
+            - generic [ref=e50]: Avg Time
+            - generic [ref=e51]: —
+        - generic [ref=e52]:
+          - generic [ref=e53]: 
+          - generic [ref=e54]: No queries yet
+      - generic [ref=e55]:
+        - generic [ref=e56]: Try asking
+        - generic [ref=e57]:
+          - button "What does Nova Finance do?" [ref=e58] [cursor=pointer]
+          - button "What products does Nova Finance offer?" [ref=e59] [cursor=pointer]
+          - button "What are common questions about Nova Finance?" [ref=e60] [cursor=pointer]
+          - button "What are Nova Finance's policies?" [ref=e61] [cursor=pointer]
+      - button " Try a different company?" [ref=e62] [cursor=pointer]:
+        - generic [ref=e63]: 
+        - text: Try a different company?
+    - generic [ref=e64]:
+      - tablist [ref=e65]:
+        - button " Preview" [ref=e66] [cursor=pointer]:
+          - generic [ref=e67]: 
+          - text: Preview
+        - button " Console" [ref=e68] [cursor=pointer]:
+          - generic [ref=e69]: 
+          - text: Console
+        - text: 
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e75]:
+            - generic [ref=e76]: Nova Finance AI
+            - generic [ref=e77]: Powered by Gemini
+          - button "Clear chat" [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: 
+        - generic [ref=e82]:
+          - generic [ref=e84]: 
+          - generic [ref=e85]:
+            - text: Hi! I'm the
+            - strong [ref=e86]: Nova Finance
+            - text: AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
+        - generic [ref=e87]:
+          - textbox "Ask a question..." [ref=e88]
+          - button "Send message" [ref=e89] [cursor=pointer]:
+            - generic [ref=e90]: 
+      - text:    
+  - contentinfo [ref=e91]:
+    - paragraph [ref=e92]: Copyright © 2026 Aliya Koy. All Rights Reserved.

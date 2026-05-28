@@ -1,0 +1,48 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ./index.html
+      - generic [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ./lab.html
+        - generic [ref=e7]: /
+        - generic [ref=e8]: RAG Chatbot
+    - generic [ref=e9]:
+      - generic [ref=e10]: LIVE DEMO
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 
+  - main [ref=e13]:
+    - text:     
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - button " Preview" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: 
+          - text: Preview
+        - button " Console" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: 
+          - text: Console
+        - button " Company" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: 
+          - text: Company
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e27]:
+            - generic [ref=e28]: Nova Finance AI
+            - generic [ref=e29]: Powered by Gemini
+          - button "Clear chat" [ref=e31] [cursor=pointer]:
+            - generic [ref=e32]: 
+            - generic [ref=e33]: Clear chat
+        - generic [ref=e35]:
+          - generic [ref=e37]: 
+          - generic [ref=e38]:
+            - text: Hi! I'm the
+            - strong [ref=e39]: Nova Finance
+            - text: AI assistant. I can answer questions about our products, services, eligibility, and policies — but only based on what's in the knowledge base.
+        - generic [ref=e40]:
+          - textbox "Ask a question..." [ref=e41]
+          - button "Send message" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: 
+      - text:         
+  - contentinfo [ref=e44]:
+    - paragraph [ref=e45]: Copyright © 2026 Aliya Koy. All Rights Reserved.

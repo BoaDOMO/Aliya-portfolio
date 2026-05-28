@@ -1,0 +1,293 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ./index.html
+      - generic [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ./lab.html
+        - text: / Design System
+    - generic [ref=e7]:
+      - text: LIVE DEMO
+      - button "Toggle theme" [ref=e8] [cursor=pointer]:
+        - generic [ref=e9]: 
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic [ref=e16]: 
+            - text: Colors
+          - generic [ref=e17]:
+            - generic [ref=e18]: Primary Color
+            - generic [ref=e19]:
+              - generic "Click to change color" [ref=e20] [cursor=pointer]
+              - generic [ref=e21]:
+                - textbox [ref=e22]: "#26428b"
+                - textbox [ref=e23] [cursor=pointer]: "#26428b"
+            - generic [ref=e24]:
+              - generic [ref=e25]: "Contrast (on white):"
+              - generic [ref=e26]: AA ✓
+              - generic [ref=e27]: AAA ✓
+            - generic [ref=e28]: Scale (click swatch to copy)
+            - generic [ref=e29]:
+              - generic [ref=e31] [cursor=pointer]: "50"
+              - generic [ref=e33] [cursor=pointer]: "100"
+              - generic [ref=e35] [cursor=pointer]: "200"
+              - generic [ref=e37] [cursor=pointer]: "300"
+              - generic [ref=e39] [cursor=pointer]: "400"
+              - generic [ref=e41] [cursor=pointer]: "500"
+              - generic [ref=e43] [cursor=pointer]: "600"
+              - generic [ref=e45] [cursor=pointer]: "700"
+              - generic [ref=e47] [cursor=pointer]: "800"
+              - generic [ref=e49] [cursor=pointer]: "900"
+              - generic [ref=e51] [cursor=pointer]: "950"
+            - generic [ref=e52]: Neutral Scale
+            - combobox [ref=e54]:
+              - option "Pure Gray" [selected]
+              - option "Brand-Tinted"
+            - generic [ref=e55]:
+              - generic [ref=e57] [cursor=pointer]: "50"
+              - generic [ref=e59] [cursor=pointer]: "100"
+              - generic [ref=e61] [cursor=pointer]: "200"
+              - generic [ref=e63] [cursor=pointer]: "300"
+              - generic [ref=e65] [cursor=pointer]: "400"
+              - generic [ref=e67] [cursor=pointer]: "500"
+              - generic [ref=e69] [cursor=pointer]: "600"
+              - generic [ref=e71] [cursor=pointer]: "700"
+              - generic [ref=e73] [cursor=pointer]: "800"
+              - generic [ref=e75] [cursor=pointer]: "900"
+              - generic [ref=e77] [cursor=pointer]: "950"
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]: 
+            - text: Typography
+          - generic [ref=e81]:
+            - generic [ref=e82]: Heading Font
+            - textbox "Type to search Google Fonts..." [ref=e84]: Georgia, serif
+            - generic [ref=e85]:
+              - generic [ref=e86] [cursor=pointer]: Georgia
+              - generic [ref=e87] [cursor=pointer]: Playfair
+              - generic [ref=e88] [cursor=pointer]: DM Serif
+              - generic [ref=e89] [cursor=pointer]: Lora
+            - generic [ref=e90]: Body Font
+            - textbox "Type to search Google Fonts..." [ref=e92]: "-apple-system, BlinkMacSystemFont, \"Inter\", \"Segoe UI\", system-ui, sans-serif"
+            - generic [ref=e93]:
+              - generic [ref=e94] [cursor=pointer]: Inter
+              - generic [ref=e95] [cursor=pointer]: Source Sans
+              - generic [ref=e96] [cursor=pointer]: DM Sans
+              - generic [ref=e97] [cursor=pointer]: Nunito
+            - generic [ref=e98]:
+              - generic [ref=e99]: The Quick Brown Fox
+              - generic [ref=e100]: Body paragraph sample that shows how the chosen fonts render together in context. The quick brown fox jumps over the lazy dog.
+            - generic [ref=e101]:
+              - text: "Base:"
+              - textbox [ref=e102]: "16"
+              - text: "px Scale:"
+              - combobox [ref=e103]:
+                - option "Compact"
+                - option "Default" [selected]
+                - option "Spacious"
+            - table [ref=e104]:
+              - rowgroup [ref=e105]:
+                - row "Level Size Preview" [ref=e106]:
+                  - columnheader "Level" [ref=e107]
+                  - columnheader "Size" [ref=e108]
+                  - columnheader "Preview" [ref=e109]
+              - rowgroup [ref=e110]:
+                - row "h1 3.052rem Aa" [ref=e111]:
+                  - cell "h1" [ref=e112]
+                  - cell "3.052rem" [ref=e113]
+                  - cell "Aa" [ref=e114]
+                - row "h2 2.441rem Aa" [ref=e115]:
+                  - cell "h2" [ref=e116]
+                  - cell "2.441rem" [ref=e117]
+                  - cell "Aa" [ref=e118]
+                - row "h3 1.953rem Aa" [ref=e119]:
+                  - cell "h3" [ref=e120]
+                  - cell "1.953rem" [ref=e121]
+                  - cell "Aa" [ref=e122]
+                - row "h4 1.563rem Aa" [ref=e123]:
+                  - cell "h4" [ref=e124]
+                  - cell "1.563rem" [ref=e125]
+                  - cell "Aa" [ref=e126]
+                - row "body 1.000rem Aa" [ref=e127]:
+                  - cell "body" [ref=e128]
+                  - cell "1.000rem" [ref=e129]
+                  - cell "Aa" [ref=e130]
+                - row "small 0.800rem Aa" [ref=e131]:
+                  - cell "small" [ref=e132]
+                  - cell "0.800rem" [ref=e133]
+                  - cell "Aa" [ref=e134]
+                - row "caption 0.640rem Aa" [ref=e135]:
+                  - cell "caption" [ref=e136]
+                  - cell "0.640rem" [ref=e137]
+                  - cell "Aa" [ref=e138]
+        - generic [ref=e139]:
+          - generic [ref=e140]:
+            - generic [ref=e141]: 
+            - text: Export
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - button "CSS" [ref=e144]
+              - button "Tailwind" [ref=e145]
+              - button "SCSS" [ref=e146]
+              - button "JSON" [ref=e147]
+            - generic [ref=e148]: "1\"hl-selector\">:root { 2 \"hl-comment\">/* -- Colors -- */ 3 \"hl-prop\">--color-primary: \"hl-hex\">#26428b; 4 \"hl-prop\">--color-primary-50: \"hl-hex\">#d3dcf3; 5 \"hl-prop\">--color-primary-100: \"hl-hex\">#bbc8ec; 6 \"hl-prop\">--color-primary-200: \"hl-hex\">#8aa2df; 7 \"hl-prop\">--color-primary-300: \"hl-hex\">#5a7bd2; 8 \"hl-prop\">--color-primary-400: \"hl-hex\">#3359bb; 9 \"hl-prop\">--color-primary-500: \"hl-hex\">#26428b; 10 \"hl-prop\">--color-primary-600: \"hl-hex\">#1e356f; 11 \"hl-prop\">--color-primary-700: \"hl-hex\">#172753; 12 \"hl-prop\">--color-primary-800: \"hl-hex\">#0f1a36; 13 \"hl-prop\">--color-primary-900: \"hl-hex\">#070c1a; 14 \"hl-prop\">--color-primary-950: \"hl-hex\">#03060c; 15 16 \"hl-comment\">/* -- Neutral -- */ 17 \"hl-prop\">--color-neutral-50: \"hl-hex\">#f7f7f7; 18 \"hl-prop\">--color-neutral-100: \"hl-hex\">#f0f0f0; 19 \"hl-prop\">--color-neutral-200: \"hl-hex\">#e0e0e0; 20 \"hl-prop\">--color-neutral-300: \"hl-hex\">#c7c7c7; 21 \"hl-prop\">--color-neutral-400: \"hl-hex\">#a6a6a6; 22 \"hl-prop\">--color-neutral-500: \"hl-hex\">#808080; 23 \"hl-prop\">--color-neutral-600: \"hl-hex\">#616161; 24 \"hl-prop\">--color-neutral-700: \"hl-hex\">#474747; 25 \"hl-prop\">--color-neutral-800: \"hl-hex\">#2e2e2e; 26 \"hl-prop\">--color-neutral-900: \"hl-hex\">#1a1a1a; 27 \"hl-prop\">--color-neutral-950: \"hl-hex\">#0d0d0d; 28 29 \"hl-comment\">/* -- Semantic -- */ 30 \"hl-prop\">--color-success: \"hl-hex\">#16a34a; 31 \"hl-prop\">--color-error: \"hl-hex\">#dc2626; 32 \"hl-prop\">--color-warning: \"hl-hex\">#d97706; 33 \"hl-prop\">--color-info: \"hl-hex\">#2563eb; 34 35 \"hl-comment\">/* -- Typography -- */ 36 \"hl-prop\">--font-display: Georgia, serif; 37 \"hl-prop\">--font-body: -apple-system, BlinkMacSystemFont, \"Inter\", \"Segoe UI\", system-ui, sans-serif; 38 \"hl-prop\">--font-size-h1: \"hl-unit\">3.052rem; 39 \"hl-prop\">--font-size-h2: \"hl-unit\">2.441rem; 40 \"hl-prop\">--font-size-h3: \"hl-unit\">1.953rem; 41 \"hl-prop\">--font-size-h4: \"hl-unit\">1.563rem; 42 \"hl-prop\">--font-size-body: \"hl-unit\">1.000rem; 43 \"hl-prop\">--font-size-small: \"hl-unit\">0.800rem; 44 \"hl-prop\">--font-size-caption: \"hl-unit\">0.640rem; 45 46 \"hl-comment\">/* -- Spacing (\"hl-unit\">8px base) -- */ 47 \"hl-prop\">--spacing-1: \"hl-unit\">0.5rem; 48 \"hl-prop\">--spacing-2: \"hl-unit\">1rem; 49 \"hl-prop\">--spacing-3: \"hl-unit\">1.5rem; 50 \"hl-prop\">--spacing-4: \"hl-unit\">2rem; 51 \"hl-prop\">--spacing-5: \"hl-unit\">2.5rem; 52 \"hl-prop\">--spacing-6: \"hl-unit\">3rem; 53 \"hl-prop\">--spacing-7: \"hl-unit\">3.5rem; 54 \"hl-prop\">--spacing-8: \"hl-unit\">4rem; 55}"
+            - generic [ref=e149]:
+              - button " Copy" [ref=e150]:
+                - generic [ref=e151]: 
+                - text: Copy
+              - button " Download" [ref=e152]:
+                - generic [ref=e153]: 
+                - text: Download
+              - button " Share" [ref=e154]:
+                - generic [ref=e155]: 
+                - text: Share
+      - generic [ref=e156]:
+        - generic [ref=e157]:
+          - heading "Colors" [level=2] [ref=e158]
+          - generic [ref=e159]:
+            - heading "Theme Colors (Solids)" [level=3] [ref=e160]
+            - generic [ref=e161]:
+              - generic [ref=e162]: "#26428bPrimary"
+              - generic [ref=e163]: "#3359bbSecondary"
+              - generic [ref=e164]: "#16a34aSuccess"
+              - generic [ref=e165]: "#dc2626Error"
+              - generic [ref=e166]: "#d97706Warning"
+              - generic [ref=e167]: "#2563ebInfo"
+          - generic [ref=e168]:
+            - heading "Gradients" [level=3] [ref=e169]
+            - generic [ref=e170]:
+              - generic [ref=e171]: Primary → Secondary
+              - generic [ref=e172]: Success
+              - generic [ref=e173]: Error
+              - generic [ref=e174]: Warning
+          - generic [ref=e175]:
+            - heading "Solid Shades" [level=3] [ref=e176]
+            - generic [ref=e177]:
+              - generic [ref=e178]: Primary
+              - generic [ref=e179]: Success
+              - generic [ref=e180]: Error
+              - generic [ref=e181]: Warning
+          - generic [ref=e182]:
+            - heading "Gray Colors" [level=3] [ref=e183]
+            - generic [ref=e184]:
+              - generic [ref=e185]: "50"
+              - generic [ref=e186]: "100"
+              - generic [ref=e187]: "200"
+              - generic [ref=e188]: "300"
+              - generic [ref=e189]: "400"
+              - generic [ref=e190]: "500"
+              - generic [ref=e191]: "600"
+              - generic [ref=e192]: "700"
+              - generic [ref=e193]: "800"
+              - generic [ref=e194]: "900"
+              - generic [ref=e195]: "950"
+          - generic [ref=e196]:
+            - heading "Surface Colors" [level=3] [ref=e197]
+            - generic [ref=e198]:
+              - generic [ref=e199]: Primary Surface
+              - generic [ref=e200]: Success Surface
+              - generic [ref=e201]: Light Surface
+              - generic [ref=e202]: Dark Surface
+        - generic [ref=e203]:
+          - heading "Typography" [level=2] [ref=e204]
+          - generic [ref=e205]:
+            - text: "Font used:"
+            - strong [ref=e206]: Georgia
+            - text: (display) /
+            - strong [ref=e207]: "-apple-system"
+            - text: (body)
+          - generic [ref=e208]:
+            - heading "Alphabet" [level=3] [ref=e209]
+            - generic [ref=e210]:
+              - text: Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
+              - text: Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
+          - generic [ref=e211]:
+            - heading "Display Sizes" [level=3] [ref=e212]
+            - generic [ref=e213]:
+              - generic [ref=e214]: Display 1The quick brown fox3.052rem · 48.8px
+              - generic [ref=e215]: Display 2The quick brown fox2.441rem · 39.1px
+              - generic [ref=e216]: Display 3The quick brown fox1.953rem · 31.2px
+              - generic [ref=e217]: Display 4The quick brown fox1.563rem · 25.0px
+              - generic [ref=e218]: Display 5The quick brown fox1.250rem · 20.0px
+              - generic [ref=e219]: Display 6The quick brown fox1.000rem · 16.0px
+          - generic [ref=e220]:
+            - heading "Headings" [level=3] [ref=e221]
+            - generic [ref=e222]:
+              - generic [ref=e223]: Heading 1The Quick Brown Fox Jumps
+              - generic [ref=e224]: Heading 2The Quick Brown Fox Jumps
+              - generic [ref=e225]: Heading 3The Quick Brown Fox Jumps
+              - generic [ref=e226]: Heading 4The Quick Brown Fox Jumps
+              - generic [ref=e227]: Heading 5The Quick Brown Fox Jumps
+              - generic [ref=e228]: Heading 6The Quick Brown Fox Jumps
+          - generic [ref=e229]:
+            - heading "Paragraphs and Texts" [level=3] [ref=e230]
+            - generic [ref=e231]:
+              - generic [ref=e232]: Lead:This is a lead paragraph for emphasis. Slightly larger, designed to draw the reader in.
+              - generic [ref=e233]: Body:Standard body text at base font size. The quick brown fox jumps over the lazy dog near the bank of the river. This is the primary reading size.
+              - generic [ref=e234]: Small:Small text for secondary content, captions, and supporting information. Less prominent but still readable.
+        - generic [ref=e235]:
+          - heading "Layout" [level=2] [ref=e236]
+          - generic [ref=e237]:
+            - heading "Spacing (8px base)" [level=3] [ref=e238]
+            - generic [ref=e239]:
+              - generic [ref=e240]:
+                - text: "1"
+                - text: 8px · 0.5rem
+              - generic [ref=e241]:
+                - text: "2"
+                - text: 16px · 1.0rem
+              - generic [ref=e242]:
+                - text: "3"
+                - text: 24px · 1.5rem
+              - generic [ref=e243]:
+                - text: "4"
+                - text: 32px · 2.0rem
+              - generic [ref=e244]:
+                - text: "5"
+                - text: 40px · 2.5rem
+              - generic [ref=e245]:
+                - text: "6"
+                - text: 48px · 3.0rem
+              - generic [ref=e246]:
+                - text: "7"
+                - text: 56px · 3.5rem
+              - generic [ref=e247]:
+                - text: "8"
+                - text: 64px · 4.0rem
+          - generic [ref=e248]:
+            - heading "Dashboard Grid" [level=3] [ref=e249]
+            - generic [ref=e250]:
+              - generic [ref=e251]: Sidebar
+              - generic [ref=e252]:
+                - generic [ref=e253]: Content Area
+                - generic [ref=e254]:
+                  - generic [ref=e255]: C1
+                  - generic [ref=e256]: C2
+                  - generic [ref=e257]: C3
+                  - generic [ref=e258]: C4
+                - generic [ref=e259]: Main Table
+          - heading "Application Grid" [level=3] [ref=e261]
+          - generic [ref=e262]:
+            - heading "Page Grid" [level=3] [ref=e263]
+            - generic [ref=e264]:
+              - generic [ref=e265]: 40%
+              - generic [ref=e266]: 30%
+              - generic [ref=e267]: 30%
+          - generic [ref=e268]:
+            - heading "Mobile Grid" [level=3] [ref=e269]
+            - generic [ref=e270]:
+              - generic [ref=e271]: 50%
+              - generic [ref=e272]: 50%
+          - generic [ref=e273]:
+            - heading "Shadows" [level=3] [ref=e274]
+            - generic [ref=e275]:
+              - generic [ref=e276]: SM0 1px 3px
+              - generic [ref=e277]: MD0 4px 12px
+              - generic [ref=e278]: LG0 10px 30px
+  - contentinfo [ref=e279]:
+    - paragraph [ref=e280]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+  - button "Back to top":
+    - generic: 
