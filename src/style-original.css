@@ -1767,16 +1767,16 @@ footer a:hover {
   border-top: 1px solid var(--glass-border-top);
   box-shadow: var(--dm-card-shadow);
   background-image: var(--card-glow-dark);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 :root[data-theme="dark"] .skill-category:hover {
   border-color: rgba(255, 255, 255, 0.12);
   border-top-color: rgba(255, 255, 255, 0.18);
   box-shadow: var(--dm-card-hover-shadow);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
 }
 
 :root[data-theme="dark"] .skill-list li {
@@ -1877,8 +1877,8 @@ footer a:hover {
   border-top: 1px solid var(--glass-border-top);
   box-shadow: var(--dm-card-shadow);
   background-image: var(--card-glow-dark);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 :root[data-theme="dark"] .contact-form-card:hover {

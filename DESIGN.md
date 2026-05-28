@@ -46,7 +46,7 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | `--color-text-muted`     | `#6B7280`                                                                        | Secondary text                                                 |
 | `--color-label-gray`     | `#6B7280`                                                                        | Labels                                                         |
 | `--color-card`           | `#18181A`                                                                        | Card backgrounds                                               |
-| `--color-border`         | `rgba(255, 255, 255, 0.06)`                                                      | Subtle light borders on dark                                   |
+| `--color-border`         | `rgba(255, 255, 255, 0.10)`                                                      | Subtle light borders on dark                                   |
 | `--color-red`            | `#EF4444`                                                                        | Errors                                                         |
 | `--dm-card-shadow`       | `0 4px 16px rgba(0, 0, 0, 0.7)`                                                  | Card shadow (dark)                                             |
 | `--dm-card-hover-shadow` | `0 16px 56px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06)`            | Card hover shadow (dark)                                       |
@@ -101,8 +101,8 @@ Frosted glass is applied to the following elements in dark mode only:
 | ---------------------------------------------- | --------------------------------- | ---------------------------------------- |
 | Nav (`#nav`)                                   | `blur(14px)`                      | `rgba(11, 17, 32, 0.85)`                 |
 | Footer                                         | `blur(14px)`                      | `rgba(11, 17, 32, 0.85)`                 |
-| Skill cards (`.skill-category`)                | `blur(12px)` → hover `blur(24px)` | `var(--color-card)` + `--card-glow-dark` |
-| Contact form card (`.contact-form-card`)       | `blur(14px)`                      | `var(--color-card)` + `--card-glow-dark` |
+| Skill cards (`.skill-category`)                | `blur(16px)` → hover `blur(28px)` | `var(--color-card)` + `--card-glow-dark` |
+| Contact form card (`.contact-form-card`)       | `blur(18px)`                      | `var(--color-card)` + `--card-glow-dark` |
 | Buttons (`.btn-color-1`, `.btn-color-2:hover`) | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
 | Back-to-top (`.back-to-top`)                   | `blur(10px)` → hover `blur(14px)` | `rgba(163, 177, 138, 0.85)`              |
 | Theme toggle (`.theme-toggle`)                 | `blur(8px)`                       | transparent border                       |
@@ -111,7 +111,7 @@ Frosted glass is applied to the following elements in dark mode only:
 | RAG tab active (`.tab-btn.active[data-tab="preview"]`) | `blur(8px`)              | `rgba(163, 177, 138, 0.88)`              |
 | RAG save (`.btn-code-primary`)                 | `blur(8px)`                       | `rgba(163, 177, 138, 0.88)`              |
 | Lab mini-chat send (`.mini-chat-send`)         | `blur(6px)`                       | `rgba(163, 177, 138, 0.88)`              |
-| Chat widgets (`.mini-chat`, `.preview-card`)   | `blur(14px)`                      | `rgba(20, 20, 20, 0.85)`                 |
+| Chat widgets (`.mini-chat`, `.preview-card`)   | `blur(16px)`                      | `rgba(20, 20, 20, 0.85)`                 |
 | RAG instruction card (`.instruction-card`)     | `blur(14px)`                      | `rgba(22, 22, 24, 0.85)`                 |
 | RAG tab bar (`.tab-bar`)                       | `blur(8px)`                       | `rgba(255, 255, 255, 0.06)`              |
 
@@ -297,7 +297,7 @@ Defined in `src/tokens.css` under `@theme`:
 | `--color-text-muted` | `rgb(120,120,120)` | `#6B7280` | Secondary text, dates |
 | `--color-label-gray` | `#999999` | `#6B7280` | Form labels |
 | `--color-card` | `#FFFFFF` | `#18181A` | Card backgrounds |
-| `--color-border` | `rgba(0,0,0,0.08)` | `rgba(255,255,255,0.06)` | Borders, dividers |
+| `--color-border` | `rgba(0,0,0,0.08)` | `rgba(255,255,255,0.10)` | Borders, dividers |
 | `--color-sage-hover` | `#8A9E78` | `#8A9E78` | Sage hover states |
 | `--color-blue-hover` | `#0d4f8c` | `#8A9E78` | Blue accent hover |
 | `--color-dark-text` | `#0F172A` | `#0F172A` | Dark text on glass elements |
