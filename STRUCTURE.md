@@ -8,9 +8,8 @@
 | `profile.html` | Skills, experience timeline, education |
 | `contact.html` | Contact form + info |
 | `cv.html` | Print-optimized CV page |
-| `lab.html` | Project showcase (RAG chatbot, Design System Generator) |
+| `lab.html` | Project showcase (RAG chatbot) |
 | `rag-chatbot.html` | RAG chatbot demo with multi-source retrieval |
-| `design-system.html` | Design system generator — color palette, typography, effects, live preview |
 
 ## APIs
 
