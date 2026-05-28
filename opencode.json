@@ -10,7 +10,7 @@
   "agent": {
     "plan": {
       "description": "Research, spec, implementation plan — read-only",
-      "model": "opencode/deepseek-v4-flash-free",
+      "model": "opencode-go/deepseek-v4-pro",
       "prompt": "{file:.opencode/prompts/plan.txt}",
       "permission": {
         "edit": "deny",
@@ -32,7 +32,7 @@
     "coder": {
       "description": "Implementation per plan + UI spec",
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash-free",
+      "model": "opencode-go/deepseek-v4-flash",
       "prompt": "{file:.opencode/prompts/coder.txt}",
       "permission": {
         "edit": "allow",
@@ -52,7 +52,7 @@
     "guardrail": {
       "description": "Lint, build, security, quality, session log",
       "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free",
+      "model": "opencode-go/minimax-m2.5",
       "prompt": "{file:.opencode/prompts/guardrail.txt}",
       "permission": {
         "edit": "allow",

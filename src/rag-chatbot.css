@@ -783,7 +783,8 @@ body {
 .message-bubble {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-card);
-  font-size: var(--text-body);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-xs);
   line-height: 1.6;
 }
 
