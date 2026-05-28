@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - text: 
+    - navigation [ref=e3]:
+      - link "ALIYA KOY" [ref=e5] [cursor=pointer]:
+        - /url: ./index.html
+        - heading "ALIYA KOY" [level=2] [ref=e6]
+      - generic [ref=e7]:
+        - button "Toggle theme" [ref=e13] [cursor=pointer]:
+          - generic [ref=e14]: 
+        - generic [ref=e15]:
+          - listitem [ref=e16]:
+            - link "Home" [ref=e17] [cursor=pointer]:
+              - /url: ./index.html
+          - listitem [ref=e18]:
+            - link "Profile" [ref=e19] [cursor=pointer]:
+              - /url: ./profile.html
+          - listitem [ref=e20]:
+            - link "Lab" [ref=e21] [cursor=pointer]:
+              - /url: ./lab.html
+          - listitem [ref=e22]:
+            - link "Contact" [ref=e23] [cursor=pointer]:
+              - /url: ./contact.html
+  - main [ref=e24]:
+    - generic [ref=e26]:
+      - paragraph [ref=e27]: HELLO, I'M
+      - heading "A l i y a K o y" [level=1] [ref=e28]:
+        - generic [ref=e29]: A
+        - generic [ref=e30]: l
+        - generic [ref=e31]: i
+        - generic [ref=e32]: "y"
+        - generic [ref=e33]: a
+        - generic [ref=e35]: K
+        - generic [ref=e36]: o
+        - generic [ref=e37]: "y"
+      - paragraph [ref=e38]: A small lab for things I want to build.
+      - generic [ref=e39]:
+        - button "View Profile →" [ref=e40]
+        - button "Get in Touch" [ref=e41]
+  - contentinfo [ref=e42]:
+    - paragraph [ref=e43]: Copyright © 2026 Aliya Koy. All Rights Reserved.
+  - button "Back to top":
+    - img
+    - generic: 

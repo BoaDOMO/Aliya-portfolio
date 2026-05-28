@@ -22,7 +22,7 @@
   --radius-lg: 1rem;        /* 16px */
 
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --font-display: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* ── Linen Reference Type Scale ── */

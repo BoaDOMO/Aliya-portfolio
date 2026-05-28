@@ -648,8 +648,11 @@ footer p {
 }
 
 .hero-name {
-  @apply font-display text-blue leading-tight font-bold italic;
-  font-size: var(--text-headline-lg);
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--color-blue);
+  font-size: var(--text-display);
 }
 
 .page-hero-sm .hero-name {
