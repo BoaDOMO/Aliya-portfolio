@@ -34,7 +34,13 @@ All light-mode tokens are overridden inside `:root[data-theme="dark"]`:
 | `--color-beige`          | `#161618`                                                                        | Alternate section background                                   |
 | `--color-green`          | `#0D0D0D`                                                                        | (Reserved, nav/footer use `rgba(11, 17, 32, 0.85)` with glass) |
 | `--color-blue`           | `#A3B18A`                                                                        | Electric Sage — primary accent replaces blue                   |
-| `--color-dark-blue`      | `#A3B18A`                                                                        | Same as sage — everything blue in light → sage in dark         |
+| `--color-dark-blue`      | `#8CA07A`                                                                        | Distinct muted sage — secondary accent (nav/photo/timeline)    |
+| `--color-sage-hover`     | `#8A9E78`                                                                        | Hover state for sage elements                                  |
+| `--color-blue-hover`     | `#8A9E78`                                                                        | Hover state for blue/sage accent elements                      |
+| `--color-dark-text`      | `#0F172A`                                                                        | Dark text on glass elements (sage buttons in dark mode)        |
+| `--color-success`        | `#34D399`                                                                        | Success states (RAG chatbot badges)                            |
+| `--color-warning`        | `#f59e0b`                                                                        | Warning states                                                 |
+| `--color-info`           | `#60A5FA`                                                                        | Info states                                                    |
 | `--color-near-black`     | `#F3F4F6`                                                                        | Near-white text                                                |
 | `--color-text-gray`      | `#9CA3AF`                                                                        | Body text                                                      |
 | `--color-text-muted`     | `#6B7280`                                                                        | Secondary text                                                 |
@@ -188,49 +194,24 @@ All font stacks are defined as CSS custom properties in `src/tokens.css` — nev
 | `--font-body`    | `"Inter", system-ui, -apple-system, sans-serif`                  | Body, nav, buttons, headings (h2-h6), UI text |
 | `--font-mono`    | `"JetBrains Mono", ui-monospace, monospace`                      | Labels, code, dates, body text (p, li), chat  |
 
-### Type Scale (Linen)
+### Type Scale
 
-Tokens defined in `src/tokens.css` under the `@theme` block. The scale follows the [plan/linen-system.css](plan/linen-system.css) reference with extra extended tokens.
+All tokens defined in `src/tokens.css` under the `@theme` block. Values in `rem` on a **4px sub-grid for type**, 8px grid for everything else. Scale follows the [plan/linen-system.css](plan/linen-system.css) reference.
 
-**Reference tokens (px-based):**
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--text-display-xl` | 120px | Hero display — largest heading |
-| `--text-display-lg` | 88px | Large display heading |
-| `--text-headline-lg` | 56px | Section headline |
-| `--text-headline-md` | 28px | Card titles, section subheadings |
-| `--text-headline-sm` | 18px | Emphasis text, skill category titles |
-| `--text-body-md` | 16px | Taglines, form inputs, body copy |
-| `--text-body-sm` | 14px | Nav links, buttons, footer |
-| `--text-label-sm` | 11px | Breadcrumbs, pills, tags, uppercase labels |
-| `--text-mono-sm` | 11px | Meta data, pill tags, figure captions |
-
-**Extended tokens (beyond Linen reference, rem-based):**
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--text-caption` | 0.625rem (10px) | Dashboard labels, pipeline, status badges |
-| `--text-label-lg` | 0.75rem (12px) | Project labels, tab buttons, CV text |
-| `--text-body-xs` | 0.82rem (13px) | Chat bubbles, compact input |
-| `--text-heading-sm` | 1.25rem (20px) | Nav logo, small section headings |
-| `--text-heading` | 1.5rem (24px) | Project titles mobile, preview headings |
-| `--text-heading-lg` | 2rem (32px) | Project titles, page-hero-sm |
-| `--text-headline` | 2.5rem (40px) | Hero mobile, profile hero |
-| `--text-display` | 4rem (64px) | Hero name desktop |
-
-**Google Fonts:** Archivo Narrow (400–700), Inter (400–600), JetBrains Mono (400–500). Loaded via `@import` in `src/tailwind.css`.
-
-### Leading Tokens
-
-Defined in `:root` in `src/tokens.css`:
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--leading-tight` | 0.92 | Display heading line-height |
-| `--leading-snug` | 1.0 | Large headline line-height |
-| `--leading-normal` | 1.3 | Small headline line-height |
-| `--leading-relaxed` | 1.55 | Body text line-height |
+| Token | rem | px | Usage |
+|-------|-----|----|-------|
+| `--text-display-xl` | 7.5rem | 120px | Hero display — largest heading |
+| `--text-display-lg` | 5.5rem | 88px | Large display heading |
+| `--text-headline-lg` | 3.5rem | 56px | Section headline, hero name desktop |
+| `--text-headline` | 2.5rem | 40px | Hero mobile, profile hero |
+| `--text-heading-lg` | 2rem | 32px | Project titles, page-hero-sm |
+| `--text-headline-sm` | 1.75rem | 28px | Card titles, section subheadings |
+| `--text-heading` | 1.5rem | 24px | Project titles mobile, preview headings |
+| `--text-heading-sm` | 1.25rem | 20px | Nav logo, small section headings |
+| `--text-body` | 1rem | 16px | Taglines, nav, buttons, footer, body copy |
+| `--text-label` | 0.75rem | 12px | Project labels, tab buttons, uppercase labels |
+| `--text-mono` | 0.75rem | 12px | Meta data, pill tags, figure captions |
+| `--text-caption` | 0.5rem | 8px | Pipeline badges, status dots, dash labels |
 
 ### Typography Utility Classes
 
@@ -238,15 +219,15 @@ Defined in `src/typography.css`. Framework-agnostic CSS classes consuming the to
 
 | Class | Font | Size | line-height | tracking |
 |-------|------|------|-------------|----------|
-| `.t-display-xl` | Archivo Narrow 700 | `clamp(72px, 11vw, 120px)` | `--leading-tight` | `--track-display` |
-| `.t-display-lg` | Archivo Narrow 700 | `clamp(56px, 8vw, 88px)` | `--leading-snug` | `--track-display` |
-| `.t-headline-lg` | Archivo Narrow 700 | 56px | `--leading-snug` | `--track-display` |
-| `.t-headline-md` | Archivo Narrow 600 | 28px | 1.1 | — |
-| `.t-headline-sm` | Inter 500 | 18px | `--leading-normal` | — |
-| `.t-body` | Inter 400 | 16px | `--leading-relaxed` | — |
-| `.t-body-sm` | Inter 400 | 14px | `--leading-relaxed` | — |
-| `.t-label` | Inter 500 | 11px | — | `--track-label` + uppercase |
-| `.t-mono` | JetBrains Mono 400 | 11px | — | `--track-mono` |
+| `.t-display-xl` | Archivo Narrow 700 | `clamp(72px, 11vw, var(--text-display-xl))` | `--leading-tight` | `--track-display` |
+| `.t-display-lg` | Archivo Narrow 700 | `clamp(56px, 8vw, var(--text-display-lg))` | `--leading-snug` | `--track-display` |
+| `.t-headline-lg` | Archivo Narrow 700 | `var(--text-headline-lg)` (56px) | `--leading-snug` | `--track-display` |
+| `.t-headline-md` | Archivo Narrow 600 | `var(--text-heading-sm)` (20px) | 1.1 | — |
+| `.t-headline-sm` | Inter 500 | `var(--text-heading-sm)` (20px) | `--leading-normal` | — |
+| `.t-body` | Inter 400 | `var(--text-body)` (16px) | `--leading-relaxed` | — |
+| `.t-body-sm` | Inter 400 | `var(--text-body)` (16px) | `--leading-relaxed` | — |
+| `.t-label` | Inter 500 | `var(--text-label)` (12px) | — | `--track-label` + uppercase |
+| `.t-mono` | JetBrains Mono 400 | `var(--text-mono)` (12px) | — | `--track-mono` |
 
 ### Base Styles
 
@@ -305,41 +286,86 @@ Defined in `src/tokens.css` under `@theme`:
 | `--color-label-gray` | `#999999` | `#6B7280` | Form labels |
 | `--color-card` | `#FFFFFF` | `#18181A` | Card backgrounds |
 | `--color-border` | `rgba(0,0,0,0.08)` | `rgba(255,255,255,0.06)` | Borders, dividers |
+| `--color-sage-hover` | `#8A9E78` | `#8A9E78` | Sage hover states |
+| `--color-blue-hover` | `#0d4f8c` | `#8A9E78` | Blue accent hover |
+| `--color-dark-text` | `#0F172A` | `#0F172A` | Dark text on glass elements |
+| `--color-success` | `#16a34a` | `#34D399` | Success states |
+| `--color-warning` | `#d97706` | `#f59e0b` | Warning states |
+| `--color-info` | `#2563eb` | `#60A5FA` | Info states |
 | `--color-red` | `#d32f2f` | `#EF4444` | Error states |
 
 ### Size Tokens
 
 Defined in `:root` in `src/tokens.css`. Context-specific component dimensions:
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--size-dot` | 8px | Timeline dots, status indicators |
-| `--size-icon` | 16px | Inline icons |
-| `--size-icon-md` | 30px | Medium icons |
-| `--size-icon-lg` | 32px | Large icons |
-| `--size-btn-icon` | 38px | Icon buttons |
-| `--size-backtotop` | 44px | Back-to-top button |
-| `--size-photo-sm` | 140px | Small profile photo |
-| `--size-photo-md` | 200px | Medium profile photo |
-| `--size-photo` | 240px | Hero profile photo |
-| `--width-tagline` | 480px | Hero tagline max-width |
-| `--width-hero-box` | 800px | Lab hero content box |
-| `--width-form-sm` | 420px | Compact form width |
-| `--width-form` | 480px | Contact form width |
-| `--width-page` | 1280px | Page container max-width |
-| `--height-chat` | 380px | Chat widget height |
-| `--height-textarea` | 160px | Textarea height |
-| `--height-nav` | 70px | Nav bar height |
+| Token | rem | px | Usage |
+|-------|-----|----|-------|
+| `--size-dot` | 0.5rem | 8px | Timeline dots, status indicators |
+| `--size-icon` | 1rem | 16px | Inline icons |
+| `--size-icon-md` | 2rem | 32px | Medium icons |
+| `--size-icon-lg` | 2rem | 32px | Large icons |
+| `--size-btn-icon` | 2.5rem | 40px | Icon buttons |
+| `--size-backtotop` | 3rem | 48px | Back-to-top button |
+| `--size-photo-sm` | 9rem | 144px | Small profile photo |
+| `--size-photo-md` | 12.5rem | 200px | Medium profile photo |
+| `--size-photo` | 15rem | 240px | Hero profile photo |
+| `--width-tagline` | 30rem | 480px | Hero tagline max-width |
+| `--width-hero-box` | 50rem | 800px | Lab hero content box |
+| `--width-form-sm` | 26rem | 416px | Compact form width |
+| `--width-form` | 30rem | 480px | Contact form width |
+| `--width-page` | 80rem | 1280px | Page container max-width |
+| `--height-chat` | 24rem | 384px | Chat widget height |
+| `--height-textarea` | 10rem | 160px | Textarea height |
+| `--height-nav` | 4.5rem | 72px | Nav bar height |
 
 ### Radius Tokens
 
+| Token | rem | px | Usage |
+|-------|-----|----|-------|
+| `--radius-sm` | 0.5rem | 8px | Small radii, inputs |
+| `--radius-lg` | 1rem | 16px | Large card radius |
+| `--radius-pill` | 2rem | 32px | Pill badges, tags |
+| `--radius-card` | 1rem | 16px | Cards, inputs |
+| `--radius-form` | 1.5rem | 24px | Contact form card |
+| `--radius-input` | 0.5rem | 8px | Form inputs |
+| `--radius-circle` | 50% | — | Circular elements |
+
+### Shadow Tokens
+
+Defined in `:root` in `src/tokens.css`:
+
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--radius-pill` | 2rem | Pill badges, tags |
-| `--radius-card` | 12px | Cards, inputs |
-| `--radius-form` | 20px | Contact form card |
-| `--radius-input` | 12px | Form inputs |
-| `--radius-circle` | 50% | Circular elements |
+| `--shadow-card` | `0 0 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.04), 0 16px 32px rgba(0,0,0,0.03)` | Card shadow (light) / `--dm-card-shadow` (dark) |
+| `--shadow-card-hover` | `0 0 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.05)` | Card hover shadow (light) / `--dm-card-hover-shadow` (dark) |
+| `--shadow-focus-blue` | `0 0 0 4px rgba(24, 95, 165, 0.1)` | Blue focus ring |
+| `--shadow-focus-sage` | `0 0 0 4px rgba(163, 177, 138, 0.15)` | Sage focus ring |
+| `--shadow-focus-red` | `0 0 0 4px rgba(211, 47, 47, 0.08)` | Red error focus ring (light) |
+| `--shadow-focus-red-dark` | `0 0 0 4px rgba(239, 68, 68, 0.15)` | Red error focus ring (dark) |
+| `--shadow-btt` | `0 4px 16px rgba(38, 66, 139, 0.3)` | Back-to-top button |
+| `--shadow-hero-card` | `0 8px 32px rgba(0, 0, 0, 0.15)` | Lab hero content box |
+| `--shadow-photo` | `0 8px 32px rgba(0, 0, 0, 0.1)` | Profile photo |
+| `--shadow-photo-hover` | `0 16px 40px rgba(0, 0, 0, 0.15)` | Profile photo hover |
+| `--shadow-btn-hover` | `0 8px 24px rgba(0, 0, 0, 0.15)` | Button hover state |
+| `--shadow-btn-active` | `0 0 8px rgba(0, 0, 0, 0.1)` | Button active/press state |
+
+### Glass Tokens
+
+Defined in `:root` for dark-mode glass morphism:
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--glass-border-top` | `rgba(255, 255, 255, 0.12)` | White top highlight on glass elements |
+| `--color-sage-glass` | `rgba(163, 177, 138, 0.88)` | Frosted sage button backgrounds |
+| `--color-nav-bg` | `rgba(11, 17, 32, 0.85)` | Frosted navy nav/footer background |
+
+### Border-Width Tokens
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--border-width-input` | 2px | Form input borders |
+| `--border-width-active` | 4px | Active/focus indicator borders |
+| `--border-width-timeline` | 2px | Timeline vertical line |
 
 ### Tracking Tokens
 
@@ -607,7 +633,7 @@ After extraction, inline code on main pages is limited to:
 |---------|--------|--------|
 | Theme detection IIFE (`<head>`) | **Kept inline** | Must run before first paint to prevent FOUC |
 | `onclick` handlers on interactive elements | **Eliminated** | Replaced with `addEventListener` in external JS files |
-| `style=""` attributes on demo widgets | **Eliminated** (lab) / **kept** (design-system) | Lab color scale → CSS classes; design-system is WIP |
+| `style=""` attributes on demo widgets | **Eliminated** | Lab color scale → CSS classes |
 | `#bgCanvas` `<style>` block | **Eliminated** | Moved to `src/style-original.css` |
 | Canvas init `<script>` | **Eliminated** | Auto-init added to `src/canvas-bg.js` |
 | Experience toggle CSS + JS | **Eliminated** | Moved to `src/style-original.css` + `script.js` |
