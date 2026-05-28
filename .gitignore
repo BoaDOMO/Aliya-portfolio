@@ -1,18 +1,8 @@
 node_modules/
+.codesearch.db/
+audit-screenshots/
+index.png
+lab-dark.png
+lab-snapshot.md
 .DS_Store
-.env.playwright-mcp
-rag*-chat*.png
-index-1680.png
-.playwright-mcp/
-
-.opencode/
-
-# Test artifacts
-canvas-test*
-moirai-logo-preview.png
-*.snapshot.yml
-
-# Design system test screenshots
-ds-*.png
-01-full-page.png
-preview-sample.png
+*.log
