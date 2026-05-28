@@ -56,14 +56,20 @@
     --text-display-xl: 7.5rem;
     --text-display-lg: 5.5rem;
     --text-headline-lg: 3.5rem;
-    --text-headline-sm: 1.75rem;
+    --text-headline-md: 1.75rem;
+    --text-headline-sm: 1.25rem;
+    --text-body-md: 1rem;
+    --text-body-sm: 1rem;
+    --text-label-sm: 0.75rem;
+    --text-mono-sm: 0.75rem;
+    --text-caption: 0.5rem;
+    --text-label-lg: 0.75rem;
+    --text-body-xs: 0.75rem;
+    --text-heading-sm: 1.25rem;
+    --text-heading: 1.5rem;
     --text-heading-lg: 2rem;
     --text-headline: 2.5rem;
-    --text-heading: 1.5rem;
-    --text-heading-sm: 1.25rem;
-    --text-body: 1rem;
-    --text-label: 0.75rem;
-    --text-mono: 0.75rem;
+    --text-display: 4rem;
     --radius-pill: 2rem;
     --radius-card: 1rem;
     --radius-form: 1.5rem;
@@ -766,7 +772,7 @@ hr {
 }
 html {
   scroll-behavior: smooth;
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
 }
 .main-wrapper {
   margin-inline: auto;
@@ -831,7 +837,7 @@ main {
 }
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: var(--text-label);
+  font-size: var(--text-caption);
   font-weight: 500;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
@@ -951,7 +957,7 @@ h6:hover {
   margin-block: var(--spacing-2);
   list-style-type: none;
   font-family: var(--font-mono);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   padding-left: var(--space-xl);
 }
 .description li {
@@ -964,7 +970,7 @@ h6:hover {
   color: var(--color-dark-blue);
   position: absolute;
   left: -0.75rem;
-  font-size: var(--text-heading-sm);
+  font-size: var(--text-headline-sm);
   line-height: inherit;
 }
 #nav {
@@ -1020,7 +1026,7 @@ nav h2 {
   display: flex;
   list-style-type: none;
   gap: var(--spacing-8);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
 }
 a {
   color: var(--color-near-black);
@@ -1083,7 +1089,7 @@ a,
   font-family: var(--font-body);
   color: var(--color-near-black);
   text-decoration-line: none;
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   padding: var(--space-md) var(--space-xl);
   border-bottom: 1px solid var(--color-border);
 }
@@ -1151,7 +1157,7 @@ section + section {
   transition: all 300ms ease;
   padding: var(--spacing-2);
   width: 8rem;
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
 }
 .btn-color-1,
 .btn-color-2 {
@@ -1222,7 +1228,7 @@ section + section {
   letter-spacing: var(--tracking-widest);
   color: var(--color-dark-blue);
   text-transform: uppercase;
-  font-size: var(--text-heading-sm);
+  font-size: var(--text-headline-sm);
   transition: all 0.4s ease;
 }
 .skill-category:hover .skill-category-title {
@@ -1249,7 +1255,7 @@ section + section {
   gap: var(--spacing-2);
   font-family: var(--font-mono);
   color: var(--color-text-gray);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   padding: var(--spacing-1) 0;
   border-bottom: 1px solid var(--color-border);
 }
@@ -1300,7 +1306,7 @@ footer p {
   --tw-font-weight: var(--font-weight-medium);
   font-weight: var(--font-weight-medium);
   color: var(--color-near-black);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
 }
 .back-to-top {
   position: fixed;
@@ -1317,7 +1323,7 @@ footer p {
   width: 44px;
   height: 44px;
   border: none;
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   box-shadow: var(--shadow-btt);
   opacity: 0;
   transform: translateY(8px);
@@ -1423,7 +1429,7 @@ footer p {
 .hero-tagline {
   font-family: var(--font-mono);
   color: var(--color-text-muted);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   max-width: var(--width-tagline);
   line-height: 1.65;
 }
@@ -1491,7 +1497,7 @@ footer p {
   gap: var(--spacing-4);
   font-family: var(--font-body);
   color: var(--color-near-black);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   transition: transform 0.25s ease;
 }
 .contact-info-item:hover {
@@ -1507,7 +1513,7 @@ footer p {
   width: 40px;
   height: 40px;
   background: rgba(24, 95, 165, 0.08);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   transition: background 0.25s ease, transform 0.25s ease;
 }
 .contact-info-item:hover .contact-info-icon {
@@ -1525,11 +1531,11 @@ footer p {
   letter-spacing: 0.12em;
   color: var(--color-label-gray);
   text-transform: uppercase;
-  font-size: var(--text-label);
+  font-size: var(--text-caption);
 }
 .contact-info-item a {
   color: var(--color-near-black);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   transition: color 0.2s ease;
 }
 .contact-info-item a:hover {
@@ -1606,7 +1612,7 @@ footer p {
   left: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   letter-spacing: 0;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
@@ -1622,7 +1628,7 @@ footer p {
   text-transform: uppercase;
   top: 0;
   transform: translateY(-50%);
-  font-size: var(--text-label);
+  font-size: var(--text-label-sm);
   letter-spacing: 0.08em;
   padding: 0 var(--space-xs);
 }
@@ -1635,7 +1641,7 @@ footer p {
   color: var(--color-near-black);
   border: var(--border-width-input) solid var(--color-border);
   padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.2s ease;
 }
 .form-input::placeholder,
@@ -1678,7 +1684,7 @@ footer p {
   border: none;
   border-radius: var(--radius-pill);
   padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   gap: var(--space-sm);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   margin-top: var(--space-sm);
@@ -2122,7 +2128,7 @@ footer a:hover {
   }
   .title {
     padding-bottom: 0.3rem !important;
-    font-size: var(--text-heading-sm) !important;
+    font-size: var(--text-headline-sm) !important;
   }
   #skills {
     background: white !important;
@@ -2142,11 +2148,11 @@ footer a:hover {
     margin-bottom: 0.25rem !important;
   }
   .skill-category-title {
-    font-size: var(--text-body) !important;
+    font-size: var(--text-label-lg) !important;
     margin-bottom: 0.5rem !important;
   }
   .skill-list li {
-    font-size: var(--text-body) !important;
+    font-size: var(--text-label-lg) !important;
     padding: 0.2rem 0 !important;
   }
   .experience-timeline {
@@ -2163,10 +2169,10 @@ footer a:hover {
     background: white !important;
   }
   .description li {
-    font-size: var(--text-body) !important;
+    font-size: var(--text-body-xs) !important;
   }
   .name3 {
-    font-size: var(--text-body) !important;
+    font-size: var(--text-label-lg) !important;
   }
 }
 @media (max-width: 768px) {
@@ -2211,7 +2217,7 @@ footer a:hover {
 }
 @media screen and (max-width: 639px) {
   html {
-    font-size: var(--text-body);
+    font-size: var(--text-body-sm);
   }
   section {
     padding: var(--spacing-8) 5%;
@@ -2283,7 +2289,7 @@ footer a:hover {
   .contact-info-icon {
     width: 34px;
     height: 34px;
-    font-size: var(--text-body);
+    font-size: var(--text-label-lg);
     border-radius: 10px;
   }
   .contact-hero-left {
@@ -2315,7 +2321,7 @@ footer a:hover {
 }
 @media screen and (min-width: 1920px) {
   html {
-    font-size: var(--text-heading-sm);
+    font-size: var(--text-headline-sm);
   }
 }
 .theme-toggle {
@@ -2325,7 +2331,7 @@ footer a:hover {
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   color: var(--color-near-black);
   transition: background 0.2s ease, border-color 0.2s ease;
   display: inline-flex;
@@ -2616,13 +2622,13 @@ footer a:hover {
   line-height: var(--leading-snug);
 }
 .t-headline-md {
-  font-size: var(--text-headline-sm);
+  font-size: var(--text-headline-md);
   line-height: 1.1;
   font-weight: 600;
 }
 .t-headline-sm {
   font-family: var(--font-body);
-  font-size: var(--text-heading-sm);
+  font-size: var(--text-headline-sm);
   line-height: var(--leading-normal);
   font-weight: 500;
   color: var(--color-near-black);
@@ -2630,21 +2636,21 @@ footer a:hover {
 }
 .t-body {
   font-family: var(--font-body);
-  font-size: var(--text-body);
+  font-size: var(--text-body-md);
   line-height: var(--leading-relaxed);
   color: var(--color-text-gray);
   margin: 0;
 }
 .t-body-sm {
   font-family: var(--font-body);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   line-height: var(--leading-relaxed);
   color: var(--color-text-gray);
   margin: 0;
 }
 .t-label {
   font-family: var(--font-body);
-  font-size: var(--text-label);
+  font-size: var(--text-label-sm);
   font-weight: 500;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
@@ -2653,7 +2659,7 @@ footer a:hover {
 }
 .t-mono {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);
+  font-size: var(--text-mono-sm);
   letter-spacing: var(--track-mono);
   color: var(--color-text-muted);
   margin: 0;

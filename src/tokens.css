@@ -29,14 +29,22 @@
   --text-display-xl: 7.5rem;   /* 120px */
   --text-display-lg: 5.5rem;   /* 88px */
   --text-headline-lg: 3.5rem;  /* 56px */
-  --text-headline-sm: 1.75rem; /* 28px */
-  --text-heading-lg: 2rem;     /* 32px */
-  --text-headline: 2.5rem;     /* 40px */
-  --text-heading: 1.5rem;      /* 24px */
-  --text-heading-sm: 1.25rem;  /* 20px */
-  --text-body: 1rem;           /* 16px */
-  --text-label: 0.75rem;       /* 12px */
-  --text-mono: 0.75rem;        /* 12px */
+  --text-headline-md: 1.75rem; /* 28px */
+  --text-headline-sm: 1.25rem; /* 20px */
+  --text-body-md: 1rem;        /* 16px */
+  --text-body-sm: 1rem;        /* 16px */
+  --text-label-sm: 0.75rem;    /* 12px */
+  --text-mono-sm: 0.75rem;     /* 12px */
+
+  /* ── Extended tokens (beyond Linen reference) ── */
+  --text-caption: 0.5rem;      /* 8px — pipeline, badges, dash labels */
+  --text-label-lg: 0.75rem;    /* 12px — project labels, tabs, CV */
+  --text-body-xs: 0.75rem;     /* 12px — chat bubbles, compact input */
+  --text-heading-sm: 1.25rem;  /* 20px — nav logo, section headings */
+  --text-heading: 1.5rem;      /* 24px — project title mobile */
+  --text-heading-lg: 2rem;     /* 32px — project titles, hero-sm */
+  --text-headline: 2.5rem;     /* 40px — hero mobile, profile hero */
+  --text-display: 4rem;        /* 64px — hero name desktop */
 
   --radius-pill: 2rem;       /* 32px */
   --radius-card: 1rem;        /* 16px */
