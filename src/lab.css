@@ -389,8 +389,8 @@
 
       :root[data-theme="dark"] .mini-chat {
         background: rgba(20, 20, 20, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         box-shadow: var(--dm-card-shadow);
       }
 

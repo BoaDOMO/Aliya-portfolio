@@ -1,0 +1,260 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ../index.html
+      - generic [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ../lab.html
+        - generic [ref=e7]: /
+        - generic [ref=e8]: VIBE UI
+    - generic [ref=e9]:
+      - generic [ref=e10]: LIVE DEMO
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 
+  - main [ref=e13]:
+    - complementary [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: Aesthetic Preset
+        - generic [ref=e17]:
+          - combobox [ref=e18] [cursor=pointer]:
+            - option "Warm Brutalist" [selected]
+            - option "Soft Minimal"
+            - option "Neo-Brutal"
+            - option "Glassmorphic"
+            - option "Retro Terminal"
+            - option "Swiss Clean"
+          - text: 
+        - button " Randomize All" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+          - text: Randomize All
+      - generic [ref=e21]:
+        - generic [ref=e22]: Dimension Locks
+        - generic [ref=e23]:
+          - generic [ref=e24]:
+            - generic [ref=e25]: 
+            - generic [ref=e26]: Colors
+          - button "Randomize colors" [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: 
+            - generic [ref=e32]: Fonts
+          - button "Randomize fonts" [ref=e33] [cursor=pointer]:
+            - generic [ref=e34]: 
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: 
+            - generic [ref=e38]: Spacing
+          - button "Randomize spacing" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]: 
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - generic [ref=e43]: 
+            - generic [ref=e44]: Radius
+          - button "Randomize radius" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: 
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - generic [ref=e49]: 
+            - generic [ref=e50]: Shadows
+          - button "Randomize shadows" [ref=e51] [cursor=pointer]:
+            - generic [ref=e52]: 
+      - generic [ref=e53]:
+        - generic [ref=e54]: Fine-Tune
+        - generic [ref=e55]:
+          - generic [ref=e56]: Font Family
+          - combobox [ref=e57] [cursor=pointer]:
+            - option "Inter" [selected]
+            - option "Geist"
+            - option "IBM Plex Sans"
+            - option "DM Sans"
+        - generic [ref=e58]:
+          - generic [ref=e59]: Font Pairing
+          - combobox [ref=e60] [cursor=pointer]:
+            - option "Inter + Archivo Narrow" [selected]
+            - option "Geist + Geist Mono"
+            - option "IBM Plex Sans + IBM Plex Mono"
+        - generic [ref=e61]:
+          - generic [ref=e62]: Radius
+          - slider [ref=e63] [cursor=pointer]: "40"
+        - generic [ref=e64]:
+          - generic [ref=e65]: Spacing
+          - slider [ref=e66] [cursor=pointer]: "40"
+        - generic [ref=e67]:
+          - generic [ref=e68]: Shadows
+          - slider [ref=e69] [cursor=pointer]: "60"
+        - generic [ref=e70]:
+          - generic [ref=e71]: Energy
+          - slider [ref=e72] [cursor=pointer]: "15"
+        - generic [ref=e73]:
+          - generic [ref=e74]: Contrast
+          - slider [ref=e75] [cursor=pointer]: "45"
+      - generic [ref=e76]:
+        - generic [ref=e77]: Export
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e81]: 
+              - text: DESIGN.md
+            - generic [ref=e82]:
+              - button "Copy DESIGN.md" [ref=e83] [cursor=pointer]:
+                - generic [ref=e84]: 
+              - button "Download DESIGN.md" [ref=e85] [cursor=pointer]:
+                - generic [ref=e86]: 
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - generic [ref=e89]: 
+              - text: CSS Vars
+            - generic [ref=e90]:
+              - button "Copy CSS" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]: 
+              - button "Download CSS" [ref=e93] [cursor=pointer]:
+                - generic [ref=e94]: 
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]: 
+              - text: shadcn/ui
+            - generic [ref=e98]:
+              - button "Copy shadcn" [ref=e99] [cursor=pointer]:
+                - generic [ref=e100]: 
+              - button "Download shadcn" [ref=e101] [cursor=pointer]:
+                - generic [ref=e102]: 
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - generic [ref=e105]: 
+              - text: Tailwind
+            - generic [ref=e106]:
+              - button "Copy Tailwind" [ref=e107] [cursor=pointer]:
+                - generic [ref=e108]: 
+              - button "Download Tailwind" [ref=e109] [cursor=pointer]:
+                - generic [ref=e110]: 
+          - generic [ref=e111]:
+            - generic [ref=e112]:
+              - generic [ref=e113]: 
+              - text: daisyUI
+            - generic [ref=e114]:
+              - button "Copy daisyUI" [ref=e115] [cursor=pointer]:
+                - generic [ref=e116]: 
+              - button "Download daisyUI" [ref=e117] [cursor=pointer]:
+                - generic [ref=e118]: 
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e121]: 
+              - text: JSON
+            - generic [ref=e122]:
+              - button "Copy JSON" [ref=e123] [cursor=pointer]:
+                - generic [ref=e124]: 
+              - button "Download JSON" [ref=e125] [cursor=pointer]:
+                - generic [ref=e126]: 
+          - generic [ref=e127]:
+            - generic [ref=e128]:
+              - generic [ref=e129]: 
+              - text: AI Prompt
+            - generic [ref=e130]:
+              - button "Copy prompt" [ref=e131] [cursor=pointer]:
+                - generic [ref=e132]: 
+              - button "Download prompt" [ref=e133] [cursor=pointer]:
+                - generic [ref=e134]: 
+      - generic [ref=e137]: "\"Warm Brutalist\""
+    - generic [ref=e139]:
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - button " Light" [ref=e142] [cursor=pointer]:
+            - generic [ref=e143]: 
+            - text: Light
+          - button " Dark" [ref=e144] [cursor=pointer]:
+            - generic [ref=e145]: 
+            - text: Dark
+        - generic [ref=e146]:
+          - generic [ref=e147]: 
+          - text: PREVIEW
+      - generic [ref=e149]:
+        - generic [ref=e150]:
+          - heading "Buttons" [level=3] [ref=e151]
+          - generic [ref=e152]:
+            - button "Primary" [ref=e153] [cursor=pointer]
+            - button "Secondary" [ref=e154] [cursor=pointer]
+            - button "Ghost" [ref=e155] [cursor=pointer]
+            - button "Disabled" [disabled] [ref=e156]
+        - generic [ref=e157]:
+          - heading "Cards" [level=3] [ref=e158]
+          - generic [ref=e159]:
+            - heading "Card Title" [level=4] [ref=e160]
+            - paragraph [ref=e161]: Card description text goes here with a brief explanation of the component.
+            - button "Action" [ref=e162] [cursor=pointer]
+        - generic [ref=e163]:
+          - heading "Forms" [level=3] [ref=e164]
+          - textbox "Text input" [ref=e166]
+          - combobox [ref=e168] [cursor=pointer]:
+            - option "Select option" [selected]
+            - option "Option A"
+            - option "Option B"
+          - generic [ref=e169]:
+            - generic [ref=e170] [cursor=pointer]:
+              - checkbox "Checkbox" [checked] [ref=e171]
+              - text: Checkbox
+            - generic [ref=e172] [cursor=pointer]:
+              - radio "Radio 1" [checked] [ref=e173]
+              - text: Radio 1
+            - generic [ref=e174] [cursor=pointer]:
+              - radio "Radio 2" [ref=e175]
+              - text: Radio 2
+        - generic [ref=e176]:
+          - heading "Typography" [level=3] [ref=e177]
+          - heading "H1 Heading" [level=1] [ref=e178]
+          - heading "H2 Heading" [level=2] [ref=e179]
+          - heading "H3 Heading" [level=3] [ref=e180]
+          - paragraph [ref=e181]: Body text paragraph content. This is how regular text looks in the generated design system with proper line height and spacing.
+          - generic [ref=e182]:
+            - generic [ref=e183]: Caption text
+            - generic [ref=e185]: LABEL
+        - generic [ref=e186]:
+          - heading "Alerts" [level=3] [ref=e187]
+          - generic [ref=e188]:
+            - generic [ref=e189]: 
+            - generic [ref=e190]: Success — Action completed
+          - generic [ref=e191]:
+            - generic [ref=e192]: 
+            - generic [ref=e193]: Warning — Check this
+          - generic [ref=e194]:
+            - generic [ref=e195]: 
+            - generic [ref=e196]: Error — Something failed
+          - generic [ref=e197]:
+            - generic [ref=e198]: 
+            - generic [ref=e199]: Info — For your information
+        - generic [ref=e200]:
+          - heading "Table" [level=3] [ref=e201]
+          - table [ref=e203]:
+            - rowgroup [ref=e204]:
+              - row "Name Role Dept" [ref=e205]:
+                - columnheader "Name" [ref=e206]
+                - columnheader "Role" [ref=e207]
+                - columnheader "Dept" [ref=e208]
+            - rowgroup [ref=e209]:
+              - row "Alex Dev Eng" [ref=e210]:
+                - cell "Alex" [ref=e211]
+                - cell "Dev" [ref=e212]
+                - cell "Eng" [ref=e213]
+              - row "Maya PM Prod" [ref=e214]:
+                - cell "Maya" [ref=e215]
+                - cell "PM" [ref=e216]
+                - cell "Prod" [ref=e217]
+        - generic [ref=e218]:
+          - heading "Nav / Modal" [level=3] [ref=e219]
+          - navigation [ref=e220]:
+            - link "Home" [ref=e221] [cursor=pointer]:
+              - /url: "#"
+            - link "About" [ref=e222] [cursor=pointer]:
+              - /url: "#"
+            - link "Contact" [ref=e223] [cursor=pointer]:
+              - /url: "#"
+          - generic [ref=e224]:
+            - generic [ref=e225]:
+              - generic [ref=e226]: Modal Title
+              - button "Close" [ref=e227] [cursor=pointer]:
+                - generic [ref=e228]: 
+            - paragraph [ref=e229]: Modal content goes here with some descriptive text.
+            - button "Close" [ref=e231] [cursor=pointer]
+  - contentinfo [ref=e232]:
+    - paragraph [ref=e233]: Copyright © 2026 Aliya Koy. All Rights Reserved.

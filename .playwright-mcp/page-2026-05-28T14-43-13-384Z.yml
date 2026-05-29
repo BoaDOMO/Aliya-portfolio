@@ -1,0 +1,278 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "ALIYA KOY" [ref=e4] [cursor=pointer]:
+        - /url: ../index.html
+      - navigation [ref=e5]:
+        - link "Lab" [ref=e6] [cursor=pointer]:
+          - /url: ../lab.html
+        - generic [ref=e7]: /
+        - generic [ref=e8]: VIBE UI
+    - generic [ref=e9]:
+      - generic [ref=e10]: LIVE DEMO
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 
+  - main [ref=e13]:
+    - complementary [ref=e14]:
+      - generic [ref=e15]:
+        - heading "Aesthetic" [level=3] [ref=e16]
+        - combobox [ref=e17] [cursor=pointer]:
+          - option "Warm Brutalist" [selected]
+          - option "Soft SaaS"
+          - option "Swiss Minimal"
+          - option "Glassmorphism"
+          - option "Cyberpunk"
+          - option "Monochrome Luxury"
+          - option "Retro"
+          - option "Terminal Hacker"
+          - option "Japanese Minimal"
+          - option "Claymorphism"
+      - button " Randomize Theme" [ref=e18] [cursor=pointer]:
+        - generic [ref=e20]: 
+        - generic [ref=e21]: Randomize Theme
+      - generic [ref=e22]:
+        - heading "Dimensions" [level=3] [ref=e23]
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - button "Lock Colors" [ref=e26] [cursor=pointer]:
+              - generic [ref=e27]: 
+            - generic [ref=e28]: Colors
+            - button "Randomize Colors" [ref=e29] [cursor=pointer]:
+              - generic [ref=e30]: 
+          - generic [ref=e31]:
+            - button "Unlock Fonts" [ref=e32] [cursor=pointer]:
+              - generic [ref=e33]: 
+            - generic [ref=e34]: Fonts
+            - button "Randomize Fonts" [ref=e35] [cursor=pointer]:
+              - generic [ref=e36]: 
+          - generic [ref=e37]:
+            - button "Lock Spacing" [ref=e38] [cursor=pointer]:
+              - generic [ref=e39]: 
+            - generic [ref=e40]: Spacing
+            - button "Randomize Spacing" [ref=e41] [cursor=pointer]:
+              - generic [ref=e42]: 
+          - generic [ref=e43]:
+            - button "Unlock Radius" [ref=e44] [cursor=pointer]:
+              - generic [ref=e45]: 
+            - generic [ref=e46]: Radius
+            - button "Randomize Radius" [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: 
+          - generic [ref=e49]:
+            - button "Unlock Shadows" [ref=e50] [cursor=pointer]:
+              - generic [ref=e51]: 
+            - generic [ref=e52]: Shadows
+            - button "Randomize Shadows" [ref=e53] [cursor=pointer]:
+              - generic [ref=e54]: 
+      - generic [ref=e55]:
+        - heading "Tune" [level=3] [ref=e56]
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]: Font Family
+            - combobox [ref=e60] [cursor=pointer]:
+              - option "Inter" [selected]
+              - option "Geist"
+              - option "DM Sans"
+              - option "IBM Plex Sans"
+          - generic [ref=e61]:
+            - generic [ref=e62]: Pairing
+            - combobox [ref=e63] [cursor=pointer]:
+              - option "Inter + Archivo Narrow" [selected]
+              - option "Geist + Geist Mono"
+              - option "DM Sans + DM Serif"
+          - generic [ref=e64]:
+            - generic [ref=e65]: Radius
+            - slider [ref=e66] [cursor=pointer]: "30"
+          - generic [ref=e67]:
+            - generic [ref=e68]: Spacing
+            - slider [ref=e69] [cursor=pointer]: "45"
+          - generic [ref=e70]:
+            - generic [ref=e71]: Shadow
+            - slider [ref=e72] [cursor=pointer]: "55"
+          - generic [ref=e73]:
+            - generic [ref=e74]: Energy
+            - slider [ref=e75] [cursor=pointer]: "25"
+          - generic [ref=e76]:
+            - generic [ref=e77]: Contrast
+            - slider [ref=e78] [cursor=pointer]: "60"
+      - generic [ref=e79]:
+        - heading "Export" [level=3] [ref=e80]
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: 
+              - text: DESIGN.md
+            - generic [ref=e85]:
+              - button "Copy" [ref=e86] [cursor=pointer]:
+                - generic [ref=e87]: 
+              - button "Download" [ref=e88] [cursor=pointer]:
+                - generic [ref=e89]: 
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - generic [ref=e92]: 
+              - text: CSS Variables
+            - generic [ref=e93]:
+              - button "Copy" [ref=e94] [cursor=pointer]:
+                - generic [ref=e95]: 
+              - button "Download" [ref=e96] [cursor=pointer]:
+                - generic [ref=e97]: 
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic [ref=e100]: 
+              - text: shadcn/ui
+            - generic [ref=e101]:
+              - button "Copy" [ref=e102] [cursor=pointer]:
+                - generic [ref=e103]: 
+              - button "Download" [ref=e104] [cursor=pointer]:
+                - generic [ref=e105]: 
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: 
+              - text: Tailwind v4
+            - generic [ref=e109]:
+              - button "Copy" [ref=e110] [cursor=pointer]:
+                - generic [ref=e111]: 
+              - button "Download" [ref=e112] [cursor=pointer]:
+                - generic [ref=e113]: 
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: 
+              - text: daisyUI
+            - generic [ref=e117]:
+              - button "Copy" [ref=e118] [cursor=pointer]:
+                - generic [ref=e119]: 
+              - button "Download" [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]: 
+          - generic [ref=e122]:
+            - generic [ref=e123]: JSON Tokens
+            - generic [ref=e124]:
+              - button "Copy" [ref=e125] [cursor=pointer]:
+                - generic [ref=e126]: 
+              - button "Download" [ref=e127] [cursor=pointer]:
+                - generic [ref=e128]: 
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - generic [ref=e131]: 
+              - text: AI Prompt
+            - generic [ref=e132]:
+              - button "Copy" [ref=e133] [cursor=pointer]:
+                - generic [ref=e134]: 
+              - button "Download" [ref=e135] [cursor=pointer]:
+                - generic [ref=e136]: 
+      - generic [ref=e138]: "\"Warm Brutalist\""
+    - generic [ref=e139]:
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - button " Light" [ref=e142] [cursor=pointer]:
+            - generic [ref=e143]: 
+            - text: Light
+          - button " Dark" [ref=e144] [cursor=pointer]:
+            - generic [ref=e145]: 
+            - text: Dark
+        - generic [ref=e146]: Preview
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - heading "Buttons" [level=4] [ref=e149]
+          - generic [ref=e150]:
+            - button "Primary" [ref=e151] [cursor=pointer]
+            - button "Secondary" [ref=e152] [cursor=pointer]
+            - button "Ghost" [ref=e153] [cursor=pointer]
+            - button "Disabled" [disabled] [ref=e154]
+        - generic [ref=e155]:
+          - heading "Card" [level=4] [ref=e156]
+          - generic [ref=e157]:
+            - generic [ref=e158]:
+              - heading "Project Alpha" [level=5] [ref=e159]
+              - paragraph [ref=e160]: A concise description of this card component. It demonstrates how body copy renders.
+            - generic [ref=e161]:
+              - button "View" [ref=e162] [cursor=pointer]
+              - button "Dismiss" [ref=e163] [cursor=pointer]
+        - generic [ref=e164]:
+          - heading "Form" [level=4] [ref=e165]
+          - generic [ref=e166]:
+            - textbox "Full name" [ref=e167]
+            - combobox [ref=e168] [cursor=pointer]:
+              - option "Choose a plan" [selected]
+              - option "Starter — $12/mo"
+              - option "Pro — $29/mo"
+            - generic [ref=e169]:
+              - generic [ref=e170] [cursor=pointer]:
+                - checkbox "Accept terms" [checked] [ref=e171]
+                - text: Accept terms
+              - generic [ref=e172] [cursor=pointer]:
+                - radio "Monthly" [checked] [ref=e173]
+                - text: Monthly
+              - generic [ref=e174] [cursor=pointer]:
+                - radio "Annual" [ref=e175]
+                - text: Annual
+            - button "Submit" [ref=e176] [cursor=pointer]
+        - generic [ref=e177]:
+          - heading "Typography" [level=4] [ref=e178]
+          - generic [ref=e179]:
+            - heading "The quick brown fox" [level=1] [ref=e180]
+            - heading "Jumps over the lazy dog" [level=2] [ref=e181]
+            - heading "A heading for deeper hierarchy" [level=3] [ref=e182]
+            - paragraph [ref=e183]: Body text sets the reading rhythm. Good typography is invisible — the reader absorbs the message without noticing the vessel that carries it. Line height, measure, and scale work together.
+            - generic [ref=e184]:
+              - generic [ref=e185]: Caption text
+              - generic [ref=e187]: LABEL
+              - code [ref=e189]: inline_code()
+        - generic [ref=e190]:
+          - heading "Alerts" [level=4] [ref=e191]
+          - generic [ref=e192]:
+            - generic [ref=e193]:
+              - generic [ref=e194]: 
+              - text: Changes saved successfully.
+            - generic [ref=e195]:
+              - generic [ref=e196]: 
+              - text: Your session expires in 5 minutes.
+            - generic [ref=e197]:
+              - generic [ref=e198]: 
+              - text: Payment failed. Please try again.
+            - generic [ref=e199]:
+              - generic [ref=e200]: 
+              - text: A new version is available.
+        - generic [ref=e201]:
+          - heading "Table" [level=4] [ref=e202]
+          - table [ref=e203]:
+            - rowgroup [ref=e204]:
+              - row "Name Role Status" [ref=e205]:
+                - columnheader "Name" [ref=e206]
+                - columnheader "Role" [ref=e207]
+                - columnheader "Status" [ref=e208]
+            - rowgroup [ref=e209]:
+              - row "Alex Chen Engineer Active" [ref=e210]:
+                - cell "Alex Chen" [ref=e211]
+                - cell "Engineer" [ref=e212]
+                - cell "Active" [ref=e213]:
+                  - generic [ref=e214]: Active
+              - row "Maya Patel Designer Active" [ref=e215]:
+                - cell "Maya Patel" [ref=e216]
+                - cell "Designer" [ref=e217]
+                - cell "Active" [ref=e218]:
+                  - generic [ref=e219]: Active
+              - row "Jordan Kim Manager Away" [ref=e220]:
+                - cell "Jordan Kim" [ref=e221]
+                - cell "Manager" [ref=e222]
+                - cell "Away" [ref=e223]:
+                  - generic [ref=e224]: Away
+        - generic [ref=e225]:
+          - heading "Navigation & Modal" [level=4] [ref=e226]
+          - navigation [ref=e227]:
+            - link "Dashboard" [ref=e228] [cursor=pointer]:
+              - /url: "#"
+            - link "Projects" [ref=e229] [cursor=pointer]:
+              - /url: "#"
+            - link "Settings" [ref=e230] [cursor=pointer]:
+              - /url: "#"
+            - link "Billing" [ref=e231] [cursor=pointer]:
+              - /url: "#"
+          - generic [ref=e232]:
+            - generic [ref=e233]:
+              - heading "Confirm deletion" [level=5] [ref=e234]
+              - button "×" [ref=e235] [cursor=pointer]
+            - paragraph [ref=e236]: This action cannot be undone. All data will be permanently removed.
+            - generic [ref=e237]:
+              - button "Cancel" [ref=e238] [cursor=pointer]
+              - button "Delete" [ref=e239] [cursor=pointer]
+  - contentinfo [ref=e240]:
+    - paragraph [ref=e241]: Copyright © 2026 Aliya Koy. All Rights Reserved.
