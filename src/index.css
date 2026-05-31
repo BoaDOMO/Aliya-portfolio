@@ -42,7 +42,6 @@
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-cream: var(--cream);
-  --color-beige: var(--beige);
   --color-sage: var(--sage);
   --color-dark-blue: var(--dark-blue);
   --color-dark-text: var(--dark-text);
@@ -57,12 +56,9 @@
 }
 
 :root {
-  /* ── Legacy Palette ── */
+  /* ── Custom Palette ── */
   --cream: #F5F1E8;
-  --beige: #E6DECF;
   --sage: #9CAF88;
-  --text-gray: #555;
-  --text-muted: #787878;
   --label-gray: #999;
   --dark-blue: #26428b;
   --dark-text: #1A1A1A;
@@ -111,12 +107,9 @@
 }
 
 .dark {
-  /* ── Legacy Palette ── */
+  /* ── Custom Palette ── */
   --cream: #0A0A0A;
-  --beige: #161618;
   --sage: #A3B18A;
-  --text-gray: #9CA3AF;
-  --text-muted: #6B7280;
   --label-gray: #6B7280;
   --dark-blue: #A3B18A;
   --dark-text: #0F172A;
