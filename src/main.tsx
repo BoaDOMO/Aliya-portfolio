@@ -8,6 +8,7 @@ import Profile from "@/pages/Profile"
 import Lab from "@/pages/Lab"
 import Contact from "@/pages/Contact"
 import RAG from "@/pages/RAG"
+import DesignSystem from "@/pages/DesignSystem"
 import "./index.css"
 
 createRoot(document.getElementById("root")!).render(
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/lab" element={<Lab />} />
             <Route path="/rag" element={<RAG />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/design-system" element={<DesignSystem />} />
           </Route>
         </Routes>
       </BrowserRouter>

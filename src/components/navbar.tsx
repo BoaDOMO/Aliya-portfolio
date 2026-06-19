@@ -111,6 +111,12 @@ export function Navbar() {
                   >
                     RAG Chatbot
                   </NavigationMenuLink>
+                  <NavigationMenuLink
+                    onClick={() => navigate("/design-system")}
+                    className="block cursor-pointer rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                  >
+                    Design System
+                  </NavigationMenuLink>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -170,6 +176,7 @@ export function Navbar() {
                   <CollapsibleContent>
                     <div className="ml-3 flex flex-col gap-1 border-l pl-3 mt-1">
                       <NavLinkItem to="/rag" label="RAG Chatbot" exact onClick={() => setSheetOpen(false)} />
+                      <NavLinkItem to="/design-system" label="Design System" exact onClick={() => setSheetOpen(false)} />
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
