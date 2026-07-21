@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { RetrievalFlowGraphic, SignalField } from "@/components/signal-graphics"
 import {
   PaperPlaneTilt,
   User,
@@ -73,7 +74,7 @@ export default function ChatArea({
   const isEmpty = messages.length === 0
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
+    <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b px-3 py-2.5 h-12">
         <span className="h-2 w-2 rounded-full bg-primary" />
@@ -86,16 +87,18 @@ export default function ChatArea({
       </div>
 
       {/* Messages */}
-      <div className="relative flex-1 overflow-hidden">
-        <ScrollArea ref={scrollRef} className="h-full">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
+        <ScrollArea ref={scrollRef} className="h-full min-h-0">
           <div className="space-y-4 p-4 pb-0">
             {isEmpty && !isLoading && (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex justify-center"
+                className="relative isolate flex min-h-[24rem] flex-col items-center justify-center overflow-hidden py-8"
               >
-                <div className="max-w-[85%] rounded-2xl border border-border-strong border-l-[3px] border-l-primary bg-tool-emphasis p-5">
+                <SignalField variant="tool" className="-inset-28 opacity-90" />
+                <RetrievalFlowGraphic className="relative z-10 mb-3 h-auto w-full max-w-xl px-6" />
+                <div className="relative z-10 max-w-[85%] rounded-2xl border border-border-strong border-l-[3px] border-l-primary bg-tool-emphasis p-5">
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <Buildings className="h-5 w-5 text-primary" />

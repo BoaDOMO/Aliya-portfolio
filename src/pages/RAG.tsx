@@ -315,8 +315,8 @@ export default function RAG() {
   const recentMessages = chatHistory.slice(-3)
 
   return (
-    <div className="flex flex-1 bg-tool-canvas">
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-3 pt-4">
+    <div className="flex min-h-0 flex-1 overflow-hidden bg-tool-canvas">
+      <div className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-6 pb-3 pt-4">
       {/* Header */}
       <div className="flex flex-wrap items-center gap-2 border-b pb-3">
         <span className="inline-flex h-8 items-center gap-1 rounded-full bg-muted px-3 font-mono text-xs font-semibold text-muted-foreground">
@@ -349,9 +349,9 @@ export default function RAG() {
       </div>
 
       {/* Main layout */}
-      <div className="flex flex-1 gap-4 overflow-hidden pt-3">
+      <div className="flex min-h-0 flex-1 gap-4 overflow-hidden pt-3">
         {/* Left: Dashboard - desktop */}
-        <div className="hidden lg:block lg:w-[360px] xl:w-[400px]">
+        <div className="hidden min-h-0 lg:block lg:w-[360px] xl:w-[400px]">
           <Dashboard
             status={status}
             pipelineStage={pipelineStage}
@@ -369,14 +369,14 @@ export default function RAG() {
         </div>
 
         {/* Right: Switch toggle + content */}
-        <div className="flex flex-1 flex-col overflow-hidden">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           {activeTab === "kb" ? (
             <KBEditor
               key={persona.company}
               persona={persona}
               kb={kb}
               onSave={handleSaveKB}
-              className="w-full flex-1"
+              className="min-h-0 w-full flex-1"
             />
           ) : (
             <ChatArea

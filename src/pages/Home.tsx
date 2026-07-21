@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { motion, useReducedMotion } from "framer-motion"
 import { buttonVariants } from "@/components/ui/button"
 import { CodeEditor } from "@/components/code-editor"
+import { HeroTraceGraphic, SignalField } from "@/components/signal-graphics"
 import { cn } from "@/lib/utils"
 import { ArrowRight, MapPin } from "@phosphor-icons/react"
 
@@ -33,8 +34,10 @@ export default function Home() {
   const init = reducedMotion ? {} : undefined
 
   return (
-    <div className="flex min-h-[calc(100svh-4rem)] items-center justify-center px-6 py-12 md:py-16">
-      <div className="grid w-full max-w-6xl items-center gap-12 md:grid-cols-2 lg:gap-20">
+    <div className="relative isolate flex min-h-[calc(100svh-4rem)] items-center justify-center overflow-hidden px-6 py-12 md:py-16">
+      <SignalField className="-right-[22rem] -top-[18rem] h-[58rem] w-[68rem] md:-right-[16rem] md:-top-[14rem]" />
+      <div aria-hidden="true" className="diagnostic-grid absolute inset-y-0 right-0 hidden w-[58%] opacity-70 md:block" />
+      <div className="relative z-10 grid w-full max-w-6xl items-center gap-12 md:grid-cols-2 lg:gap-20">
         <motion.div
           initial={init ?? { opacity: 0, y: 6 }}
           animate={init ?? { opacity: 1, y: 0 }}
@@ -141,8 +144,12 @@ export default function Home() {
             delay: 0.25,
             ease: [0.16, 1, 0.3, 1],
           }}
+          className="relative isolate"
         >
-          <CodeEditor />
+          <HeroTraceGraphic className="absolute left-1/2 top-1/2 hidden h-[36rem] w-[46rem] -translate-x-1/2 -translate-y-1/2 md:block" />
+          <div className="relative z-10">
+            <CodeEditor />
+          </div>
         </motion.div>
       </div>
     </div>

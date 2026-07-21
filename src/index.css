@@ -74,6 +74,9 @@
   --color-dark-blue: var(--dark-blue);
   --color-dark-text: var(--dark-text);
   --color-label-gray: var(--label-gray);
+  --color-signal-blue: var(--signal-blue);
+  --color-signal-sage: var(--signal-sage);
+  --color-signal-warm: var(--signal-warm);
 }
 
 @layer components {
@@ -144,6 +147,35 @@
   --tool-emphasis: #EDF3F6;
   --tool-bar-height: 3.5rem;
   --overlay: rgba(20, 30, 35, 0.18);
+
+  /* ── Signal Graphics ── */
+  --signal-blue: #185FA5;
+  --signal-sage: #9CAF88;
+  --signal-warm: #D9A45B;
+  --signal-error: #C65A54;
+  --trace-line: rgba(24, 95, 165, 0.22);
+  --trace-line-muted: rgba(35, 48, 54, 0.14);
+  --trace-line-strong: rgba(24, 95, 165, 0.62);
+  --trace-node-fill: #F7F9F8;
+  --trace-label: rgba(35, 48, 54, 0.56);
+  --trace-label-strong: #185FA5;
+  --trace-panel-fill: rgba(247, 249, 248, 0.82);
+  --trace-panel-border: rgba(24, 95, 165, 0.22);
+  --gradient-signal-hero:
+    radial-gradient(circle at 76% 28%, rgba(24, 95, 165, 0.2), transparent 31%),
+    radial-gradient(circle at 88% 66%, rgba(156, 175, 136, 0.22), transparent 35%),
+    radial-gradient(circle at 52% 78%, rgba(217, 164, 91, 0.12), transparent 30%);
+  --gradient-signal-warm:
+    radial-gradient(circle at 72% 40%, rgba(217, 164, 91, 0.16), transparent 32%),
+    radial-gradient(circle at 88% 68%, rgba(24, 95, 165, 0.14), transparent 38%);
+  --gradient-signal-project:
+    radial-gradient(circle at 50% 50%, rgba(24, 95, 165, 0.13), transparent 40%),
+    radial-gradient(circle at 72% 24%, rgba(156, 175, 136, 0.18), transparent 30%);
+  --gradient-signal-tool:
+    radial-gradient(circle at 50% 30%, rgba(24, 95, 165, 0.11), transparent 42%),
+    radial-gradient(circle at 72% 62%, rgba(156, 175, 136, 0.13), transparent 34%);
+  --gradient-signal-bar: linear-gradient(90deg, var(--signal-blue), var(--signal-sage));
+  --diagnostic-grid: rgba(24, 95, 165, 0.07);
 
   /* ── Sidebar ── */
   --sidebar: #F2EEE6;
@@ -227,6 +259,35 @@
   --tool-emphasis: #1B2328;
   --overlay: rgba(0, 0, 0, 0.58);
 
+  /* ── Signal Graphics ── */
+  --signal-blue: #68A7E0;
+  --signal-sage: #A3B18A;
+  --signal-warm: #D9A45B;
+  --signal-error: #EF7C76;
+  --trace-line: rgba(163, 177, 138, 0.24);
+  --trace-line-muted: rgba(243, 244, 246, 0.11);
+  --trace-line-strong: rgba(163, 177, 138, 0.68);
+  --trace-node-fill: #18181A;
+  --trace-label: rgba(243, 244, 246, 0.48);
+  --trace-label-strong: #A3B18A;
+  --trace-panel-fill: rgba(24, 24, 26, 0.78);
+  --trace-panel-border: rgba(163, 177, 138, 0.24);
+  --gradient-signal-hero:
+    radial-gradient(circle at 76% 28%, rgba(60, 122, 176, 0.22), transparent 31%),
+    radial-gradient(circle at 88% 66%, rgba(163, 177, 138, 0.18), transparent 35%),
+    radial-gradient(circle at 52% 78%, rgba(217, 164, 91, 0.08), transparent 30%);
+  --gradient-signal-warm:
+    radial-gradient(circle at 72% 40%, rgba(217, 164, 91, 0.11), transparent 32%),
+    radial-gradient(circle at 88% 68%, rgba(60, 122, 176, 0.17), transparent 38%);
+  --gradient-signal-project:
+    radial-gradient(circle at 50% 50%, rgba(60, 122, 176, 0.16), transparent 40%),
+    radial-gradient(circle at 72% 24%, rgba(163, 177, 138, 0.15), transparent 30%);
+  --gradient-signal-tool:
+    radial-gradient(circle at 50% 30%, rgba(60, 122, 176, 0.12), transparent 42%),
+    radial-gradient(circle at 72% 62%, rgba(163, 177, 138, 0.12), transparent 34%);
+  --gradient-signal-bar: linear-gradient(90deg, var(--signal-blue), var(--signal-sage));
+  --diagnostic-grid: rgba(163, 177, 138, 0.06);
+
   /* ── Sidebar ── */
   --sidebar: #0A0A0A;
   --sidebar-foreground: #F3F4F6;
@@ -276,6 +337,165 @@
   }
   section + section {
     border-top: 1px solid var(--border);
+  }
+}
+
+@layer components {
+  .signal-field {
+    pointer-events: none;
+    position: absolute;
+    border-radius: 999px;
+    opacity: 0.92;
+    mask-image: radial-gradient(circle at center, black 28%, transparent 74%);
+    -webkit-mask-image: radial-gradient(circle at center, black 28%, transparent 74%);
+  }
+
+  .signal-field-hero {
+    background: var(--gradient-signal-hero);
+  }
+
+  .signal-field-warm {
+    background: var(--gradient-signal-warm);
+  }
+
+  .signal-field-project {
+    background: var(--gradient-signal-project);
+  }
+
+  .signal-field-tool {
+    background: var(--gradient-signal-tool);
+  }
+
+  .diagnostic-grid {
+    background-image:
+      linear-gradient(var(--diagnostic-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--diagnostic-grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, transparent, black 16%, black 74%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 16%, black 74%, transparent);
+  }
+
+  .trace-graphic {
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .trace-line {
+    fill: none;
+    stroke: var(--trace-line);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .trace-line-muted {
+    stroke: var(--trace-line-muted);
+  }
+
+  .trace-line-strong {
+    stroke: var(--trace-line-strong);
+    stroke-width: 1.8;
+  }
+
+  .trace-line-dashed {
+    stroke-dasharray: 3 8;
+  }
+
+  .trace-line-animated {
+    stroke-dasharray: 9 13;
+    animation: signal-flow 10s linear infinite;
+  }
+
+  .trace-node {
+    fill: var(--trace-node-fill);
+    stroke: var(--trace-line-strong);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .trace-node-small {
+    fill: var(--signal-sage);
+  }
+
+  .trace-node-strong {
+    fill: var(--signal-blue);
+    stroke: var(--trace-node-fill);
+    stroke-width: 3;
+  }
+
+  .trace-node-error {
+    fill: var(--trace-node-fill);
+    stroke: var(--signal-error);
+  }
+
+  .trace-node-pulse {
+    fill: var(--signal-sage);
+    stroke: var(--trace-node-fill);
+    stroke-width: 3;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: signal-pulse 3.2s ease-in-out infinite;
+  }
+
+  .trace-mark {
+    fill: none;
+    stroke: var(--signal-error);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .trace-label,
+  .trace-coordinate {
+    fill: var(--trace-label);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .trace-coordinate {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+
+  .trace-label-strong {
+    fill: var(--trace-label-strong);
+  }
+
+  .trace-panel {
+    fill: var(--trace-panel-fill);
+    stroke: var(--trace-panel-border);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .signal-rule {
+    height: 1px;
+    background: var(--gradient-signal-bar);
+    opacity: 0.55;
+  }
+
+  .bg-signal-gradient {
+    background: var(--gradient-signal-bar);
+  }
+}
+
+@keyframes signal-flow {
+  to {
+    stroke-dashoffset: -88;
+  }
+}
+
+@keyframes signal-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.14);
   }
 }
 

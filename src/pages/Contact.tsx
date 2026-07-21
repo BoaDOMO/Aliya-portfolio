@@ -14,6 +14,7 @@ import { FloatingLabelTextarea } from "@/components/floating-label-textarea"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { SectionLabel } from "@/components/section-label"
 import { PageContainer, PageSection } from "@/components/page-layout"
+import { ContactRouteGraphic, SignalField } from "@/components/signal-graphics"
 
 const contactItems = [
   {
@@ -118,8 +119,13 @@ export default function Contact() {
   }
 
   return (
-    <PageSection className="py-14 md:py-20">
-      <PageContainer className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+    <PageSection className="relative isolate overflow-hidden py-14 md:py-20">
+      <SignalField
+        variant="warm"
+        className="-right-[24rem] -top-[12rem] h-[60rem] w-[70rem] opacity-80"
+      />
+      <ContactRouteGraphic className="absolute right-[-4rem] top-1/2 hidden h-[42rem] w-[58rem] -translate-y-1/2 opacity-55 lg:block" />
+      <PageContainer className="relative z-10 grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
         <FadeInWhenVisible className="lg:col-span-5 lg:pt-4">
           <SectionLabel>// get in touch</SectionLabel>
           <h1 className="mt-4 max-w-lg font-display text-5xl font-bold leading-none tracking-tight text-primary sm:text-6xl">

@@ -1,6 +1,10 @@
 import { useDesignTokens } from "@/lib/design-tokens-store"
 import { toast } from "sonner"
 import { useCallback } from "react"
+import {
+  SignalField,
+  TokenRelationshipGraphic,
+} from "@/components/signal-graphics"
 
 interface Swatch {
   label: string
@@ -162,6 +166,19 @@ export default function ColorSection() {
         Every role token in the system, with light and dark values side by side.
         Click any swatch to copy the value.
       </p>
+      <div className="relative isolate overflow-hidden rounded-xl border border-border bg-surface-featured p-5 sm:min-h-48 sm:pr-[46%]">
+        <SignalField variant="tool" className="-inset-24 opacity-80" />
+        <div className="relative z-10 max-w-sm">
+          <p className="font-display text-xl font-semibold tracking-tight text-foreground">
+            One decision, connected roles.
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            The brand color branches into surfaces and accents, then resolves
+            into a complete semantic system.
+          </p>
+        </div>
+        <TokenRelationshipGraphic className="relative z-10 mt-5 h-auto w-full sm:absolute sm:right-3 sm:top-1/2 sm:mt-0 sm:w-[48%] sm:-translate-y-1/2" />
+      </div>
       <div className="space-y-5">
         <SwatchGroup title="Brand" swatches={brand} />
         <SwatchGroup title="Surfaces" swatches={surface} />

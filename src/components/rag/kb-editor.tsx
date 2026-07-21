@@ -83,7 +83,7 @@ export default function KBEditor({
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-xl border border-editor-border bg-editor-background",
+        "flex min-h-0 flex-col overflow-hidden rounded-xl border border-editor-border bg-editor-background",
         className
       )}
     >
@@ -141,7 +141,7 @@ export default function KBEditor({
       </div>
 
       {/* Editor body */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {activeFile === "persona" ? (
           <PersonaEditor
             persona={localPersona}

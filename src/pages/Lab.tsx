@@ -6,6 +6,7 @@ import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
 import { SectionLabel } from "@/components/section-label"
 import MiniChat from "@/components/lab/mini-chat"
+import { SignalField } from "@/components/signal-graphics"
 import { ArrowRight, Palette, SlidersHorizontal, TextT } from "@phosphor-icons/react"
 
 const projects = [
@@ -88,10 +89,14 @@ function DesignSystemPreview() {
 
 export default function Lab() {
   return (
-    <div>
-      <PageSection>
+    <div className="overflow-x-clip">
+      <PageSection className="relative isolate overflow-hidden">
+        <SignalField
+          className="-right-[24rem] -top-[22rem] hidden h-[52rem] w-[66rem] opacity-70 md:block"
+        />
+        <div aria-hidden="true" className="diagnostic-grid absolute inset-y-0 right-0 hidden w-[48%] opacity-55 md:block" />
         <FadeInWhenVisible>
-          <PageContainer className="grid gap-6 border-b pb-10 md:grid-cols-12 md:items-end md:pb-14">
+          <PageContainer className="relative z-10 grid gap-6 border-b pb-10 md:grid-cols-12 md:items-end md:pb-14">
             <div className="md:col-span-8">
               <SectionLabel>// the lab</SectionLabel>
               <h1 className="mt-3 max-w-3xl font-display text-5xl font-bold leading-none tracking-tight md:text-6xl">
@@ -111,7 +116,7 @@ export default function Lab() {
           {projects.map((project, index) => (
             <FadeInWhenVisible key={project.title} delay={index * 0.08}>
               <article className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
-                <div className={index % 2 ? "md:order-2 md:col-span-5" : "md:col-span-5"}>
+                <div className={index % 2 ? "min-w-0 md:order-2 md:col-span-5" : "min-w-0 md:col-span-5"}>
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{project.label}</p>
                     <Badge variant="outline" className="font-mono text-[10px] text-primary">{project.status}</Badge>
@@ -166,7 +171,7 @@ export default function Lab() {
                     {project.cta}<ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
-                <div className={index % 2 ? "md:order-1 md:col-span-7" : "md:col-span-7"}>
+                <div className={index % 2 ? "min-w-0 md:order-1 md:col-span-7" : "min-w-0 md:col-span-7"}>
                   {project.preview === "chat" ? (
                     <div className="h-[420px] md:h-[460px]"><MiniChat /></div>
                   ) : (

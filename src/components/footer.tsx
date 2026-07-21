@@ -1,6 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="border-t px-6 py-4 text-xs text-muted-foreground">
+    <footer className="relative border-t px-6 py-4 text-xs text-muted-foreground">
+      <div aria-hidden="true" className="signal-rule absolute left-1/2 top-0 w-28 -translate-x-1/2" />
       <div className="mx-auto flex min-h-6 w-full max-w-6xl items-center justify-between gap-3">
         <p className="whitespace-nowrap">
           &copy; {new Date().getFullYear()} Aliya Koy

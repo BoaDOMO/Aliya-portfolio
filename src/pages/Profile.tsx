@@ -9,22 +9,26 @@ import { Badge } from "@/components/ui/badge"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { SectionLabel } from "@/components/section-label"
 import { PageContainer, PageSection } from "@/components/page-layout"
+import { CapabilityTrace, SignalField } from "@/components/signal-graphics"
 
 const capabilities = [
   {
     number: "01",
+    graphic: "direct" as const,
     title: "Direct the model",
     description:
       "Break a messy idea into clear prompts, useful constraints, and small steps the model can actually execute.",
   },
   {
     number: "02",
+    graphic: "debug" as const,
     title: "Debug the output",
     description:
       "Read what the AI produced, spot where it is bluffing or breaking, and keep testing until the real bug is gone.",
   },
   {
     number: "03",
+    graphic: "finish" as const,
     title: "Finish the software",
     description:
       "Turn the promising first pass into a coherent, responsive product instead of stopping at an impressive demo.",
@@ -89,9 +93,13 @@ const earlierExperience = [
 export default function Profile() {
   return (
     <div className="flex flex-col">
-      <PageSection className="pt-14 md:pt-20">
+      <PageSection className="relative isolate overflow-hidden pt-14 md:pt-20">
+        <SignalField
+          variant="warm"
+          className="-right-[24rem] -top-[20rem] h-[52rem] w-[64rem] opacity-70"
+        />
         <FadeInWhenVisible>
-          <PageContainer className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+          <PageContainer className="relative z-10 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
               <SectionLabel>// profile</SectionLabel>
               <h1 className="mt-4 max-w-4xl font-display text-5xl font-bold leading-[0.98] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
@@ -166,6 +174,10 @@ export default function Profile() {
                   key={capability.number}
                   className="border-b py-6 last:border-b-0 md:border-b-0 md:px-6 md:first:pl-0 md:last:pr-0"
                 >
+                  <CapabilityTrace
+                    kind={capability.graphic}
+                    className="mb-5 h-20 w-full max-w-[17.5rem]"
+                  />
                   <p className="font-mono text-xs text-primary">
                     {capability.number}
                   </p>

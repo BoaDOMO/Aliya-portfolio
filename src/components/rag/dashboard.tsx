@@ -88,7 +88,7 @@ export default function Dashboard({
   const maxTime = Math.max(...responseTimes.slice(-8), 1)
 
   return (
-    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
+    <div className="flex h-full min-h-0 max-h-full flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b px-3 py-2.5 h-12">
         <span className={cn("h-2 w-2 rounded-full", s.dot)} />
@@ -101,7 +101,7 @@ export default function Dashboard({
       </div>
 
       {/* Scrollable content */}
-      <div className="flex flex-1 flex-col gap-5 overflow-y-auto p-5 pt-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 pt-4">
 
         {/* 2. Answer flow */}
         <div>
@@ -150,7 +150,7 @@ export default function Dashboard({
                     <div
                       className={cn(
                         "mx-1 h-px w-3",
-                        done ? "bg-primary" : "bg-border"
+                        done ? "bg-signal-gradient" : "bg-border"
                       )}
                     />
                   )}
