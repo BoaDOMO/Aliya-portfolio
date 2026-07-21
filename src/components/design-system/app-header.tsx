@@ -14,7 +14,6 @@ import {
 } from "@phosphor-icons/react"
 import { useDesignTokens, useDesignTokensDispatch, type Severity } from "@/lib/design-tokens-store"
 import { useQualityReport } from "@/lib/use-quality-report"
-import { getPresetById } from "@/lib/style-preset-presets"
 import {
   generateAIContext,
   generatePlainCSS,
@@ -68,7 +67,6 @@ export default function DesignSystemAppHeader({
   const [exportOpen, setExportOpen] = useState(false)
   const [exportTab, setExportTab] = useState<string>("ai")
 
-  const preset = getPresetById(state.stylePreset.activePreset)
   const canUndo = state.history.past.length > 0
   const canRedo = state.history.future.length > 0
   const { categories: qualityCategories, issueCount, overallStatus } = useQualityReport()
@@ -96,7 +94,7 @@ export default function DesignSystemAppHeader({
             onClick={onToggleInspector}
             aria-label={inspectorOpen ? "Hide inspector" : "Show inspector"}
             aria-pressed={inspectorOpen}
-            className="hidden size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:flex"
+            className="hidden size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:flex"
           >
             <SidebarSimple className="size-4" />
           </button>
@@ -104,12 +102,12 @@ export default function DesignSystemAppHeader({
             type="button"
             onClick={onOpenMobileInspector}
             aria-label="Open inspector"
-            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:hidden"
           >
             <List className="size-4" />
           </button>
           <div className="min-w-0 border-l border-border pl-3">
-            <p className="truncate text-sm font-semibold text-foreground">{preset?.name ?? "Design System"}</p>
+            <p className="truncate text-sm font-semibold text-foreground">Design System</p>
             <p className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
               <CloudCheck className="size-3.5 text-success" /> Autosaved locally
             </p>

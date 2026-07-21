@@ -1,16 +1,23 @@
-import { CaretRight, Copy } from "@phosphor-icons/react"
+import type { CSSProperties } from "react"
+import { Copy } from "@phosphor-icons/react"
 import { toast } from "sonner"
+import {
+  Collapsible,
+  CollapsibleContent,
+} from "@/components/ui/collapsible"
 import {
   useDesignTokens,
   useDesignTokensDispatch,
   type ColorIntent,
 } from "@/lib/design-tokens-store"
 import type { ColorTokens, StateColors } from "@/lib/color-utils"
+import { SegmentedControl } from "@/components/ui/segmented-control"
+import AdvancedSettingsToggle from "./advanced-settings-toggle"
 
-const INTENTS: Array<{ value: ColorIntent; label: string; description: string }> = [
-  { value: "neutral", label: "Quiet", description: "Neutral supporting colors" },
-  { value: "subtle", label: "Balanced", description: "Gently tinted supporting colors" },
-  { value: "expressive", label: "Bold", description: "Stronger accent relationships" },
+const INTENTS: Array<{ value: ColorIntent; label: string }> = [
+  { value: "neutral", label: "Calm" },
+  { value: "subtle", label: "Balanced" },
+  { value: "expressive", label: "Expressive" },
 ]
 
 const ADVANCED_TOKENS: Array<{ key: keyof ColorTokens; label: string }> = [
@@ -36,6 +43,18 @@ const STATE_TOKENS: Array<{ key: keyof StateColors; label: string }> = [
   { key: "warning", label: "Warning" },
   { key: "destructive", label: "Destructive" },
   { key: "info", label: "Info" },
+]
+
+const COLOR_ROLE_SWATCHES: Array<{
+  key: keyof ColorTokens
+  foreground: keyof ColorTokens
+  label: string
+  featured: boolean
+}> = [
+  { key: "background", foreground: "foreground", label: "Canvas", featured: true },
+  { key: "primary", foreground: "primary-foreground", label: "Primary", featured: true },
+  { key: "secondary", foreground: "secondary-foreground", label: "Secondary", featured: false },
+  { key: "card", foreground: "card-foreground", label: "Surface", featured: false },
 ]
 
 function copyColor(value: string, label: string) {
@@ -82,47 +101,81 @@ function TokenRow({
 
 export default function ColorSection({
   onOpenDrawer,
+  advancedOpen,
+  onAdvancedOpenChange,
+  hasAdvancedChanges,
 }: {
   onOpenDrawer?: (
     key: string,
     label: string,
     type?: "light" | "dark" | "states",
   ) => void
+  advancedOpen: boolean
+  onAdvancedOpenChange: (open: boolean) => void
+  hasAdvancedChanges: boolean
 }) {
   const state = useDesignTokens()
+  const dispatch = useDesignTokensDispatch()
   const mode = state.previewMode
   const tokens = mode === "dark" ? state.tokens.dark : state.tokens.light
 
   return (
-    <button
-      type="button"
-      onClick={() => onOpenDrawer?.("primary", "Brand color", mode)}
-      className="group flex min-h-24 w-full items-start gap-3 rounded-xl border border-border bg-surface-control p-3.5 text-left transition-colors hover:border-border-strong hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-mono text-[10px] font-semibold text-muted-foreground">
-        02
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-[11px] font-semibold text-muted-foreground">
-          Choose a brand color
-        </span>
-        <span className="mt-1 flex items-center gap-2">
-          <span
-            className="size-5 shrink-0 rounded-md border border-border-strong shadow-sm"
-            style={{ backgroundColor: tokens.primary }}
-          />
-          <span className="font-mono text-xs font-semibold text-foreground">
-            {tokens.primary.toUpperCase()}
-          </span>
-        </span>
-        <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
-          One color generates every semantic role.
-        </span>
-      </span>
-      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover:bg-muted group-hover:text-foreground">
-        <CaretRight className="size-4" />
-      </span>
-    </button>
+    <section>
+      <Collapsible open={advancedOpen} onOpenChange={onAdvancedOpenChange}>
+        <div className="mb-4 flex items-center gap-2">
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+            Colors
+          </h2>
+          <div className="ml-auto flex min-w-0 items-center gap-2">
+            <SegmentedControl
+              options={INTENTS}
+              value={state.colorIntent}
+              onChange={(value) =>
+                dispatch({ type: "SET_COLOR_INTENT", payload: value as ColorIntent })
+              }
+              size="sm"
+              ariaLabel="Color personality"
+              className="shrink-0 [&_button]:px-1.5 [&_button]:text-[10px] sm:[&_button]:px-2 sm:[&_button]:text-xs"
+            />
+            <AdvancedSettingsToggle
+              label="color"
+              open={advancedOpen}
+              modified={hasAdvancedChanges}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2 sm:h-64 sm:grid-cols-3 sm:grid-rows-2">
+          {COLOR_ROLE_SWATCHES.map((swatch) => {
+            const swatchStyle = {
+              "--dock-swatch": tokens[swatch.key],
+              "--dock-swatch-foreground": tokens[swatch.foreground],
+            } as CSSProperties
+
+            return (
+              <button
+                key={swatch.key}
+                type="button"
+                onClick={() => onOpenDrawer?.(swatch.key, swatch.label, mode)}
+                className={`group flex min-h-28 flex-col rounded-xl border border-border-strong bg-[var(--dock-swatch)] p-4 text-left text-[var(--dock-swatch-foreground)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-0 ${
+                  swatch.featured ? "sm:row-span-2" : ""
+                }`}
+                style={swatchStyle}
+              >
+                <span className="text-sm font-semibold">{swatch.label}</span>
+                <span className="mt-auto font-mono text-xs opacity-75">
+                  {tokens[swatch.key].toUpperCase()}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+        <CollapsibleContent className="overflow-hidden data-closed:animate-accordion-up data-open:animate-accordion-down motion-reduce:animate-none">
+          <div className="mt-5 border-t border-border pt-5">
+            <ColorAdvancedSettings onOpenDrawer={onOpenDrawer} />
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </section>
   )
 }
 
@@ -136,45 +189,14 @@ export function ColorAdvancedSettings({
   ) => void
 }) {
   const state = useDesignTokens()
-  const dispatch = useDesignTokensDispatch()
   const mode = state.previewMode
   const tokens = mode === "dark" ? state.tokens.dark : state.tokens.light
 
   return (
     <div className="space-y-5">
-      <fieldset className="space-y-2">
-        <legend className="text-xs font-semibold text-foreground">Color personality</legend>
-        <p className="text-[11px] leading-4 text-muted-foreground">
-          Control how strongly the brand color influences supporting roles.
-        </p>
-        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
-          {INTENTS.map((intent) => (
-            <button
-              key={intent.value}
-              type="button"
-              aria-pressed={state.colorIntent === intent.value}
-              title={intent.description}
-              onClick={() => dispatch({ type: "SET_COLOR_INTENT", payload: intent.value })}
-              className={`rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                state.colorIntent === intent.value
-                  ? "bg-surface-featured text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {intent.label}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-
       <div className="space-y-2">
         <div className="flex items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold text-foreground">Color roles</p>
-            <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
-              Override generated colors only when needed.
-            </p>
-          </div>
+          <p className="text-xs font-semibold text-foreground">All roles</p>
           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
             {mode}
           </span>

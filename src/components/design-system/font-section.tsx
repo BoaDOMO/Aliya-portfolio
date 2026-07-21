@@ -7,48 +7,77 @@ import {
 import { SMART_PAIRINGS, type FontPairing } from "@/lib/google-fonts"
 import type { TypeScaleId } from "@/lib/type-scale"
 import { Switch } from "@/components/ui/switch"
+import { SegmentedControl } from "@/components/ui/segmented-control"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+  Collapsible,
+  CollapsibleContent,
+} from "@/components/ui/collapsible"
+import AdvancedSettingsToggle from "./advanced-settings-toggle"
 
 const TYPE_SCALE_OPTIONS: Array<{
   value: TypeScaleId
   label: string
-  description: string
 }> = [
-  { value: "compact", label: "Compact", description: "Dense product tools" },
-  { value: "balanced", label: "Balanced", description: "Everyday product UI" },
-  { value: "editorial", label: "Editorial", description: "Larger storytelling type" },
+  { value: "compact", label: "Calm" },
+  { value: "balanced", label: "Balanced" },
+  { value: "editorial", label: "Expressive" },
 ]
 
 function PairingDropdown({
   activePair,
+  fonts,
   onChange,
 }: {
   activePair: FontPairing | null
+  fonts: {
+    display: string | null
+    body: string | null
+    mono: string | null
+  }
   onChange: (pair: FontPairing) => void
 }) {
   const [open, setOpen] = useState(false)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="group flex min-h-24 w-full items-start gap-3 rounded-xl border border-border bg-surface-control p-3.5 text-left transition-colors hover:border-border-strong hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-mono text-[10px] font-semibold text-muted-foreground">
-          03
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-semibold text-muted-foreground">
-            Choose a font pairing
+      <PopoverTrigger className="group grid w-full grid-cols-1 gap-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-2">
+        <span className="flex min-h-36 flex-col justify-between rounded-xl border border-border bg-surface-control p-5 transition-colors group-hover:border-border-strong group-hover:bg-surface-raised">
+          <span className="text-sm font-semibold text-muted-foreground">Heading</span>
+          <span
+            className="break-words text-3xl font-semibold leading-none tracking-tight text-foreground"
+            style={{ fontFamily: fonts.display ?? undefined }}
+          >
+            {fonts.display ?? "Display"}
           </span>
-          <span className="mt-1 block text-sm font-semibold text-foreground">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            Display
+          </span>
+        </span>
+        <span className="flex min-h-36 flex-col justify-between rounded-xl border border-border bg-surface-control p-5 transition-colors group-hover:border-border-strong group-hover:bg-surface-raised">
+          <span className="text-sm font-semibold text-muted-foreground">Body</span>
+          <span
+            className="break-words text-3xl leading-none tracking-tight text-foreground"
+            style={{ fontFamily: fonts.body ?? undefined }}
+          >
+            {fonts.body ?? "Body"}
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            Reading
+          </span>
+        </span>
+        <span className="flex min-h-20 items-center gap-4 rounded-xl border border-border bg-surface-control p-5 transition-colors group-hover:border-border-strong group-hover:bg-surface-raised sm:col-span-2">
+          <span className="text-sm font-semibold text-muted-foreground">Data</span>
+          <span
+            className="min-w-0 flex-1 truncate text-xl text-foreground"
+            style={{ fontFamily: fonts.mono ?? undefined }}
+          >
+            {fonts.mono ?? "Monospace"}
+          </span>
+          <span className="hidden truncate font-mono text-[10px] uppercase tracking-widest text-muted-foreground sm:block">
             {activePair?.label ?? "Custom pairing"}
           </span>
-          <span className="mt-0.5 block truncate text-[11px] leading-4 text-muted-foreground">
-            {activePair
-              ? `${activePair.display} · ${activePair.body} · ${activePair.mono}`
-              : "Choose a curated role-based pairing"}
-          </span>
-        </span>
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover:bg-muted group-hover:text-foreground">
-          <CaretDown className={`size-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+          <CaretDown className={`size-4 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
         </span>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-[var(--anchor-width)] gap-1 p-1.5">
@@ -105,7 +134,17 @@ function FontRoleRow({
   )
 }
 
-export default function FontSection() {
+export default function FontSection({
+  onOpenDrawer,
+  advancedOpen,
+  onAdvancedOpenChange,
+  hasAdvancedChanges,
+}: {
+  onOpenDrawer?: (slot: "display" | "body" | "mono") => void
+  advancedOpen: boolean
+  onAdvancedOpenChange: (open: boolean) => void
+  hasAdvancedChanges: boolean
+}) {
   const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
   const activePair = SMART_PAIRINGS.find(
@@ -126,7 +165,40 @@ export default function FontSection() {
     })
   }
 
-  return <PairingDropdown activePair={activePair} onChange={setPairing} />
+  return (
+    <section>
+      <Collapsible open={advancedOpen} onOpenChange={onAdvancedOpenChange}>
+        <div className="mb-4 flex items-center gap-2">
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+            Typography
+          </h2>
+          <div className="ml-auto flex min-w-0 items-center gap-2">
+            <SegmentedControl
+              options={TYPE_SCALE_OPTIONS}
+              value={state.typeScaleId}
+              onChange={(value) =>
+                dispatch({ type: "SET_TYPE_SCALE", payload: value as TypeScaleId })
+              }
+              size="sm"
+              ariaLabel="Type scale"
+              className="shrink-0 [&_button]:px-1.5 [&_button]:text-[10px] sm:[&_button]:px-2 sm:[&_button]:text-xs"
+            />
+            <AdvancedSettingsToggle
+              label="typography"
+              open={advancedOpen}
+              modified={hasAdvancedChanges}
+            />
+          </div>
+        </div>
+        <PairingDropdown activePair={activePair} fonts={state.fonts} onChange={setPairing} />
+        <CollapsibleContent className="overflow-hidden data-closed:animate-accordion-up data-open:animate-accordion-down motion-reduce:animate-none">
+          <div className="mt-5 border-t border-border pt-5">
+            <FontAdvancedSettings onOpenDrawer={onOpenDrawer} />
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </section>
+  )
 }
 
 export function FontAdvancedSettings({
@@ -139,38 +211,8 @@ export function FontAdvancedSettings({
 
   return (
     <div className="space-y-5">
-      <fieldset className="space-y-2">
-        <legend className="text-xs font-semibold text-foreground">Type scale</legend>
-        <p className="text-[11px] leading-4 text-muted-foreground">
-          Change the complete size system without tuning each heading.
-        </p>
-        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
-          {TYPE_SCALE_OPTIONS.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              aria-pressed={state.typeScaleId === option.value}
-              title={option.description}
-              onClick={() => dispatch({ type: "SET_TYPE_SCALE", payload: option.value })}
-              className={`rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                state.typeScaleId === option.value
-                  ? "bg-surface-featured text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-
       <div className="space-y-2">
-        <div>
-          <p className="text-xs font-semibold text-foreground">Font roles</p>
-          <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
-            Fine-tune individual roles when the pairing needs an exception.
-          </p>
-        </div>
+        <p className="text-xs font-semibold text-foreground">Font roles</p>
         <div className="rounded-xl border border-border bg-surface-control p-1">
           <FontRoleRow
             label="Display"
@@ -194,10 +236,7 @@ export function FontAdvancedSettings({
       </div>
 
       <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-control px-3 py-2.5">
-        <div>
-          <p className="text-xs font-semibold text-foreground">Keep type matched to style</p>
-          <p className="mt-0.5 text-[10px] text-muted-foreground">Update pairing and scale when style changes</p>
-        </div>
+        <p className="text-xs font-semibold text-foreground">Match type to style</p>
         <Switch
           checked={state.typographyMatchPreset}
           onCheckedChange={(checked) =>

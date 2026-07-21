@@ -2,19 +2,13 @@ import { cn } from "@/lib/utils"
 
 export interface PresetBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
+  tone?: "card" | "raised" | "featured" | "popover"
 }
 
-export function PresetBox({ children, className, ...props }: PresetBoxProps) {
+export function PresetBox({ children, className, tone = "card", ...props }: PresetBoxProps) {
   return (
     <div
-      className={cn("bg-card", className)}
-      style={{
-        borderRadius: "var(--preset-radius)",
-        boxShadow: "var(--preset-shadow)",
-        backgroundColor: "oklch(from var(--card) l c h / var(--preset-bg-opacity))",
-        border: "var(--preset-border-width) solid oklch(from var(--border) l c h / var(--preset-border-opacity))",
-        backdropFilter: "var(--preset-backdrop)",
-      }}
+      className={cn("preview-preset-surface", `preview-preset-surface--${tone}`, className)}
       {...props}
     >
       {children}
@@ -38,11 +32,10 @@ export function PresetButton({
   return (
     <button
       className={cn(
-        "px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+        "preview-preset-radius inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         variantClasses,
         className
       )}
-      style={{ borderRadius: "var(--preset-radius)" }}
       {...props}
     >
       {children}
