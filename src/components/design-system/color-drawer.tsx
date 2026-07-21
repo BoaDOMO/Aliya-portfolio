@@ -136,7 +136,7 @@ function HueStrip({ hue, onChange }: { hue: number; onChange: (h: number) => voi
       }}
     >
       <div
-        className="absolute top-1/2 -translate-y-1/2 size-5 rounded-full border-[3px] border-white shadow-lg ring-1 ring-black/10 bg-background pointer-events-none"
+        className="pointer-events-none absolute top-1/2 size-5 -translate-y-1/2 rounded-full border-[3px] border-surface-control bg-surface-control shadow-lg ring-1 ring-border-strong"
         style={{ left: `${(hue / 360) * 100}%`, marginLeft: "-10px" }}
       />
     </div>
@@ -181,7 +181,7 @@ function ShadeBar({
               </span>
               <span className="font-mono text-[11px] text-muted-foreground flex-1">{hex}</span>
               {ratio !== null && (
-                <span className={`text-[10px] font-semibold font-mono leading-none ${ratio >= 7 ? "text-green-600" : ratio >= 4.5 ? "text-green-600" : ratio >= 3 ? "text-amber-500" : "text-red-500"}`}>
+                <span className={`font-mono text-[10px] font-semibold leading-none ${ratio >= 4.5 ? "text-success" : ratio >= 3 ? "text-warning" : "text-destructive"}`}>
                   {ratio.toFixed(1)}:1 {ratio >= 7 ? "(AAA)" : ratio >= 4.5 ? "(AA)" : ratio >= 3 ? "(AA?)" : "(FAIL)"}
                 </span>
               )}
@@ -300,7 +300,7 @@ export default function ColorDrawer({
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
           <div
-            className="size-5 rounded ring-1 ring-black/10 shrink-0"
+            className="size-5 shrink-0 rounded ring-1 ring-border-strong"
             style={{ backgroundColor: draftColor }}
           />
           <span className="text-sm font-bold capitalize">{context?.colorLabel ?? key}</span>
@@ -323,7 +323,7 @@ export default function ColorDrawer({
         <form onSubmit={handleHexSubmit}>
           <div className="flex items-center gap-2">
             <div
-              className="size-9 rounded-lg border shrink-0 ring-1 ring-black/5"
+              className="size-9 shrink-0 rounded-lg border ring-1 ring-border-strong"
               style={{ backgroundColor: draftColor }}
             />
             <input
@@ -332,7 +332,7 @@ export default function ColorDrawer({
               onChange={(e) => setHexInput(e.target.value)}
               onBlur={handleHexBlur}
               placeholder="#000000"
-              className="h-9 flex-1 rounded-lg border bg-background px-3 font-mono text-xs focus-visible:ring-2 focus-visible:ring-ring outline-none"
+            className="h-9 flex-1 rounded-lg border bg-surface-control px-3 font-mono text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
         </form>

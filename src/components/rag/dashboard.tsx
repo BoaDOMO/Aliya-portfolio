@@ -16,8 +16,8 @@ const NODES = ["Ask", "Find", "Draft", "Answer"] as const
 
 const STATUS_MAP: Record<Status, { dot: string; label: string }> = {
   ready: { dot: "bg-primary", label: "Ready" },
-  retrieving: { dot: "bg-blue-500 animate-pulse", label: "Retrieving\u2026" },
-  generating: { dot: "bg-amber-500 animate-pulse", label: "Generating\u2026" },
+  retrieving: { dot: "bg-info animate-pulse", label: "Retrieving\u2026" },
+  generating: { dot: "bg-warning animate-pulse", label: "Generating\u2026" },
   offline: { dot: "bg-destructive", label: "Offline" },
 }
 
@@ -88,7 +88,7 @@ export default function Dashboard({
   const maxTime = Math.max(...responseTimes.slice(-8), 1)
 
   return (
-    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border bg-white/85 dark:bg-card/90">
+    <div className="flex h-full max-h-full flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b px-3 py-2.5 h-12">
         <span className={cn("h-2 w-2 rounded-full", s.dot)} />
@@ -206,7 +206,7 @@ export default function Dashboard({
               {recentMessages.map((msg) => (
                 <div
                   key={msg.id}
-                  className="rounded-lg border bg-background px-2.5 py-1.5"
+                  className="rounded-lg border bg-tool-emphasis px-2.5 py-1.5"
                 >
                   <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/70">
                     <span

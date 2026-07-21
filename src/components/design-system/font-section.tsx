@@ -30,18 +30,26 @@ function PairingDropdown({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="flex w-full items-center gap-3 rounded-xl border border-border bg-background px-3 py-3 text-left transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <PopoverTrigger className="group flex min-h-24 w-full items-start gap-3 rounded-xl border border-border bg-surface-control p-3.5 text-left transition-colors hover:border-border-strong hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-mono text-[10px] font-semibold text-muted-foreground">
+          03
+        </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-xs font-semibold text-foreground">
+          <span className="block text-[11px] font-semibold text-muted-foreground">
+            Choose a font pairing
+          </span>
+          <span className="mt-1 block text-sm font-semibold text-foreground">
             {activePair?.label ?? "Custom pairing"}
           </span>
-          <span className="mt-0.5 block truncate text-[10px] text-muted-foreground">
+          <span className="mt-0.5 block truncate text-[11px] leading-4 text-muted-foreground">
             {activePair
               ? `${activePair.display} · ${activePair.body} · ${activePair.mono}`
               : "Choose a curated role-based pairing"}
           </span>
         </span>
-        <CaretDown className={`size-3.5 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover:bg-muted group-hover:text-foreground">
+          <CaretDown className={`size-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+        </span>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-[var(--anchor-width)] gap-1 p-1.5">
         {SMART_PAIRINGS.map((pair) => (
@@ -97,11 +105,7 @@ function FontRoleRow({
   )
 }
 
-export default function FontSection({
-  onOpenDrawer,
-}: {
-  onOpenDrawer?: (slot: "display" | "body" | "mono") => void
-}) {
+export default function FontSection() {
   const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
   const activePair = SMART_PAIRINGS.find(
@@ -122,16 +126,25 @@ export default function FontSection({
     })
   }
 
+  return <PairingDropdown activePair={activePair} onChange={setPairing} />
+}
+
+export function FontAdvancedSettings({
+  onOpenDrawer,
+}: {
+  onOpenDrawer?: (slot: "display" | "body" | "mono") => void
+}) {
+  const state = useDesignTokens()
+  const dispatch = useDesignTokensDispatch()
+
   return (
     <div className="space-y-5">
-      <div className="space-y-2">
-        <span className="text-xs font-semibold text-foreground">Pairing</span>
-        <PairingDropdown activePair={activePair} onChange={setPairing} />
-      </div>
-
       <fieldset className="space-y-2">
         <legend className="text-xs font-semibold text-foreground">Type scale</legend>
-        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted/60 p-1">
+        <p className="text-[11px] leading-4 text-muted-foreground">
+          Change the complete size system without tuning each heading.
+        </p>
+        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
           {TYPE_SCALE_OPTIONS.map((option) => (
             <button
               key={option.value}
@@ -151,31 +164,39 @@ export default function FontSection({
         </div>
       </fieldset>
 
-      <div className="rounded-xl border border-border bg-background p-1">
-        <FontRoleRow
-          label="Display"
-          family={state.fonts.display}
-          sample="Build clearly"
-          onEdit={() => onOpenDrawer?.("display")}
-        />
-        <FontRoleRow
-          label="Body"
-          family={state.fonts.body}
-          sample="Readable product copy"
-          onEdit={() => onOpenDrawer?.("body")}
-        />
-        <FontRoleRow
-          label="Data"
-          family={state.fonts.mono}
-          sample="STATUS 12:42"
-          onEdit={() => onOpenDrawer?.("mono")}
-        />
+      <div className="space-y-2">
+        <div>
+          <p className="text-xs font-semibold text-foreground">Font roles</p>
+          <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
+            Fine-tune individual roles when the pairing needs an exception.
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-surface-control p-1">
+          <FontRoleRow
+            label="Display"
+            family={state.fonts.display}
+            sample="Build clearly"
+            onEdit={() => onOpenDrawer?.("display")}
+          />
+          <FontRoleRow
+            label="Body"
+            family={state.fonts.body}
+            sample="Readable product copy"
+            onEdit={() => onOpenDrawer?.("body")}
+          />
+          <FontRoleRow
+            label="Data"
+            family={state.fonts.mono}
+            sample="STATUS 12:42"
+            onEdit={() => onOpenDrawer?.("mono")}
+          />
+        </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2.5">
+      <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-control px-3 py-2.5">
         <div>
-          <p className="text-xs font-semibold text-foreground">Match style preset</p>
-          <p className="mt-0.5 text-[10px] text-muted-foreground">Update pairing when style changes</p>
+          <p className="text-xs font-semibold text-foreground">Keep type matched to style</p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground">Update pairing and scale when style changes</p>
         </div>
         <Switch
           checked={state.typographyMatchPreset}

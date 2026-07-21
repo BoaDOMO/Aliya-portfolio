@@ -52,12 +52,12 @@ const TOKEN_RE = /(\/\/.*$|#.*$|"[^"]*"|'[^']*'|`[^`]*`|[{}[\]():;,=\->]|\b\w+\b
 function highlightLine(line: string): React.ReactNode[] {
   const tokens = line.match(TOKEN_RE) || [line]
   return tokens.map((token, i) => {
-    let color = "text-zinc-300"
-    if (/^(\/\/|#)/.test(token)) color = "text-zinc-500 italic"
-    else if (/^["'`]/.test(token)) color = "text-emerald-400"
-    else if (KEYWORDS.has(token)) color = "text-violet-400"
-    else if (/^\d+$/.test(token)) color = "text-amber-400"
-    else if (/^[{}[\]():;,=\->]$/.test(token)) color = "text-zinc-500"
+    let color = "text-editor-foreground"
+    if (/^(\/\/|#)/.test(token)) color = "text-editor-muted italic"
+    else if (/^["'`]/.test(token)) color = "text-editor-string"
+    else if (KEYWORDS.has(token)) color = "text-editor-keyword"
+    else if (/^\d+$/.test(token)) color = "text-editor-number"
+    else if (/^[{}[\]():;,=\->]$/.test(token)) color = "text-editor-muted"
     return (
       <span key={i} className={color}>
         {token}
@@ -126,21 +126,21 @@ export function CodeEditor() {
   const lines = code.split("\n")
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 shadow-2xl">
-      <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-3">
+    <div className="overflow-hidden rounded-xl border border-editor-border bg-editor-background shadow-[var(--shadow-card-hover)]">
+      <div className="flex items-center gap-2 border-b border-editor-border px-4 py-3">
         <div className="flex gap-1.5">
-          <div className="h-3 w-3 rounded-full bg-red-500" />
-          <div className="h-3 w-3 rounded-full bg-yellow-500" />
-          <div className="h-3 w-3 rounded-full bg-green-500" />
+          <div className="h-3 w-3 rounded-full bg-editor-stop" />
+          <div className="h-3 w-3 rounded-full bg-editor-caution" />
+          <div className="h-3 w-3 rounded-full bg-editor-go" />
         </div>
         <div className="flex-1 text-center">
-          <span className="text-xs text-zinc-500">{filename}</span>
+          <span className="text-xs text-editor-muted">{filename}</span>
         </div>
       </div>
       <div className="min-h-[260px] overflow-hidden px-4 py-5 font-mono text-sm leading-relaxed">
         {lines.map((line, i) => (
           <div key={i} className="flex min-h-[1.625rem]">
-            <span className="mr-4 w-6 shrink-0 select-none text-right text-zinc-600">
+            <span className="mr-4 w-6 shrink-0 select-none text-right text-editor-subtle">
               {i + 1}
             </span>
             <span className="whitespace-pre-wrap break-all">

@@ -1,4 +1,4 @@
-import { Copy, CaretDown, SlidersHorizontal } from "@phosphor-icons/react"
+import { CaretRight, Copy } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import {
   useDesignTokens,
@@ -8,9 +8,9 @@ import {
 import type { ColorTokens, StateColors } from "@/lib/color-utils"
 
 const INTENTS: Array<{ value: ColorIntent; label: string; description: string }> = [
-  { value: "neutral", label: "Neutral", description: "Quiet product UI" },
-  { value: "subtle", label: "Subtle", description: "Tinted supporting roles" },
-  { value: "expressive", label: "Expressive", description: "Stronger accent contrast" },
+  { value: "neutral", label: "Quiet", description: "Neutral supporting colors" },
+  { value: "subtle", label: "Balanced", description: "Gently tinted supporting colors" },
+  { value: "expressive", label: "Bold", description: "Stronger accent relationships" },
 ]
 
 const ADVANCED_TOKENS: Array<{ key: keyof ColorTokens; label: string }> = [
@@ -72,7 +72,7 @@ function TokenRow({
         type="button"
         onClick={() => copyColor(color, label)}
         aria-label={`Copy ${label} color`}
-        className="flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-control hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <Copy className="size-3.5" />
       </button>
@@ -90,46 +90,64 @@ export default function ColorSection({
   ) => void
 }) {
   const state = useDesignTokens()
+  const mode = state.previewMode
+  const tokens = mode === "dark" ? state.tokens.dark : state.tokens.light
+
+  return (
+    <button
+      type="button"
+      onClick={() => onOpenDrawer?.("primary", "Brand color", mode)}
+      className="group flex min-h-24 w-full items-start gap-3 rounded-xl border border-border bg-surface-control p-3.5 text-left transition-colors hover:border-border-strong hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-muted font-mono text-[10px] font-semibold text-muted-foreground">
+        02
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[11px] font-semibold text-muted-foreground">
+          Choose a brand color
+        </span>
+        <span className="mt-1 flex items-center gap-2">
+          <span
+            className="size-5 shrink-0 rounded-md border border-border-strong shadow-sm"
+            style={{ backgroundColor: tokens.primary }}
+          />
+          <span className="font-mono text-xs font-semibold text-foreground">
+            {tokens.primary.toUpperCase()}
+          </span>
+        </span>
+        <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
+          One color generates every semantic role.
+        </span>
+      </span>
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover:bg-muted group-hover:text-foreground">
+        <CaretRight className="size-4" />
+      </span>
+    </button>
+  )
+}
+
+export function ColorAdvancedSettings({
+  onOpenDrawer,
+}: {
+  onOpenDrawer?: (
+    key: string,
+    label: string,
+    type?: "light" | "dark" | "states",
+  ) => void
+}) {
+  const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
   const mode = state.previewMode
   const tokens = mode === "dark" ? state.tokens.dark : state.tokens.light
 
   return (
     <div className="space-y-5">
-      <div className="space-y-2">
-        <span className="text-xs font-semibold text-foreground">Brand color</span>
-        <div className="flex items-stretch gap-2">
-          <button
-            type="button"
-            onClick={() => onOpenDrawer?.("primary", "Brand color", mode)}
-            className="flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-border bg-background p-3 text-left transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <span
-              className="size-10 shrink-0 rounded-lg border border-black/10 shadow-sm"
-              style={{ backgroundColor: tokens.primary }}
-            />
-            <span className="min-w-0">
-              <span className="block text-sm font-semibold text-foreground">Primary</span>
-              <span className="block font-mono text-[11px] text-muted-foreground">
-                {tokens.primary.toUpperCase()}
-              </span>
-            </span>
-            <SlidersHorizontal className="ml-auto size-4 text-muted-foreground" />
-          </button>
-          <button
-            type="button"
-            onClick={() => copyColor(tokens.primary, "Brand color")}
-            aria-label="Copy brand color"
-            className="flex w-11 items-center justify-center rounded-xl border border-border bg-background text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <Copy className="size-4" />
-          </button>
-        </div>
-      </div>
-
       <fieldset className="space-y-2">
-        <legend className="text-xs font-semibold text-foreground">Color intent</legend>
-        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted/60 p-1">
+        <legend className="text-xs font-semibold text-foreground">Color personality</legend>
+        <p className="text-[11px] leading-4 text-muted-foreground">
+          Control how strongly the brand color influences supporting roles.
+        </p>
+        <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
           {INTENTS.map((intent) => (
             <button
               key={intent.value}
@@ -150,34 +168,18 @@ export default function ColorSection({
       </fieldset>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-foreground">System preview</span>
+        <div className="flex items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold text-foreground">Color roles</p>
+            <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
+              Override generated colors only when needed.
+            </p>
+          </div>
           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
             {mode}
           </span>
         </div>
-        <div className="grid grid-cols-5 overflow-hidden rounded-xl border border-border">
-          {[
-            [tokens.background, "Canvas"],
-            [tokens.card, "Card"],
-            [tokens.muted, "Muted"],
-            [tokens.accent, "Accent"],
-            [tokens.foreground, "Text"],
-          ].map(([color, label]) => (
-            <div key={label} className="group relative aspect-square" style={{ backgroundColor: color }}>
-              <span className="sr-only">{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <details className="group rounded-xl border border-border bg-background">
-        <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-3 text-xs font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          Fine-tune semantic tokens
-          <span className="ml-auto text-[10px] font-normal text-muted-foreground">Advanced</span>
-          <CaretDown className="size-3.5 text-muted-foreground transition-transform group-open:rotate-180" />
-        </summary>
-        <div className="border-t border-border px-1 py-2">
+        <div className="rounded-xl border border-border bg-surface-control px-1 py-2">
           {ADVANCED_TOKENS.map(({ key, label }) => (
             <TokenRow
               key={key}
@@ -199,7 +201,7 @@ export default function ColorSection({
             />
           ))}
         </div>
-      </details>
+      </div>
     </div>
   )
 }

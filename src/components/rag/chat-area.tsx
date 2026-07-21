@@ -73,7 +73,7 @@ export default function ChatArea({
   const isEmpty = messages.length === 0
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden rounded-xl border bg-white/85 dark:bg-card/90">
+    <div className="relative flex flex-1 flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel">
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 border-b px-3 py-2.5 h-12">
         <span className="h-2 w-2 rounded-full bg-primary" />
@@ -95,7 +95,7 @@ export default function ChatArea({
                 animate={{ opacity: 1, y: 0 }}
                 className="flex justify-center"
               >
-                <div className="max-w-[85%] rounded-2xl border bg-white/85 dark:bg-card/90 p-5 shadow-sm">
+                <div className="max-w-[85%] rounded-2xl border border-border-strong border-l-[3px] border-l-primary bg-tool-emphasis p-5">
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <Buildings className="h-5 w-5 text-primary" />
@@ -220,7 +220,7 @@ export default function ChatArea({
               key={s}
               type="button"
               onClick={() => onSend(s)}
-              className="rounded-full border bg-background px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-full border bg-secondary px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               {s}
             </button>
@@ -234,7 +234,7 @@ export default function ChatArea({
           ref={inputRef}
           placeholder="Ask from the source material..."
           rows={1}
-          className="min-h-[36px] resize-none text-sm"
+          className="min-h-[36px] resize-none bg-surface-control text-sm"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault()

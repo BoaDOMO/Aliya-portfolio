@@ -34,7 +34,7 @@ export function PageSection({
     <section
       className={cn(
         "py-12 md:py-20",
-        tone === "muted" && "bg-muted/30",
+        tone === "muted" && "bg-muted/50",
         className
       )}
       {...props}

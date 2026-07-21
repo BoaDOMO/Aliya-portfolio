@@ -90,7 +90,7 @@ export default function MiniChat() {
   const suggestions = ["Loan rates?", "How to apply?", "Early repayment?"]
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-white/85 dark:bg-card/90">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-border-strong bg-tool-panel shadow-[var(--shadow-card)]">
       {/* Header */}
       <div className="flex items-center gap-2 border-b px-3 py-2.5">
         <span className="h-2 w-2 rounded-full bg-primary" />
@@ -148,7 +148,7 @@ export default function MiniChat() {
             >
               <Link
                 to="/rag"
-                className="inline-flex items-center gap-1.5 rounded-full border bg-background px-4 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+                className="inline-flex items-center gap-1.5 rounded-full border bg-surface-control px-4 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent"
               >
                 Try the full demo
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -166,7 +166,7 @@ export default function MiniChat() {
               key={s}
               type="button"
               onClick={() => send(s)}
-              className="rounded-full border bg-background px-2.5 py-1 font-mono text-[10px] text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-full border bg-secondary px-2.5 py-1 font-mono text-[10px] text-muted-foreground transition-colors hover:text-foreground"
             >
               {s}
             </button>
@@ -185,7 +185,7 @@ export default function MiniChat() {
               handleSend()
             }
           }}
-          className="h-9 text-sm"
+          className="h-9 bg-surface-control text-sm"
         />
         <Button size="sm" onClick={handleSend} disabled={isLoading}>
           Send

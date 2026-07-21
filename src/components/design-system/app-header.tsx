@@ -82,7 +82,7 @@ export default function DesignSystemAppHeader({
 
   return (
     <>
-      <header className="flex h-13 shrink-0 items-center border-b border-border bg-background px-3 sm:px-4 print:hidden">
+      <header className="flex h-13 shrink-0 items-center border-b border-border bg-tool-panel px-3 sm:px-4 print:hidden">
         <div className="flex min-w-0 items-center gap-2">
           <Link
             to="/lab"
@@ -196,7 +196,7 @@ export default function DesignSystemAppHeader({
             {EXPORT_TABS.map((tab) => (
               <TabsContent key={tab.id} value={tab.id} className="m-0 min-h-0 min-w-0 flex-1 overflow-hidden p-4">
                 <div className="flex h-full min-h-0 min-w-0 flex-col gap-3">
-                  <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-lg border border-border bg-background">
+                  <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-lg border border-border bg-tool-canvas">
                     <pre className="min-w-max p-4 font-mono text-xs leading-relaxed whitespace-pre"><code>{exportOutput[tab.id].code}</code></pre>
                   </div>
                   <button

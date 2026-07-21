@@ -17,7 +17,7 @@ export function FloatingLabelInput({ label, className, ...props }: Props) {
         id={inputId}
         className={cn(
           "peer pt-5 pb-1",
-          "bg-surface-featured",
+          "bg-surface-control",
           "font-sans",
           className
         )}

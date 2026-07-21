@@ -71,7 +71,7 @@ function DesignSystemPreview() {
           <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
             <TextT className="h-4 w-4" /> Type roles
           </div>
-          <div className="space-y-3 rounded-lg border bg-background/60 p-4">
+          <div className="space-y-3 rounded-lg border bg-surface-control p-4">
             <p className="font-display text-3xl font-bold tracking-tight">Display</p>
             <p className="text-sm leading-relaxed text-muted-foreground">Readable product copy with a calm editorial rhythm.</p>
             <p className="font-mono text-[10px] uppercase tracking-widest text-primary">Metadata 12PX</p>

@@ -62,7 +62,7 @@ export default function FontBrowserModal({ open, onOpenChange, onSelect, preferr
                     key={cat}
                     onClick={() => setFilter(cat)}
                     className={`min-w-0 rounded-md px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-all sm:px-3 sm:text-xs sm:tracking-wider ${
-                      filter === cat ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
+                      filter === cat ? "bg-surface-control text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {cat}

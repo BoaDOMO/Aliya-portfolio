@@ -258,7 +258,7 @@ export default function PreviewPanel() {
 
       <div
         data-preview-toolbar
-        className="flex min-h-14 shrink-0 flex-wrap items-center gap-2 border-b border-border bg-background px-3 py-2 print:hidden sm:h-14 sm:flex-nowrap sm:gap-3 sm:py-0 sm:px-4"
+        className="flex min-h-[var(--tool-bar-height)] shrink-0 flex-wrap items-center gap-2 border-b border-border bg-tool-panel px-3 py-2 print:hidden sm:h-[var(--tool-bar-height)] sm:flex-nowrap sm:gap-3 sm:px-4 sm:py-0"
       >
         <div className="flex shrink-0 items-center gap-1 rounded-lg bg-muted/50 p-1" role="tablist" aria-label="Preview view">
             {TABS.map((tab) => (

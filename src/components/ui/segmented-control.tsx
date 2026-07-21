@@ -54,7 +54,7 @@ export function SegmentedControl({
             {isActive && (
               <motion.div
                 layoutId={`seg-active-${instanceId}`}
-                className="absolute inset-0 bg-background rounded-md shadow-sm"
+                className="absolute inset-0 rounded-md bg-surface-control shadow-sm"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
               />
             )}

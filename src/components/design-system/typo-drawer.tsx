@@ -65,7 +65,7 @@ export default function TypoDrawer({
         <button
           type="button"
           onClick={() => setShowBrowser(true)}
-          className="flex w-full items-center justify-between rounded-xl border border-border bg-background px-4 py-3 text-left transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex w-full items-center justify-between rounded-xl border border-border bg-surface-control px-4 py-3 text-left transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <span>
             <span className="block text-xs font-semibold text-foreground">Browse curated fonts</span>
@@ -75,7 +75,7 @@ export default function TypoDrawer({
         </button>
 
         {font && (
-          <div className="space-y-3 rounded-xl border border-border bg-background p-4">
+          <div className="space-y-3 rounded-xl border border-border bg-surface-control p-4">
             <div className="flex items-center gap-2">
               <CheckCircle className="size-4 text-success" weight="fill" />
               <span className="text-xs font-semibold text-foreground">Available variants</span>

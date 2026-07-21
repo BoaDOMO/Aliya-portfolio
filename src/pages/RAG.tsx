@@ -315,7 +315,8 @@ export default function RAG() {
   const recentMessages = chatHistory.slice(-3)
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-3 pt-4">
+    <div className="flex flex-1 bg-tool-canvas">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-3 pt-4">
       {/* Header */}
       <div className="flex flex-wrap items-center gap-2 border-b pb-3">
         <span className="inline-flex h-8 items-center gap-1 rounded-full bg-muted px-3 font-mono text-xs font-semibold text-muted-foreground">
@@ -391,7 +392,7 @@ export default function RAG() {
       </div>
 
       {/* Company picker */}
-      <Dialog open={companyOpen} onOpenChange={setCompanyOpen}>
+        <Dialog open={companyOpen} onOpenChange={setCompanyOpen}>
         <DialogContent className="max-w-2xl lg:max-w-4xl">
           <DialogTitle className="sr-only">Choose a company</DialogTitle>
           <div className="space-y-1">
@@ -423,7 +424,8 @@ export default function RAG() {
             ))}
           </div>
         </DialogContent>
-      </Dialog>
+        </Dialog>
+      </div>
     </div>
   )
 }

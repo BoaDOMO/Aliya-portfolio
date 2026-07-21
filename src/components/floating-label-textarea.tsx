@@ -17,7 +17,7 @@ export function FloatingLabelTextarea({ label, className, ...props }: Props) {
         id={textareaId}
         className={cn(
           "peer pt-5 pb-1 flex-1",
-          "bg-surface-featured",
+          "bg-surface-control",
           "font-sans",
           className
         )}

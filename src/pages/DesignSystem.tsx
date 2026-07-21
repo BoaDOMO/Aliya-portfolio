@@ -81,7 +81,7 @@ function DesignSystemContent() {
   return (
     <motion.div
       layout={!shouldReduceMotion}
-      className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background"
+      className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <DesignSystemAppHeader
@@ -91,7 +91,7 @@ function DesignSystemContent() {
       />
 
       <Sheet open={mobilePanelOpen} onOpenChange={setMobilePanelOpen}>
-        <SheetContent side="bottom" showCloseButton={false} className="h-[88dvh]! max-h-[88dvh] overflow-hidden rounded-t-2xl bg-background p-0 sm:max-w-none lg:hidden">
+        <SheetContent side="bottom" showCloseButton={false} className="h-[88dvh]! max-h-[88dvh] overflow-hidden rounded-t-2xl bg-tool-panel p-0 sm:max-w-none lg:hidden">
           <SheetHeader className="sr-only">
             <SheetTitle>Theme inspector</SheetTitle>
           </SheetHeader>

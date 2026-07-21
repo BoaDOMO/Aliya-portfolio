@@ -32,7 +32,7 @@ export default function DrawerSheet({ open, type, context, onClose }: DrawerShee
       <SheetContent
         side="right"
         showCloseButton={false}
-        className="w-full gap-0 bg-background p-0 sm:max-w-[400px]"
+        className="w-full gap-0 bg-tool-panel p-0 sm:max-w-[400px]"
       >
         <SheetHeader className="sr-only">
           <SheetTitle>{type ? drawerTitles[type] : "Theme settings"}</SheetTitle>

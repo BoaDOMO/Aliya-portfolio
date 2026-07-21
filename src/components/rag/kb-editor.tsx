@@ -83,25 +83,25 @@ export default function KBEditor({
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950",
+        "flex flex-col overflow-hidden rounded-xl border border-editor-border bg-editor-background",
         className
       )}
     >
       {/* Title bar */}
-      <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-3.5 h-12">
+      <div className="flex h-12 items-center gap-2 border-b border-editor-border px-4 py-3.5">
         <div className="flex gap-1.5">
-          <div className="h-3 w-3 rounded-full bg-red-500" />
-          <div className="h-3 w-3 rounded-full bg-yellow-500" />
-          <div className="h-3 w-3 rounded-full bg-green-500" />
+          <div className="h-3 w-3 rounded-full bg-editor-stop" />
+          <div className="h-3 w-3 rounded-full bg-editor-caution" />
+          <div className="h-3 w-3 rounded-full bg-editor-go" />
         </div>
         <div className="flex-1 text-center">
-          <span className="text-xs text-zinc-500">{fileName}</span>
+          <span className="text-xs text-editor-muted">{fileName}</span>
         </div>
         <div className="flex items-center gap-1">
           {dirty && (
             <button
               onClick={handleDiscard}
-              className="rounded px-2.5 py-0.5 font-mono text-[11px] text-zinc-400 transition-colors hover:text-zinc-200"
+              className="rounded px-2.5 py-0.5 font-mono text-[11px] text-editor-muted transition-colors hover:text-editor-foreground"
             >
               Discard
             </button>
@@ -113,7 +113,7 @@ export default function KBEditor({
               "rounded px-2.5 py-0.5 font-mono text-[11px] transition-colors",
               dirty
                 ? "bg-primary text-primary-foreground hover:opacity-90"
-                : "bg-zinc-800 text-zinc-600 cursor-not-allowed"
+                : "cursor-not-allowed bg-editor-border text-editor-subtle"
             )}
           >
             Save
@@ -122,7 +122,7 @@ export default function KBEditor({
       </div>
 
       {/* File tabs */}
-      <div className="flex gap-0 border-b border-zinc-800 px-2">
+      <div className="flex gap-0 border-b border-editor-border px-2">
         {FILE_TABS.map((f) => (
           <button
             key={f.key}
@@ -131,8 +131,8 @@ export default function KBEditor({
             className={cn(
               "px-3 py-1.5 font-mono text-[11px] transition-colors",
               activeFile === f.key
-                ? "border-b-2 border-primary text-zinc-200"
-                : "text-zinc-500 hover:text-zinc-300"
+                ? "border-b-2 border-primary text-editor-foreground"
+                : "text-editor-muted hover:text-editor-foreground"
             )}
           >
             {f.label}
@@ -182,7 +182,7 @@ function PersonaEditor({
             onChange={(e) =>
               onChange({ ...persona, [field.key]: e.target.value })
             }
-            className="flex-1 bg-transparent text-zinc-200 outline-none placeholder:text-zinc-600"
+            className="flex-1 bg-transparent text-editor-foreground outline-none placeholder:text-editor-subtle"
           />
         </EditorLine>
       ))}
@@ -193,7 +193,7 @@ function PersonaEditor({
             onChange({ ...persona, instructions: e.target.value })
           }
           rows={6}
-          className="w-full resize-none bg-transparent text-zinc-200 outline-none placeholder:text-zinc-600"
+          className="w-full resize-none bg-transparent text-editor-foreground outline-none placeholder:text-editor-subtle"
           placeholder="Define how the AI should behave..."
         />
       </EditorLine>
@@ -216,7 +216,7 @@ function CodeTextarea({
 
   return (
     <div className="relative font-mono text-xs leading-relaxed">
-      <div className="pointer-events-none absolute left-0 top-0 w-10 select-none pt-3 text-right text-zinc-600">
+      <div className="pointer-events-none absolute left-0 top-0 w-10 select-none pt-3 text-right text-editor-subtle">
         {lines.map((_, i) => (
           <div key={i} className="h-[1.375rem] pr-3">
             {i + 1}
@@ -227,7 +227,7 @@ function CodeTextarea({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={Math.max(lines.length, 15)}
-        className="w-full resize-none bg-transparent pl-11 pr-3 pt-3 text-zinc-200 outline-none placeholder:text-zinc-600"
+        className="w-full resize-none bg-transparent pl-11 pr-3 pt-3 text-editor-foreground outline-none placeholder:text-editor-subtle"
         placeholder={`Enter ${label.toLowerCase()} content...`}
         spellCheck={false}
       />
@@ -249,8 +249,8 @@ function EditorLine({
   center?: boolean
 }) {
   return (
-    <div className={cn("flex gap-3 px-4", center ? "items-center" : "items-start", isLast ? "pb-3 pt-3" : "border-b border-zinc-800/50 py-3")}>
-      <span className="w-32 shrink-0 text-right text-zinc-500">{label}</span>
+    <div className={cn("flex gap-3 px-4", center ? "items-center" : "items-start", isLast ? "pb-3 pt-3" : "border-b border-editor-border/50 py-3")}>
+      <span className="w-32 shrink-0 text-right text-editor-muted">{label}</span>
       {children}
     </div>
   )
