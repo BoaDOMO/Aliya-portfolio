@@ -3,95 +3,135 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
+import { PageContainer, PageSection } from "@/components/page-layout"
 import { SectionLabel } from "@/components/section-label"
 import MiniChat from "@/components/lab/mini-chat"
-import { ArrowRight } from "@phosphor-icons/react"
+import { ArrowRight, Palette, SlidersHorizontal, TextT } from "@phosphor-icons/react"
 
 const projects = [
   {
-    label: "PROJECT 01 \u2014 LIVE DEMO",
-    title: "RAG Chatbot \u2014 Nova Finance",
+    label: "PROJECT 01",
+    status: "Live prototype",
+    title: "RAG Chatbot — Nova Finance",
     description:
-      "An interactive RAG demo where the AI answers questions based only on a live knowledge base \u2014 the same architecture used in real-world enterprise AI assistants.",
-    tech: ["Gemini", "RAG", "Vercel Functions", "Embeddings"],
+      "An interactive knowledge-grounded assistant that shows how retrieval boundaries, editable source material, and product UX work together.",
+    contribution: "Product framing, conversation design, frontend, and serverless AI integration.",
+    tech: ["Gemini", "RAG", "Vercel Functions", "Knowledge base"],
     link: "/rag",
+    cta: "Try the chatbot",
+    preview: "chat" as const,
+  },
+  {
+    label: "PROJECT 02",
+    status: "Working tool",
+    title: "Design System Studio",
+    description:
+      "A browser-based workspace for exploring color, typography, component previews, and accessibility quality before exporting design tokens.",
+    contribution: "Design-system modeling, interaction design, token architecture, and frontend engineering.",
+    tech: ["React", "Tailwind v4", "Color science", "Accessibility"],
+    link: "/design-system",
+    cta: "Open the studio",
+    preview: "design" as const,
   },
 ]
+
+function DesignSystemPreview() {
+  return (
+    <Card className="card-featured flex h-full min-h-[360px] flex-col overflow-hidden p-6 md:min-h-[420px]">
+      <div className="flex items-center justify-between border-b pb-4">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Live tokens</p>
+          <p className="mt-1 font-display text-xl font-semibold">Warm Precision</p>
+        </div>
+        <SlidersHorizontal className="h-5 w-5 text-primary" />
+      </div>
+      <div className="grid flex-1 content-center gap-6 py-6 sm:grid-cols-2">
+        <div>
+          <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <Palette className="h-4 w-4" /> Color roles
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="aspect-[4/3] rounded-lg bg-primary p-3 text-xs font-semibold text-primary-foreground">Primary</div>
+            <div className="aspect-[4/3] rounded-lg bg-secondary p-3 text-xs font-semibold text-secondary-foreground">Secondary</div>
+            <div className="aspect-[4/3] rounded-lg border bg-background p-3 text-xs font-semibold">Canvas</div>
+            <div className="aspect-[4/3] rounded-lg border bg-card p-3 text-xs font-semibold">Surface</div>
+          </div>
+        </div>
+        <div>
+          <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <TextT className="h-4 w-4" /> Type roles
+          </div>
+          <div className="space-y-3 rounded-lg border bg-background/60 p-4">
+            <p className="font-display text-3xl font-bold tracking-tight">Display</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">Readable product copy with a calm editorial rhythm.</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-primary">Metadata 12PX</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-between border-t pt-4 text-xs text-muted-foreground">
+        <span>Contrast checks included</span>
+        <span className="font-mono text-primary">AA ✓</span>
+      </div>
+    </Card>
+  )
+}
 
 export default function Lab() {
   return (
     <div>
-      {/* ── Hero ── */}
-      <div className="py-12 md:py-20">
+      <PageSection>
         <FadeInWhenVisible>
-          <div className="mx-auto max-w-6xl px-6">
-            <Card className="rounded-xl border p-8 md:p-10 bg-white/85 dark:bg-card">
+          <PageContainer>
+            <Card className="card-featured p-8 md:p-10">
               <SectionLabel>// the lab</SectionLabel>
-              <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+              <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
                 Things I&rsquo;m building.
               </h1>
               <div className="mt-3 h-1 w-16 rounded-full bg-primary" />
-              <p className="mt-4 max-w-lg text-base text-muted-foreground">
-                Experiments, prototypes, and side projects.
+              <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
+                Working experiments in AI, product design, and frontend systems—with the decisions visible, not just the demos.
               </p>
             </Card>
-          </div>
+          </PageContainer>
         </FadeInWhenVisible>
-      </div>
+      </PageSection>
 
-      {/* ── Projects ── */}
-      <div className="bg-muted/30 py-12 md:py-20">
-        <FadeInWhenVisible delay={0.1}>
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="space-y-16">
-              {projects.map((project) => (
-                <div
-                  key={project.title}
-                  className="grid gap-8 md:grid-cols-2"
-                >
-                  {/* Info */}
-                  <div className="flex flex-col justify-center">
-                    <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                      {project.label}
-                    </p>
-                    <h2 className="mt-2 font-display text-2xl font-bold tracking-tight md:text-3xl">
-                      {project.title}
-                    </h2>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tech.map((t) => (
-                        <Badge
-                          key={t}
-                          variant="secondary"
-                          className="font-mono text-[10px]"
-                        >
-                          {t}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="mt-6">
-                      <Button
-                        render={<Link to={project.link} />}
-                        size="sm"
-                      >
-                        Try the full demo
-                        <ArrowRight className="ml-1.5 h-4 w-4" />
-                      </Button>
-                    </div>
+      <PageSection>
+        <PageContainer className="space-y-20 md:space-y-28">
+          {projects.map((project, index) => (
+            <FadeInWhenVisible key={project.title} delay={index * 0.08}>
+              <article className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
+                <div className={index % 2 ? "md:order-2 md:col-span-5" : "md:col-span-5"}>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{project.label}</p>
+                    <Badge variant="outline" className="font-mono text-[10px] text-primary">{project.status}</Badge>
                   </div>
-
-                  {/* Mini Chat Widget */}
-                  <div className="h-[400px] md:h-[460px]">
-                    <MiniChat />
+                  <h2 className="mt-3 font-display text-3xl font-bold tracking-tight">{project.title}</h2>
+                  <p className="mt-4 leading-relaxed text-muted-foreground">{project.description}</p>
+                  <p className="mt-4 text-sm leading-relaxed">
+                    <span className="font-semibold">My contribution:</span> {project.contribution}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <Badge key={tech} variant="secondary" className="font-mono text-[10px]">{tech}</Badge>
+                    ))}
                   </div>
+                  <Button render={<Link to={project.link} />} className="mt-7" size="sm">
+                    {project.cta}<ArrowRight className="ml-1 h-4 w-4" />
+                  </Button>
                 </div>
-              ))}
-            </div>
-          </div>
-        </FadeInWhenVisible>
-      </div>
+                <div className={index % 2 ? "md:order-1 md:col-span-7" : "md:col-span-7"}>
+                  {project.preview === "chat" ? (
+                    <div className="h-[420px] md:h-[460px]"><MiniChat /></div>
+                  ) : (
+                    <DesignSystemPreview />
+                  )}
+                </div>
+              </article>
+            </FadeInWhenVisible>
+          ))}
+        </PageContainer>
+      </PageSection>
     </div>
   )
 }

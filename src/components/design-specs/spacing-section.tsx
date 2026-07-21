@@ -1,4 +1,5 @@
 import { RADIUS_SCALE, RADIUS_CSS_MAP } from "@/lib/style-preset-utils"
+import { useDesignTokens } from "@/lib/design-tokens-store"
 
 const SPACING_TOKENS = [
   { token: "--spacing(0.5)", px: "2px", size: 0.5 },
@@ -15,19 +16,38 @@ const SPACING_TOKENS = [
 ]
 
 export default function SpacingSection() {
+  const state = useDesignTokens()
+  const preset = state.stylePreset.activePreset
+
   return (
     <div className="space-y-8">
+      <p className="text-sm text-muted-foreground">
+        Density, spacing scale, and border radius — the three pieces that govern
+        layout rhythm.
+      </p>
+
+      <div className="space-y-2">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          Density
+        </p>
+        <p className="font-mono text-xs text-foreground">
+          {preset} · spacing-scale = 1.0 · paragraph-spacing = 1.0
+        </p>
+      </div>
+
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Spacing Scale</p>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          Spacing scale
+        </p>
         <div className="space-y-2">
           {SPACING_TOKENS.map((s) => (
             <div key={s.token} className="flex items-center gap-4">
-              <div className="w-28 shrink-0">
-                <p className="text-xs font-medium text-foreground">{s.token}</p>
+              <div className="w-32 shrink-0">
+                <p className="font-mono text-xs font-medium text-foreground">{s.token}</p>
                 <p className="text-[8px] text-muted-foreground/60">{s.px}</p>
               </div>
               <div
-                className="h-5 rounded bg-primary/20 ring-1 ring-primary/30 transition-all"
+                className="h-5 rounded bg-primary/20 ring-1 ring-primary/30"
                 style={{ width: `${s.size * 4}px` }}
               />
             </div>
@@ -36,8 +56,10 @@ export default function SpacingSection() {
       </div>
 
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Border Radius</p>
-        <div className="grid grid-cols-3 gap-3">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          Border radius
+        </p>
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
           {RADIUS_SCALE.map(({ token, value }) => (
             <div
               key={token}
@@ -45,7 +67,9 @@ export default function SpacingSection() {
               style={{ borderRadius: RADIUS_CSS_MAP[token] }}
             >
               <p className="text-xs font-semibold text-foreground">{token}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground/60 break-all">{value}</p>
+              <p className="mt-0.5 break-all text-[10px] text-muted-foreground/70">
+                {value}
+              </p>
             </div>
           ))}
         </div>

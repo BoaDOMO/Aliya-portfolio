@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 interface Option {
   label: string | React.ReactNode
   value: string
+  accessibleLabel?: string
 }
 
 interface SegmentedControlProps {
@@ -13,6 +14,7 @@ interface SegmentedControlProps {
   onChange: (value: string) => void
   className?: string
   size?: "sm" | "md"
+  ariaLabel?: string
 }
 
 export function SegmentedControl({
@@ -21,10 +23,13 @@ export function SegmentedControl({
   onChange,
   className,
   size = "md",
+  ariaLabel,
 }: SegmentedControlProps) {
   const instanceId = React.useId()
   return (
     <div
+      role="group"
+      aria-label={ariaLabel}
       className={cn(
         "inline-flex p-1 bg-muted/50 rounded-lg border",
         size === "sm" ? "h-8" : "h-10",
@@ -35,8 +40,11 @@ export function SegmentedControl({
         const isActive = option.value === value
         return (
           <button
+            type="button"
             key={option.value}
             onClick={() => onChange(option.value)}
+            aria-label={option.accessibleLabel}
+            aria-pressed={isActive}
             className={cn(
               "relative flex-1 flex items-center justify-center px-3 rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",

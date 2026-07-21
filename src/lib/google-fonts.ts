@@ -1,6 +1,8 @@
 export interface FontDef {
   family: string
   category: "serif" | "sans-serif" | "display" | "monospace"
+  weights: number[]
+  italic: boolean
 }
 
 export interface FontPairing {
@@ -11,64 +13,30 @@ export interface FontPairing {
 }
 
 export const BUNDLED_FONTS: FontDef[] = [
-  { family: "Inter", category: "sans-serif" },
-  { family: "Roboto", category: "sans-serif" },
-  { family: "Open Sans", category: "sans-serif" },
-  { family: "Lato", category: "sans-serif" },
-  { family: "Montserrat", category: "sans-serif" },
-  { family: "Poppins", category: "sans-serif" },
-  { family: "Raleway", category: "sans-serif" },
-  { family: "Nunito", category: "sans-serif" },
-  { family: "DM Sans", category: "sans-serif" },
-  { family: "Work Sans", category: "sans-serif" },
-  { family: "Space Grotesk", category: "sans-serif" },
-  { family: "Archivo Narrow", category: "sans-serif" },
-  { family: "Rubik", category: "sans-serif" },
-  { family: "Manrope", category: "sans-serif" },
-  { family: "Playfair Display", category: "serif" },
-  { family: "Lora", category: "serif" },
-  { family: "Merriweather", category: "serif" },
-  { family: "DM Serif Display", category: "serif" },
-  { family: "Libre Baskerville", category: "serif" },
-  { family: "Crimson Text", category: "serif" },
-  { family: "Source Serif 4", category: "serif" },
-  { family: "Playfair", category: "serif" },
-  { family: "Cormorant Garamond", category: "serif" },
-  { family: "Spectral", category: "serif" },
-  { family: "JetBrains Mono", category: "monospace" },
-  { family: "Fira Code", category: "monospace" },
-  { family: "Source Code Pro", category: "monospace" },
-  { family: "IBM Plex Mono", category: "monospace" },
-  { family: "Space Mono", category: "monospace" },
-  { family: "Roboto Mono", category: "monospace" },
-  { family: "Ubuntu Mono", category: "monospace" },
-  { family: "Cutive Mono", category: "monospace" },
-  { family: "Oswald", category: "display" },
-  { family: "Bebas Neue", category: "display" },
-  { family: "Abril Fatface", category: "display" },
-  { family: "Righteous", category: "display" },
-  { family: "Fredoka One", category: "display" },
-  { family: "Lobster", category: "display" },
-  { family: "Pacifico", category: "display" },
-  { family: "Comfortaa", category: "display" },
+  { family: "Archivo Narrow", category: "display", weights: [400, 500, 600, 700], italic: true },
+  { family: "Inter", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "JetBrains Mono", category: "monospace", weights: [400, 500, 600, 700], italic: true },
+  { family: "Sora", category: "display", weights: [300, 400, 500, 600, 700], italic: false },
+  { family: "Quicksand", category: "display", weights: [300, 400, 500, 600, 700], italic: false },
+  { family: "Nunito", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "Fraunces", category: "serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "Roboto", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "DM Serif Display", category: "serif", weights: [400], italic: true },
+  { family: "DM Sans", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "Lora", category: "serif", weights: [400, 500, 600, 700], italic: true },
+  { family: "Work Sans", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
+  { family: "Fira Code", category: "monospace", weights: [400, 500, 600, 700], italic: false },
+  { family: "IBM Plex Mono", category: "monospace", weights: [400, 500, 600, 700], italic: true },
+  { family: "Space Mono", category: "monospace", weights: [400, 700], italic: true },
 ] as const
 
 export const SMART_PAIRINGS: FontPairing[] = [
-  { label: "Elegant Editorial", display: "Playfair Display", body: "Inter", mono: "JetBrains Mono" },
-  { label: "Modern SaaS", display: "Space Grotesk", body: "Inter", mono: "Fira Code" },
+  { label: "Warm Precision", display: "Archivo Narrow", body: "Inter", mono: "JetBrains Mono" },
+  { label: "Modern Product", display: "Sora", body: "Inter", mono: "Fira Code" },
   { label: "Trustworthy", display: "DM Serif Display", body: "DM Sans", mono: "JetBrains Mono" },
-  { label: "Warm Reading", display: "Lora", body: "Work Sans", mono: "Source Code Pro" },
-  { label: "Clean Minimal", display: "Raleway", body: "Inter", mono: "Roboto Mono" },
-  { label: "Bold Tech", display: "Montserrat", body: "Open Sans", mono: "IBM Plex Mono" },
-  { label: "Classic Pro", display: "Merriweather", body: "Lato", mono: "JetBrains Mono" },
-  { label: "Creative Studio", display: "Poppins", body: "Nunito", mono: "Space Mono" },
-  { label: "Geometric", display: "Rubik", body: "Manrope", mono: "Fira Code" },
-  { label: "Literary", display: "Cormorant Garamond", body: "Inter", mono: "Ubuntu Mono" },
-  { label: "Display Bold", display: "Oswald", body: "Roboto", mono: "Source Code Pro" },
-  { label: "Playful Dev", display: "Comfortaa", body: "Nunito", mono: "JetBrains Mono" },
-  { label: "Monospace First", display: "Space Mono", body: "Inter", mono: "JetBrains Mono" },
-  { label: "Serif Code", display: "Spectral", body: "DM Sans", mono: "IBM Plex Mono" },
-  { label: "Narrow Lead", display: "Archivo Narrow", body: "Inter", mono: "JetBrains Mono" },
+  { label: "Warm Reading", display: "Lora", body: "Work Sans", mono: "IBM Plex Mono" },
+  { label: "Soft Product", display: "Quicksand", body: "Nunito", mono: "JetBrains Mono" },
+  { label: "Technical", display: "JetBrains Mono", body: "Inter", mono: "IBM Plex Mono" },
 ]
 
 export function getPopularFonts(): readonly FontDef[] {
@@ -86,7 +54,18 @@ export function injectFontLink(family: string): () => void {
   const link = document.createElement("link")
   link.id = id
   link.rel = "stylesheet"
-  link.href = `https://fonts.googleapis.com/css2?family=${family.replace(/\s+/g, "+")}:wght@400;500;600;700&display=swap`
+  const font = BUNDLED_FONTS.find((candidate) => candidate.family === family)
+  const weights = font?.weights ?? [400, 500, 600, 700]
+  const familyParam = family.replace(/\s+/g, "+")
+  if (font?.italic) {
+    const variants = [
+      ...weights.map((weight) => `0,${weight}`),
+      ...weights.map((weight) => `1,${weight}`),
+    ].join(";")
+    link.href = `https://fonts.googleapis.com/css2?family=${familyParam}:ital,wght@${variants}&display=swap`
+  } else {
+    link.href = `https://fonts.googleapis.com/css2?family=${familyParam}:wght@${weights.join(";")}&display=swap`
+  }
   document.head.appendChild(link)
 
   return () => removeFontLink(family)
@@ -105,12 +84,7 @@ export function randomFont(category: string): FontDef {
   return filtered[Math.floor(Math.random() * filtered.length)]
 }
 
-export function fetchGoogleFonts(
-  apiKey: string
-): Promise<{ items: { family: string; category: string }[] } | null> {
-  return fetch(
-    `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`
-  )
-    .then((res) => res.json())
-    .catch(() => null)
+export function getFontDefinition(family: string | null): FontDef | undefined {
+  if (!family) return undefined
+  return BUNDLED_FONTS.find((font) => font.family === family)
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useDesignTokens, useDesignTokensDispatch } from "@/lib/design-tokens-store"
-import { generateShadeScale, SHADE_STOPS } from "@/lib/color-utils"
+import { generateShadeScale, SHADE_STOPS, type ColorTokens, type StateColors } from "@/lib/color-utils"
 import { hsv, formatHex } from "culori"
 import { getContrastRatio } from "@/lib/contrast-utils"
 import type { DrawerContext } from "./drawer-sheet"
-import { XIcon } from "lucide-react"
+import { X } from "@phosphor-icons/react"
 
 const SURFACE_KEYS: Record<string, string | undefined> = {
   "primary-foreground": "primary",
@@ -205,29 +205,26 @@ export default function ColorDrawer({
   const tokenType = context?.colorTokenType ?? "light"
   const key = context?.colorKey ?? "primary"
   const currentColor = tokenType === "states"
-    ? (state.tokens.states as any)[key] ?? "#000000"
+    ? state.tokens.states[key as keyof StateColors] ?? "#000000"
     : tokenType === "dark"
-      ? (state.tokens.dark as any)[key] ?? "#000000"
-      : (state.tokens.light as any)[key] ?? "#000000"
+      ? state.tokens.dark[key as keyof ColorTokens] ?? "#000000"
+      : state.tokens.light[key as keyof ColorTokens] ?? "#000000"
 
   // Derive paired surface hex for foreground drawers
   const surfaceKey = SURFACE_KEYS[key]
   const pairedSurfaceHex = surfaceKey
     ? tokenType === "states"
-      ? (state.tokens.states as any)[surfaceKey]
+      ? state.tokens.states[surfaceKey as keyof StateColors]
       : tokenType === "dark"
-        ? (state.tokens.dark as any)[surfaceKey]
-        : (state.tokens.light as any)[surfaceKey]
+        ? state.tokens.dark[surfaceKey as keyof ColorTokens]
+        : state.tokens.light[surfaceKey as keyof ColorTokens]
     : undefined
   const [hexInput, setHexInput] = useState(currentColor)
-
-  useEffect(() => {
-    setHexInput(currentColor)
-  }, [currentColor])
-
-  // baseColor is what the color picker shows — decoupled from the store value
-  // so selecting a shade doesn't jump the picker
   const [baseColor, setBaseColor] = useState(currentColor)
+  const [draftColor, setDraftColor] = useState(currentColor)
+  const [selectedStop, setSelectedStop] = useState<number | null>(
+    state.shadeMeta[key] ?? null,
+  )
 
   const [h, s, v] = (() => {
     try {
@@ -236,54 +233,66 @@ export default function ColorDrawer({
     } catch { return [0, 0, 1] }
   })()
 
-  // Detect which shade from baseColor's scale matches the store's token value
   const scale = generateShadeScale(baseColor)
-  const activeShadeIdx = scale.indexOf(currentColor)
-  const activeStop = activeShadeIdx >= 0 && activeShadeIdx !== 4 ? SHADE_STOPS[activeShadeIdx] : null
+  const activeShadeIdx = scale.indexOf(draftColor)
+  const activeStop = selectedStop ?? (activeShadeIdx >= 0 ? SHADE_STOPS[activeShadeIdx] : null)
 
-  const updateColor = (newHex: string) => {
+  const updateDraft = (newHex: string) => {
     if (!/^#[0-9A-Fa-f]{6}$/.test(newHex)) return
-    if (tokenType === "states") {
-      dispatch({ type: "UPDATE_STATE_TOKEN", payload: { key: key as any, value: newHex } })
-    } else if (tokenType === "dark") {
-      dispatch({ type: "UPDATE_DARK_TOKEN", payload: { key: key as any, value: newHex } })
-    } else if (key === "primary") {
-      dispatch({ type: "SET_PRIMARY_COLOR", payload: newHex })
-    } else {
-      dispatch({ type: "UPDATE_LIGHT_TOKEN", payload: { key: key as any, value: newHex } })
-    }
+    setHexInput(newHex)
+    setDraftColor(newHex)
   }
 
   const handleCanvasChange = (sat: number, val: number) => {
     const newHex = formatHex({ mode: "hsv", h, s: sat, v: val })
     setBaseColor(newHex)
-    updateColor(newHex)
-    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: null } })
+    updateDraft(newHex)
+    setSelectedStop(null)
   }
 
   const handleHueChange = (newHue: number) => {
     const newHex = formatHex({ mode: "hsv", h: newHue, s, v })
     setBaseColor(newHex)
-    updateColor(newHex)
-    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: null } })
+    updateDraft(newHex)
+    setSelectedStop(null)
   }
 
   const handleHexSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setBaseColor(hexInput)
-    updateColor(hexInput)
-    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: null } })
+    if (/^#[0-9A-Fa-f]{6}$/.test(hexInput)) {
+      setBaseColor(hexInput)
+      updateDraft(hexInput)
+      setSelectedStop(null)
+    }
   }
 
   const handleHexBlur = () => {
-    setBaseColor(hexInput)
-    updateColor(hexInput)
-    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: null } })
+    if (/^#[0-9A-Fa-f]{6}$/.test(hexInput)) {
+      setBaseColor(hexInput)
+      updateDraft(hexInput)
+      setSelectedStop(null)
+    } else {
+      setHexInput(draftColor)
+    }
   }
 
   const handleShadeSelect = (hex: string, stop: number) => {
-    updateColor(hex)
-    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: stop } })
+    updateDraft(hex)
+    setSelectedStop(stop)
+  }
+
+  const applyColor = () => {
+    if (tokenType === "states") {
+      dispatch({ type: "UPDATE_STATE_TOKEN", payload: { key: key as keyof StateColors, value: draftColor } })
+    } else if (tokenType === "dark") {
+      dispatch({ type: "UPDATE_DARK_TOKEN", payload: { key: key as keyof ColorTokens, value: draftColor } })
+    } else if (key === "primary") {
+      dispatch({ type: "SET_PRIMARY_COLOR", payload: draftColor })
+    } else {
+      dispatch({ type: "UPDATE_LIGHT_TOKEN", payload: { key: key as keyof ColorTokens, value: draftColor } })
+    }
+    dispatch({ type: "UPDATE_SHADE_META", payload: { key, index: selectedStop } })
+    onClose()
   }
 
   return (
@@ -292,15 +301,16 @@ export default function ColorDrawer({
         <div className="flex items-center gap-2">
           <div
             className="size-5 rounded ring-1 ring-black/10 shrink-0"
-            style={{ backgroundColor: currentColor }}
+            style={{ backgroundColor: draftColor }}
           />
           <span className="text-sm font-bold capitalize">{context?.colorLabel ?? key}</span>
         </div>
         <button
           onClick={onClose}
+          aria-label="Close color editor"
           className="flex size-7 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
         >
-          <XIcon className="size-4" />
+          <X className="size-4" />
         </button>
       </div>
 
@@ -314,7 +324,7 @@ export default function ColorDrawer({
           <div className="flex items-center gap-2">
             <div
               className="size-9 rounded-lg border shrink-0 ring-1 ring-black/5"
-              style={{ backgroundColor: currentColor }}
+              style={{ backgroundColor: draftColor }}
             />
             <input
               type="text"
@@ -328,6 +338,23 @@ export default function ColorDrawer({
         </form>
 
         <ShadeBar color={baseColor} onSelect={handleShadeSelect} activeStop={activeStop} pairedSurfaceHex={pairedSurfaceHex} />
+      </div>
+
+      <div className="flex shrink-0 gap-2 border-t border-border p-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex-1 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={applyColor}
+          className="flex-1 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Apply color
+        </button>
       </div>
     </div>
   )

@@ -1,14 +1,7 @@
-import { useState } from "react"
-import { XIcon } from "lucide-react"
+import { X } from "@phosphor-icons/react"
 import { useDesignTokens, useDesignTokensDispatch } from "@/lib/design-tokens-store"
 import { STYLE_PRESETS } from "@/lib/style-preset-presets"
 import type { StylePreset } from "@/lib/style-preset-types"
-import { SegmentedControl } from "@/components/ui/segmented-control"
-
-const GROUP_TABS = [
-  { value: "default", label: "Default" },
-  { value: "advanced", label: "Advanced" },
-]
 
 function PresetListItem({
   preset,
@@ -45,9 +38,6 @@ export default function StylePresetDrawer({
 }) {
   const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
-  const [activeGroup, setActiveGroup] = useState<"default" | "advanced">("default")
-
-  const filteredPresets = STYLE_PRESETS.filter((p) => p.group === activeGroup)
 
   const handleSelect = (presetId: string) => {
     dispatch({ type: "APPLY_STYLE_PRESET", payload: presetId })
@@ -63,30 +53,20 @@ export default function StylePresetDrawer({
           className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Close drawer"
         >
-          <XIcon className="size-4" />
+          <X className="size-4" />
         </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <div className="space-y-4">
-          <SegmentedControl
-            options={GROUP_TABS}
-            value={activeGroup}
-            onChange={(v) => setActiveGroup(v as "default" | "advanced")}
-            className="w-full"
-            size="sm"
-          />
-
-          <div className="space-y-2">
-            {filteredPresets.map((preset) => (
-              <PresetListItem
-                key={preset.id}
-                preset={preset}
-                isActive={state.stylePreset.activePreset === preset.id}
-                onClick={() => handleSelect(preset.id)}
-              />
-            ))}
-          </div>
+        <div className="space-y-2">
+          {STYLE_PRESETS.map((preset) => (
+            <PresetListItem
+              key={preset.id}
+              preset={preset}
+              isActive={state.stylePreset.activePreset === preset.id}
+              onClick={() => handleSelect(preset.id)}
+            />
+          ))}
         </div>
       </div>
     </div>

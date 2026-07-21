@@ -1,4 +1,42 @@
-import type { StylePreset } from "./style-preset-types"
+import type { StylePreset, DarkRules, StateColorRules, PresetTypography } from "./style-preset-types"
+import type { HarmonyType } from "./color-utils"
+
+const DEFAULT_DARK_RULES: DarkRules = {
+  bgChroma: 0.00375,
+  primaryMinLightness: 0.60,
+  surfaceHierarchyBoost: 0.08,
+  preserveChroma: false,
+}
+
+const DEFAULT_STATE_COLORS: StateColorRules = {
+  chromaModifier: 1,
+  desaturate: false,
+}
+
+const ALL_HARMONIES: HarmonyType[] = [
+  "shadcn",
+  "monochromatic",
+  "analogous",
+  "complementary",
+  "split-complementary",
+  "triadic",
+  "tetradic",
+  "double-complementary",
+  "compound",
+  "golden-ratio",
+  "near-complementary",
+  "pentadic",
+  "analogous-accent",
+]
+
+function typography(profile: Partial<PresetTypography> & Omit<PresetTypography, "scale" | "density" | "paragraphSpacing">, scale: PresetTypography["scale"], density: PresetTypography["density"] = "normal", paragraphSpacing: number = 1.0): PresetTypography {
+  return {
+    ...profile,
+    scale,
+    density,
+    paragraphSpacing,
+  } as PresetTypography
+}
 
 export const STYLE_PRESETS: StylePreset[] = [
   {
@@ -11,27 +49,44 @@ export const STYLE_PRESETS: StylePreset[] = [
         borderRadius: "0.5rem",
         boxShadow: "0 0 #0000",
         backgroundOpacity: 1,
-        borderOpacity: 0,
-        borderWidth: "0px",
+        borderOpacity: 0.08,
+        borderWidth: "1px",
         backdropFilter: "none",
       },
       dark: {
         borderRadius: "0.5rem",
         boxShadow: "0 0 #0000",
         backgroundOpacity: 1,
-        borderOpacity: 0,
-        borderWidth: "0px",
+        borderOpacity: 0.08,
+        borderWidth: "1px",
         backdropFilter: "none",
       },
     },
     colorRules: {
-      chromaModifier: 1,
-      warmthBias: 0,
-      shadowOpacityLight: 0,
-      shadowOpacityDark: 0,
+      allowedHarmonies: ALL_HARMONIES,
+      defaultHarmony: "shadcn",
+      chromaModifier: { light: 1.0, dark: 1.0 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Archivo Narrow",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.1, body: 1.6 },
+      },
+      {
+        display: { size: 48, weight: 700 },
+        body: { size: 16, weight: 500 },
+        mono: { size: 14, weight: 400 },
+      },
+      "normal",
+      1.0
+    ),
   },
   {
     id: "floating",
@@ -57,13 +112,38 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 1,
-      warmthBias: 0,
-      shadowOpacityLight: 0.12,
-      shadowOpacityDark: 0.28,
+      allowedHarmonies: [
+        "shadcn",
+        "monochromatic",
+        "analogous",
+        "complementary",
+        "split-complementary",
+        "near-complementary",
+        "analogous-accent",
+      ],
+      defaultHarmony: "analogous",
+      chromaModifier: { light: 1.0, dark: 1.0 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Sora",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.05, body: 1.6 },
+      },
+      {
+        display: { size: 56, weight: 700 },
+        body: { size: 16, weight: 700 },
+        mono: { size: 14, weight: 400 },
+      },
+      "normal",
+      1.1
+    ),
   },
   {
     id: "soft",
@@ -89,13 +169,30 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 0.8,
-      warmthBias: 0,
-      shadowOpacityLight: 0.08,
-      shadowOpacityDark: 0.18,
+      allowedHarmonies: ["monochromatic", "analogous", "analogous-accent", "shadcn"],
+      defaultHarmony: "analogous",
+      chromaModifier: { light: 0.8, dark: 0.7 },
+      warmthBias: { light: 0, dark: 5 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Quicksand",
+        bodyFont: "Nunito",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.2, body: 1.7 },
+      },
+      {
+        display: { size: 52, weight: 300 },
+        body: { size: 18, weight: 300 },
+        mono: { size: 14, weight: 400 },
+      },
+      "airy",
+      1.3
+    ),
   },
   {
     id: "outline",
@@ -121,13 +218,37 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 1,
-      warmthBias: 0,
-      shadowOpacityLight: 0,
-      shadowOpacityDark: 0,
+      allowedHarmonies: [
+        "monochromatic",
+        "analogous",
+        "complementary",
+        "near-complementary",
+        "shadcn",
+      ],
+      defaultHarmony: "complementary",
+      chromaModifier: { light: 1.0, dark: 1.0 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Fraunces",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.1, body: 1.6 },
+        letterSpacing: { body: "0.01em" },
+      },
+      {
+        display: { size: 64, weight: 400 },
+        body: { size: 17, weight: 400 },
+        mono: { size: 14, weight: 400 },
+      },
+      "normal",
+      1.4
+    ),
   },
   {
     id: "minimal",
@@ -153,13 +274,30 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 0.9,
-      warmthBias: 0,
-      shadowOpacityLight: 0,
-      shadowOpacityDark: 0,
+      allowedHarmonies: ["monochromatic"],
+      defaultHarmony: "monochromatic",
+      chromaModifier: { light: 0.9, dark: 0.9 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: { chromaModifier: 0.4, desaturate: true },
     },
+    typography: typography(
+      {
+        displayFont: "JetBrains Mono",
+        bodyFont: "JetBrains Mono",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.0, body: 1.4 },
+      },
+      {
+        display: { size: 40, weight: 700 },
+        body: { size: 14, weight: 400 },
+        mono: { size: 14, weight: 400 },
+      },
+      "tight",
+      1.0
+    ),
   },
   {
     id: "material",
@@ -187,13 +325,37 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 1,
-      warmthBias: 0,
-      shadowOpacityLight: 0.1,
-      shadowOpacityDark: 0.22,
+      allowedHarmonies: [
+        "shadcn",
+        "analogous",
+        "complementary",
+        "split-complementary",
+        "triadic",
+        "analogous-accent",
+      ],
+      defaultHarmony: "analogous",
+      chromaModifier: { light: 1.0, dark: 1.0 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Roboto",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.1, body: 1.5 },
+      },
+      {
+        display: { size: 48, weight: 500 },
+        body: { size: 16, weight: 500 },
+        mono: { size: 14, weight: 500 },
+      },
+      "normal",
+      1.0
+    ),
   },
   {
     id: "glass",
@@ -219,13 +381,41 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      chromaModifier: 0.85,
-      warmthBias: 0,
-      shadowOpacityLight: 0.1,
-      shadowOpacityDark: 0.2,
+      allowedHarmonies: [
+        "monochromatic",
+        "analogous",
+        "complementary",
+        "near-complementary",
+        "analogous-accent",
+      ],
+      defaultHarmony: "complementary",
+      chromaModifier: { light: 0.85, dark: 1.15 },
+      warmthBias: { light: 0, dark: 0 },
+      darkRules: {
+        ...DEFAULT_DARK_RULES,
+        preserveChroma: true,
+        bgChroma: 0.02,
+      },
       requiresScrim: true,
       requiresNeon: false,
+      stateColors: DEFAULT_STATE_COLORS,
     },
+    typography: typography(
+      {
+        displayFont: "Inter",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.0, body: 1.6 },
+        letterSpacing: { body: "0.02em" },
+      },
+      {
+        display: { size: 60, weight: 300 },
+        body: { size: 16, weight: 300 },
+        mono: { size: 14, weight: 400 },
+      },
+      "airy",
+      1.2
+    ),
   },
   {
     id: "neumorphic",
@@ -253,14 +443,30 @@ export const STYLE_PRESETS: StylePreset[] = [
       },
     },
     colorRules: {
-      forceHarmony: "monochromatic",
-      chromaModifier: 0.3,
-      warmthBias: 0,
-      shadowOpacityLight: 0.12,
-      shadowOpacityDark: 0.35,
+      allowedHarmonies: ["monochromatic"],
+      defaultHarmony: "monochromatic",
+      chromaModifier: { light: 0.3, dark: 0.25 },
+      warmthBias: { light: 0, dark: 8 },
+      darkRules: DEFAULT_DARK_RULES,
       requiresScrim: false,
       requiresNeon: false,
+      stateColors: { chromaModifier: 0.5, desaturate: false },
     },
+    typography: typography(
+      {
+        displayFont: "Nunito",
+        bodyFont: "Inter",
+        monoFont: "JetBrains Mono",
+        lineHeight: { display: 1.1, body: 1.5 },
+      },
+      {
+        display: { size: 42, weight: 500 },
+        body: { size: 15, weight: 500 },
+        mono: { size: 14, weight: 400 },
+      },
+      "normal",
+      1.1
+    ),
   },
 ]
 

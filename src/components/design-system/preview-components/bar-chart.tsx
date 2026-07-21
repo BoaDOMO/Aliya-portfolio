@@ -71,17 +71,19 @@ export default function BarChart({
         const y = padding.top + chartH - barH
         return (
           <Popover key={d.label} open>
-            <PopoverTrigger>
-              <div
-                className="absolute pointer-events-none"
-                style={{
-                  left: `${(x / 300) * 100}%`,
-                  top: `${(y / height) * 100}%`,
-                  width: `${(barW / 300) * 100}%`,
-                  height: `${(barH / height) * 100}%`,
-                }}
-              />
-            </PopoverTrigger>
+            <PopoverTrigger
+              render={
+                <div
+                  className="pointer-events-none absolute"
+                  style={{
+                    left: `${(x / 300) * 100}%`,
+                    top: `${(y / height) * 100}%`,
+                    width: `${(barW / 300) * 100}%`,
+                    height: `${(barH / height) * 100}%`,
+                  }}
+                />
+              }
+            />
             <PopoverContent
               className="w-auto px-2 py-1 text-xs"
               side="top"

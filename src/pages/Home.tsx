@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { CodeEditor } from "@/components/code-editor"
 import { cn } from "@/lib/utils"
+import { ArrowRight, MapPin } from "@phosphor-icons/react"
 
 const name = "Aliya Koy"
 
@@ -11,8 +12,8 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.4,
+      staggerChildren: 0.035,
+      delayChildren: 0.15,
     },
   },
 }
@@ -32,7 +33,7 @@ export default function Home() {
   const init = reducedMotion ? {} : undefined
 
   return (
-    <div className="flex min-h-[86vh] items-center justify-center px-6">
+    <div className="flex min-h-[calc(100svh-4rem)] items-center justify-center px-6 py-12 md:py-16">
       <div className="grid w-full max-w-6xl items-center gap-12 md:grid-cols-2 lg:gap-20">
         <motion.div
           initial={init ?? { opacity: 0, y: 6 }}
@@ -75,9 +76,9 @@ export default function Home() {
               delay: 1.4,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="mt-4 mx-auto max-w-md font-mono text-base leading-relaxed text-muted-foreground md:mx-0 lg:text-lg"
+            className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-muted-foreground md:mx-0 lg:text-lg"
           >
-            A small lab for things I want to build.
+            Product thinker and hands-on builder turning useful AI ideas into working experiences.
           </motion.p>
 
           <motion.div
@@ -85,22 +86,35 @@ export default function Home() {
             animate={init ?? { opacity: 1, scale: 1 }}
             transition={{
               duration: 0.4,
-              delay: 1.7,
+              delay: 0.65,
               ease: [0.16, 1, 0.3, 1],
             }}
             className="mt-8 flex justify-center gap-4 md:justify-start"
           >
-            <Button render={<Link to="/profile" />} size="lg">
-              View Profile
+            <Button render={<Link to="/lab" />} size="lg">
+              Explore the Lab
+              <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
             <Button
               render={<Link to="/contact" />}
               variant="outline"
               size="lg"
-              className="dark:border-foreground/20 dark:hover:bg-foreground/10"
             >
-              Get in Touch
+              View Profile
             </Button>
+          </motion.div>
+
+          <motion.div
+            initial={init ?? { opacity: 0, y: 8 }}
+            animate={init ?? { opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.78 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted-foreground md:justify-start"
+          >
+            <span className="font-mono uppercase tracking-wider">AI · Product · Full-stack</span>
+            <span className="flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-primary" />
+              Phnom Penh
+            </span>
           </motion.div>
         </motion.div>
 
@@ -109,7 +123,7 @@ export default function Home() {
           animate={init ?? { opacity: 1, x: 0 }}
           transition={{
             duration: 0.6,
-            delay: 0.5,
+            delay: 0.25,
             ease: [0.16, 1, 0.3, 1],
           }}
         >

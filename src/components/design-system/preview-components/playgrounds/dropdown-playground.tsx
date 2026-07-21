@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,13 +15,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "sonner"
 import {
-  SettingsIcon,
-  UserIcon,
-  LogOutIcon,
-  HelpCircleIcon,
-  KeyboardIcon,
-  ChevronRightIcon,
-} from "lucide-react"
+  Gear as SettingsIcon,
+  User as UserIcon,
+  SignOut as LogOutIcon,
+  Question as HelpCircleIcon,
+  Keyboard as KeyboardIcon,
+  CaretRight as ChevronRightIcon,
+} from "@phosphor-icons/react"
 
 export default function DropdownPlayground() {
   const [status, setStatus] = useState("active")
@@ -34,8 +33,8 @@ export default function DropdownPlayground() {
       <p className="text-xs text-muted-foreground">Click to open dropdowns with items, checkboxes, and submenus.</p>
       <div className="flex flex-wrap gap-2">
         <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline" size="sm">User Menu</Button>
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-7 rounded-md border border-border bg-background px-2.5 text-xs font-medium hover:bg-muted transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+              User Menu
             </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
             <DropdownMenuLabel className="text-xs">My Account</DropdownMenuLabel>
@@ -74,8 +73,8 @@ export default function DropdownPlayground() {
         </DropdownMenu>
 
         <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline" size="sm">Preferences</Button>
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-7 rounded-md border border-border bg-background px-2.5 text-xs font-medium hover:bg-muted transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+              Preferences
             </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-52">
             <DropdownMenuLabel className="text-xs">Preferences</DropdownMenuLabel>

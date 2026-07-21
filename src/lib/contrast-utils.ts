@@ -1,5 +1,5 @@
 import { wcagLuminance } from "culori"
-import type { ColorTokens } from "./color-utils"
+import type { ColorTokens, StateColors } from "./color-utils"
 
 export interface ContrastResult {
   label: string
@@ -58,6 +58,42 @@ export function checkAllPairs(tokens: ColorTokens): ContrastResult[] {
       label: "accent-fg ↔ accent",
       fg: tokens["accent-foreground"],
       bg: tokens.accent,
+    },
+  ]
+
+  return pairs.map((p) => {
+    const ratio = getContrastRatio(p.fg, p.bg)
+    return {
+      label: p.label,
+      fg: p.fg,
+      bg: p.bg,
+      ratio: Math.round(ratio * 100) / 100,
+      grade: getContrastGrade(ratio),
+    }
+  })
+}
+
+export function checkStatePairs(states: StateColors): ContrastResult[] {
+  const pairs: { label: string; fg: string; bg: string }[] = [
+    {
+      label: "success-fg ↔ success",
+      fg: states["success-foreground"],
+      bg: states.success,
+    },
+    {
+      label: "warning-fg ↔ warning",
+      fg: states["warning-foreground"],
+      bg: states.warning,
+    },
+    {
+      label: "destructive-fg ↔ destructive",
+      fg: states["destructive-foreground"],
+      bg: states.destructive,
+    },
+    {
+      label: "info-fg ↔ info",
+      fg: states["info-foreground"],
+      bg: states.info,
     },
   ]
 

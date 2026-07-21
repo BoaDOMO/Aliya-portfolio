@@ -1,5 +1,5 @@
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { InfoIcon, CheckCircleIcon, AlertTriangleIcon, XCircleIcon } from "lucide-react"
+import { Info as InfoIcon, CheckCircle as CheckCircleIcon, Warning as AlertTriangleIcon, XCircle as XCircleIcon } from "@phosphor-icons/react"
 
 export default function AlertPreview() {
   return (

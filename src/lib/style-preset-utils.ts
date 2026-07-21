@@ -4,11 +4,14 @@ import type { ColorTokens, HarmonyType } from "./color-utils"
 import type { PresetModifiers, StylePreset, StylePresetState } from "./style-preset-types"
 import { DEFAULT_STYLE_PRESET_ID, getDefaultPreset, getPresetById } from "./style-preset-presets"
 
-export function getEffectiveHarmonyType(
+export function getEffectiveHarmony(
   userHarmony: HarmonyType,
   preset?: StylePreset
 ): HarmonyType {
-  return preset?.colorRules.forceHarmony ?? userHarmony
+  if (!preset) return userHarmony
+  return preset.colorRules.allowedHarmonies.includes(userHarmony)
+    ? userHarmony
+    : preset.colorRules.defaultHarmony
 }
 
 export function getActiveModifiers(
@@ -35,8 +38,15 @@ export function generatePresetCssVars(
   isDark: boolean
 ): Record<string, string> {
   const m = getActiveModifiers(state, isDark)
+  const preset = getPresetById(state.activePreset)
 
-  return {
+  const densityScale: Record<"tight" | "normal" | "airy", string> = {
+    tight: "0.85",
+    normal: "1.0",
+    airy: "1.2",
+  }
+
+  const vars: Record<string, string> = {
     "--preset-radius": m.borderRadius,
     "--preset-shadow": m.boxShadow,
     "--preset-bg-opacity": String(m.backgroundOpacity),
@@ -44,7 +54,16 @@ export function generatePresetCssVars(
     "--preset-border-width": m.borderWidth,
     "--preset-backdrop": m.backdropFilter,
     "--radius": m.borderRadius,
+    "--spacing-scale": densityScale[preset?.typography.density ?? "normal"],
+    "--paragraph-spacing": String(preset?.typography.paragraphSpacing ?? 1.0),
   }
+
+  if (preset?.typography.lineHeight) {
+    vars["--line-height-display"] = String(preset.typography.lineHeight.display)
+    vars["--line-height-body"] = String(preset.typography.lineHeight.body)
+  }
+
+  return vars
 }
 
 export function generateStandardRadiusTheme(): Record<string, string> {
@@ -125,18 +144,18 @@ function hexFromOklch(l: number, c: number, h: number): string {
   })
 }
 
-function adjustColor(hex: string, preset?: StylePreset): string {
-  if (!preset) return hex
+function adjustColor(hex: string, preset: StylePreset, isDark?: boolean): string {
   const { chromaModifier, warmthBias, requiresNeon } = preset.colorRules
+  const mode = isDark ? "dark" : "light"
 
   const { l, c: baseC, h: baseH } = oklchFromHex(hex)
 
   let h = baseH
-  if (warmthBias !== 0) {
-    h = (h + warmthBias) % 360
+  if (warmthBias[mode] !== 0) {
+    h = (h + warmthBias[mode]) % 360
   }
 
-  let modifier = chromaModifier
+  let modifier = chromaModifier[mode]
   if (requiresNeon) {
     modifier *= 1.3
   }
@@ -148,7 +167,8 @@ function adjustColor(hex: string, preset?: StylePreset): string {
 
 export function applyColorRulesToTokens(
   tokens: ColorTokens,
-  preset?: StylePreset
+  preset?: StylePreset,
+  isDark?: boolean
 ): ColorTokens {
   if (!preset) return tokens
 
@@ -160,13 +180,16 @@ export function applyColorRulesToTokens(
     "muted",
     "background",
     "card",
+    "surface-raised",
+    "surface-featured",
     "popover",
     "border",
+    "border-strong",
     "input",
   ]
 
   for (const key of surfaceKeys) {
-    adjusted[key] = adjustColor(adjusted[key], preset)
+    adjusted[key] = adjustColor(adjusted[key], preset, isDark)
   }
 
   // Recompute foregrounds for adjusted surface colors

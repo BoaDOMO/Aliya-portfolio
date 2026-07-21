@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsUpDownIcon,
-  ArrowUpDownIcon,
-  SearchIcon,
-  ColumnsIcon,
-} from "lucide-react"
+  CaretLeft as ChevronLeftIcon,
+  CaretRight as ChevronRightIcon,
+  CaretUpDown as ChevronsUpDownIcon,
+  ArrowsDownUp as ArrowUpDownIcon,
+  MagnifyingGlass as SearchIcon,
+  Columns as ColumnsIcon,
+} from "@phosphor-icons/react"
 
 interface Product {
   id: string
@@ -144,11 +144,9 @@ export default function DataTablePlayground() {
           />
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="outline" size="sm" className="h-7 gap-1 text-xs">
-              <ColumnsIcon className="size-3" />
-              Columns
-            </Button>
+          <DropdownMenuTrigger className="inline-flex items-center justify-center gap-1 h-7 rounded-md border border-border bg-background px-2.5 text-xs font-medium hover:bg-muted transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none">
+            <ColumnsIcon className="size-3" />
+            Columns
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
             {COLUMNS.map((col) => (

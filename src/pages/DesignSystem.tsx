@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react"
-import { MenuIcon } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import {
-  DesignTokensProvider,
   useDesignTokens,
   useDesignTokensDispatch,
 } from "@/lib/design-tokens-store"
-import { readURLTheme, readURLPrimaryColor, syncToURL } from "@/lib/url-state"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { readURLTheme, syncToURL } from "@/lib/url-state"
+import { debouncedAutosave, loadAutosave } from "@/lib/localstorage-state"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import LeftPanel from "@/components/design-system/left-panel"
+import DesignSystemAppHeader from "@/components/design-system/app-header"
+import OnboardingTour from "@/components/design-system/onboarding-tour"
 import PreviewPanel from "@/components/design-system/preview-panel"
 import DrawerSheet from "@/components/design-system/drawer-sheet"
 import type { DrawerType, DrawerContext } from "@/components/design-system/drawer-sheet"
 
 function DesignSystemContent() {
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false)
-  const [isPanelCollapsed, setIsPanelCollapsed] = useState(false)
+  const [inspectorOpen, setInspectorOpen] = useState(true)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [drawerType, setDrawerType] = useState<DrawerType>(null)
   const [drawerContext, setDrawerContext] = useState<DrawerContext | undefined>(undefined)
@@ -23,35 +24,43 @@ function DesignSystemContent() {
   const shouldReduceMotion = useReducedMotion()
   const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
+  const loadedRef = useRef(false)
 
   useEffect(() => {
-    const urlPrimary = readURLPrimaryColor()
     const urlTheme = readURLTheme()
+    const autosave = loadAutosave()
 
     if (urlTheme) {
       dispatch({ type: "LOAD_THEME", payload: urlTheme })
+    } else if (autosave) {
+      dispatch({ type: "LOAD_THEME", payload: autosave })
     }
-    dispatch({
-      type: "SET_PRIMARY_COLOR",
-      payload: urlPrimary ?? state.tokens.light.primary,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    loadedRef.current = true
+  }, [dispatch])
 
   useEffect(() => {
+    if (!loadedRef.current) return
     syncToURL(state)
-  }, [
-    state.tokens.light.primary,
-    state.harmonyType,
-    state.colorSpace,
-    state.fonts,
-    state.stylePreset,
-  ])
+  }, [state])
+
+  useEffect(() => {
+    if (!loadedRef.current) return
+    debouncedAutosave(state)
+  }, [state])
 
   const handleOpenDrawer = (type: DrawerType, context?: DrawerContext) => {
-    setDrawerType(type)
-    setDrawerContext(context)
-    setDrawerOpen(true)
+    const openDrawer = () => {
+      setDrawerType(type)
+      setDrawerContext(context)
+      setDrawerOpen(true)
+    }
+
+    if (mobilePanelOpen) {
+      setMobilePanelOpen(false)
+      window.setTimeout(openDrawer, 160)
+    } else {
+      openDrawer()
+    }
   }
 
   const handleCloseDrawer = () => {
@@ -65,8 +74,6 @@ function DesignSystemContent() {
   const panelContent = (
     <LeftPanel
       onClose={() => setMobilePanelOpen(false)}
-      collapsed={isPanelCollapsed}
-      onToggle={() => setIsPanelCollapsed(!isPanelCollapsed)}
       onOpenDrawer={handleOpenDrawer}
     />
   )
@@ -74,28 +81,39 @@ function DesignSystemContent() {
   return (
     <motion.div
       layout={!shouldReduceMotion}
-      className="relative flex flex-1 min-h-0 flex-col overflow-hidden md:flex-row"
+      className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div
-        className={`hidden transition-all duration-300 motion-reduce:transition-none md:block shrink-0 ${
-          isPanelCollapsed ? "w-[52px]" : "w-[522px]"
-        }`}
-      >
-        {panelContent}
-      </div>
+      <DesignSystemAppHeader
+        inspectorOpen={inspectorOpen}
+        onToggleInspector={() => setInspectorOpen((open) => !open)}
+        onOpenMobileInspector={() => setMobilePanelOpen(true)}
+      />
 
       <Sheet open={mobilePanelOpen} onOpenChange={setMobilePanelOpen}>
-        <SheetTrigger className="fixed left-3 top-3 z-40 rounded-md border bg-card p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden" aria-label="Open design panel">
-          <MenuIcon className="size-4" />
-        </SheetTrigger>
-        <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0 sm:max-w-none md:hidden">
+        <SheetContent side="bottom" showCloseButton={false} className="h-[88dvh]! max-h-[88dvh] overflow-hidden rounded-t-2xl bg-background p-0 sm:max-w-none lg:hidden">
+          <SheetHeader className="sr-only">
+            <SheetTitle>Theme inspector</SheetTitle>
+          </SheetHeader>
           {panelContent}
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
-        <PreviewPanel collapsed={isPanelCollapsed} />
+      <div className="flex min-h-0 flex-1 overflow-hidden">
+        <motion.div
+          initial={false}
+          animate={{ width: inspectorOpen ? 360 : 0, opacity: inspectorOpen ? 1 : 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          data-design-system-left
+          aria-hidden={!inspectorOpen}
+          inert={!inspectorOpen || undefined}
+          className="hidden shrink-0 overflow-hidden border-r border-border print:hidden lg:block"
+        >
+          <div className="h-full w-[360px]">{panelContent}</div>
+        </motion.div>
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+          <PreviewPanel />
+        </div>
       </div>
 
       <DrawerSheet
@@ -104,14 +122,11 @@ function DesignSystemContent() {
         context={drawerContext}
         onClose={handleCloseDrawer}
       />
+      <OnboardingTour />
     </motion.div>
   )
 }
 
 export default function DesignSystem() {
-  return (
-    <DesignTokensProvider>
-      <DesignSystemContent />
-    </DesignTokensProvider>
-  )
+  return <DesignSystemContent />
 }

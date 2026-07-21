@@ -14,20 +14,20 @@ const SHADOW_DESCRIPTIONS: Record<string, string> = {
 export default function ElevationSection() {
   return (
     <div className="space-y-3">
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        Shadows
+      <p className="text-sm text-muted-foreground">
+        Shadow scale from the active preset, paired with recommended usage.
       </p>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {SHADOW_SCALE.map(({ token, value }) => (
           <div
             key={token}
-            className="rounded-xl border border-border bg-card p-4 transition-all"
+            className="rounded-xl border border-border bg-card p-4"
             style={{ boxShadow: token === "none" ? "none" : value }}
           >
-            <p className="text-xs font-semibold text-foreground">
-              {token}
+            <p className="font-mono text-xs font-semibold text-foreground">
+              --shadow-{token}
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-[10px] text-muted-foreground">
               {SHADOW_DESCRIPTIONS[token]}
             </p>
           </div>

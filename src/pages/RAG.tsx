@@ -124,11 +124,11 @@ function collectKB(kb: KB): string {
 }
 
 export default function RAG() {
-  const saved = loadState()
+  const [saved] = useState(loadState)
 
-  const [persona, setPersona] = useState<Persona>(saved?.persona ?? DEFAULT_PERSONA)
-  const [kb, setKB] = useState<KB>(saved?.kb ?? DEFAULT_KB)
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(saved?.chatHistory ?? [])
+  const [persona, setPersona] = useState<Persona>(() => saved?.persona ?? DEFAULT_PERSONA)
+  const [kb, setKB] = useState<KB>(() => saved?.kb ?? DEFAULT_KB)
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(() => saved?.chatHistory ?? [])
   const [isLoading, setIsLoading] = useState(false)
   const [pipelineStage, setPipelineStage] = useState<PipelineStage>(-1)
   const [status, setStatus] = useState<Status>("ready")
@@ -136,10 +136,20 @@ export default function RAG() {
   const [companyOpen, setCompanyOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<"chat" | "kb">("chat")
 
-  const sessionId = useRef(Math.random().toString(36).substring(2, 11) + Date.now().toString(36))
+  const [sessionId] = useState(() => crypto.randomUUID())
+  const [sessionStart] = useState(() => Date.now())
   const abortRef = useRef<AbortController | null>(null)
-  const msgIdCounter = useRef(0)
-  const sessionStart = useRef(Date.now())
+  const pipelineTimersRef = useRef<number[]>([])
+
+  const clearPipelineTimers = useCallback(() => {
+    for (const timer of pipelineTimersRef.current) window.clearTimeout(timer)
+    pipelineTimersRef.current = []
+  }, [])
+
+  useEffect(() => () => {
+    abortRef.current?.abort()
+    clearPipelineTimers()
+  }, [clearPipelineTimers])
 
   // Page title
   useEffect(() => {
@@ -159,11 +169,12 @@ export default function RAG() {
       if (isLoading) return
 
       abortRef.current?.abort()
+      clearPipelineTimers()
       const controller = new AbortController()
       abortRef.current = controller
 
       const userMsg: ChatMessage = {
-        id: `msg-${++msgIdCounter.current}`,
+        id: `msg-${crypto.randomUUID()}`,
         timestamp: Date.now(),
         role: "user",
         content: text,
@@ -175,9 +186,11 @@ export default function RAG() {
 
       const startTime = performance.now()
 
-      setTimeout(() => setPipelineStage(1), 200)
-      setTimeout(() => setStatus("generating"), 300)
-      setTimeout(() => setPipelineStage(2), 400)
+      pipelineTimersRef.current = [
+        window.setTimeout(() => setPipelineStage(1), 200),
+        window.setTimeout(() => setStatus("generating"), 300),
+        window.setTimeout(() => setPipelineStage(2), 400),
+      ]
 
       try {
         const res = await fetch("/api/chat", {
@@ -189,17 +202,18 @@ export default function RAG() {
             knowledgeBase: collectKB(kb),
             persona: persona.instructions,
             history: chatHistory.slice(-10),
-            sessionId: sessionId.current,
+            sessionId,
             companyName: persona.company,
           }),
         })
 
+        clearPipelineTimers()
         setPipelineStage(3)
         const body = await res.json()
 
         if (res.ok) {
           const botMsg: ChatMessage = {
-            id: `msg-${++msgIdCounter.current}`,
+            id: `msg-${crypto.randomUUID()}`,
             timestamp: Date.now(),
             role: "assistant",
             content: body.answer,
@@ -211,7 +225,7 @@ export default function RAG() {
           })
         } else {
           const errMsg: ChatMessage = {
-            id: `msg-${++msgIdCounter.current}`,
+            id: `msg-${crypto.randomUUID()}`,
             timestamp: Date.now(),
             role: "assistant",
             content: body.error || "Something went wrong.",
@@ -220,10 +234,11 @@ export default function RAG() {
           setChatHistory((prev) => [...prev, errMsg])
         }
       } catch (err) {
+        clearPipelineTimers()
         if (err instanceof DOMException && err.name === "AbortError") return
         setStatus("offline")
         const errMsg: ChatMessage = {
-          id: `msg-${++msgIdCounter.current}`,
+          id: `msg-${crypto.randomUUID()}`,
           timestamp: Date.now(),
           role: "assistant",
           content: "Could not reach the server. Please check your connection.",
@@ -233,20 +248,21 @@ export default function RAG() {
       }
 
       setIsLoading(false)
-      setTimeout(() => {
+      pipelineTimersRef.current = [window.setTimeout(() => {
         setStatus("ready")
         setPipelineStage(-1)
-      }, 600)
+      }, 600)]
     },
-    [isLoading, persona, kb, chatHistory]
+    [isLoading, persona, kb, chatHistory, sessionId, clearPipelineTimers]
   )
 
   const handleStop = useCallback(() => {
     abortRef.current?.abort()
+    clearPipelineTimers()
     setIsLoading(false)
     setStatus("ready")
     setPipelineStage(-1)
-  }, [])
+  }, [clearPipelineTimers])
 
   const handleClear = useCallback(() => {
     setChatHistory([])
@@ -338,7 +354,7 @@ export default function RAG() {
             msgCount={msgCount}
             avgTime={avgTime}
             companyName={persona.company}
-            sessionStart={sessionStart.current}
+            sessionStart={sessionStart}
             kbFillCount={kbFillCount}
             recentMessages={recentMessages}
             responseTimes={responseTimes}
@@ -352,6 +368,7 @@ export default function RAG() {
         <div className="flex flex-1 flex-col overflow-hidden">
           {activeTab === "kb" ? (
             <KBEditor
+              key={persona.company}
               persona={persona}
               kb={kb}
               onSave={handleSaveKB}

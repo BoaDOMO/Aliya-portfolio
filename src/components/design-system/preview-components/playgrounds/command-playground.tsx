@@ -13,14 +13,14 @@ import {
 } from "@/components/ui/command"
 import { Button } from "@/components/ui/button"
 import {
-  SearchIcon,
-  LayoutDashboardIcon,
-  SettingsIcon,
-  UserIcon,
-  FileTextIcon,
-  LogOutIcon,
-  HomeIcon,
-} from "lucide-react"
+  MagnifyingGlass as SearchIcon,
+  SquaresFour as LayoutDashboardIcon,
+  Gear as SettingsIcon,
+  User as UserIcon,
+  FileText as FileTextIcon,
+  SignOut as LogOutIcon,
+  House as HomeIcon,
+} from "@phosphor-icons/react"
 
 export default function CommandPlayground() {
   const [open, setOpen] = useState(false)

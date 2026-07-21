@@ -5,6 +5,7 @@ import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { SectionLabel } from "@/components/section-label"
 import { Timeline, TimelineItem } from "@/components/timeline"
 import { Cpu, Sparkle, Palette, MapPin } from "@phosphor-icons/react"
+import { PageContainer, PageSection } from "@/components/page-layout"
 
 const summary =
   "Product brain, builder hands. I figure out what needs to exist, then make it real \u2014 usually with AI riding shotgun."
@@ -144,13 +145,9 @@ function SkillCard({
 }) {
   return (
     <div className="group relative">
-      {/* Layered sheet effect */}
-      <div className="absolute inset-0 -z-10 scale-90 rounded-xl bg-primary/10 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-100 group-hover:rotate-[8deg]" />
-      <div className="absolute inset-0 -z-20 scale-90 rounded-xl bg-primary/5 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-100 group-hover:rotate-[-8deg]" />
+      <div className="absolute inset-x-3 -bottom-2 -z-10 h-8 rounded-xl bg-primary/8 transition-transform duration-300 motion-reduce:transition-none md:group-hover:translate-y-1" />
 
-      {/* Card */}
-      <Card className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-4 dark:border-border/50 dark:bg-card/90 dark:backdrop-blur-xl bg-white/85">
-        {/* Always visible: icon + title */}
+      <Card className="h-full overflow-hidden bg-card transition-transform duration-300 motion-reduce:transition-none md:group-hover:-translate-y-1">
         <div className="flex items-center gap-3 p-6">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
             <Icon className="h-5 w-5 text-primary" />
@@ -160,25 +157,18 @@ function SkillCard({
           </h3>
         </div>
 
-        {/* Expandable items */}
-        <div className="grid grid-rows-[0fr] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:grid-rows-[1fr]">
-          <div className="overflow-hidden">
-            <div className="px-6 pb-6 opacity-0 translate-y-2 transition-all duration-500 delay-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-100 group-hover:translate-y-0">
-              <ul className="space-y-2.5 border-t pt-4">
-                {items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
-                  >
-                    <span className="mt-0.5 shrink-0 text-primary">
-                      {"\u2192"}
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <div className="px-6 pb-6">
+          <ul className="space-y-2.5 border-t pt-4">
+            {items.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-sm text-muted-foreground"
+              >
+                <span className="mt-0.5 shrink-0 text-primary">{"\u2192"}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Card>
     </div>
@@ -189,10 +179,10 @@ export default function Profile() {
   return (
     <div className="flex flex-col">
       {/* ── Summary ── */}
-      <div className="py-12 md:py-20">
+      <PageSection>
         <FadeInWhenVisible>
-          <div className="mx-auto max-w-6xl px-6">
-            <Card className="rounded-xl border p-8 md:p-10 bg-white/85 dark:bg-card">
+          <PageContainer>
+            <Card className="card-featured rounded-xl p-8 md:p-10">
               <div className="flex flex-col items-center gap-5 text-center md:flex-row md:items-start md:text-left">
                 <Avatar className="h-16 w-16 md:h-20 md:w-20">
                   <AvatarFallback className="text-xl font-display md:text-2xl">
@@ -225,15 +215,15 @@ export default function Profile() {
                 </div>
               </div>
             </Card>
-          </div>
+          </PageContainer>
         </FadeInWhenVisible>
-      </div>
+      </PageSection>
 
       {/* ── Skills ── */}
-      <div className="bg-muted/30 py-12 md:py-20">
+      <PageSection>
         <FadeInWhenVisible delay={0.1}>
-          <div className="mx-auto max-w-6xl px-6">
-            <section>
+          <PageContainer>
+            <div>
               <SectionLabel>// what I do</SectionLabel>
               <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {categories.map((cat) => (
@@ -245,16 +235,16 @@ export default function Profile() {
                   />
                 ))}
               </div>
-            </section>
-          </div>
+            </div>
+          </PageContainer>
         </FadeInWhenVisible>
-      </div>
+      </PageSection>
 
       {/* ── Experience ── */}
-      <div className="py-12 md:py-20">
+      <PageSection>
         <FadeInWhenVisible delay={0.15}>
-          <div className="mx-auto max-w-6xl px-6">
-            <section>
+          <PageContainer>
+            <div>
               <SectionLabel>// where I&rsquo;ve been</SectionLabel>
               <Timeline>
                 {experience.map((entry) => (
@@ -301,22 +291,22 @@ export default function Profile() {
                   </TimelineItem>
                 ))}
               </Timeline>
-            </section>
-          </div>
+            </div>
+          </PageContainer>
         </FadeInWhenVisible>
-      </div>
+      </PageSection>
 
       {/* ── Education ── */}
-      <div className="bg-muted/30 py-12 md:py-20">
+      <PageSection>
         <FadeInWhenVisible delay={0.2}>
-          <div className="mx-auto max-w-6xl px-6">
-            <section>
+          <PageContainer>
+            <div>
               <SectionLabel>// where I studied</SectionLabel>
               <div className="mt-6 grid gap-6 md:grid-cols-2">
                 {education.map((entry) => (
                   <Card
                     key={entry.school}
-                    className="p-6 dark:border-border/50 dark:bg-card/90 dark:backdrop-blur-xl bg-white/85"
+                    className="p-6"
                   >
                     <h3 className="font-display text-base font-semibold">
                       {entry.school}
@@ -339,10 +329,10 @@ export default function Profile() {
                   </Card>
                 ))}
               </div>
-            </section>
-          </div>
+            </div>
+          </PageContainer>
         </FadeInWhenVisible>
-      </div>
+      </PageSection>
     </div>
   )
 }

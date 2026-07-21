@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { AlertCircleIcon } from "lucide-react"
+import { WarningCircle as AlertCircleIcon } from "@phosphor-icons/react"
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

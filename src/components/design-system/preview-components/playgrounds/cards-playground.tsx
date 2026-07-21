@@ -9,11 +9,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { TrendingUpIcon, UsersIcon } from "lucide-react"
+import { TrendUp as TrendingUpIcon, Users as UsersIcon } from "@phosphor-icons/react"
 
 export default function CardsPlayground() {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3 @[40rem]:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle className="text-xs">Stat Card</CardTitle>

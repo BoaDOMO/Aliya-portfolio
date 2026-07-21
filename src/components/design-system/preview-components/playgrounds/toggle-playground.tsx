@@ -3,7 +3,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { BoldIcon, ItalicIcon, UnderlineIcon, AlignLeftIcon, AlignCenterIcon, AlignRightIcon } from "lucide-react"
+import { TextB as BoldIcon, TextItalic as ItalicIcon, TextUnderline as UnderlineIcon, TextAlignLeft as AlignLeftIcon, TextAlignCenter as AlignCenterIcon, TextAlignRight as AlignRightIcon } from "@phosphor-icons/react"
 
 export default function TogglePlayground() {
   const [pizza, setPizza] = useState<string[]>([])

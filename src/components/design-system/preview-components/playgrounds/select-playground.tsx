@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, CaretUpDown as ChevronsUpDown } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -42,7 +42,7 @@ export default function SelectPlayground() {
     <div className="space-y-3">
       <p className="text-xs text-muted-foreground">Basic select, grouped, and combobox patterns.</p>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 @[40rem]:grid-cols-2">
         <div className="space-y-1">
           <p className="text-xs font-medium text-foreground">Basic Select</p>
           <Select>
@@ -60,18 +60,20 @@ export default function SelectPlayground() {
         <div className="space-y-1">
           <p className="text-xs font-medium text-foreground">Combobox</p>
           <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-full justify-between text-xs font-normal"
-              >
-                {value
-                  ? FRAMEWORKS.find((f) => f.value === value)?.label
-                  : "Select framework..."}
-                <ChevronsUpDown className="ml-2 size-3 shrink-0 opacity-50" />
-              </Button>
+            <PopoverTrigger
+              render={
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-full justify-between text-xs font-normal"
+                />
+              }
+            >
+              {value
+                ? FRAMEWORKS.find((f) => f.value === value)?.label
+                : "Select framework..."}
+              <ChevronsUpDown className="ml-2 size-3 shrink-0 opacity-50" />
             </PopoverTrigger>
             <PopoverContent className="w-full p-0" align="start">
               <Command>

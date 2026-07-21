@@ -41,19 +41,13 @@ export default function KBEditor({
   const [localPersona, setLocalPersona] = useState(persona)
   const [localKb, setLocalKb] = useState(kb)
 
-  // Sync when parent data changes (e.g. company switch)
-  useEffect(() => {
-    setLocalPersona(persona)
-    setLocalKb(kb)
-  }, [persona, kb])
-
   const dirty =
     JSON.stringify(localPersona) !== JSON.stringify(persona) ||
     JSON.stringify(localKb) !== JSON.stringify(kb)
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     onSave(localPersona, localKb)
-  }
+  }, [localPersona, localKb, onSave])
 
   const handleDiscard = useCallback(() => {
     setLocalPersona(persona)
@@ -71,7 +65,7 @@ export default function KBEditor({
     }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
-  })
+  }, [dirty, handleSave])
 
   // beforeunload guard
   useEffect(() => {

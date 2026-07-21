@@ -12,6 +12,7 @@ import { FloatingLabelInput } from "@/components/floating-label-input"
 import { FloatingLabelTextarea } from "@/components/floating-label-textarea"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { SectionLabel } from "@/components/section-label"
+import { PageContainer } from "@/components/page-layout"
 
 const contactItems = [
   {
@@ -67,17 +68,17 @@ export default function Contact() {
   }
 
   return (
-    <div className="flex min-h-[86vh] items-center justify-center px-6">
+    <div className="flex min-h-[calc(100svh-4rem)] items-center py-12 md:py-16">
       <FadeInWhenVisible>
-        <div className="grid w-full max-w-6xl items-stretch gap-8 md:grid-cols-2 md:gap-12">
+        <PageContainer className="grid items-start gap-10 md:grid-cols-12 md:gap-12">
           {/* Left: heading + tagline + contact info */}
           <FadeInWhenVisible delay={0.1}>
-            <div>
+            <div className="md:col-span-5 md:py-4">
               <SectionLabel>// get in touch</SectionLabel>
               <h1 className="mt-3 font-display text-5xl font-bold tracking-tight text-primary sm:text-6xl">
                 Let&rsquo;s talk.
               </h1>
-              <p className="mt-2 max-w-lg font-mono text-base leading-relaxed text-muted-foreground">
+              <p className="mt-3 max-w-md leading-relaxed text-muted-foreground">
                 Open to interesting work and good conversations.
               </p>
               <div className="mt-8 space-y-6">
@@ -101,7 +102,7 @@ export default function Contact() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="mt-0.5 block truncate text-sm font-medium hover:text-primary transition-colors"
+                        className="mt-0.5 block break-words rounded-sm text-sm font-medium transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       >
                         {item.value}
                       </a>
@@ -113,14 +114,19 @@ export default function Contact() {
           </FadeInWhenVisible>
 
           {/* Right: Form */}
-          <FadeInWhenVisible delay={0.2}>
-            <Card className="flex h-full flex-col bg-white/85 dark:bg-card/90 pb-0">
+          <FadeInWhenVisible delay={0.2} className="md:col-span-7">
+            <Card className="card-featured flex h-full flex-col pb-0">
               <CardHeader>
                 <CardTitle>Send a message</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col flex-1 pb-4">
+                <div className="sr-only" aria-live="polite" aria-atomic="true">
+                  {status === "sending" && "Sending your message."}
+                  {status === "success" && "Message sent successfully."}
+                  {status === "error" && "Message failed to send. Please try again or email directly."}
+                </div>
                 {status === "success" ? (
-                  <div className="flex flex-col items-center py-8 text-center">
+                  <div className="flex flex-col items-center py-10 text-center" role="status">
                     <CheckCircle className="mb-4 h-12 w-12 text-primary" />
                     <h3 className="text-lg font-semibold">
                       Message sent!
@@ -152,13 +158,12 @@ export default function Contact() {
                     <FloatingLabelTextarea
                       name="message"
                       label="Message"
-                      className="min-h-0"
-                      style={{ fieldSizing: "fixed" as const }}
+                      className="min-h-36 resize-y"
                       required
                       disabled={status === "sending"}
                     />
                     {status === "error" && (
-                      <p className="text-xs text-destructive">
+                      <p className="text-sm text-destructive" role="alert">
                         Something went wrong. Please try again or email me
                         directly.
                       </p>
@@ -178,7 +183,7 @@ export default function Contact() {
               </CardContent>
             </Card>
           </FadeInWhenVisible>
-        </div>
+        </PageContainer>
       </FadeInWhenVisible>
     </div>
   )

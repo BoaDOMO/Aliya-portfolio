@@ -28,9 +28,12 @@ export interface ColorTokens {
   foreground: string
   card: string
   "card-foreground": string
+  "surface-raised": string
+  "surface-featured": string
   popover: string
   "popover-foreground": string
   border: string
+  "border-strong": string
   input: string
   ring: string
 }
@@ -92,13 +95,29 @@ function hexFromOklch(l: number, c: number, h: number): string {
   })
 }
 
+export function mixColors(a: string, b: string, percentA: number): string {
+  const [la, ca, ha] = oklchFromHex(a)
+  const [lb, cb, hb] = oklchFromHex(b)
+  const t = percentA / 100
+  const hueDelta = ((ha - hb + 540) % 360) - 180
+  return hexFromOklch(
+    la * t + lb * (1 - t),
+    ca * t + cb * (1 - t),
+    hb + hueDelta * t,
+  )
+}
+
 export function computeForeground(bgHex: string): string {
   const bgLum = wcagLuminance(bgHex)
-  const darkHex = hexFromOklch(0.145, 0, 0)
-  const lightHex = hexFromOklch(0.985, 0, 0)
-  if ((bgLum + 0.05) / (wcagLuminance(darkHex) + 0.05) >= 4.5) return darkHex
-  if ((wcagLuminance(lightHex) + 0.05) / (bgLum + 0.05) >= 4.5) return lightHex
-  return bgLum > 0.18 ? darkHex : lightHex
+  const darkHex = "#1A1917"
+  const lightHex = "#FFFCF5"
+  const darkLum = wcagLuminance(darkHex)
+  const lightLum = wcagLuminance(lightHex)
+  const darkRatio = (bgLum + 0.05) / (darkLum + 0.05)
+  const lightRatio = (lightLum + 0.05) / (bgLum + 0.05)
+  if (darkRatio >= 4.5 && darkRatio >= lightRatio) return darkHex
+  if (lightRatio >= 4.5) return lightHex
+  return bgLum > 0.18 ? "#000000" : "#ffffff"
 }
 
 export function constrainPrimary(hex: string, mode: "light" | "dark"): string {
@@ -110,15 +129,6 @@ export function constrainPrimary(hex: string, mode: "light" | "dark"): string {
     return hexFromOklch(Math.max(l, 0.60), c, h)
   }
   return hex
-}
-
-function clampedLightness(base: number, offset: number): number {
-  let target = base + offset
-  target = Math.max(0.08, Math.min(0.95, target))
-  if (Math.abs(target - base) < 0.08) {
-    target = offset > 0 ? base + 0.08 : base - 0.08
-  }
-  return Math.max(0.08, Math.min(0.95, target))
 }
 
 type HarmonySlot = {
@@ -206,11 +216,11 @@ export function generateHarmony(
 ): { primary: string; secondary: string; accent: string; muted: string; palette: string[] } {
   if (type === "shadcn") {
     const [, , h] = oklchFromHex(hex)
-    const surface = hexFromOklch(0.97, 0.005, h)
+    const surface = hexFromOklch(0.92, 0.012, h)
     return { primary: hex, secondary: surface, accent: surface, muted: surface, palette: [hex, surface] }
   }
 
-  const [l, c, h] = oklchFromHex(hex)
+  const [, c, h] = oklchFromHex(hex)
   const angles = HARMONY_ANGLES[type]
   const slots = HARMONY_SLOTS[type]
 
@@ -218,9 +228,8 @@ export function generateHarmony(
     return { primary: hex, secondary: hex, accent: hex, muted: hex, palette: [hex] }
   }
 
-function makeColor(slot: HarmonySlot): string {
+  function makeColor(slot: HarmonySlot, targetL: number): string {
     const hue = pickFromAngle(angles, slot.angleIdx, h)
-    const targetL = clampedLightness(l, slot.lOffset)
     const targetC = Math.max(c * slot.chromaScale, 0.02)
     return hexFromOklch(targetL, targetC, hue)
   }
@@ -233,60 +242,73 @@ function makeColor(slot: HarmonySlot): string {
 
   return {
     primary: hex,
-    secondary: makeColor(slots.sec),
-    accent: makeColor(slots.acc),
-    muted: makeColor(slots.mut),
+    secondary: makeColor(slots.sec, 0.91),
+    accent: makeColor(slots.acc, 0.84),
+    muted: makeColor(slots.mut, 0.93),
     palette,
   }
 }
 
 export function generateNeutrals(primaryHex: string): ColorTokens {
-  const [, , h] = oklchFromHex(primaryHex)
-
-  const background = hexFromOklch(0.97, 0.00375, h)
-  const foreground = computeForeground(background)
-  const card = hexFromOklch(1.0, 0.020, h)
-  const popover = card
-  const [bgl] = oklchFromHex(background)
-  const [fgl] = oklchFromHex(foreground)
-  const borderL = fgl * 0.87 + bgl * 0.13
-  const border = hexFromOklch(borderL, 0.025, h)
+  const [, , primaryHue] = oklchFromHex(primaryHex)
+  const warmDelta = ((75 - primaryHue + 540) % 360) - 180
+  const neutralHue = primaryHue + warmDelta * 0.7
+  const primary = constrainPrimary(primaryHex, "light")
+  const background = hexFromOklch(0.96, 0.018, neutralHue)
+  const foreground = hexFromOklch(0.22, 0.018, neutralHue)
+  const card = hexFromOklch(0.98, 0.012, neutralHue)
+  const surfaceRaised = card
+  const surfaceFeatured = hexFromOklch(0.995, 0.009, neutralHue)
+  const popover = surfaceFeatured
+  const border = hexFromOklch(0.82, 0.014, neutralHue)
+  const borderStrong = hexFromOklch(0.72, 0.018, neutralHue)
   const input = border
-  const ring = primaryHex
+  const ring = primary
 
-  const secondary = hexFromOklch(0.97, 0.005, h)
-  const accent = hexFromOklch(0.97, 0.005, h)
-  const muted = hexFromOklch(0.97, 0.005, h)
+  const secondary = hexFromOklch(0.91, 0.018, neutralHue)
+  const accent = hexFromOklch(0.88, 0.024, neutralHue)
+  const muted = hexFromOklch(0.92, 0.014, neutralHue)
+  const mutedForeground = hexFromOklch(0.43, 0.018, neutralHue)
 
   return {
-    primary: primaryHex,
-    "primary-foreground": computeForeground(primaryHex),
+    primary,
+    "primary-foreground": computeForeground(primary),
     secondary,
-    "secondary-foreground": computeForeground(secondary),
+    "secondary-foreground": foreground,
     accent,
-    "accent-foreground": computeForeground(accent),
+    "accent-foreground": foreground,
     muted,
-    "muted-foreground": computeForeground(muted),
+    "muted-foreground": mutedForeground,
     background,
     foreground,
     card,
-    "card-foreground": computeForeground(card),
+    "card-foreground": foreground,
+    "surface-raised": surfaceRaised,
+    "surface-featured": surfaceFeatured,
     popover,
-    "popover-foreground": computeForeground(popover),
+    "popover-foreground": foreground,
     border,
+    "border-strong": borderStrong,
     input,
     ring,
   }
 }
 
-export function generateStateColors(primaryHex: string): StateColors {
+export function generateStateColors(
+  primaryHex: string,
+  stateRules: { chromaModifier: number; desaturate: boolean } = {
+    chromaModifier: 1,
+    desaturate: false,
+  }
+): StateColors {
   const [, c] = oklchFromHex(primaryHex)
-  const minChroma = Math.max(c, 0.12)
+  const minChroma = Math.max(c, 0.12) * stateRules.chromaModifier
+  const finalC = stateRules.desaturate ? Math.min(minChroma, 0.05) : minChroma
 
-  const info = hexFromOklch(0.60, minChroma * 0.75, 250)
-  const success = hexFromOklch(0.55, minChroma * 0.75, 145)
-  const warning = hexFromOklch(0.62, minChroma * 0.75, 48)
-  const destructive = hexFromOklch(0.50, minChroma * 0.85, 15)
+  const info = hexFromOklch(0.60, finalC * 0.75, 250)
+  const success = hexFromOklch(0.55, finalC * 0.75, 145)
+  const warning = hexFromOklch(0.62, finalC * 0.75, 48)
+  const destructive = hexFromOklch(0.50, finalC * 0.85, 15)
 
   return {
     info,
@@ -310,7 +332,55 @@ function darkMap(l: number): number {
   return 0.85 + (l - 0.05) * 0.35
 }
 
-export function generateDarkTokens(light: ColorTokens): ColorTokens {
+function contrastRatio(a: string, b: string): number {
+  const la = wcagLuminance(a) + 0.05
+  const lb = wcagLuminance(b) + 0.05
+  return Math.max(la, lb) / Math.min(la, lb)
+}
+
+function minContrastFallback(dark: ColorTokens): ColorTokens {
+  const pairs: [keyof ColorTokens, keyof ColorTokens][] = [
+    ["primary", "primary-foreground"],
+    ["secondary", "secondary-foreground"],
+    ["accent", "accent-foreground"],
+    ["muted", "muted-foreground"],
+    ["background", "foreground"],
+    ["card", "card-foreground"],
+    ["popover", "popover-foreground"],
+  ]
+
+  for (const [bgKey, fgKey] of pairs) {
+    const bg = dark[bgKey]
+    let fg = dark[fgKey]
+    if (!bg || !fg) continue
+
+    let iterations = 0
+    while (contrastRatio(bg, fg) < 4.5 && iterations < 20) {
+      const parsed = oklch(fg)
+      const l = Math.min(0.985, (parsed.l ?? 0) + 0.05)
+      fg = hexFromOklch(l, parsed.c ?? 0, parsed.h ?? 0)
+      iterations++
+    }
+    dark[fgKey] = fg
+  }
+
+  return dark
+}
+
+export function generateDarkTokens(
+  light: ColorTokens,
+  darkRules: {
+    bgChroma: number
+    primaryMinLightness: number
+    surfaceHierarchyBoost: number
+    preserveChroma: boolean
+  } = {
+    bgChroma: 0.00375,
+    primaryMinLightness: 0.60,
+    surfaceHierarchyBoost: 0.08,
+    preserveChroma: false,
+  }
+): ColorTokens {
   const [bgL] = oklchFromHex(light.background)
   const isDarkBg = bgL < 0.20
   const dark = {} as Record<string, string>
@@ -326,20 +396,26 @@ export function generateDarkTokens(light: ColorTokens): ColorTokens {
       const [l, c, h] = oklchFromHex(value)
       const rawL = isDarkBg ? Math.max(0.02, l * 0.45) : darkMap(l)
       const newL = (key === "primary" || key === "ring")
-        ? Math.max(0.60, rawL)
+        ? Math.max(darkRules.primaryMinLightness, rawL)
         : rawL
-      const newC = key === "background" ? 0.00375 : c
+      const newC = key === "background"
+        ? (darkRules.preserveChroma ? Math.max(c, darkRules.bgChroma) : darkRules.bgChroma)
+        : c
       dark[key] = hexFromOklch(newL, newC, h)
     }
   }
 
   // Ensure surface hierarchy: border/card/muted are visibly distinct from background
   const [dbgL, dbgC, dbgH] = oklchFromHex(dark.background)
+  const boost = darkRules.surfaceHierarchyBoost
   const surfaceMin: Record<string, number> = {
-    card: dbgL + 0.08,
-    popover: dbgL + 0.08,
-    border: dbgL + 0.12,
-    input: dbgL + 0.12,
+    card: dbgL + boost,
+    "surface-raised": dbgL + boost,
+    "surface-featured": dbgL + boost * 1.25,
+    popover: dbgL + boost,
+    border: dbgL + boost * 1.5,
+    "border-strong": dbgL + boost * 2,
+    input: dbgL + boost * 1.5,
     muted: 0.27,
     secondary: 0.27,
     accent: 0.27,
@@ -356,7 +432,7 @@ export function generateDarkTokens(light: ColorTokens): ColorTokens {
     }
   }
 
-  return dark as unknown as ColorTokens
+  return minContrastFallback(dark as unknown as ColorTokens)
 }
 
 export function generateShadeScale(hex: string): string[] {
@@ -411,7 +487,7 @@ export function generateDerivedTokens(
   modeTokens: ColorTokens,
   isDark?: boolean
 ): DerivedTokens {
-  const [_l, c, h] = oklchFromHex(modeTokens.primary)
+  const [, c, h] = oklchFromHex(modeTokens.primary)
   const chartChroma = Math.max(c * 0.7, 0.12)
   const chartHues = isDark ? CHART_DARK_HUES : CHART_LIGHT_HUES
   const chartLightness = isDark ? 0.65 : 0.6

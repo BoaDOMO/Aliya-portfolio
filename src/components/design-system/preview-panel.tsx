@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from "react"
-import { useDesignTokens } from "@/lib/design-tokens-store"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { useDesignTokens, useDesignTokensDispatch } from "@/lib/design-tokens-store"
 import {
   getCVDFilterId,
   type CVDType,
@@ -8,45 +8,36 @@ import {
   TRITANOPIA_MATRIX,
 } from "@/lib/color-blindness"
 import type { ColorTokens, StateColors, DerivedTokens } from "@/lib/color-utils"
-import type { FontSlots, Severity, FontCustomization } from "@/lib/design-tokens-store"
+import { mixColors } from "@/lib/color-utils"
+import type { FontSlots, FontCustomization } from "@/lib/design-tokens-store"
+import type { SemanticTypeScale } from "@/lib/type-scale"
 import type { StylePresetState } from "@/lib/style-preset-types"
 import { generatePresetCssVars, generateStandardRadiusTheme } from "@/lib/style-preset-utils"
-import { MonitorIcon, SmartphoneIcon, Layers, CheckCircle, AlertCircle, XCircle } from "lucide-react"
-import ComponentKitTab from "./preview-components/component-kit-tab"
+import { Columns, Desktop, DeviceMobile, DeviceTablet, Moon, Sun, GearSix } from "@phosphor-icons/react"
 import DashboardTab from "./preview-components/dashboard-tab"
-import LandingTab from "./preview-components/landing-tab"
+import WebviewRouter from "./preview-components/webviews/WebviewRouter"
 import ResponsiveFrame, { type DeviceType } from "./preview-components/responsive-frame"
+import DesignSpecs from "@/pages/DesignSpecs"
 import { SegmentedControl } from "@/components/ui/segmented-control"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-
-const CVD_OPTIONS: { type: CVDType; label: string; name: string }[] = [
-  { type: "protanopia", label: "P", name: "Protanopia" },
-  { type: "deuteranopia", label: "D", name: "Deuteranopia" },
-  { type: "tritanopia", label: "T", name: "Tritanopia" },
-]
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 
 const DEVICE_OPTIONS = [
-  { value: "desktop", label: <MonitorIcon className="size-3.5" /> },
-  { value: "phone", label: <SmartphoneIcon className="size-3.5" /> },
+  { value: "desktop", label: <Desktop className="size-3.5" />, accessibleLabel: "Desktop preview" },
+  { value: "tablet", label: <DeviceTablet className="size-3.5" />, accessibleLabel: "Tablet preview" },
+  { value: "phone", label: <DeviceMobile className="size-3.5" />, accessibleLabel: "Mobile preview" },
 ]
 
 const TABS = [
-  { id: "landing" as const, label: "Application" },
+  { id: "landing" as const, label: "Webview" },
   { id: "dashboard" as const, label: "Components" },
-  { id: "kit" as const, label: "Foundation" },
+  { id: "specs" as const, label: "Specs" },
 ]
 
-export type PreviewTabId = "kit" | "dashboard" | "landing"
+export type PreviewTabId = "dashboard" | "landing" | "specs"
 
-const TAB_COMPONENTS = {
-  kit: ComponentKitTab,
+const TAB_COMPONENTS: Record<Exclude<PreviewTabId, "specs">, React.ComponentType<{ onNavigateToTab?: (tab: PreviewTabId) => void }>> = {
   dashboard: DashboardTab,
-  landing: LandingTab,
+  landing: WebviewRouter,
 }
 
 function buildCssVars(
@@ -56,6 +47,7 @@ function buildCssVars(
   fonts: FontSlots,
   derived: DerivedTokens,
   fontCustomization: FontCustomization,
+  typeScale: SemanticTypeScale,
   isDark: boolean,
 ): React.CSSProperties {
   const presetVars = generatePresetCssVars(stylePreset, isDark)
@@ -64,6 +56,7 @@ function buildCssVars(
   return {
     "--primary": tokens.primary,
     "--primary-foreground": tokens["primary-foreground"],
+    "--primary-safe": mixColors(tokens.primary, tokens["card-foreground"], 85),
     "--secondary": tokens.secondary,
     "--secondary-foreground": tokens["secondary-foreground"],
     "--accent": tokens.accent,
@@ -74,10 +67,13 @@ function buildCssVars(
     "--foreground": tokens.foreground,
     "--card": tokens.card,
     "--card-foreground": tokens["card-foreground"],
+    "--surface-raised": tokens["surface-raised"],
+    "--surface-featured": tokens["surface-featured"],
     "--card-glow": `radial-gradient(ellipse at 50% 0%, ${tokens.card}0a 0%, transparent 70%)`,
     "--popover": tokens.popover,
     "--popover-foreground": tokens["popover-foreground"],
     "--border": tokens.border,
+    "--border-strong": tokens["border-strong"],
     "--input": tokens.input,
     "--ring": tokens.ring,
     "--destructive": states.destructive,
@@ -106,15 +102,25 @@ function buildCssVars(
     "--font-display": fonts.display ?? "Archivo Narrow",
     "--font-body": fonts.body ?? "Inter",
     "--font-mono": fonts.mono ?? "JetBrains Mono",
-    "--font-size-display": `${fontCustomization.display.size}px`,
-    "--font-size-body": `${fontCustomization.body.size}px`,
-    "--font-size-mono": `${fontCustomization.mono.size}px`,
+    "--font-size-display": `${typeScale.display}px`,
+    "--font-size-body": `${typeScale.body}px`,
+    "--font-size-mono": `${typeScale.code}px`,
     "--font-weight-display": fontCustomization.display.weight,
     "--font-weight-body": fontCustomization.body.weight,
     "--font-weight-mono": fontCustomization.mono.weight,
     "--font-style-display": fontCustomization.display.italic ? "italic" : "normal",
     "--font-style-body": fontCustomization.body.italic ? "italic" : "normal",
     "--font-style-mono": fontCustomization.mono.italic ? "italic" : "normal",
+    "--text-xs": `${typeScale.label}px`,
+    "--text-sm": `${typeScale.small}px`,
+    "--text-base": `${typeScale.body}px`,
+    "--text-lg": `${typeScale.bodyLarge}px`,
+    "--text-xl": `${typeScale.h3}px`,
+    "--text-2xl": `${typeScale.h2}px`,
+    "--text-3xl": `${typeScale.h1}px`,
+    "--text-4xl": `${typeScale.h1}px`,
+    "--text-5xl": `${typeScale.display}px`,
+    "--text-6xl": `${typeScale.display}px`,
   } as React.CSSProperties
 }
 
@@ -136,62 +142,23 @@ function CVDDefs() {
   )
 }
 
-export default function PreviewPanel({
-  collapsed,
-}: {
-  collapsed?: boolean
-}) {
+export default function PreviewPanel() {
   const state = useDesignTokens()
+  const dispatch = useDesignTokensDispatch()
   const { light, dark, states, derived } = state.tokens
   const { fonts, stylePreset } = state
-
   const mode = state.previewMode
+  const [activeTab, setActiveTab] = useState<PreviewTabId>("landing")
   const [activeCVD, setActiveCVD] = useState<CVDType | null>(null)
-  const [activeTab, setActiveTab] = useState<"kit" | "dashboard" | "landing">("landing")
   const [device, setDevice] = useState<DeviceType>("desktop")
   const [splitView, setSplitView] = useState(false)
-  const [qualityOpen, setQualityOpen] = useState(false)
-
   const isDark = mode === "dark"
-
-  const { report } = state
-
-  const contrastPairs = isDark ? report.contrast.darkPairs : report.contrast.pairs
-  const contrastFailing = contrastPairs.filter(p => p.grade === "fail")
-  const contrastStatus: Severity = contrastFailing.length > 0 ? "error" : "pass"
-  const qualityCategories = [
-    { key: "contrast", label: "WCAG", status: contrastStatus, details: contrastPairs.map(p => `${p.label}: ${p.ratio.toFixed(1)}:1 (${p.grade.toUpperCase()})`).join("\n") || "All contrast pairs pass." },
-    { key: "cvd", label: "CVD", status: report.accessibility.status, details: report.accessibility.cvdWarnings.join("\n") || "No color-blind issues detected." },
-    { key: "dark", label: "Dark", status: report.darkMode.status, details: report.darkMode.warnings.join("\n") || "Dark mode tokens ready." },
-    { key: "tokens", label: "Tokens", status: report.completeness.status, details: report.completeness.missing.length > 0 ? `Missing: ${report.completeness.missing.join(", ")}` : "All tokens defined." },
-  ]
-
-  const STATUS_ICONS: Record<Severity, React.ReactNode> = {
-    pass: <CheckCircle className="size-3 text-success" />,
-    warning: <AlertCircle className="size-3 text-warning" />,
-    error: <XCircle className="size-3 text-destructive" />,
-  }
-
-  const STATUS_COLORS: Record<Severity, string> = {
-    pass: "text-success",
-    warning: "text-warning",
-    error: "text-destructive",
-  }
-
-  function statusSummary(status: Severity): string {
-    switch (status) {
-      case "pass": return "Passed"
-      case "warning": return "Recommendations"
-      case "error": return "Failed"
-      default: return "Unknown"
-    }
-  }
 
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const scrollPositions = useRef<Record<string, number>>({})
 
   const handleTabChange = useCallback(
-    (tab: "kit" | "dashboard" | "landing") => {
+    (tab: PreviewTabId) => {
       if (scrollContainerRef.current) {
         scrollPositions.current[activeTab] = scrollContainerRef.current.scrollTop
       }
@@ -215,207 +182,223 @@ export default function PreviewPanel({
     }
   }, [activeTab])
 
-  const handleNavigateToTab = useCallback((tab: "kit" | "dashboard" | "landing") => {
+  const handleNavigateToTab = useCallback((tab: PreviewTabId) => {
     handleTabChange(tab)
   }, [handleTabChange])
 
-  const activeTokens = isDark ? dark : light
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const meta = e.metaKey || e.ctrlKey
+      if (!meta) return
+      const target = e.target as HTMLElement | null
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
+        return
+      }
+      if (e.key === "z" && !e.shiftKey) {
+        e.preventDefault()
+        dispatch({ type: "UNDO" })
+      } else if ((e.key === "z" && e.shiftKey) || e.key === "y") {
+        e.preventDefault()
+        dispatch({ type: "REDO" })
+      }
+    }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
+  }, [dispatch])
 
-  const previewCssVars = useMemo(
-    () => ({
-      ...buildCssVars(activeTokens, states, stylePreset, fonts, isDark ? derived.dark : derived.light, state.fontCustomization, isDark),
-    }),
-    [activeTokens, states, stylePreset, fonts, derived, isDark, state.fontCustomization]
-  )
+  const activeTokens = isDark ? dark : light
 
   const cvdFilter = activeCVD ? `url(#${getCVDFilterId(activeCVD)})` : undefined
 
-  const ActiveTabComponent = TAB_COMPONENTS[activeTab]
+  const isSpecs = activeTab === "specs"
 
-  const previewContent = (
-    <div
-      ref={scrollContainerRef}
-      className={`h-full overflow-y-auto bg-background text-foreground transition-colors duration-300 ${isDark ? "dark" : ""}`}
-      style={{
-        ...previewCssVars,
-        ...(cvdFilter ? { filter: cvdFilter } : {}),
-      }}
-    >
-      <ResponsiveFrame device={device} fullscreen={false}>
-        <ActiveTabComponent onNavigateToTab={handleNavigateToTab} />
-      </ResponsiveFrame>
-    </div>
-  )
+  function renderPane(
+    paneTab: "dashboard" | "landing",
+    paneTokens: ColorTokens,
+    paneDerived: DerivedTokens,
+    paneIsDark: boolean,
+    paneStylePreset: StylePresetState
+  ) {
+    const PaneComponent = TAB_COMPONENTS[paneTab]
+    const paneCssVars = buildCssVars(
+      paneTokens,
+      states,
+      paneStylePreset,
+      fonts,
+      paneDerived,
+      state.fontCustomization,
+      state.typeScale,
+      paneIsDark
+    )
+    return (
+      <div
+        ref={paneIsDark === isDark ? scrollContainerRef : undefined}
+        data-design-system-preview
+        className={`h-full overflow-x-hidden overflow-y-auto bg-background text-foreground transition-colors duration-300 [&_p]:mb-[calc(1em*var(--paragraph-spacing))] ${paneIsDark ? "dark" : ""}`}
+        style={{
+          ...paneCssVars,
+          fontFamily: "var(--font-body)",
+          ...(cvdFilter ? { filter: cvdFilter } : {}),
+        }}
+      >
+        <ResponsiveFrame device={device} fullscreen={false}>
+          <PaneComponent onNavigateToTab={handleNavigateToTab} />
+        </ResponsiveFrame>
+      </div>
+    )
+  }
+
+  const previewContent = isSpecs
+    ? null
+    : renderPane(activeTab as "dashboard" | "landing", activeTokens, isDark ? derived.dark : derived.light, isDark, stylePreset)
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden motion-reduce:transition-none">
       <CVDDefs />
 
-      <div className="flex shrink-0 items-center justify-between bg-background px-4 h-[44px]">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5 border-r pr-4">
+      <div
+        data-preview-toolbar
+        className="flex h-14 min-h-14 shrink-0 items-center gap-3 overflow-x-auto border-b border-border bg-background px-3 print:hidden sm:px-4"
+      >
+        <div className="flex shrink-0 items-center gap-1 rounded-lg bg-muted/50 p-1" role="tablist" aria-label="Preview view">
             {TABS.map((tab) => (
               <button
+                type="button"
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`relative px-3 py-1.5 text-xs font-semibold rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   activeTab === tab.id
-                    ? "bg-primary/10 text-primary font-bold"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "bg-surface-featured text-foreground shadow-sm"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
-                aria-label={`Preview: ${tab.label}`}
               >
                 {tab.label}
-                {activeTab === tab.id && (
-                  <span className="absolute inset-x-2 -bottom-2 h-[3px] rounded-full bg-primary" />
-                )}
               </button>
             ))}
-          </div>
-
-          {collapsed && (
-            <button
-              onClick={() => setSplitView(!splitView)}
-              className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${
-                splitView ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <Layers className="size-3.5" />
-              Split View
-            </button>
-          )}
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setQualityOpen(true)}
-            className="flex items-center gap-2 rounded-md border bg-card px-2.5 h-8 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            title="Quality Report"
-          >
-            {qualityCategories.map((c) => (
-              <span key={c.key} className="flex items-center gap-1">
-                {STATUS_ICONS[c.status as Severity]}
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{c.label}</span>
-              </span>
-            ))}
-          </button>
-        </div>
-
-        <div className="flex items-center gap-3">
-           <SegmentedControl
-             options={DEVICE_OPTIONS}
-             value={device}
-             onChange={(v) => setDevice(v as DeviceType)}
-             size="sm"
-           />
-        </div>
-      </div>
-
-      <div className="relative flex-1 overflow-hidden rounded-xl p-4 bg-muted/20">
-        {/* Dot grid background */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.07]" 
-             style={{ backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
-        
-        <div className="relative h-full w-full flex gap-4">
-            <div
-              className={`h-full bg-card overflow-hidden transition-all duration-500 ${splitView ? "flex-1" : "w-full"}`}
-              style={{
-                boxShadow: "var(--preset-shadow)",
-                backgroundColor: "oklch(from var(--card) l c h / var(--preset-bg-opacity))",
-                backdropFilter: "var(--preset-backdrop)",
+        {!isSpecs && (
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <SegmentedControl
+              options={[
+                { value: "light", label: <Sun className="size-3.5" />, accessibleLabel: "Light mode" },
+                { value: "dark", label: <Moon className="size-3.5" />, accessibleLabel: "Dark mode" },
+                { value: "split", label: <Columns className="size-3.5" />, accessibleLabel: "Split view" },
+              ]}
+              value={splitView ? "split" : mode}
+              onChange={(value) => {
+                if (value === "split") {
+                  setSplitView(true)
+                } else {
+                  setSplitView(false)
+                  dispatch({ type: "SET_PREVIEW_MODE", payload: value as "light" | "dark" })
+                }
               }}
-            >
-              {previewContent}
-            </div>
-          {splitView && (
-            <div
-              className="h-full flex-1 bg-card overflow-hidden animate-in fade-in slide-in-from-right-4 duration-500"
-              style={{
-                boxShadow: "var(--preset-shadow)",
-                backgroundColor: "oklch(from var(--card) l c h / var(--preset-bg-opacity))",
-                backdropFilter: "var(--preset-backdrop)",
-              }}
-            >
-                <div
-                   className={`h-full overflow-y-auto bg-background text-foreground grayscale brightness-95 ${isDark ? "" : "dark"}`}
-                  style={{
-                    ...previewCssVars,
-                    "--background": isDark ? "#ffffff" : "#0f172a",
-                    "--foreground": isDark ? "#0f172a" : "#ffffff",
-                    filter: isDark ? "invert(1)" : "none",
-                  } as React.CSSProperties}
+              size="sm"
+              ariaLabel="Preview color mode"
+            />
+            <SegmentedControl
+              options={DEVICE_OPTIONS}
+              value={device}
+              onChange={(value) => setDevice(value as DeviceType)}
+              size="sm"
+              ariaLabel="Preview viewport"
+            />
+            <Popover>
+              <PopoverTrigger
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Color vision settings"
+              >
+                <GearSix className="size-4" />
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-52 p-1.5 space-y-0.5">
+                <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Color vision</p>
+                <button
+                  onClick={() => setActiveCVD(null)}
+                  className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${!activeCVD ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                 >
-                  <ResponsiveFrame device={device} fullscreen={false}>
-                    <ActiveTabComponent onNavigateToTab={handleNavigateToTab} />
-                  </ResponsiveFrame>
-                </div>
-            </div>
-          )}
-        </div>
+                  Normal
+                </button>
+                <button
+                  onClick={() => setActiveCVD("protanopia")}
+                  className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${activeCVD === 'protanopia' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                >
+                  Protanopia
+                </button>
+                <button
+                  onClick={() => setActiveCVD("deuteranopia")}
+                  className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${activeCVD === 'deuteranopia' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                >
+                  Deuteranopia
+                </button>
+                <button
+                  onClick={() => setActiveCVD("tritanopia")}
+                  className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${activeCVD === 'tritanopia' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                >
+                  Tritanopia
+                </button>
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
       </div>
 
-      <Dialog open={qualityOpen} onOpenChange={setQualityOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Design System Quality Report</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3">
-            {qualityCategories.map((cat) => (
-              <div key={cat.key} className="rounded-lg border p-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    {STATUS_ICONS[cat.status as Severity]}
-                    <span className="text-xs font-semibold">{cat.label}</span>
-                  </div>
-                  <span className={`ml-auto text-xs font-medium ${STATUS_COLORS[cat.status as Severity]}`}>
-                    {statusSummary(cat.status)}
-                  </span>
-                </div>
-                <p className="mt-1 whitespace-pre-line text-xs text-muted-foreground">
-                  {cat.details}
-                </p>
-                {cat.key === "cvd" && (
-                  <div className="mt-3 flex items-center gap-2">
-                    <span className="text-xs font-semibold text-muted-foreground uppercase shrink-0">Simulate:</span>
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => setActiveCVD(null)}
-                        className={`rounded px-2 py-1 text-xs font-medium transition-colors ${!activeCVD ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
-                      >
-                        Normal
-                      </button>
-                      {CVD_OPTIONS.map((opt) => (
-                        <button
-                          key={opt.type}
-                          onClick={() => setActiveCVD(opt.type)}
-                          className={`rounded px-2 py-1 text-xs font-medium transition-colors ${activeCVD === opt.type ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
-                        >
-                          {opt.label}
-                        </button>
-                      ))}
-                    </div>
-                    {activeCVD && (
-                      <button
-                        onClick={() => setActiveCVD(null)}
-                        className="ml-auto text-xs text-muted-foreground hover:text-foreground"
-                      >
-                        Clear
-                      </button>
-                    )}
+      {isSpecs ? (
+        <div className="flex-1 overflow-hidden">
+          <DesignSpecs />
+        </div>
+      ) : (
+        <div
+          data-preview-chrome
+          className="relative flex-1 overflow-hidden rounded-xl bg-muted/20 print:hidden"
+        >
+          {/* Dot grid background */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.07]"
+               style={{ backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+
+          <div className="relative h-full w-full flex gap-4 p-4">
+              <div
+                className={`h-full overflow-hidden transition-all duration-500 ${splitView ? "flex-1" : "w-full"}`}
+                style={{
+                  boxShadow: "var(--preset-shadow)",
+                  backgroundColor: "transparent",
+                  backdropFilter: "var(--preset-backdrop)",
+                }}
+              >
+                {splitView && (
+                  <div className="flex items-center justify-center h-6 bg-card/80 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground border-b border-border">
+                    {isDark ? "Dark" : "Light"}
                   </div>
                 )}
+                {previewContent}
               </div>
-            ))}
-            <div className={`rounded-lg p-3 text-center text-xs font-semibold ${
-              report.exportReady
-                ? "bg-success/10 text-success dark:bg-success/20"
-                : "bg-destructive/10 text-destructive dark:bg-destructive/20"
-            }`}>
-              {report.exportReady ? "Ready for Production Export" : "Export Blocked — Check Missing Tokens"}
-            </div>
+            {splitView && (
+              <div
+                className="h-full flex-1 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-500"
+                style={{
+                  boxShadow: "var(--preset-shadow)",
+                  backgroundColor: "transparent",
+                  backdropFilter: "var(--preset-backdrop)",
+                }}
+              >
+                <div className="flex items-center justify-center h-6 bg-card/80 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground border-b border-border">
+                  {isDark ? "Light" : "Dark"}
+                </div>
+                {renderPane(
+                  activeTab as "dashboard" | "landing",
+                  isDark ? light : dark,
+                  isDark ? derived.light : derived.dark,
+                  !isDark,
+                  stylePreset
+                )}
+              </div>
+            )}
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
+
     </div>
   )
 }

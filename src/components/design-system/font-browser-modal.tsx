@@ -1,22 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Search, X } from "lucide-react"
-import { BUNDLED_FONTS, type FontDef } from "@/lib/google-fonts"
+import { MagnifyingGlass, X } from "@phosphor-icons/react"
+import { BUNDLED_FONTS, injectFontLink, type FontDef } from "@/lib/google-fonts"
 
 interface FontBrowserModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSelect: (font: FontDef) => void
+  preferredCategory?: FontDef["category"]
 }
 
-export default function FontBrowserModal({ open, onOpenChange, onSelect }: FontBrowserModalProps) {
+export default function FontBrowserModal({ open, onOpenChange, onSelect, preferredCategory }: FontBrowserModalProps) {
   const [search, setSearch] = useState("")
-  const [filter, setFilter] = useState<FontDef["category"] | "all">("all")
+  const [filter, setFilter] = useState<FontDef["category"] | "all">(preferredCategory ?? "all")
+
+  useEffect(() => {
+    if (!open) return
+    for (const font of BUNDLED_FONTS) injectFontLink(font.family)
+  }, [open])
 
   const filteredFonts = BUNDLED_FONTS.filter(f => {
     const matchesSearch = f.family.toLowerCase().includes(search.toLowerCase())
@@ -28,10 +34,10 @@ export default function FontBrowserModal({ open, onOpenChange, onSelect }: FontB
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-3xl p-0 overflow-hidden h-[80vh] flex flex-col">
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="text-2xl font-bold">Browse Fonts</DialogTitle>
+          <DialogTitle className="font-display text-2xl font-bold">Browse curated fonts</DialogTitle>
           <div className="mt-4 flex flex-col sm:flex-row gap-3">
              <div className="relative flex-1">
-               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+               <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                <input 
                  type="text" 
                  placeholder="Search fonts..."
@@ -41,6 +47,8 @@ export default function FontBrowserModal({ open, onOpenChange, onSelect }: FontB
                />
                {search && (
                  <button 
+                   type="button"
+                   aria-label="Clear font search"
                    onClick={() => setSearch("")}
                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                  >
@@ -48,12 +56,12 @@ export default function FontBrowserModal({ open, onOpenChange, onSelect }: FontB
                  </button>
                )}
              </div>
-             <div className="flex gap-1 bg-muted p-1 rounded-lg">
+             <div className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-1 sm:flex">
                 {(["all", "sans-serif", "serif", "display", "monospace"] as const).map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setFilter(cat)}
-                    className={`px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider transition-all ${
+                    className={`min-w-0 rounded-md px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-all sm:px-3 sm:text-xs sm:tracking-wider ${
                       filter === cat ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >

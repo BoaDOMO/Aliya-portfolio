@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { List, CaretDown } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
@@ -45,8 +45,9 @@ function NavLinkItem({
         cn(
           "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
           isActive
-            ? "text-foreground"
-            : "text-foreground/60 hover:text-foreground"
+            ? "bg-background/55 text-foreground shadow-xs"
+            : "text-foreground/70 hover:bg-background/30 hover:text-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         )
       }
     >
@@ -63,18 +64,10 @@ export function Navbar() {
 
   const isLabActive = location.pathname.startsWith("/lab") || location.pathname === "/rag"
 
-  useEffect(() => {
-    if (sheetOpen && isLabActive) {
-      setLabMobileOpen(true)
-    } else if (!sheetOpen) {
-      setLabMobileOpen(false)
-    }
-  }, [sheetOpen, isLabActive])
-
   return (
     <nav
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 mx-4 mt-3 rounded-full border bg-surface shadow-sm backdrop-blur-lg transition-all duration-500 md:mx-6 lg:mx-12"
+        "fixed left-1/2 top-3 z-50 w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 rounded-full border bg-surface shadow-sm backdrop-blur-lg transition-all duration-300"
       )}
     >
       <div className="mx-auto flex h-12 w-full items-center px-4">
@@ -95,11 +88,11 @@ export function Navbar() {
                   onClick={() => navigate("/lab")}
                   className={cn(
                     "h-auto rounded-md px-3 py-1.5 text-sm font-medium",
-                    "hover:bg-transparent focus:bg-transparent focus-visible:ring-0",
-                    "data-open:bg-transparent data-open:hover:bg-transparent",
+                    "hover:bg-background/30 focus:bg-background/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+                    "data-open:bg-background/40 data-open:hover:bg-background/40",
                     isLabActive
-                      ? "text-foreground data-open:text-foreground"
-                      : "text-foreground/60 hover:text-foreground data-open:text-foreground"
+                      ? "bg-background/55 text-foreground shadow-xs data-open:text-foreground"
+                      : "text-foreground/70 hover:text-foreground data-open:text-foreground"
                   )}
                 >
                   Lab
@@ -129,7 +122,13 @@ export function Navbar() {
 
         <div className="ml-auto flex items-center gap-1 md:hidden">
           <ModeToggle />
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <Sheet
+            open={sheetOpen}
+            onOpenChange={(open) => {
+              setSheetOpen(open)
+              setLabMobileOpen(open && isLabActive)
+            }}
+          >
             <SheetTrigger
               render={
                 <Button variant="ghost" size="icon" aria-label="Open menu" />
@@ -162,8 +161,11 @@ export function Navbar() {
                       Lab
                     </NavLink>
                     <button
+                      type="button"
+                      aria-label={labMobileOpen ? "Collapse Lab links" : "Expand Lab links"}
+                      aria-expanded={labMobileOpen}
                       onClick={(e) => { e.stopPropagation(); setLabMobileOpen(!labMobileOpen) }}
-                      className="text-foreground/60 hover:text-foreground transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded-lg text-foreground/70 transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <CaretDown
                         className={cn(

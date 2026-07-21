@@ -43,7 +43,7 @@ function PlaygroundCard({
             onClick={onViewIn}
             className="shrink-0 rounded-md px-2.5 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
-            View in App →
+            Open in Webview →
           </button>
         )}
       </div>

@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
-import { XIcon } from "lucide-react"
+import { X as XIcon } from "@phosphor-icons/react"
 import { useState } from "react"
 
 function DismissibleBadge({ children }: { children: React.ReactNode }) {
@@ -61,24 +61,24 @@ export default function AvatarBadgeTooltipPlayground() {
         <TooltipProvider>
           <div className="flex flex-wrap gap-2">
             <Tooltip>
-              <TooltipTrigger>
-                <Button variant="outline" size="sm">Hover top</Button>
+              <TooltipTrigger render={<Button variant="outline" size="sm" />}>
+                Hover top
               </TooltipTrigger>
               <TooltipContent side="top" className="text-xs">
                 Tooltip on top
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger>
-                <Button variant="outline" size="sm">Hover right</Button>
+              <TooltipTrigger render={<Button variant="outline" size="sm" />}>
+                Hover right
               </TooltipTrigger>
               <TooltipContent side="right" className="text-xs">
                 Tooltip on the right
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger>
-                <Button variant="outline" size="sm">Hover bottom</Button>
+              <TooltipTrigger render={<Button variant="outline" size="sm" />}>
+                Hover bottom
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
                 Tooltip below
