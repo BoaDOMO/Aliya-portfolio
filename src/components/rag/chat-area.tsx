@@ -103,10 +103,9 @@ export default function ChatArea({
                     <div>
                       <p className="text-sm font-semibold">{companyName} AI</p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                        I can answer questions about our products, services, and
-                        policies &mdash; based on what&rsquo;s in the knowledge
-                        base. Try one of the suggestions below or ask your own
-                        question.
+                        This assistant answers only from the source material in
+                        this demo. Ask a question, inspect the sources, edit one,
+                        and ask again to see what changes.
                       </p>
                     </div>
                   </div>
@@ -233,7 +232,7 @@ export default function ChatArea({
       <div className="flex items-end gap-2 border-t p-3">
         <Textarea
           ref={inputRef}
-          placeholder="Ask a question... (Enter to send)"
+          placeholder="Ask from the source material..."
           rows={1}
           className="min-h-[36px] resize-none text-sm"
           onKeyDown={(e) => {

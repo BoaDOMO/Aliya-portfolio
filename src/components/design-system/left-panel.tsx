@@ -34,8 +34,8 @@ export default function LeftPanel({
     <aside className="flex h-full min-h-0 flex-col bg-background">
       <div className="flex h-14 shrink-0 items-center border-b border-border px-4">
         <div>
-          <p className="text-sm font-semibold text-foreground">Theme recipe</p>
-          <p className="text-[11px] text-muted-foreground">Four decisions, one coherent system</p>
+          <p className="text-sm font-semibold text-foreground">Build your theme</p>
+          <p className="text-[11px] text-muted-foreground">Three decisions, one coherent system</p>
         </div>
         <button
           type="button"

@@ -12,7 +12,7 @@ import {
 type Status = "ready" | "retrieving" | "generating" | "offline"
 type PipelineStage = -1 | 0 | 1 | 2 | 3
 
-const NODES = ["Query", "Retriever", "LLM", "Response"] as const
+const NODES = ["Ask", "Find", "Draft", "Answer"] as const
 
 const STATUS_MAP: Record<Status, { dot: string; label: string }> = {
   ready: { dot: "bg-primary", label: "Ready" },
@@ -103,10 +103,10 @@ export default function Dashboard({
       {/* Scrollable content */}
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto p-5 pt-4">
 
-        {/* 2. RAG Pipeline */}
+        {/* 2. Answer flow */}
         <div>
           <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-            RAG Pipeline
+            Answer flow
           </p>
           <div className="flex items-center gap-0">
             {NODES.map((label, i) => {
@@ -254,11 +254,11 @@ export default function Dashboard({
           </div>
         )}
 
-        {/* 6. Knowledge Base */}
+        {/* 6. Source material */}
         <div>
           <div className="mb-1.5 flex items-center justify-between">
             <span className="text-xs uppercase tracking-wider text-muted-foreground">
-              Knowledge Base
+              Source material
             </span>
             <span className="font-mono text-xs text-muted-foreground">
               {kbFillCount} of 4
@@ -283,7 +283,7 @@ export default function Dashboard({
             className="w-full text-xs"
           >
             <ArrowsLeftRight className="mr-1.5 h-3.5 w-3.5" />
-            Try a different company?
+            Switch demo scenario
           </Button>
         </div>
       </div>

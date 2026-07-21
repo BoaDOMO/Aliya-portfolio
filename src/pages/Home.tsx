@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion, useReducedMotion } from "framer-motion"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { CodeEditor } from "@/components/code-editor"
 import { cn } from "@/lib/utils"
 import { ArrowRight, MapPin } from "@phosphor-icons/react"
@@ -46,7 +46,7 @@ export default function Home() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="font-mono text-xs uppercase tracking-widest text-primary"
           >
-            HELLO, I&rsquo;M
+            BUILDING WITH AI
           </motion.p>
 
           <motion.h1
@@ -73,12 +73,26 @@ export default function Home() {
             animate={init ?? { opacity: 1, y: 0 }}
             transition={{
               duration: 0.5,
-              delay: 1.4,
+              delay: 0.45,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-muted-foreground md:mx-0 lg:text-lg"
+            className="mx-auto mt-5 max-w-lg font-display text-2xl font-semibold leading-tight tracking-tight text-foreground md:mx-0 lg:text-3xl"
           >
-            Product thinker and hands-on builder turning useful AI ideas into working experiences.
+            I build with AI fast&mdash;and debug until it actually works.
+          </motion.p>
+
+          <motion.p
+            initial={init ?? { opacity: 0, y: 8 }}
+            animate={init ?? { opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.45,
+              delay: 0.55,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="mx-auto mt-3 max-w-lg text-base leading-relaxed text-muted-foreground md:mx-0"
+          >
+            Good prompts get things moving. Technical judgment, taste, and
+            relentless debugging turn the output into working software.
           </motion.p>
 
           <motion.div
@@ -89,19 +103,18 @@ export default function Home() {
               delay: 0.65,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="mt-8 flex justify-center gap-4 md:justify-start"
+            className="mt-7 flex justify-center gap-4 md:justify-start"
           >
-            <Button render={<Link to="/lab" />} size="lg">
-              Explore the Lab
+            <Link to="/lab" className={buttonVariants({ size: "lg" })}>
+              See what I&rsquo;ve built
               <ArrowRight className="ml-1 h-4 w-4" />
-            </Button>
-            <Button
-              render={<Link to="/contact" />}
-              variant="outline"
-              size="lg"
+            </Link>
+            <Link
+              to="/profile"
+              className={buttonVariants({ variant: "outline", size: "lg" })}
             >
-              View Profile
-            </Button>
+              How I work
+            </Link>
           </motion.div>
 
           <motion.div
@@ -110,7 +123,9 @@ export default function Home() {
             transition={{ duration: 0.4, delay: 0.78 }}
             className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted-foreground md:justify-start"
           >
-            <span className="font-mono uppercase tracking-wider">AI · Product · Full-stack</span>
+            <span className="font-mono uppercase tracking-wider">
+              Prompt · Inspect · Debug · Ship
+            </span>
             <span className="flex items-center gap-1.5">
               <MapPin className="h-3.5 w-3.5 text-primary" />
               Phnom Penh

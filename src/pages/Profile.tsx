@@ -1,335 +1,295 @@
-import { Card } from "@/components/ui/card"
+import { Link } from "react-router-dom"
+import {
+  ArrowRight,
+  CaretDown,
+  MapPin,
+} from "@phosphor-icons/react"
+import { buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { SectionLabel } from "@/components/section-label"
-import { Timeline, TimelineItem } from "@/components/timeline"
-import { Cpu, Sparkle, Palette, MapPin } from "@phosphor-icons/react"
 import { PageContainer, PageSection } from "@/components/page-layout"
 
-const summary =
-  "Product brain, builder hands. I figure out what needs to exist, then make it real \u2014 usually with AI riding shotgun."
-
-const categories = [
+const capabilities = [
   {
-    title: "Build",
-    icon: Cpu,
-    items: [
-      "vibe coding with AI",
-      "shipping prototypes fast",
-      "full-stack tinkering",
-      "breaking things on purpose",
-    ],
+    number: "01",
+    title: "Direct the model",
+    description:
+      "Break a messy idea into clear prompts, useful constraints, and small steps the model can actually execute.",
   },
   {
-    title: "AI",
-    icon: Sparkle,
-    items: [
-      "prompt engineering",
-      "RAG pipelines",
-      "making LLMs useful (not just cool)",
-    ],
+    number: "02",
+    title: "Debug the output",
+    description:
+      "Read what the AI produced, spot where it is bluffing or breaking, and keep testing until the real bug is gone.",
   },
   {
-    title: "Product & Design",
-    icon: Palette,
-    items: [
-      "knowing what to build, what to skip",
-      "Figma flows & wireframes",
-      "making complex things feel simple",
-    ],
+    number: "03",
+    title: "Finish the software",
+    description:
+      "Turn the promising first pass into a coherent, responsive product instead of stopping at an impressive demo.",
   },
 ]
 
-const experience = [
+const selectedExperience = [
   {
     company: "KB Prasac Bank",
     role: "Senior Digital Product Owner (AI Lead)",
-    period: "Apr 2026 \u2013 Present",
+    period: "Apr 2026 – Present",
     current: true,
-    bullets: [
-      "Building an AI assistant for a banking app \u2014 picking the LLM, designing the RAG pipeline, and shipping it into production.",
-      "Working across teams to make sure it solves real problems, not just demo scenarios.",
-    ],
+    summary:
+      "Leading an AI assistant for a banking app—from choosing models and shaping prompts to testing answers, debugging failures, and coordinating production delivery.",
   },
   {
     company: "Boost Capital",
     role: "Senior Product Specialist",
-    period: "Jun 2023 \u2013 Jan 2026",
+    period: "Jun 2023 – Jan 2026",
     current: false,
-    bullets: [
-      "Revamped chatbot flows for loan applications. Made the UX less painful based on what users actually did.",
-      "Worked across product, marketing, and engineering to keep the user journey from falling apart.",
-    ],
+    summary:
+      "Redesigned loan-application chatbot journeys using observed user behaviour, connecting product, marketing, and engineering around a clearer customer experience.",
   },
   {
     company: "Smart Axiata",
     role: "VAS & DCB Product Specialist",
-    period: "Nov 2021 \u2013 Jun 2023",
+    period: "Nov 2021 – Jun 2023",
     current: false,
-    bullets: [
-      "Managed gaming and payment products. Bridged Google, Apple, and internal teams to make things work.",
-      "Spotted operational issues early and turned them into product improvements.",
-    ],
+    summary:
+      "Managed gaming and direct-carrier-billing products across Google, Apple, and internal teams, turning recurring operational issues into product improvements.",
   },
+]
+
+const earlierExperience = [
   {
     company: "PTC Computer Co., Ltd.",
     role: "Retail Product Supervisor",
-    period: "Sep 2020 \u2013 Sep 2021",
-    current: false,
-    bullets: [
-      "Supervised sales for Dell, Asus, Acer, HP, Razer. Kept the website accurate with specs and SKUs.",
-    ],
+    period: "2020 – 2021",
   },
   {
     company: "PTC Computer Co., Ltd.",
     role: "Bid & Tender Specialist",
-    period: "Sep 2019 \u2013 Sep 2020",
-    current: false,
-    bullets: [
-      "Managed tender projects for NGOs and government clients. Made sure every requirement was covered.",
-    ],
+    period: "2019 – 2020",
   },
   {
     company: "PTC Computer Co., Ltd.",
     role: "Corporate & SMB Sales",
-    period: "Sep 2018 \u2013 Sep 2019",
-    current: false,
-    bullets: [
-      "Sold to businesses, negotiated pricing, built relationships that actually lasted.",
-    ],
+    period: "2018 – 2019",
   },
   {
     company: "Fabric Arts (Cambodia)",
     role: "Translator / Assistant",
-    period: "Jun 2017 \u2013 Jul 2018",
-    current: false,
-    bullets: [
-      "English\u2013Khmer translation for the CEO. Helped with cross-cultural communication and marketing.",
-    ],
+    period: "2017 – 2018",
   },
   {
     company: "Takeo Adventist School",
     role: "Volunteer Teacher",
-    period: "Jun 2016 \u2013 May 2017",
-    current: false,
-    bullets: [
-      "Taught English and Biology at an orphanage school in Takeo.",
-    ],
+    period: "2016 – 2017",
   },
 ]
-
-const education = [
-  {
-    school: "Asia Pacific International University",
-    degree: "Bachelor of Science",
-    period: "2012 \u2013 2016",
-    location: "Saraburi, Thailand",
-  },
-  {
-    school: "Cambodia Adventist School",
-    degree: "High School Diploma",
-    period: "2009 \u2013 2012",
-    location: "Phnom Penh, Cambodia",
-  },
-]
-
-function SkillCard({
-  title,
-  icon: Icon,
-  items,
-}: {
-  title: string
-  icon: React.ComponentType<{ className?: string }>
-  items: string[]
-}) {
-  return (
-    <div className="group relative">
-      <div className="absolute inset-x-3 -bottom-2 -z-10 h-8 rounded-xl bg-primary/8 transition-transform duration-300 motion-reduce:transition-none md:group-hover:translate-y-1" />
-
-      <Card className="h-full overflow-hidden bg-card transition-transform duration-300 motion-reduce:transition-none md:group-hover:-translate-y-1">
-        <div className="flex items-center gap-3 p-6">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-            <Icon className="h-5 w-5 text-primary" />
-          </div>
-          <h3 className="font-display text-lg font-semibold tracking-tight">
-            {title}
-          </h3>
-        </div>
-
-        <div className="px-6 pb-6">
-          <ul className="space-y-2.5 border-t pt-4">
-            {items.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-sm text-muted-foreground"
-              >
-                <span className="mt-0.5 shrink-0 text-primary">{"\u2192"}</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Card>
-    </div>
-  )
-}
 
 export default function Profile() {
   return (
     <div className="flex flex-col">
-      {/* ── Summary ── */}
-      <PageSection>
+      <PageSection className="pt-14 md:pt-20">
         <FadeInWhenVisible>
-          <PageContainer>
-            <Card className="card-featured rounded-xl p-8 md:p-10">
-              <div className="flex flex-col items-center gap-5 text-center md:flex-row md:items-start md:text-left">
-                <Avatar className="h-16 w-16 md:h-20 md:w-20">
-                  <AvatarFallback className="text-xl font-display md:text-2xl">
-                    AK
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <SectionLabel>// profile</SectionLabel>
-                  <p className="mt-2 font-display text-xl leading-relaxed text-foreground md:text-2xl md:max-w-2xl">
-                    {summary}
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-sm text-muted-foreground md:justify-start">
-                    <Badge
-                      variant="secondary"
-                      className="font-mono text-[10px]"
-                    >
-                      8+ yrs
-                    </Badge>
-                    <Badge
-                      variant="secondary"
-                      className="font-mono text-[10px]"
-                    >
-                      5 companies
-                    </Badge>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-3.5 w-3.5" />
-                      Phnom Penh
-                    </span>
-                  </div>
-                </div>
+          <PageContainer className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+            <div className="lg:col-span-8">
+              <SectionLabel>// profile</SectionLabel>
+              <h1 className="mt-4 max-w-4xl font-display text-5xl font-bold leading-[0.98] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+                Vibe coding, backed by actual judgment.
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                A lot of people can ask AI to generate code. I&rsquo;m good at
+                directing it, reading what it produces, spotting when it is
+                confidently wrong, and debugging the final 20% that turns a
+                promising demo into working software.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/lab"
+                  className={buttonVariants({
+                    size: "lg",
+                    className: "h-11 px-5",
+                  })}
+                >
+                  View selected work
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "lg",
+                    className: "h-11 px-5",
+                  })}
+                >
+                  Start a conversation
+                </Link>
               </div>
-            </Card>
+            </div>
+
+            <dl className="border-t pt-6 text-sm lg:col-span-4 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+              <div className="grid grid-cols-[5.5rem_1fr] gap-4 border-b py-4 first:pt-0">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                  Current
+                </dt>
+                <dd className="font-medium leading-relaxed">
+                  Senior Digital Product Owner, AI Lead
+                </dd>
+              </div>
+              <div className="grid grid-cols-[5.5rem_1fr] gap-4 pt-4">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                  Based
+                </dt>
+                <dd className="flex items-center gap-1.5 text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-primary" />
+                  Phnom Penh, Cambodia
+                </dd>
+              </div>
+            </dl>
           </PageContainer>
         </FadeInWhenVisible>
       </PageSection>
 
-      {/* ── Skills ── */}
-      <PageSection>
-        <FadeInWhenVisible delay={0.1}>
+      <PageSection tone="muted">
+        <FadeInWhenVisible>
           <PageContainer>
-            <div>
-              <SectionLabel>// what I do</SectionLabel>
-              <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {categories.map((cat) => (
-                  <SkillCard
-                    key={cat.title}
-                    title={cat.title}
-                    icon={cat.icon}
-                    items={cat.items}
-                  />
-                ))}
-              </div>
+            <div className="max-w-2xl">
+              <SectionLabel>// what I bring</SectionLabel>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                Good prompting is only the beginning.
+              </h2>
+            </div>
+
+            <div className="mt-10 grid border-y md:grid-cols-3 md:divide-x">
+              {capabilities.map((capability) => (
+                <article
+                  key={capability.number}
+                  className="border-b py-6 last:border-b-0 md:border-b-0 md:px-6 md:first:pl-0 md:last:pr-0"
+                >
+                  <p className="font-mono text-xs text-primary">
+                    {capability.number}
+                  </p>
+                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">
+                    {capability.title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    {capability.description}
+                  </p>
+                </article>
+              ))}
             </div>
           </PageContainer>
         </FadeInWhenVisible>
       </PageSection>
 
-      {/* ── Experience ── */}
       <PageSection>
-        <FadeInWhenVisible delay={0.15}>
+        <FadeInWhenVisible>
           <PageContainer>
-            <div>
-              <SectionLabel>// where I&rsquo;ve been</SectionLabel>
-              <Timeline>
-                {experience.map((entry) => (
-                  <TimelineItem
-                    key={entry.company}
-                    isCurrent={entry.current}
-                  >
-                    <div className="pt-0.5">
-                      <h3 className="font-display text-lg font-semibold tracking-tight">
-                        {entry.company}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {entry.role}
-                      </p>
-                      <div className="mt-2 flex flex-wrap items-center gap-2">
-                        <Badge
-                          variant="secondary"
-                          className="font-mono text-[10px]"
-                        >
+            <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4">
+                <SectionLabel>// selected experience</SectionLabel>
+                <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  The work most relevant to what I do now.
+                </h2>
+                <p className="mt-4 max-w-sm leading-relaxed text-muted-foreground">
+                  A progression from operating products to leading AI work where
+                  the prompts, answers, edge cases, and delivery all matter.
+                </p>
+              </div>
+
+              <div className="lg:col-span-8">
+                <div className="border-t">
+                  {selectedExperience.map((entry) => (
+                    <article
+                      key={`${entry.company}-${entry.role}`}
+                      className="grid gap-4 border-b py-7 sm:grid-cols-[9rem_1fr] sm:gap-8"
+                    >
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
                           {entry.period}
-                        </Badge>
+                        </p>
                         {entry.current && (
-                          <Badge className="font-mono text-[10px]">
+                          <Badge className="mt-2 font-mono text-[10px]">
                             Current
                           </Badge>
                         )}
                       </div>
-                      {entry.bullets.length > 0 && (
-                        <ul className="mt-3 space-y-1.5">
-                          {entry.bullets.map((b) => (
-                            <li
-                              key={b}
-                              className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"
-                            >
-                              <span className="mt-0.5 shrink-0 text-primary">
-                                {"\u2192"}
-                              </span>
-                              <span>{b}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </TimelineItem>
-                ))}
-              </Timeline>
+                      <div>
+                        <h3 className="font-display text-xl font-semibold tracking-tight">
+                          {entry.role}
+                        </h3>
+                        <p className="mt-1 text-sm font-medium text-primary">
+                          {entry.company}
+                        </p>
+                        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                          {entry.summary}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <details className="group border-b">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-sm py-4 font-medium outline-none transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                    <span>Earlier experience</span>
+                    <CaretDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
+                  </summary>
+                  <div className="divide-y border-t">
+                    {earlierExperience.map((entry) => (
+                      <div
+                        key={`${entry.company}-${entry.role}`}
+                        className="grid gap-2 py-4 text-sm sm:grid-cols-[9rem_1fr] sm:gap-8"
+                      >
+                        <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                          {entry.period}
+                        </p>
+                        <p>
+                          <span className="font-medium">{entry.role}</span>
+                          <span className="text-muted-foreground">
+                            {" "}&middot; {entry.company}
+                          </span>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+
+                <div className="grid gap-2 border-b py-6 text-sm sm:grid-cols-[9rem_1fr] sm:gap-8">
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                    Education
+                  </p>
+                  <p>
+                    <span className="font-medium">Bachelor of Science</span>
+                    <span className="text-muted-foreground">
+                      {" "}&middot; Asia Pacific International University, 2016
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
           </PageContainer>
         </FadeInWhenVisible>
       </PageSection>
 
-      {/* ── Education ── */}
-      <PageSection>
-        <FadeInWhenVisible delay={0.2}>
-          <PageContainer>
+      <PageSection tone="muted" className="py-12 md:py-16">
+        <FadeInWhenVisible>
+          <PageContainer className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
-              <SectionLabel>// where I studied</SectionLabel>
-              <div className="mt-6 grid gap-6 md:grid-cols-2">
-                {education.map((entry) => (
-                  <Card
-                    key={entry.school}
-                    className="p-6"
-                  >
-                    <h3 className="font-display text-base font-semibold">
-                      {entry.school}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {entry.degree}
-                    </p>
-                    <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                      <Badge
-                        variant="secondary"
-                        className="font-mono text-[10px]"
-                      >
-                        {entry.period}
-                      </Badge>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {entry.location}
-                      </span>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+              <SectionLabel>// next</SectionLabel>
+              <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
+                Have a messy idea that AI could help build?
+              </h2>
             </div>
+            <Link
+              to="/contact"
+              className={buttonVariants({
+                size: "lg",
+                className: "h-11 px-5",
+              })}
+            >
+              Start a conversation
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
           </PageContainer>
         </FadeInWhenVisible>
       </PageSection>

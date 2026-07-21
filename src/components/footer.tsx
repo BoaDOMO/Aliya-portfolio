@@ -1,9 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="border-t px-6 py-8 text-sm text-muted-foreground">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-        <p>&copy; {new Date().getFullYear()} Aliya Koy · Phnom Penh</p>
-        <div className="flex items-center gap-5">
+    <footer className="border-t px-6 py-4 text-xs text-muted-foreground">
+      <div className="mx-auto flex min-h-6 w-full max-w-6xl items-center justify-between gap-3">
+        <p className="whitespace-nowrap">
+          &copy; {new Date().getFullYear()} Aliya Koy
+        </p>
+        <nav aria-label="Footer" className="flex items-center gap-4">
           <a
             href="mailto:aliyakoy365@gmail.com"
             className="rounded-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -18,7 +20,7 @@ export default function Footer() {
           >
             LinkedIn<span className="sr-only"> (opens in a new tab)</span>
           </a>
-        </div>
+        </nav>
       </div>
     </footer>
   )

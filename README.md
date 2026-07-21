@@ -13,9 +13,9 @@ Personal portfolio and lab. What began as a vanilla HTML/CSS site has been rebui
 ## Features
 
 - **Home** — animated hero with a live code-editor panel
-- **Profile** — summary, skill cards, experience timeline, education
+- **Profile** — editorial positioning, capabilities, and selected experience
 - **Lab** — experiments and mini-projects
-- **Contact** — floating-label form (react-hook-form + zod)
+- **Contact** — compact validated form with resilient Formspree delivery
 - **RAG chatbot** (`/rag`) — serverless Gemini Q&A over a custom knowledge base
 - **Design System tool** (`/design-system`) — token editor, color/typography drawers, quality reports, export
 

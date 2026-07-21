@@ -10,33 +10,34 @@ const snippets: Snippet[] = [
   {
     filename: "aliya.ts",
     code: `const aliya = {
-  name:   "Aliya Koy",
-  role:   "AI engineer & builder",
-  vibing: ["React", "TypeScript", "Python"],
-  sips:   "matcha while coding",
-  mode:   "night owl + lo-fi beats",
+  superpower: "building with AI",
+  loop: [
+    "prompt",
+    "inspect",
+    "debug",
+    "ship",
+  ],
+  rule: "make it actually work",
 }`,
   },
   {
-    filename: "currently.ts",
-    code: `const currently = {
-  music:     "lo-fi hip hop radio",
-  building:  "this portfolio, slowly",
-  learning:  "RAG & AI agents",
-  tabsOpen:  47,
-  lastMeal:  "instant noodles",
+    filename: "vibe-coding.ts",
+    code: `const vibeCoding = {
+  input:     "messy idea",
+  firstPass: "probably broken",
+  response:  "debug it",
+  finish:    "working software",
 }`,
   },
   {
-    filename: "lab-log.yaml",
-    code: `# lab-log.yaml
-vibe: chill
-tools:
-  - React
-  - Tailwind
-  - Shadcn
-status: experimenting
-mood: pretty good`,
+    filename: "field-notes.yaml",
+    code: `# field-notes.yaml
+good_at:
+  - steering models
+  - finding real bugs
+  - finishing the last 20%
+belief: AI makes me faster
+proof: judgment makes it good`,
   },
 ]
 

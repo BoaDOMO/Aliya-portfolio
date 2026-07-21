@@ -111,7 +111,7 @@ function computeSuggestions(kb: KB, company: string): string[] {
   const result: string[] = []
   const chunks = KB_SECTIONS.filter((s) => kb[s.key] && kb[s.key].trim().length > 0)
   chunks.forEach((s) => result.push(s.question.replace("{company}", company)))
-  return result.slice(0, 4)
+  return result.slice(0, 3)
 }
 
 function collectKB(kb: KB): string {
@@ -153,7 +153,7 @@ export default function RAG() {
 
   // Page title
   useEffect(() => {
-    document.title = `RAG Chatbot \u2014 ${persona.company}`
+    document.title = `AI Assistant Lab \u2014 ${persona.company}`
     return () => { document.title = "Aliya Koy" }
   }, [persona.company])
 
@@ -317,18 +317,21 @@ export default function RAG() {
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-3 pt-4">
       {/* Header */}
-      <div className="flex items-center gap-2 border-b pb-3">
+      <div className="flex flex-wrap items-center gap-2 border-b pb-3">
         <span className="inline-flex h-8 items-center gap-1 rounded-full bg-muted px-3 font-mono text-xs font-semibold text-muted-foreground">
-          RAG Chatbot
+          AI Assistant Lab
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Prompt · Inspect · Debug
         </span>
         <div className="ml-auto flex items-center gap-3">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "chat" | "kb")}>
             <TabsList className="h-8">
               <TabsTrigger value="chat" className="text-xs">
-                Chat
+                Ask
               </TabsTrigger>
               <TabsTrigger value="kb" className="text-xs">
-                KB
+                Sources
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -392,13 +395,14 @@ export default function RAG() {
         <DialogContent className="max-w-2xl lg:max-w-4xl">
           <DialogTitle className="sr-only">Choose a company</DialogTitle>
           <div className="space-y-1">
-            <p className="font-display text-lg font-semibold">Try a different company?</p>
+            <p className="font-display text-lg font-semibold">Switch demo scenario</p>
             <p className="text-sm text-muted-foreground">
-              Pick a pre-built company to explore. Switching will clear your current chat.
+              Try the same assistant logic with different source material.
+              Switching will clear your current chat.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 py-4">
-            {TEMPLATES.map((t) => (
+          <div className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-3">
+            {TEMPLATES.slice(0, 3).map((t) => (
               <button
                 key={t.company}
                 type="button"

@@ -28,9 +28,9 @@ const DEVICE_OPTIONS = [
 ]
 
 const TABS = [
-  { id: "landing" as const, label: "Webview" },
+  { id: "landing" as const, label: "Preview" },
   { id: "dashboard" as const, label: "Components" },
-  { id: "specs" as const, label: "Specs" },
+  { id: "specs" as const, label: "Spec" },
 ]
 
 export type PreviewTabId = "dashboard" | "landing" | "specs"
@@ -258,7 +258,7 @@ export default function PreviewPanel() {
 
       <div
         data-preview-toolbar
-        className="flex h-14 min-h-14 shrink-0 items-center gap-3 overflow-x-auto border-b border-border bg-background px-3 print:hidden sm:px-4"
+        className="flex min-h-14 shrink-0 flex-wrap items-center gap-2 border-b border-border bg-background px-3 py-2 print:hidden sm:h-14 sm:flex-nowrap sm:gap-3 sm:py-0 sm:px-4"
       >
         <div className="flex shrink-0 items-center gap-1 rounded-lg bg-muted/50 p-1" role="tablist" aria-label="Preview view">
             {TABS.map((tab) => (
@@ -268,7 +268,7 @@ export default function PreviewPanel() {
                 onClick={() => handleTabChange(tab.id)}
                 role="tab"
                 aria-selected={activeTab === tab.id}
-                className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                className={`rounded-md px-2.5 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 ${
                   activeTab === tab.id
                     ? "bg-surface-featured text-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -280,7 +280,7 @@ export default function PreviewPanel() {
         </div>
 
         {!isSpecs && (
-          <div className="ml-auto flex shrink-0 items-center gap-2">
+          <div className="flex w-full shrink-0 items-center justify-end gap-2 sm:ml-auto sm:w-auto sm:justify-start">
             <SegmentedControl
               options={[
                 { value: "light", label: <Sun className="size-3.5" />, accessibleLabel: "Light mode" },

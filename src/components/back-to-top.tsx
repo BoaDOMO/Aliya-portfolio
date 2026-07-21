@@ -11,7 +11,9 @@ export function BackToTop() {
       const scrollTop = window.scrollY
       const docHeight =
         document.documentElement.scrollHeight - window.innerHeight
-      setVisible(scrollTop > 300)
+      const footerTop = document.querySelector("footer")?.getBoundingClientRect().top
+      const footerVisible = footerTop !== undefined && footerTop < window.innerHeight
+      setVisible(scrollTop > 300 && !footerVisible)
       setProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0)
     }
     window.addEventListener("scroll", onScroll, { passive: true })

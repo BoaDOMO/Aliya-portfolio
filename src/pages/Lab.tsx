@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
@@ -12,23 +12,33 @@ const projects = [
   {
     label: "PROJECT 01",
     status: "Live prototype",
-    title: "RAG Chatbot — Nova Finance",
-    description:
-      "An interactive knowledge-grounded assistant that shows how retrieval boundaries, editable source material, and product UX work together.",
-    contribution: "Product framing, conversation design, frontend, and serverless AI integration.",
-    tech: ["Gemini", "RAG", "Vercel Functions", "Knowledge base"],
+    title: "AI Assistant — Nova Finance",
+    direction:
+      "Build an assistant that answers only from information I give it, then make that source material editable.",
+    failure:
+      "Early answers wandered beyond the source, the suggestions felt generic, and the interface hid why an answer worked.",
+    debugging:
+      "I tightened the system prompt, structured the source material, added boundaries and error states, and kept testing awkward questions.",
+    shipped:
+      "A working assistant whose company data can be switched, edited, and tested live.",
+    proof: ["Prompting", "Debugging", "AI integration"],
     link: "/rag",
-    cta: "Try the chatbot",
+    cta: "Try the assistant",
     preview: "chat" as const,
   },
   {
     label: "PROJECT 02",
     status: "Working tool",
     title: "Design System Studio",
-    description:
-      "A browser-based workspace for exploring color, typography, component previews, and accessibility quality before exporting design tokens.",
-    contribution: "Design-system modeling, interaction design, token architecture, and frontend engineering.",
-    tech: ["React", "Tailwind v4", "Color science", "Accessibility"],
+    direction:
+      "Turn three choices—style, color, and type—into a complete theme without dumping a wall of controls on the user.",
+    failure:
+      "Early color relationships drifted, font roles fought the presets, and responsive previews broke at smaller sizes.",
+    debugging:
+      "I separated user intent from generated values, rebuilt the font logic, and audited every preview, mode, and export state.",
+    shipped:
+      "A theme builder with live previews, accessibility checks, responsive modes, and usable exports.",
+    proof: ["Vibe coding", "Systems debugging", "Frontend craft"],
     link: "/design-system",
     cta: "Open the studio",
     preview: "design" as const,
@@ -81,17 +91,17 @@ export default function Lab() {
     <div>
       <PageSection>
         <FadeInWhenVisible>
-          <PageContainer>
-            <Card className="card-featured p-8 md:p-10">
+          <PageContainer className="grid gap-6 border-b pb-10 md:grid-cols-12 md:items-end md:pb-14">
+            <div className="md:col-span-8">
               <SectionLabel>// the lab</SectionLabel>
-              <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
-                Things I&rsquo;m building.
+              <h1 className="mt-3 max-w-3xl font-display text-5xl font-bold leading-none tracking-tight md:text-6xl">
+                I vibe code for real.
               </h1>
-              <div className="mt-3 h-1 w-16 rounded-full bg-primary" />
-              <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
-                Working experiments in AI, product design, and frontend systems—with the decisions visible, not just the demos.
-              </p>
-            </Card>
+            </div>
+            <p className="max-w-md leading-relaxed text-muted-foreground md:col-span-4">
+              Working experiments that show how I direct AI, inspect the output,
+              debug what breaks, and finish the software.
+            </p>
           </PageContainer>
         </FadeInWhenVisible>
       </PageSection>
@@ -107,18 +117,54 @@ export default function Lab() {
                     <Badge variant="outline" className="font-mono text-[10px] text-primary">{project.status}</Badge>
                   </div>
                   <h2 className="mt-3 font-display text-3xl font-bold tracking-tight">{project.title}</h2>
-                  <p className="mt-4 leading-relaxed text-muted-foreground">{project.description}</p>
-                  <p className="mt-4 text-sm leading-relaxed">
-                    <span className="font-semibold">My contribution:</span> {project.contribution}
-                  </p>
+                  <dl className="mt-6 divide-y border-y">
+                    <div className="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-4">
+                      <dt className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                        Direction
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-muted-foreground">
+                        {project.direction}
+                      </dd>
+                    </div>
+                    <div className="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-4">
+                      <dt className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                        Where it broke
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-muted-foreground">
+                        {project.failure}
+                      </dd>
+                    </div>
+                    <div className="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-4">
+                      <dt className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                        The debugging
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-muted-foreground">
+                        {project.debugging}
+                      </dd>
+                    </div>
+                    <div className="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:gap-4">
+                      <dt className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                        What shipped
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-muted-foreground">
+                        {project.shipped}
+                      </dd>
+                    </div>
+                  </dl>
                   <div className="mt-5 flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="font-mono text-[10px]">{tech}</Badge>
+                    {project.proof.map((item) => (
+                      <Badge key={item} variant="secondary" className="font-mono text-[10px]">{item}</Badge>
                     ))}
                   </div>
-                  <Button render={<Link to={project.link} />} className="mt-7" size="sm">
+                  <Link
+                    to={project.link}
+                    className={buttonVariants({
+                      size: "sm",
+                      className: "mt-7",
+                    })}
+                  >
                     {project.cta}<ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
+                  </Link>
                 </div>
                 <div className={index % 2 ? "md:order-1 md:col-span-7" : "md:col-span-7"}>
                   {project.preview === "chat" ? (
