@@ -63,7 +63,7 @@ export default function DashboardTab({ onNavigateToTab }: ComponentsTabProps) {
       <div className="mb-10">
         <h1
           className="text-xl font-bold text-foreground"
-          style={{ fontFamily: state.fonts.display ?? "Archivo Narrow" }}
+          style={{ fontFamily: state.fonts.display ?? "Plus Jakarta Sans" }}
         >
           Interactive Components
         </h1>

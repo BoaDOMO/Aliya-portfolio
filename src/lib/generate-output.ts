@@ -414,7 +414,7 @@ export function generateThemeJSON(state: DesignTokensState): string {
       },
     },
     font: {
-      display: { $type: "fontFamily", $value: state.fonts.display ?? "Archivo Narrow" },
+      display: { $type: "fontFamily", $value: state.fonts.display ?? "Plus Jakarta Sans" },
       body: { $type: "fontFamily", $value: state.fonts.body ?? "Inter" },
       mono: { $type: "fontFamily", $value: state.fonts.mono ?? "JetBrains Mono" },
     },

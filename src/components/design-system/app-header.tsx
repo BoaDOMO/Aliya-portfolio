@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { toast } from "sonner"
+import { ToolSectionLabel, ToolStatusPill } from "@/components/tool-shell"
 
 const EXPORT_TABS = [
   { id: "ai", label: "AI Context" },
@@ -80,7 +81,7 @@ export default function DesignSystemAppHeader({
 
   return (
     <>
-      <header className="flex h-13 shrink-0 items-center border-b border-border bg-tool-panel px-3 sm:px-4 print:hidden">
+      <header className="relative z-10 flex h-13 shrink-0 items-center border-b border-border/80 bg-tool-panel/90 px-3 backdrop-blur-md sm:px-4 print:hidden">
         <div className="flex min-w-0 items-center gap-2">
           <Link
             to="/lab"
@@ -107,9 +108,12 @@ export default function DesignSystemAppHeader({
             <List className="size-4" />
           </button>
           <div className="min-w-0 border-l border-border pl-3">
-            <p className="truncate text-sm font-semibold text-foreground">Design System</p>
+            <div className="flex items-center gap-2">
+              <p className="truncate text-sm font-semibold text-foreground">Design System Studio</p>
+              <ToolStatusPill tone="success" className="hidden sm:inline-flex">Live</ToolStatusPill>
+            </div>
             <p className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
-              <CloudCheck className="size-3.5 text-success" /> Autosaved locally
+              <CloudCheck className="size-3.5 text-success" /> Autosaved locally · production-ready tokens
             </p>
           </div>
         </div>
@@ -134,6 +138,9 @@ export default function DesignSystemAppHeader({
             >
               <ArrowClockwise className="size-4" />
             </button>
+          </div>
+          <div className="hidden items-center gap-2 pr-1 lg:flex">
+            <ToolSectionLabel>Studio</ToolSectionLabel>
           </div>
           <button
             type="button"

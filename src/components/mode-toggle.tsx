@@ -14,11 +14,11 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      aria-label="Toggle theme"
-      className="text-foreground/70"
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      className="relative size-10 rounded-full border-0 text-foreground/65 hover:bg-foreground/5 hover:text-foreground"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />

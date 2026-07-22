@@ -6,6 +6,7 @@ import { useQualityReport } from "@/lib/use-quality-report"
 import ColorSection from "./color-section"
 import FontSection from "./font-section"
 import type { DrawerContext, DrawerType } from "./drawer-sheet"
+import { ToolSectionLabel } from "@/components/tool-shell"
 
 export default function LeftPanel({
   onClose,
@@ -64,16 +65,22 @@ export default function LeftPanel({
 
   const handleColorAdvancedChange = (open: boolean) => {
     setColorAdvancedOpen(open)
-    if (open) revealSection(colorSectionRef.current)
+    if (open) {
+      setTypeAdvancedOpen(false)
+      revealSection(colorSectionRef.current)
+    }
   }
 
   const handleTypeAdvancedChange = (open: boolean) => {
     setTypeAdvancedOpen(open)
-    if (open) revealSection(typeSectionRef.current)
+    if (open) {
+      setColorAdvancedOpen(false)
+      revealSection(typeSectionRef.current)
+    }
   }
 
   return (
-    <aside className="flex h-full min-h-0 flex-col bg-tool-panel">
+    <aside className="flex h-full min-h-0 flex-col bg-tool-panel/90 backdrop-blur-md">
       <div className="flex h-[var(--tool-bar-height)] shrink-0 items-center gap-2 border-b border-border px-4">
         <button
           type="button"
@@ -110,23 +117,33 @@ export default function LeftPanel({
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-smooth">
+        <div className="border-b border-border/70 px-5 py-4 sm:px-6">
+          <ToolSectionLabel>Token inspector</ToolSectionLabel>
+          <p className="mt-2 max-w-[28rem] text-xs leading-relaxed text-muted-foreground">
+            Shape the system, then inspect how it behaves across a real interface.
+          </p>
+        </div>
         <div aria-label="Theme controls" className="space-y-10 p-5 sm:p-6">
-          <div ref={colorSectionRef} className="scroll-mt-6">
-            <ColorSection
-              onOpenDrawer={openColor}
-              advancedOpen={colorAdvancedOpen}
-              onAdvancedOpenChange={handleColorAdvancedChange}
-              hasAdvancedChanges={hasColorAdvancedChanges}
-            />
-          </div>
-          <div ref={typeSectionRef} className="scroll-mt-6 border-t border-border pt-8">
-            <FontSection
-              onOpenDrawer={openFont}
-              advancedOpen={typeAdvancedOpen}
-              onAdvancedOpenChange={handleTypeAdvancedChange}
-              hasAdvancedChanges={hasTypeAdvancedChanges}
-            />
-          </div>
+          {!typeAdvancedOpen && (
+            <div ref={colorSectionRef} className="scroll-mt-6">
+              <ColorSection
+                onOpenDrawer={openColor}
+                advancedOpen={colorAdvancedOpen}
+                onAdvancedOpenChange={handleColorAdvancedChange}
+                hasAdvancedChanges={hasColorAdvancedChanges}
+              />
+            </div>
+          )}
+          {!colorAdvancedOpen && (
+            <div ref={typeSectionRef} className="scroll-mt-6 border-t border-border pt-8">
+              <FontSection
+                onOpenDrawer={openFont}
+                advancedOpen={typeAdvancedOpen}
+                onAdvancedOpenChange={handleTypeAdvancedChange}
+                hasAdvancedChanges={hasTypeAdvancedChanges}
+              />
+            </div>
+          )}
         </div>
       </div>
 

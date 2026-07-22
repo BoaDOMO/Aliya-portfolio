@@ -1,88 +1,117 @@
-# Aliya Koy
+# Aliya Koy — Portfolio
 
-**AI researcher & full-stack developer** building product with AI riding shotgun. Based in Phnom Penh.
+Portfolio and product lab for Aliya Koy, a Senior Digital Product Owner and AI Lead based in Phnom Penh.
 
-> Live demo: _TODO: add Vercel URL_ · Repo: [github.com/…/Aliya-portfolio](https://github.com/apple/Aliya-portfolio)
+The public site uses the **Ethereal Monolith** direction: editorial product storytelling, oversized typography, generous whitespace, a floating command-bar navigation, restrained motion, and an intentional Gallery/Studio light-dark palette flip.
 
----
+## Public experience
 
-## About
+- **Home** — positioning hero, working method, and clear paths to selected work or profile
+- **Profile** — editorial introduction, three core capabilities, selected experience, earlier roles, and education
+- **Lab** — selected shipped and in-progress work presented as outcome-led project cards
+- **Contact** — validated message form with direct email fallback
 
-Personal portfolio and lab. What began as a vanilla HTML/CSS site has been rebuilt as a React 19 + Vite single-page app. Beyond the usual portfolio pages, it ships two working tools: an in-app **design-system editor** (`/design-system`) and a **Gemini-powered RAG chatbot** (`/rag`).
+The repository also contains two working product tools:
 
-## Features
+- **RAG assistant** (`/rag`) — Gemini-backed Q&A over an editable knowledge base
+- **Design System Studio** (`/design-system`) — token, colour, typography, preview, quality, and export tooling
 
-- **Home** — animated hero with a live code-editor panel
-- **Profile** — editorial positioning, capabilities, and selected experience
-- **Lab** — experiments and mini-projects
-- **Contact** — compact validated form with resilient Formspree delivery
-- **RAG chatbot** (`/rag`) — serverless Gemini Q&A over a custom knowledge base
-- **Design System tool** (`/design-system`) — token editor, color/typography drawers, quality reports, export
+## Core journeys
 
-## Tech stack
+1. Land on Home and choose **See what I've built** or **How I work**.
+2. Review Profile capabilities and experience, then continue to Contact.
+3. Browse Lab projects and open the relevant working tool.
+4. Send a validated Contact form or use the direct email link.
+5. Toggle and persist the intentionally designed light or dark theme.
 
-| Layer     | Choices                                                             |
-| --------- | ------------------------------------------------------------------- |
-| Framework | React 19, TypeScript 6, Vite 8                                      |
-| Styling   | Tailwind CSS v4 (`@theme` tokens), shadcn (Base UI primitives core) |
-| Animation | Framer Motion, `tw-animate-css`                                     |
-| Theming   | `next-themes` (`class` strategy, light/dark)                        |
-| Forms     | react-hook-form + zod + @hookform/resolvers                         |
-| AI / RAG  | `@google/generative-ai`, serverless API on Vercel                   |
-| Color     | culori, chroma-js (contrast & palette utils)                        |
-| Icons     | `@phosphor-icons/react`                                             |
-| Routing   | react-router-dom 7                                                  |
+## Stack
+
+| Layer | Choice |
+| --- | --- |
+| Framework | React 19, TypeScript 6, Vite 8 |
+| Routing | React Router 7 |
+| Styling | Tailwind CSS v4 with CSS-first semantic tokens |
+| Components | shadcn with Base UI primitives |
+| Motion | Framer Motion and `tw-animate-css` |
+| Theme | Class-based light/dark provider with pre-paint theme script |
+| Forms | Native semantic form handling with client validation and Formspree delivery |
+| Icons | `@phosphor-icons/react` |
+| AI | `@google/generative-ai` through a Vercel serverless endpoint |
+
+## Typography and palette
+
+- Display: Plus Jakarta Sans
+- Body: Inter
+- Data and metadata: JetBrains Mono
+- Gallery: warm linen canvas, obsidian text, laurel selection, cobalt action
+- Studio: deep forest canvas, warm linen text, moss selection, brighter cobalt action
+
+The complete rules live in [DESIGN.md](./DESIGN.md).
 
 ## Getting started
 
-Requires Node 20+.
+Requires Node 20 or newer.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # tsc -b && vite build
-npm run lint     # eslint .
-npm run preview  # preview the production build
+npm run dev
+npm run lint
+npm run build
+npm run preview
 ```
+
+The development server runs at `http://localhost:5173`.
 
 ## Project structure
 
-```
+```text
 src/
-  main.tsx              # Router + ThemeProvider + Layout
-  pages/                # Home, Profile, Lab, Contact, RAG, DesignSystem
+  main.tsx                 Router and providers
+  index.css                Tailwind v4 theme tokens and shared visual rules
+  pages/                   Home, Profile, Lab, Contact, RAG, Design System
   components/
-    ui/                 # shadcn primitives
-    design-system/      # DS tool (drawers, preview, quality report)
-    rag/                # chatbot dashboard, chat area, kb editor
-    lab/                # lab experiments
-  lib/                  # tokens store, color/contrast utils, generate-output, url-state
-  index.css             # Tailwind v4 @theme + :root/.dark tokens
+    ui/                    shadcn/Base UI primitives
+    design-system/         Design System Studio
+    rag/                   RAG product interface
+    lab/                   Embedded lab experiments
+  lib/                     Token, colour, contrast, persistence, and export logic
 api/
-  chat.js               # Vercel serverless Gemini RAG endpoint
+  chat.js                  Vercel Gemini endpoint
 ```
 
 ## Architecture notes
 
-- **Path alias:** `@` → `src/` (configured in `vite.config.ts` and `tsconfig.app.json`).
-- **Tokens:** CSS custom properties in `src/index.css` mapped to Tailwind v4 `@theme`. Light/dark swap via `.dark` on `<html>` — **never use `dark:` modifiers for background/foreground fills**; the tokens adapt automatically. See `DESIGN.md` for the full system.
-- **Theming:** `next-themes` with `class` strategy; inline pre-paint script in `index.html` prevents FOUC.
-- **SPA routing:** `vercel.json` rewrites all routes to `/index.html`.
-- **RAG backend:** `api/chat.js` is a Vercel serverless function calling Gemini with a provided knowledge base + persona. Requires `GOOGLE_API_KEY`.
+- `@` resolves to `src/` through Vite and TypeScript configuration.
+- Semantic tokens live in `src/index.css` and switch values under `.dark`.
+- Structural backgrounds and foregrounds use semantic utilities; do not add `dark:` fill overrides to portfolio UI.
+- `/rag` and `/design-system` use isolated product-tool shells without the portfolio navigation and footer.
+- `vercel.json` rewrites SPA routes to `index.html`.
+- The inline theme script in `index.html` applies the persisted theme before paint.
+- The Contact form submits to Formspree and retains client-side validation and accessible status feedback.
+- The Gemini endpoint requires `GOOGLE_API_KEY`.
 
-## Design system tool
+## Environment
 
-The `/design-system` route is a built-in token editor: edit color scales, typography, and style presets; run contrast/quality checks; preview components; export tokens. Full implementation guidance lives in `DESIGN.md`.
+Create the deployment environment variable used by `/api/chat.js`:
 
-## Deployment
-
-Vercel auto-detects Vite. Set the environment variable:
-
-```
+```text
 GOOGLE_API_KEY=your_gemini_api_key
 ```
 
-Push to `main` — Vercel builds and serves both the SPA and the `api/` serverless functions.
+The four public portfolio pages do not require a backend or authentication.
+
+## Quality gate
+
+Before shipping:
+
+1. Run `npm run lint` and `npm run build`.
+2. Start `npm run dev` and verify all four public routes.
+3. Review light and dark themes at 375px, 768px, and 1280px or wider.
+4. Check keyboard focus, reduced motion, field validation, and horizontal reflow.
+
+## Deployment
+
+Vercel auto-detects Vite and serves the SPA plus `api/` serverless functions. Configure `GOOGLE_API_KEY` before deploying the RAG route.
 
 ## License
 

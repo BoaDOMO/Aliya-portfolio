@@ -165,10 +165,13 @@ const INTENT_HARMONIES: Record<ColorIntent, HarmonyType> = {
 }
 
 function ensureExtendedTokens(tokens: ColorTokens): ColorTokens {
+  const featuredSurface = tokens["surface-featured"] ?? tokens.popover
   return {
     ...tokens,
-    "surface-raised": tokens["surface-raised"] ?? tokens.card,
-    "surface-featured": tokens["surface-featured"] ?? tokens.popover,
+    "surface-raised": tokens.card,
+    "surface-featured": featuredSurface,
+    popover: featuredSurface,
+    "popover-foreground": computeForeground(featuredSurface),
     "border-strong": tokens["border-strong"] ?? tokens.border,
   }
 }

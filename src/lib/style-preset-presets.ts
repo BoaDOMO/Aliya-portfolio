@@ -74,13 +74,13 @@ export const STYLE_PRESETS: StylePreset[] = [
     },
     typography: typography(
       {
-        displayFont: "Archivo Narrow",
+        displayFont: "Plus Jakarta Sans",
         bodyFont: "Inter",
         monoFont: "JetBrains Mono",
         lineHeight: { display: 1.1, body: 1.6 },
       },
       {
-        display: { size: 48, weight: 700 },
+        display: { size: 48, weight: 500 },
         body: { size: 16, weight: 500 },
         mono: { size: 14, weight: 400 },
       },

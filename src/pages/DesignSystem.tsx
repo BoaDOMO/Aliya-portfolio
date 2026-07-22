@@ -13,6 +13,7 @@ import OnboardingTour from "@/components/design-system/onboarding-tour"
 import PreviewPanel from "@/components/design-system/preview-panel"
 import DrawerSheet from "@/components/design-system/drawer-sheet"
 import type { DrawerType, DrawerContext } from "@/components/design-system/drawer-sheet"
+import { ToolAtmosphere } from "@/components/tool-shell"
 
 const DOCK_MIN_WIDTH = 560
 const DOCK_MAX_WIDTH = 760
@@ -124,6 +125,7 @@ function DesignSystemContent() {
       className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
+      <ToolAtmosphere />
       <DesignSystemAppHeader
         inspectorOpen={inspectorOpen}
         onToggleInspector={() => setInspectorOpen((open) => !open)}
@@ -139,7 +141,7 @@ function DesignSystemContent() {
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-h-0 flex-1 overflow-hidden">
+      <div className="relative z-10 flex min-h-0 flex-1 overflow-hidden">
         <motion.div
           initial={false}
           animate={{ width: inspectorOpen ? inspectorWidth : 0, opacity: inspectorOpen ? 1 : 0 }}

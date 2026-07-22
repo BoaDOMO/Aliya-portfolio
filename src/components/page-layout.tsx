@@ -16,7 +16,7 @@ export function PageContainer({
 }: ComponentPropsWithoutRef<"div"> & { width?: ContainerWidth }) {
   return (
     <div
-      className={cn("mx-auto w-full px-6", widths[width], className)}
+      className={cn("mx-auto w-full px-6 md:px-8", widths[width], className)}
       {...props}
     />
   )
@@ -33,8 +33,8 @@ export function PageSection({
   return (
     <section
       className={cn(
-        "py-12 md:py-20",
-        tone === "muted" && "bg-muted/50",
+        "py-20 md:py-32",
+        tone === "muted" && "bg-muted",
         className
       )}
       {...props}

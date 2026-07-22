@@ -14,7 +14,7 @@ import "./index.css"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="system" storageKey="aliya-theme">
+    <ThemeProvider defaultTheme="light" storageKey="aliya-theme">
       <DesignTokensProvider>
         <BrowserRouter>
           <Routes>

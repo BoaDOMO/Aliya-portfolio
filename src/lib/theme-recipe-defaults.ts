@@ -6,12 +6,12 @@ export const DEFAULT_THEME_RECIPE: ThemeRecipe = {
   colorIntent: "neutral",
   harmonyType: "shadcn",
   fonts: {
-    display: "Archivo Narrow",
+    display: "Plus Jakarta Sans",
     body: "Inter",
     mono: "JetBrains Mono",
   },
   fontCustomization: {
-    display: { size: 52, weight: 700, italic: false },
+    display: { size: 52, weight: 500, italic: false },
     body: { size: 16, weight: 400, italic: false },
     mono: { size: 13, weight: 400, italic: false },
   },

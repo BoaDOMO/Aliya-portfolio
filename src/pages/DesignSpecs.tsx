@@ -57,7 +57,7 @@ export default function DesignSpecs() {
           </p>
           <h1
             className="mt-1 text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
-            style={{ fontFamily: state.fonts.display ?? "Archivo Narrow" }}
+            style={{ fontFamily: state.fonts.display ?? "Plus Jakarta Sans" }}
           >
             Design Specs
           </h1>

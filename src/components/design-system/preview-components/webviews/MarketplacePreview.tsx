@@ -49,13 +49,20 @@ const REQUIRED_COLOR_ROLES = [
 
 const REQUIRED_FONT_ROLES = ["display", "body", "mono"] as const
 
+const MARKETPLACE_ASSETS = {
+  lamp: `${import.meta.env.BASE_URL}assets/marketplace/field-lamp.webp`,
+  headphones: `${import.meta.env.BASE_URL}assets/marketplace/field-headphones.webp`,
+  chair: `${import.meta.env.BASE_URL}assets/marketplace/field-chair.webp`,
+  watch: `${import.meta.env.BASE_URL}assets/marketplace/field-watch.webp`,
+}
+
 const PRODUCTS = [
   {
     name: "Halo pendant",
     category: "Lighting",
     price: "$148",
     note: "Editor’s pick",
-    image: "/assets/marketplace/field-lamp.webp",
+    image: MARKETPLACE_ASSETS.lamp,
     alt: "Cobalt blue pendant lamp",
     art: "primary",
   },
@@ -64,7 +71,7 @@ const PRODUCTS = [
     category: "Audio",
     price: "$220",
     note: "Low stock",
-    image: "/assets/marketplace/field-headphones.webp",
+    image: MARKETPLACE_ASSETS.headphones,
     alt: "Graphite over-ear headphones",
     art: "secondary",
   },
@@ -73,7 +80,7 @@ const PRODUCTS = [
     category: "Furniture",
     price: "$390",
     note: "Ships today",
-    image: "/assets/marketplace/field-chair.webp",
+    image: MARKETPLACE_ASSETS.chair,
     alt: "Oatmeal boucle lounge chair",
     art: "accent",
   },
@@ -82,7 +89,7 @@ const PRODUCTS = [
     category: "Accessories",
     price: "$184",
     note: "New arrival",
-    image: "/assets/marketplace/field-watch.webp",
+    image: MARKETPLACE_ASSETS.watch,
     alt: "Minimal field watch with olive strap",
     art: "muted",
   },
@@ -125,8 +132,9 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[number] }) {
           alt={product.alt}
           width="1200"
           height="1200"
-          loading="lazy"
+          loading="eager"
           decoding="async"
+          onError={(event) => { event.currentTarget.hidden = true }}
         />
       </div>
       <div className="marketplace-product-copy">
@@ -258,12 +266,13 @@ export default function MarketplacePreview({ presetId }: { presetId: string }) {
             <div className="marketplace-visual-orbit marketplace-visual-orbit--two" />
             <img
               className="marketplace-hero-image"
-              src="/assets/marketplace/field-chair.webp"
+              src={MARKETPLACE_ASSETS.chair}
               alt="Oatmeal boucle Loop lounge chair"
               width="1200"
               height="1200"
               fetchPriority="high"
               decoding="async"
+              onError={(event) => { event.currentTarget.hidden = true }}
             />
             <PresetBox className="marketplace-hero-label">
               <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">No. 018</span>
@@ -312,12 +321,13 @@ export default function MarketplacePreview({ presetId }: { presetId: string }) {
             <div className="marketplace-selected-art">
               <img
                 className="marketplace-selected-image"
-                src="/assets/marketplace/field-headphones.webp"
+                src={MARKETPLACE_ASSETS.headphones}
                 alt="Graphite Orbit headphones"
                 width="1200"
                 height="1200"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
+                onError={(event) => { event.currentTarget.hidden = true }}
               />
               <span className="marketplace-selected-index font-mono">02 / 04</span>
             </div>
@@ -346,7 +356,10 @@ export default function MarketplacePreview({ presetId }: { presetId: string }) {
               <Package className="size-6 text-primary" />
             </div>
 
-            <div className="marketplace-status-list">
+            <div
+              className="marketplace-status-list"
+              data-token-role="success success-foreground warning warning-foreground destructive destructive-foreground info info-foreground"
+            >
               <StatusRow icon={CheckCircle} label="Payment protected" value="READY" tone="success" />
               <StatusRow icon={Info} label="Delivery window" value="2–3 DAYS" tone="info" />
               <StatusRow icon={WarningCircle} label="Graphite stock" value="3 LEFT" tone="warning" />

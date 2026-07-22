@@ -13,6 +13,7 @@ export interface FontPairing {
 }
 
 export const BUNDLED_FONTS: FontDef[] = [
+  { family: "Plus Jakarta Sans", category: "display", weights: [300, 400, 500, 600], italic: true },
   { family: "Archivo Narrow", category: "display", weights: [400, 500, 600, 700], italic: true },
   { family: "Inter", category: "sans-serif", weights: [300, 400, 500, 600, 700], italic: true },
   { family: "JetBrains Mono", category: "monospace", weights: [400, 500, 600, 700], italic: true },
@@ -31,7 +32,7 @@ export const BUNDLED_FONTS: FontDef[] = [
 ] as const
 
 export const SMART_PAIRINGS: FontPairing[] = [
-  { label: "Warm Precision", display: "Archivo Narrow", body: "Inter", mono: "JetBrains Mono" },
+  { label: "Warm Precision", display: "Plus Jakarta Sans", body: "Inter", mono: "JetBrains Mono" },
   { label: "Modern Product", display: "Sora", body: "Inter", mono: "Fira Code" },
   { label: "Trustworthy", display: "DM Serif Display", body: "DM Sans", mono: "JetBrains Mono" },
   { label: "Warm Reading", display: "Lora", body: "Work Sans", mono: "IBM Plex Mono" },

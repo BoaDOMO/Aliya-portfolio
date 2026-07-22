@@ -20,6 +20,7 @@ import ResponsiveFrame, { type DeviceType } from "./preview-components/responsiv
 import DesignSpecs from "@/pages/DesignSpecs"
 import { SegmentedControl } from "@/components/ui/segmented-control"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { ToolSectionLabel, ToolStatusPill } from "@/components/tool-shell"
 
 const DEVICE_OPTIONS = [
   { value: "desktop", label: <Desktop className="size-3.5" />, accessibleLabel: "Desktop preview" },
@@ -99,7 +100,7 @@ function buildCssVars(
     "--chart-5": derived["chart-5"],
     ...presetVars,
     ...radiusVars,
-    "--font-display": fonts.display ?? "Archivo Narrow",
+    "--font-display": fonts.display ?? "Plus Jakarta Sans",
     "--font-body": fonts.body ?? "Inter",
     "--font-mono": fonts.mono ?? "JetBrains Mono",
     "--font-size-display": `${typeScale.display}px`,
@@ -253,12 +254,12 @@ export default function PreviewPanel() {
     : renderPane(activeTab as "dashboard" | "landing", activeTokens, isDark ? derived.dark : derived.light, isDark, stylePreset)
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden motion-reduce:transition-none">
+    <div className="relative z-10 flex flex-1 flex-col overflow-hidden motion-reduce:transition-none">
       <CVDDefs />
 
       <div
         data-preview-toolbar
-        className="flex min-h-[var(--tool-bar-height)] shrink-0 flex-wrap items-center gap-2 border-b border-border bg-tool-panel px-3 py-2 print:hidden sm:h-[var(--tool-bar-height)] sm:flex-nowrap sm:gap-3 sm:px-4 sm:py-0"
+        className="flex min-h-[var(--tool-bar-height)] shrink-0 flex-wrap items-center gap-2 border-b border-border/80 bg-tool-panel/90 px-3 py-2 backdrop-blur-md print:hidden sm:h-[var(--tool-bar-height)] sm:flex-nowrap sm:gap-3 sm:px-4 sm:py-0"
       >
         <div className="flex shrink-0 items-center gap-1 rounded-lg bg-muted/50 p-1" role="tablist" aria-label="Preview view">
             {TABS.map((tab) => (
@@ -277,6 +278,11 @@ export default function PreviewPanel() {
                 {tab.label}
               </button>
             ))}
+        </div>
+
+        <div className="hidden items-center gap-2 pl-1 lg:flex">
+          <ToolSectionLabel>Workbench</ToolSectionLabel>
+          <ToolStatusPill tone="info">Preview synced</ToolStatusPill>
         </div>
 
         {!isSpecs && (
@@ -352,7 +358,7 @@ export default function PreviewPanel() {
       ) : (
         <div
           data-preview-chrome
-          className="relative flex-1 overflow-hidden rounded-xl bg-muted/20 print:hidden"
+          className="relative flex-1 overflow-hidden rounded-2xl border border-border/70 bg-muted/20 shadow-[inset_0_1px_0_color-mix(in_oklch,var(--foreground)_6%,transparent)] print:hidden"
         >
           {/* Dot grid background */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.07]"
