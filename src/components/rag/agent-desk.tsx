@@ -592,26 +592,38 @@ export default function AgentDesk() {
       window.clearTimeout(botTypewriterTimerRef.current)
     }
 
-    const charactersPerTick = 1
-    const typingInterval = 24
-    let cursor = Math.min(charactersPerTick, content.length)
-    setTypedBotReplies((current) => ({ ...current, [messageId]: content.slice(0, cursor) }))
+    let cursor = 0
+    setTypedBotReplies((current) => ({ ...current, [messageId]: "" }))
     setBotTypingMessageId(messageId)
 
     const revealNext = () => {
-      cursor = Math.min(cursor + charactersPerTick, content.length)
+      let chunk = 1
+      const char = content.charAt(cursor)
+      let nextDelay = 15 + Math.random() * 20
+
+      if (/[.,!?]/.test(char)) {
+        nextDelay = 300 + Math.random() * 200
+      } else if (char === " ") {
+        nextDelay = 50 + Math.random() * 50
+      } else {
+        if (Math.random() > 0.4) {
+          chunk = Math.floor(Math.random() * 3) + 1
+        }
+      }
+
+      cursor = Math.min(cursor + chunk, content.length)
       setTypedBotReplies((current) => ({ ...current, [messageId]: content.slice(0, cursor) }))
 
       if (cursor < content.length) {
-        botTypewriterTimerRef.current = window.setTimeout(revealNext, typingInterval)
+        botTypewriterTimerRef.current = window.setTimeout(revealNext, nextDelay)
       } else {
         botTypewriterTimerRef.current = null
         setBotTypingMessageId(null)
       }
     }
 
-    if (cursor < content.length) {
-      botTypewriterTimerRef.current = window.setTimeout(revealNext, typingInterval)
+    if (content.length > 0) {
+      botTypewriterTimerRef.current = window.setTimeout(revealNext, 30)
     } else {
       setBotTypingMessageId(null)
     }
