@@ -63,7 +63,7 @@ export const projects = [
     description:
       "A grounded customer assistant paired with a live support inbox—designed for natural answers, clear human handoff, and a single editable knowledge base.",
     tags: ["Grounded Answers", "Human Handoff", "Knowledge Base"],
-    link: "/rag",
+    link: "/chat",
     kind: "rag" as const,
   },
   {

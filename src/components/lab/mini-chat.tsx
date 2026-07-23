@@ -147,7 +147,7 @@ export default function MiniChat() {
               className="text-center"
             >
               <Link
-                to="/rag"
+                to="/chat"
                 className="inline-flex items-center gap-1.5 rounded-full border bg-surface-control px-4 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent"
               >
                 Try the full demo

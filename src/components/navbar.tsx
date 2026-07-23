@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const labItems = [
-  { to: "/rag", label: "Chat Workspace" },
+  { to: "/chat", label: "Chat Workspace" },
   { to: "/design-system", label: "Design System Studio" },
 ] as const
 

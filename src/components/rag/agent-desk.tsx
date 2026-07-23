@@ -915,7 +915,7 @@ export default function AgentDesk() {
       botTypewriterTimerRef.current = null
     }
     sessionIdRef.current = crypto.randomUUID()
-    toast.success("Demo session reset")
+    toast.success("Session reset")
   }
 
   function handleOpenKnowledge(open: boolean) {

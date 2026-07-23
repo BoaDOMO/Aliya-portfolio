@@ -2,6 +2,7 @@
 
 ## Core behaviour
 
+- Always present a proposed plan or diff and wait for explicit user confirmation before modifying code files or running build/deployment commands.
 - Think through edge cases, dependencies, responsive changes, and failure points before editing.
 - Use the loop Plan → Act → Observe → Correct. Test changes, read failures, and fix them autonomously.
 - Preserve unrelated work in a dirty worktree. Never overwrite or revert changes outside the current task.
@@ -38,7 +39,7 @@ shadcn is a repository library, not a skill. Read `@docs/shadcn-reference.md` wh
 
 - Before UI code, map the component tree, parent container, Flex/Grid alignment, responsive composition, and required shadcn primitives.
 - Follow `@DESIGN.md` for the public portfolio. Do not improvise a competing visual language.
-- Treat `/rag` and `/design-system` as isolated product-tool shells. They share semantic tokens and accessibility, but not the portfolio navbar, footer, or editorial spacing.
+- Treat `/chat` and `/design-system` as isolated product-tool shells. They share semantic tokens and accessibility, but not the portfolio navbar, footer, or editorial spacing.
 - Use `@phosphor-icons/react` for all interface icons.
 - Use semantic Tailwind tokens for structural colour. Never add `dark:` modifiers for portfolio background or foreground fills; token values adapt automatically.
 
@@ -78,7 +79,7 @@ Ship nothing visually unreviewed.
 - Display/body/data typography is Plus Jakarta Sans / Inter / JetBrains Mono.
 - Public portfolio direction is **Ethereal Monolith**, documented in `@DESIGN.md`.
 - The RAG endpoint is `api/chat.js`, uses `@google/generative-ai`, and requires `GOOGLE_API_KEY`.
-- `/rag` and `/design-system` do not render the portfolio shell.
+- `/chat` and `/design-system` do not render the portfolio shell.
 
 ## References
 
