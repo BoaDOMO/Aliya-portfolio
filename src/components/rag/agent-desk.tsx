@@ -55,7 +55,7 @@ interface Thread {
   messages: AgentMessage[]
 }
 
-const KNOWLEDGE_KEY = "kb-prasac-rag-knowledge-v1"
+const KNOWLEDGE_KEY = "daydream-club-knowledge-v2"
 const CHAT_SESSION_KEY = "daydream-club-chat-workspace-v1"
 
 interface PersistedChatSession {
@@ -67,37 +67,51 @@ interface PersistedChatSession {
 }
 
 const DEFAULT_KNOWLEDGE = [
-  "# Daydream Club support",
+  "# Daydream Club",
   "",
-  "This knowledge base supports Daydream Club members. Answers should be clear, cautious, and grounded in the supplied product and support policies.",
+  "Daydream Club is a welcoming members' clubhouse for slow mornings, focused work, movement, shared meals, and good evenings. Members can drop in to work from the lounge, join a class, meet friends, or make space for a little less rush.",
   "",
-  "# Membership",
+  "# Opening hours and arrival",
   "",
-  "Members can pause a Daydream Club membership for up to 3 months from Settings → Membership. A pause takes effect at the next billing date. Account-specific billing issues should be reviewed by a human support teammate.",
+  "The clubhouse is open every day from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM. Members can check in with the Daydream Club app or ask the front desk. First-time guests should arrive during staffed hours.",
   "",
-  "# Account access",
+  "# Memberships and day passes",
   "",
-  "Customers can reset a forgotten passcode from the Daydream Club app sign-in screen. If a device is lost or account activity looks suspicious, contact the support team immediately. Never request a full password, PIN, or one-time passcode in chat.",
+  "Day Pass is for a full day at the clubhouse and includes the lounge, café seating, and same-day events when capacity allows. Club membership includes everyday clubhouse access, early event booking, and member pricing. Studio membership also includes four movement or creative studio sessions each month. Membership options and current pricing are available in the app under Join Daydream.",
   "",
-  "# Transfers",
+  "Members can pause a Club or Studio membership for up to three months from Settings → Membership. A pause begins on the next billing date. Members can change or cancel a membership up to two days before their next billing date. Billing questions tied to a specific account should be handled by a human support teammate.",
   "",
-  "Local transfers can take up to one business day to appear. Before escalating, confirm the transfer date, destination account, and whether the app shows a pending or failed status. Do not promise a reversal without a confirmed case reference.",
+  "# Spaces and bookings",
   "",
-  "# Card support",
+  "The main lounge is drop-in and first come, first served. The Library is a quiet, phone-free space for focused work. The Garden and café tables are for conversation and casual work. Members can book a Focus Booth for up to two hours per day and a Meeting Room for up to four hours per week in the app. Meeting Room bookings can include up to six people.",
   "",
-  "A card can be temporarily locked from Cards in the mobile app. A replacement is required when a card is stolen or the card number may be exposed. Ask the customer to verify only the last four digits; never collect a full card number or CVV.",
+  "Please cancel a room booking at least one hour ahead so another member can use it. Three missed bookings in a month temporarily pause booking access; the front desk can help if something unexpected happened.",
   "",
-  "# Human handoff",
+  "# Classes, events, and workshops",
   "",
-  "Escalate complaints, suspected fraud, vulnerable-customer concerns, and requests involving account-specific investigation to a human support team. Keep the handoff summary factual and include the customer's preferred callback channel.",
+  "Daydream Club hosts morning movement, creative workshops, shared-table dinners, listening sessions, and member meetups. The weekly schedule lives in the app under What's On. Most sessions need a booking because spaces are small. Members can cancel without a fee up to four hours before a class; late cancellations release the place for someone on the waitlist.",
   "",
-  "# Answer policy",
+  "A member may bring one guest to an open event or the café after 5:00 PM. Guests cannot use the Library, Focus Booths, Meeting Rooms, or members-only classes. Some ticketed events are open to everyone; the event listing will say so.",
   "",
-  "Q: Can I tell a customer their transfer will arrive today?",
-  "A: No. Explain the normal processing window and check the current status instead.",
+  "# Café and food",
   "",
-  "Q: What should the assistant do when the knowledge base is silent?",
-  "A: Say that the information is not available, avoid guessing, and offer a human handoff.",
+  "The café serves coffee, tea, breakfast, light lunch, and non-alcoholic drinks every day from 7:00 AM to 8:00 PM. Dinner service runs Thursday to Saturday from 6:00 PM to 9:30 PM. Members receive a small café discount when they show their app at checkout. Please tell the café team about allergies before ordering; they can share current ingredients and alternatives.",
+  "",
+  "# Accessibility and bringing little ones",
+  "",
+  "The clubhouse has step-free entry, an accessible restroom, and a lift to every member floor. Service animals are always welcome. Children are welcome in the café and Garden with an adult, but the Library and evening events are for guests aged 16 and over unless an event says otherwise. For a quieter arrival, a support teammate can arrange a low-sensory welcome.",
+  "",
+  "# Account and app help",
+  "",
+  "Use the Daydream Club app to check in, manage membership, book a space, reserve a class, see the weekly schedule, and update contact details. If a member cannot access the app, they can use Forgot password on the sign-in screen or ask the front desk for help. Never ask for a password, one-time code, or payment card details in chat.",
+  "",
+  "# Clubhouse care",
+  "",
+  "Please take calls in the Garden, café, or phone booths; the Library stays quiet. Keep shared tables clear when the clubhouse is busy. Be kind, ask before photographing anyone, and let the front desk know if someone needs help. Daydream Club does not tolerate harassment, discrimination, or unsafe behaviour.",
+  "",
+  "# Human support",
+  "",
+  "Offer a human support teammate for account-specific billing issues, accessibility arrangements, safety concerns, lost property, complaints, or anything not answered clearly here. Keep the handoff summary factual and ask for the member's preferred contact method only when needed.",
 ].join("\n")
 
 function message(
@@ -132,7 +146,7 @@ function createSeedThreads(): Thread[] {
       messages: [
         message(
           "agent",
-          "Hi, welcome to Daydream Club. I’m here to help with memberships, transfers, cards, and account access. What can I help you with today?",
+          "Hi, welcome to Daydream Club. I can help with visits, memberships, spaces, classes, events, and the café. What can I help you with today?",
           0,
           "Daydream Club"
         ),
@@ -177,37 +191,23 @@ function loadChatSession(): PersistedChatSession | null {
 function fallbackSuggestion(question: string) {
   const normalized = question.toLowerCase()
 
-  if (
-    normalized.includes("transfer") ||
-    normalized.includes("pending") ||
-    normalized.includes("failed")
-  ) {
-    return "Local transfers can take up to one business day to appear. Please check whether the transfer is pending or failed before we escalate it to the support team."
+  if (/\b(open|opening|hours|close|closing)\b/.test(normalized)) {
+    return "Daydream Club is open daily from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM."
   }
 
-  if (
-    normalized.includes("card") ||
-    normalized.includes("stolen") ||
-    normalized.includes("fraud") ||
-    normalized.includes("suspicious")
-  ) {
-    return "I’m sorry this looks suspicious. Please temporarily lock the card in the Daydream Club app and I’ll prepare a human handoff. Never share your full card number or CVV in chat."
+  if (/\b(book|booking|room|booth|meeting|library|space)\b/.test(normalized)) {
+    return "The lounge is drop-in, while Focus Booths and Meeting Rooms can be booked in the Daydream Club app. The Library is a quiet, phone-free work space."
   }
 
-  if (
-    normalized.includes("passcode") ||
-    normalized.includes("password") ||
-    normalized.includes("sign in") ||
-    normalized.includes("login")
-  ) {
-    return "Open the Daydream Club app and choose the reset option from the sign-in screen. If you suspect unusual account activity, contact support immediately."
+  if (/\b(class|workshop|event|schedule)\b/.test(normalized)) {
+    return "You can find Daydream Club's movement sessions, workshops, dinners, and meetups in the app under What's On. Most need a booking because spaces are small."
   }
 
-  if (normalized.includes("pause") || normalized.includes("membership")) {
-    return "You can pause your Daydream Club membership for up to 3 months from Settings → Membership. The pause takes effect at your next billing date."
+  if (/\b(cafe|coffee|food|lunch|dinner|allerg)\b/.test(normalized)) {
+    return "The café is open daily from 7:00 AM to 8:00 PM, with dinner Thursday to Saturday from 6:00 PM to 9:30 PM. Please tell the café team about allergies before ordering."
   }
 
-  return "I’m checking the Daydream Club knowledge base. If the policy is not covered, I’ll recommend a human handoff instead of guessing."
+  return "I can help with visiting Daydream Club, memberships, work spaces, classes, events, guests, and the café."
 }
 
 function normalizeMessage(value: string) {
@@ -257,8 +257,7 @@ function fallbackCustomerAnswer(
     .find((item) => item.role === "customer")?.content
   const previousTopic = normalizeMessage(previousCustomerMessage || "")
   const contextualQuestion =
-    /^(it|that|this|and|but|how|when|where|why|what|which)\b/.test(normalized) ||
-    normalized.split(" ").length <= 3
+    /^(it|that|this|and|but)\b/.test(normalized) || normalized.split(" ").length <= 2
       ? `${previousTopic} ${normalized}`
       : normalized
 
@@ -269,7 +268,7 @@ function fallbackCustomerAnswer(
   ) {
     return {
       content:
-        "Hey! How can I help? You can ask me about memberships, transfers, cards, or account access.",
+        "Hey! How can I help? You can ask me about visiting Daydream Club, memberships, spaces, classes, events, or the café.",
     }
   }
 
@@ -295,39 +294,74 @@ function fallbackCustomerAnswer(
   if (/\b(what can you do|help me|what do you know)\b/.test(normalized)) {
     return {
       content:
-        "I can help with Daydream Club memberships, transfers, cards, and account access. Tell me what’s going on.",
+        "I can help with visiting Daydream Club, memberships, work spaces, classes, events, guests, and the café. Tell me what you need.",
+    }
+  }
+
+  if (
+    /\b(what is daydream|about daydream|tell me about.*daydream|what.*daydream club|daydream club.*what)\b/.test(
+      contextualQuestion
+    )
+  ) {
+    return {
+      content:
+        "Daydream Club is a members' clubhouse for focused work, movement, shared meals, and events. You can drop in to the lounge, book a work space, join a class, or meet people over coffee.",
+    }
+  }
+
+  if (/\b(open|opening|hours|close|closing|when.*open)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "Daydream Club is open every day from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM.",
     }
   }
 
   if (/\b(pause|membership|member|subscription)\b/.test(contextualQuestion)) {
     return {
       content:
-        "You can pause your Daydream Club membership for up to 3 months from Settings → Membership. The pause starts at your next billing date.",
+        "Daydream Club has Day Pass, Club, and Studio options. You can pause a Club or Studio membership for up to three months from Settings → Membership; the pause starts at the next billing date.",
     }
   }
 
-  if (/\b(transfer|transaction|pending|failed|sent money)\b/.test(contextualQuestion)) {
+  if (/\b(book|booking|room|booth|meeting|library|space|work)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Local transfers can take up to one business day to appear. Does the app show the transfer as pending or failed?",
+        "The lounge is drop-in and the Library is a quiet, phone-free work space. You can book a Focus Booth for up to two hours a day or a Meeting Room for up to four hours a week in the app.",
     }
   }
 
-  if (/\b(card|stolen|lost card|freeze|lock)\b/.test(contextualQuestion)) {
+  if (/\b(class|workshop|event|schedule|waitlist)\b/.test(contextualQuestion)) {
     return {
       content:
-        "You can temporarily lock your card from Cards in the Daydream Club app. If it was stolen or its number may be exposed, it will need to be replaced.",
+        "You can find Daydream Club's movement sessions, workshops, dinners, and meetups in the app under What's On. Most need a booking, and you can cancel up to four hours ahead so the place goes to the waitlist.",
     }
   }
 
-  if (
-    /\b(passcode|password|login|log in|sign in|locked out|account access)\b/.test(
-      contextualQuestion
-    )
-  ) {
+  if (/\b(cafe|coffee|food|breakfast|lunch|dinner|allerg)\b/.test(contextualQuestion)) {
     return {
       content:
-        "You can reset a forgotten passcode from the Daydream Club app sign-in screen. Never share a password, PIN, or one-time passcode in chat.",
+        "The café serves coffee, tea, breakfast, light lunch, and non-alcoholic drinks daily from 7:00 AM to 8:00 PM. Dinner runs Thursday to Saturday from 6:00 PM to 9:30 PM.",
+    }
+  }
+
+  if (/\b(guest|friend|bring someone|plus one)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "Members can bring one guest to an open event or the café after 5:00 PM. Guests can't use the Library, Focus Booths, Meeting Rooms, or members-only classes.",
+    }
+  }
+
+  if (/\b(accessib|wheelchair|sensory|child|kids|dog|service animal)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "Daydream Club has step-free entry, an accessible restroom, and a lift to every member floor. Service animals are welcome, and a support teammate can arrange a quieter, low-sensory arrival if helpful.",
+    }
+  }
+
+  if (/\b(password|login|log in|sign in|locked out|account|app)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "You can use the Daydream Club app to check in, manage membership, book spaces, and reserve classes. If you can't access it, use Forgot password on the sign-in screen or ask the front desk for help.",
     }
   }
 
@@ -339,7 +373,7 @@ function fallbackCustomerAnswer(
   if (!recentClarification) {
     return {
       content:
-        "I’m not quite sure what you mean. Could you rephrase that, or tell me whether it’s about your membership, a transfer, a card, or account access?",
+        "I’m not quite sure what you mean. Could you tell me whether it’s about visiting, membership, a space booking, a class or event, or the café?",
     }
   }
 
