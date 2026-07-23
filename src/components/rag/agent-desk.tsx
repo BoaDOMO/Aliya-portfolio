@@ -597,21 +597,16 @@ export default function AgentDesk() {
     setBotTypingMessageId(messageId)
 
     const revealNext = () => {
-      let chunk = 1
       const char = content.charAt(cursor)
-      let nextDelay = 15 + Math.random() * 20
+      let nextDelay = 10 + Math.random() * 15 // Base typing speed: 10-25ms
 
       if (/[.,!?]/.test(char)) {
-        nextDelay = 300 + Math.random() * 200
+        nextDelay = 150 + Math.random() * 150 // Pause at punctuation: 150-300ms
       } else if (char === " ") {
-        nextDelay = 50 + Math.random() * 50
-      } else {
-        if (Math.random() > 0.4) {
-          chunk = Math.floor(Math.random() * 3) + 1
-        }
+        nextDelay = 25 + Math.random() * 30 // Slight pause at spaces: 25-55ms
       }
 
-      cursor = Math.min(cursor + chunk, content.length)
+      cursor += 1
       setTypedBotReplies((current) => ({ ...current, [messageId]: content.slice(0, cursor) }))
 
       if (cursor < content.length) {
@@ -623,7 +618,7 @@ export default function AgentDesk() {
     }
 
     if (content.length > 0) {
-      botTypewriterTimerRef.current = window.setTimeout(revealNext, 30)
+      botTypewriterTimerRef.current = window.setTimeout(revealNext, 100) // Initial delay before typing starts
     } else {
       setBotTypingMessageId(null)
     }
@@ -1034,7 +1029,6 @@ export default function AgentDesk() {
                         key={item.id}
                         message={item}
                         displayContent={displayContent}
-                        isTyping={botTypingMessageId === item.id}
                         showHandoffActions={
                           index === customerMessages.length - 1 &&
                           item.action === "offer-handoff" &&
@@ -1211,14 +1205,12 @@ export default function AgentDesk() {
 function CustomerMessage({
   message: item,
   displayContent,
-  isTyping = false,
   showHandoffActions = false,
   onRequestHuman,
   onDeclineHuman,
 }: {
   message: AgentMessage
   displayContent?: string
-  isTyping?: boolean
   showHandoffActions?: boolean
   onRequestHuman: () => void
   onDeclineHuman: () => void
@@ -1228,7 +1220,6 @@ function CustomerMessage({
       <div className="rag-message mx-auto flex max-w-[280px] items-center gap-2 rounded-xl bg-success/10 px-3 py-2.5 text-xs text-success">
         <Headset className="size-3.5 shrink-0" />
         {displayContent ?? item.content}
-        {isTyping && <span aria-hidden="true" className="ml-0.5 inline-block animate-pulse text-primary">▍</span>}
       </div>
     )
   }
@@ -1242,7 +1233,7 @@ function CustomerMessage({
         <span>{formatTime(item.timestamp)}</span>
       </div>
       <div className={cn("max-w-[88%] text-sm leading-relaxed md:max-w-[280px]", isCustomer ? "text-foreground" : "rounded-2xl rounded-tl-md px-3.5 py-3", isSupport ? "bg-success/12 text-foreground" : !isCustomer ? "bg-primary/10 text-foreground" : "")}>
-        {item.content}
+        {displayContent ?? item.content}
       </div>
       {showHandoffActions && (
         <div className="mt-1 flex flex-wrap gap-2">
