@@ -1052,14 +1052,14 @@ export default function AgentDesk() {
                     <Textarea
                       ref={customerComposerRef}
                       value={customerDraft}
-                      disabled={customerAssistState === "loading" || botTypingMessageId !== null}
+                      disabled={false}
                       onChange={(event) => setCustomerDraft(event.target.value)}
                       onKeyDown={handleCustomerKeyDown}
                       rows={2}
                       placeholder="Write a message…"
                       className="rag-composer-input min-h-[78px] resize-none rounded-xl border-border-strong bg-white pr-11 text-sm disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-foreground"
                     />
-                    <Button size="icon" onClick={handleCustomerSend} disabled={!customerDraft.trim() || customerAssistState === "loading" || botTypingMessageId !== null} aria-label="Send customer message" className="absolute right-2 bottom-2 size-8 rounded-full">
+                    <Button size="icon" onClick={handleCustomerSend} disabled={!customerDraft.trim() || customerAssistState === "loading"} aria-label="Send customer message" className="absolute right-2 bottom-2 size-8 rounded-full">
                       <ArrowUp className="size-4" />
                     </Button>
                   </div>
