@@ -55,8 +55,8 @@ interface Thread {
   messages: AgentMessage[]
 }
 
-const KNOWLEDGE_KEY = "daydream-club-knowledge-v2"
-const CHAT_SESSION_KEY = "daydream-club-chat-workspace-v1"
+const KNOWLEDGE_KEY = "groundwork-coffee-knowledge-v1"
+const CHAT_SESSION_KEY = "groundwork-coffee-chat-workspace-v1"
 
 interface PersistedChatSession {
   threads: Thread[]
@@ -67,51 +67,81 @@ interface PersistedChatSession {
 }
 
 const DEFAULT_KNOWLEDGE = [
-  "# Daydream Club",
+  "# Groundwork Coffee Co.",
   "",
-  "Daydream Club is a welcoming members' clubhouse for slow mornings, focused work, movement, shared meals, and good evenings. Members can drop in to work from the lounge, join a class, meet friends, or make space for a little less rush.",
+  "Groundwork Coffee Co. is a neighbourhood coffee chain with six locations across the city. We roast our own beans in-house at the East Side Roastery, source directly from small farms, and serve espresso drinks, filter coffee, seasonal specials, pastries, and light food all day. Our goal is simple: great coffee without the attitude.",
   "",
-  "# Opening hours and arrival",
+  "# Locations and opening hours",
   "",
-  "The clubhouse is open every day from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM. Members can check in with the Daydream Club app or ask the front desk. First-time guests should arrive during staffed hours.",
+  "All six stores are open Monday to Friday 6:30 AM to 8:00 PM and Saturday to Sunday 7:30 AM to 7:00 PM. Public holidays follow Sunday hours unless a location posts otherwise on the door or the app. The East Side Roastery doubles as a café and is open to the public during the same hours; roastery tours run Saturday at 10:00 AM with a $10 fee redeemable against any purchase.",
   "",
-  "# Memberships and day passes",
+  "Store addresses: Downtown (12 Commerce St), East Side Roastery (88 Mill Lane), Midtown (350 Park Ave, suite lobby), Riverside (4 Wharf Rd), Northgate (Unit 9, Northgate Mall), and Westwood (201 Garden Blvd). Each location's exact hours and any temporary closures are listed in the Groundwork app under Stores.",
   "",
-  "Day Pass is for a full day at the clubhouse and includes the lounge, café seating, and same-day events when capacity allows. Club membership includes everyday clubhouse access, early event booking, and member pricing. Studio membership also includes four movement or creative studio sessions each month. Membership options and current pricing are available in the app under Join Daydream.",
+  "# The menu",
   "",
-  "Members can pause a Club or Studio membership for up to three months from Settings → Membership. A pause begins on the next billing date. Members can change or cancel a membership up to two days before their next billing date. Billing questions tied to a specific account should be handled by a human support teammate.",
+  "Espresso drinks include: Espresso (single or double), Americano, Flat White, Cappuccino, Latte, Cortado, Macchiato, Oat Latte, and Dirty Chai. Filter coffee is batch-brewed every 30 minutes and is always available as a pourover on request. Cold brew is available at all stores from 8:00 AM until sold out.",
   "",
-  "# Spaces and bookings",
+  "Milk options: whole, semi-skimmed, skimmed, oat (default dairy-free), almond, soy, and coconut. Oat and almond are included at no extra charge; soy and coconut carry a $0.50 surcharge. Decaf espresso is available at all stores.",
   "",
-  "The main lounge is drop-in and first come, first served. The Library is a quiet, phone-free space for focused work. The Garden and café tables are for conversation and casual work. Members can book a Focus Booth for up to two hours per day and a Meeting Room for up to four hours per week in the app. Meeting Room bookings can include up to six people.",
+  "Food: all-day avocado toast, sourdough breakfast sandwich (egg, cheese, smoked bacon or plant-based patty), banana bread, almond croissant, seasonal fruit bowl, and a rotating grain bowl for lunch. Vegan items are marked (V) on the menu board and the app. Gluten-free bread is available as a swap for $1 extra.",
   "",
-  "Please cancel a room booking at least one hour ahead so another member can use it. Three missed bookings in a month temporarily pause booking access; the front desk can help if something unexpected happened.",
+  "Drinks are available in three sizes: Small (8 oz), Regular (12 oz), and Large (16 oz). Iced versions of any espresso drink are available. Extra shots cost $0.75 each. Syrups (vanilla, caramel, hazelnut, brown sugar, lavender) are $0.50 each.",
   "",
-  "# Classes, events, and workshops",
+  "# Seasonal specials",
   "",
-  "Daydream Club hosts morning movement, creative workshops, shared-table dinners, listening sessions, and member meetups. The weekly schedule lives in the app under What's On. Most sessions need a booking because spaces are small. Members can cancel without a fee up to four hours before a class; late cancellations release the place for someone on the waitlist.",
+  "Groundwork releases a new seasonal menu every three months. The current season (Summer) features: Iced Mango Cold Brew, Coconut Cold Foam Latte, Strawberry Matcha (hot or iced), and Yuzu Sparkling Lemonade. Seasonal items are available while supplies last and are listed in the app under What's Seasonal. When a seasonal item sells out for the day, the app updates in real time.",
   "",
-  "A member may bring one guest to an open event or the café after 5:00 PM. Guests cannot use the Library, Focus Booths, Meeting Rooms, or members-only classes. Some ticketed events are open to everyone; the event listing will say so.",
+  "Limited single-origin filter coffees rotate monthly. The current single-origin is a washed Ethiopian Yirgacheffe with tasting notes of blueberry and jasmine, available as pourover or to purchase as whole beans (250 g bags, $22).",
   "",
-  "# Café and food",
+  "# Loyalty programme — Groundwork Perks",
   "",
-  "The café serves coffee, tea, breakfast, light lunch, and non-alcoholic drinks every day from 7:00 AM to 8:00 PM. Dinner service runs Thursday to Saturday from 6:00 PM to 9:30 PM. Members receive a small café discount when they show their app at checkout. Please tell the café team about allergies before ordering; they can share current ingredients and alternatives.",
+  "Groundwork Perks is free to join via the app or in-store. Every $1 spent earns 1 Perk Point. Rewards: 50 points = free add-on (extra shot, syrup, or milk upgrade); 100 points = free drink of any size; 200 points = free food item or retail bag of beans.",
   "",
-  "# Accessibility and bringing little ones",
+  "Points are added automatically when you scan the app QR code at checkout or pay with a saved card in the app. Points cannot be added retroactively more than 7 days after a purchase, and only one QR code can be scanned per transaction. Points expire after 12 months of account inactivity.",
   "",
-  "The clubhouse has step-free entry, an accessible restroom, and a lift to every member floor. Service animals are always welcome. Children are welcome in the café and Garden with an adult, but the Library and evening events are for guests aged 16 and over unless an event says otherwise. For a quieter arrival, a support teammate can arrange a low-sensory welcome.",
+  "Birthday reward: members receive a free drink of any size during their birthday month. The birthday must be set in the app at least 48 hours before the visit. The birthday reward cannot be combined with a Perks redemption in the same transaction.",
   "",
-  "# Account and app help",
+  "Perk Points cannot be transferred between accounts, exchanged for cash, or used on catering orders. Dispute a missing points claim via the app under Help → Missing Points, or contact support. Resolution typically takes 2–3 business days.",
   "",
-  "Use the Daydream Club app to check in, manage membership, book a space, reserve a class, see the weekly schedule, and update contact details. If a member cannot access the app, they can use Forgot password on the sign-in screen or ask the front desk for help. Never ask for a password, one-time code, or payment card details in chat.",
+  "# Ordering ahead and the app",
   "",
-  "# Clubhouse care",
+  "The Groundwork app (iOS and Android) supports mobile ordering with a 10-minute pickup window. Orders can be placed up to 2 hours in advance. App orders earn Perks points automatically. The app also shows the live seasonal menu, store wait times, and a loyalty point balance.",
   "",
-  "Please take calls in the Garden, café, or phone booths; the Library stays quiet. Keep shared tables clear when the clubhouse is busy. Be kind, ask before photographing anyone, and let the front desk know if someone needs help. Daydream Club does not tolerate harassment, discrimination, or unsafe behaviour.",
+  "To cancel or modify a mobile order, you must do so within 2 minutes of placing it through the app. After that window, the order moves to the bar and cannot be changed. Refunds for cancelled orders are returned to the original payment method within 3–5 business days.",
+  "",
+  "If the app is unavailable, customers can order in-store or by calling the location directly. App account issues (password reset, payment method problems) can be resolved via the app's Help section or by contacting customer support.",
+  "",
+  "# Catering",
+  "",
+  "Groundwork offers catering for offices, events, and private bookings. The minimum catering order is $150, and orders must be placed at least 48 hours in advance via the catering enquiry form at groundworkcoffee.com/catering or by emailing catering@groundworkcoffee.com.",
+  "",
+  "Catering packages include: The Morning Box (serves 10–20, includes drip coffee, pastries, and fruit), The Espresso Bar (a barista + equipment on-site, 2-hour minimum, serves up to 50), and Custom Office Delivery (recurring weekly drops of whole beans or ground coffee with a filter machine option). Catering orders in the Downtown and Midtown areas can be delivered; other locations are collection only.",
+  "",
+  "Catering cancellations made more than 24 hours before the scheduled time receive a full refund. Cancellations within 24 hours forfeit a 50% deposit. The catering team will confirm all orders by email within 4 business hours.",
+  "",
+  "# Allergens and dietary information",
+  "",
+  "All Groundwork kitchens handle milk, eggs, gluten, nuts (including almonds and hazelnuts), sesame, and soy. Cross-contamination is possible, and we cannot guarantee any item is fully allergen-free. Customers with severe allergies should inform the barista before ordering so we can take extra care or advise on safer options.",
+  "",
+  "Vegan drinks: all espresso drinks made with oat or almond milk are vegan. Syrups (vanilla, caramel, hazelnut, brown sugar, lavender) are all vegan. The banana bread and grain bowl are vegan. The almond croissant contains butter and eggs and is not vegan.",
+  "",
+  "Nutrition and full allergen details for every menu item are available in the app under Menu → Allergen Info and on the printed allergen menu available at each store. Always ask a team member if unsure.",
+  "",
+  "# Retail and beans",
+  "",
+  "Whole bean and ground coffee is available to purchase in-store and online. Bag sizes: 250 g ($18–$22) and 500 g ($32–$38) depending on the origin. A subscription for fortnightly or monthly delivery of fresh-roasted beans is available at groundworkcoffee.com/subscribe and earns Perks points on every order.",
+  "",
+  "Retail merchandise (tumblers, branded tote bags, Fellow gear, Aeropress kits) is stocked at the Roastery and Downtown stores. Out-of-stock items can be requested for inter-store transfer with a 3–5 day lead time.",
+  "",
+  "# Quality, complaints, and feedback",
+  "",
+  "If a drink or food item is not right, let a barista know immediately and we will remake it. If an issue is raised after leaving the store, the customer can report it through the app under Help → Report an Issue within 24 hours, and a store credit or complimentary drink will be issued at a manager's discretion.",
+  "",
+  "Formal complaints about staff conduct, safety concerns, or recurring quality problems should be directed to hello@groundworkcoffee.com or through the chat's human support handoff. Groundwork responds to all written complaints within 2 business days.",
   "",
   "# Human support",
   "",
-  "Offer a human support teammate for account-specific billing issues, accessibility arrangements, safety concerns, lost property, complaints, or anything not answered clearly here. Keep the handoff summary factual and ask for the member's preferred contact method only when needed.",
+  "Offer a human support teammate for account-specific billing issues, missing Perks points disputes, catering enquiries, safety or conduct concerns, complaints that need manager escalation, or anything this assistant cannot clearly answer. Always ask the customer for their preferred contact method (email or phone) before closing the handoff.",
 ].join("\n")
 
 function message(
@@ -142,13 +172,13 @@ function createSeedThreads(): Thread[] {
       unread: false,
       handoffRequested: false,
       tags: ["customer"],
-      plan: "Monthly member",
+      plan: "Perks member",
       messages: [
         message(
           "agent",
-          "Hi, welcome to Daydream Club. I can help with visits, memberships, spaces, classes, events, and the café. What can I help you with today?",
+          "Hey! Welcome to Groundwork Coffee Co. I can help with our menu, seasonal specials, Perks loyalty rewards, mobile ordering, catering, and more. What can I help you with?",
           0,
-          "Daydream Club"
+          "Groundwork Coffee"
         ),
       ],
     },
@@ -191,23 +221,27 @@ function loadChatSession(): PersistedChatSession | null {
 function fallbackSuggestion(question: string) {
   const normalized = question.toLowerCase()
 
-  if (/\b(open|opening|hours|close|closing)\b/.test(normalized)) {
-    return "Daydream Club is open daily from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM."
+  if (/\b(open|opening|hours|close|closing|when)\b/.test(normalized)) {
+    return "All Groundwork stores are open Monday–Friday 6:30 AM–8:00 PM and Saturday–Sunday 7:30 AM–7:00 PM. Check the app under Stores for individual location hours."
   }
 
-  if (/\b(book|booking|room|booth|meeting|library|space)\b/.test(normalized)) {
-    return "The lounge is drop-in, while Focus Booths and Meeting Rooms can be booked in the Daydream Club app. The Library is a quiet, phone-free work space."
+  if (/\b(point|perk|reward|loyalty|redeem|earn)\b/.test(normalized)) {
+    return "Groundwork Perks earns 1 point per $1 spent. Redeem at 50, 100, or 200 points for add-ons, free drinks, or food items. Scan your app QR code at checkout to earn."
   }
 
-  if (/\b(class|workshop|event|schedule)\b/.test(normalized)) {
-    return "You can find Daydream Club's movement sessions, workshops, dinners, and meetups in the app under What's On. Most need a booking because spaces are small."
+  if (/\b(cater|catering|event|office|deliver)\b/.test(normalized)) {
+    return "Catering orders (min. $150) must be placed 48 hours in advance via groundworkcoffee.com/catering or catering@groundworkcoffee.com. Packages include The Morning Box, Espresso Bar, and Custom Office Delivery."
   }
 
-  if (/\b(cafe|coffee|food|lunch|dinner|allerg)\b/.test(normalized)) {
-    return "The café is open daily from 7:00 AM to 8:00 PM, with dinner Thursday to Saturday from 6:00 PM to 9:30 PM. Please tell the café team about allergies before ordering."
+  if (/\b(menu|drink|coffee|milk|syrup|food|vegan|allerg|gluten)\b/.test(normalized)) {
+    return "Groundwork serves espresso drinks, filter, cold brew, and seasonal specials. Oat and almond milk are included at no extra charge. Full allergen info is in the app under Menu → Allergen Info."
   }
 
-  return "I can help with visiting Daydream Club, memberships, work spaces, classes, events, guests, and the café."
+  if (/\b(season|special|limited|summer|new)\b/.test(normalized)) {
+    return "The current Summer seasonal menu includes Iced Mango Cold Brew, Coconut Cold Foam Latte, Strawberry Matcha, and Yuzu Sparkling Lemonade — available while supplies last."
+  }
+
+  return "I can help with Groundwork's menu, Perks loyalty rewards, seasonal drinks, mobile ordering, catering, and store locations."
 }
 
 function normalizeMessage(value: string) {
@@ -268,118 +302,143 @@ function fallbackCustomerAnswer(
   ) {
     return {
       content:
-        "Hey! How can I help? You can ask me about visiting Daydream Club, memberships, spaces, classes, events, or the café.",
+        "Hey! Great to hear from you. I can help with our menu, seasonal drinks, Perks rewards, mobile ordering, catering, and store info. What's up?",
     }
   }
 
   if (/\b(thank|thanks|thx)\b/.test(normalized)) {
-    return { content: "You’re welcome! If anything else comes up, I’m here to help." }
+    return { content: "Of course! Come back any time — and don't forget to scan your Perks QR code next visit." }
   }
 
-  if (/^(ok|okay|alright|got it|cool|great|makes sense)$/.test(normalized)) {
-    return { content: "Got it. Is there anything else I can help with?" }
+  if (/^(ok|okay|alright|got it|cool|great|makes sense|perfect|awesome)$/.test(normalized)) {
+    return { content: "Great — is there anything else I can help with?" }
   }
 
   if (/^(how are you|how's it going|hows it going|what's up|whats up)$/.test(normalized)) {
-    return { content: "I’m doing well, thanks! What can I help you with today?" }
+    return { content: "All good, thanks for asking! What can I sort out for you today?" }
   }
 
-  if (/\b(are you (a )?(bot|human|person)|who are you)\b/.test(normalized)) {
+  if (/\b(are you (a )?(bot|human|person|ai)|who are you)\b/.test(normalized)) {
     return {
       content:
-        "I’m the Daydream Club virtual assistant. I can answer common questions, and I can connect you with human support when you need it.",
+        "I'm Groundwork's virtual assistant — I can answer questions about our coffee, stores, and loyalty programme. For anything account-specific, I can loop in a real team member.",
     }
   }
 
-  if (/\b(what can you do|help me|what do you know)\b/.test(normalized)) {
+  if (/\b(what can you do|help me|what do you know|what.*help)\b/.test(normalized)) {
     return {
       content:
-        "I can help with visiting Daydream Club, memberships, work spaces, classes, events, guests, and the café. Tell me what you need.",
+        "I can cover the menu, milk options, allergens, seasonal specials, Perks loyalty rewards, mobile ordering, catering packages, store hours, and retail beans. What do you need?",
     }
   }
 
-  if (
-    /\b(what is daydream|about daydream|tell me about.*daydream|what.*daydream club|daydream club.*what)\b/.test(
-      contextualQuestion
-    )
-  ) {
+  if (/\b(what is groundwork|about groundwork|tell me about|who are groundwork)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Daydream Club is a members' clubhouse for focused work, movement, shared meals, and events. You can drop in to the lounge, book a work space, join a class, or meet people over coffee.",
+        "Groundwork Coffee Co. is a neighbourhood coffee chain with six city locations and an in-house roastery. We do direct-trade sourcing, seasonal menus, and a free loyalty programme called Groundwork Perks.",
     }
   }
 
-  if (/\b(open|opening|hours|close|closing|when.*open)\b/.test(contextualQuestion)) {
+  if (/\b(open|opening|hours|close|closing|when.*open|what time)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Daydream Club is open every day from 7:00 AM to 10:00 PM. The front desk is staffed from 8:00 AM to 8:00 PM.",
+        "All stores are open Monday–Friday 6:30 AM–8:00 PM and Saturday–Sunday 7:30 AM–7:00 PM. Public holidays follow Sunday hours. Individual store info is in the app under Stores.",
     }
   }
 
-  if (/\b(pause|membership|member|subscription)\b/.test(contextualQuestion)) {
+  if (/\b(location|store|where|address|nearest|find us)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Daydream Club has Day Pass, Club, and Studio options. You can pause a Club or Studio membership for up to three months from Settings → Membership; the pause starts at the next billing date.",
+        "We have six locations: Downtown (12 Commerce St), East Side Roastery (88 Mill Lane), Midtown (350 Park Ave), Riverside (4 Wharf Rd), Northgate Mall, and Westwood (201 Garden Blvd). Use the app to find the nearest one.",
     }
   }
 
-  if (/\b(book|booking|room|booth|meeting|library|space|work)\b/.test(contextualQuestion)) {
+  if (/\b(perk|point|reward|loyalty|redeem|birthday|earn|stamp)\b/.test(contextualQuestion)) {
     return {
       content:
-        "The lounge is drop-in and the Library is a quiet, phone-free work space. You can book a Focus Booth for up to two hours a day or a Meeting Room for up to four hours a week in the app.",
+        "Groundwork Perks earns 1 point per $1 spent. Rewards start at 50 points (free add-on), 100 points (free drink), or 200 points (free food or beans). Birthday month means a free drink — just set your birthday in the app 48 hours before your visit.",
     }
   }
 
-  if (/\b(class|workshop|event|schedule|waitlist)\b/.test(contextualQuestion)) {
+  if (/\b(miss|missing|add point|forgot|didn't scan|retroactive)\b/.test(contextualQuestion)) {
     return {
       content:
-        "You can find Daydream Club's movement sessions, workshops, dinners, and meetups in the app under What's On. Most need a booking, and you can cancel up to four hours ahead so the place goes to the waitlist.",
+        "Missing points can be claimed up to 7 days after a purchase via the app under Help → Missing Points. After 7 days, a team member needs to review it — I can connect you with support if needed.",
+      offerHandoff: true,
     }
   }
 
-  if (/\b(cafe|coffee|food|breakfast|lunch|dinner|allerg)\b/.test(contextualQuestion)) {
+  if (/\b(order|mobile order|app order|pickup|cancel order|modify)\b/.test(contextualQuestion)) {
     return {
       content:
-        "The café serves coffee, tea, breakfast, light lunch, and non-alcoholic drinks daily from 7:00 AM to 8:00 PM. Dinner runs Thursday to Saturday from 6:00 PM to 9:30 PM.",
+        "Mobile orders can be placed up to 2 hours ahead with a 10-minute pickup window. You can cancel or modify within 2 minutes of placing the order. After that, it's already with the bar. Refunds go back to your original payment in 3–5 business days.",
     }
   }
 
-  if (/\b(guest|friend|bring someone|plus one)\b/.test(contextualQuestion)) {
+  if (/\b(cater|catering|event|office|delivery|morning box|espresso bar)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Members can bring one guest to an open event or the café after 5:00 PM. Guests can't use the Library, Focus Booths, Meeting Rooms, or members-only classes.",
+        "Catering orders (min. $150) need 48 hours notice. Options include The Morning Box (serves 10–20), The Espresso Bar (on-site barista), and Custom Office Delivery. Submit a request at groundworkcoffee.com/catering or email catering@groundworkcoffee.com.",
     }
   }
 
-  if (/\b(accessib|wheelchair|sensory|child|kids|dog|service animal)\b/.test(contextualQuestion)) {
+  if (/\b(season|special|limited|summer|mango|matcha|cold brew|yuzu|coconut foam)\b/.test(contextualQuestion)) {
     return {
       content:
-        "Daydream Club has step-free entry, an accessible restroom, and a lift to every member floor. Service animals are welcome, and a support teammate can arrange a quieter, low-sensory arrival if helpful.",
+        "This summer we have Iced Mango Cold Brew, Coconut Cold Foam Latte, Strawberry Matcha, and Yuzu Sparkling Lemonade. All are available while supplies last — check the app for real-time availability.",
     }
   }
 
-  if (/\b(password|login|log in|sign in|locked out|account|app)\b/.test(contextualQuestion)) {
+  if (/\b(menu|drink|coffee|milk|oat|almond|soy|decaf|shot|syrup|latte|flat white|cold brew|filter|pourover)\b/.test(contextualQuestion)) {
     return {
       content:
-        "You can use the Daydream Club app to check in, manage membership, book spaces, and reserve classes. If you can't access it, use Forgot password on the sign-in screen or ask the front desk for help.",
+        "We serve espresso drinks, filter, and cold brew. Milk options include whole, semi-skimmed, oat (default dairy-free), almond, soy, and coconut. Oat and almond are free; soy/coconut add $0.50. Decaf is always available. Syrups are $0.50 each.",
+    }
+  }
+
+  if (/\b(food|eat|pastry|toast|sandwich|croissant|vegan|gluten|allergen|allerg)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "Food includes avocado toast, sourdough breakfast sandwich, banana bread, almond croissant, fruit bowl, and a rotating grain bowl. Vegan items are marked (V). Gluten-free bread is a $1 swap. Full allergen info is in the app under Menu → Allergen Info.",
+    }
+  }
+
+  if (/\b(bean|bag|retail|subscription|roastery|tour|buy|whole bean|ground)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "Beans are sold in 250 g and 500 g bags ($18–$38 depending on origin). A fortnightly or monthly bean subscription is at groundworkcoffee.com/subscribe and earns Perks points. Roastery tours run Saturdays at 10:00 AM for $10 (redeemable in-store).",
+    }
+  }
+
+  if (/\b(complain|complaint|wrong|bad|issue|cold|spill|refund|remake|quality)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "If something's not right, let a barista know and we'll remake it on the spot. If you've already left, report it within 24 hours via the app under Help → Report an Issue — a store credit or complimentary drink is usually issued at the manager's discretion.",
+    }
+  }
+
+  if (/\b(password|login|log in|sign in|locked out|account|app|reset)\b/.test(contextualQuestion)) {
+    return {
+      content:
+        "For app access issues, use Forgot Password on the sign-in screen. For payment method problems or account-specific questions, go to Help in the app or I can connect you with our support team.",
     }
   }
 
   const recentClarification = [...history]
     .reverse()
     .find((item) => item.role === "agent")
-    ?.content.startsWith("I’m not quite sure")
+    ?.content.startsWith("Not quite sure")
 
   if (!recentClarification) {
     return {
       content:
-        "I’m not quite sure what you mean. Could you tell me whether it’s about visiting, membership, a space booking, a class or event, or the café?",
+        "Not quite sure what you mean — could you tell me a bit more? I can help with our menu, Perks loyalty, seasonal drinks, mobile ordering, catering, or store info.",
     }
   }
 
   return {
     content:
-      "I’m still not finding a clear answer. Would you like to request human support?",
+      "I'm not finding a clear answer for that one. Would you like me to connect you with a team member?",
     offerHandoff: true,
   }
 }
@@ -512,7 +571,7 @@ export default function AgentDesk() {
       content,
       0,
       role === "agent"
-        ? authorOverride || "Daydream Club"
+        ? authorOverride || "Groundwork Coffee"
         : role === "note"
           ? "Private note"
           : undefined
@@ -607,7 +666,7 @@ export default function AgentDesk() {
                 content: item.content,
               })),
             sessionId: sessionIdRef.current,
-            companyName: "Daydream Club",
+            companyName: "Groundwork Coffee",
           }),
         })
         const body = (await response.json()) as {
@@ -632,7 +691,7 @@ export default function AgentDesk() {
 
   function addCustomerAnswer(content: string, offerHandoff = false) {
     const nextMessage: AgentMessage = {
-      ...message("agent", content, 0, "Daydream Club"),
+      ...message("agent", content, 0, "Groundwork Coffee"),
       action: offerHandoff ? "offer-handoff" : undefined,
     }
     updateThread((thread) => ({
@@ -676,7 +735,7 @@ export default function AgentDesk() {
       "agent",
       "No problem — I’m here if you need anything else.",
       0,
-      "Daydream Club"
+      "Groundwork Coffee"
     )
 
     updateThread((thread) => ({
@@ -733,7 +792,7 @@ export default function AgentDesk() {
               content: item.content,
             })),
           sessionId: sessionIdRef.current,
-          companyName: "Daydream Club",
+          companyName: "Groundwork Coffee",
         }),
       })
       const body = (await response.json()) as { answer?: string }
@@ -788,14 +847,14 @@ export default function AgentDesk() {
       const statusMessage = shouldHandBackToBot
         ? message(
             "event",
-            "Your conversation with Daydream Club support has been resolved. I’m back if you need anything else.",
+            "Your conversation with Groundwork support has been resolved. I’m back if you need anything else.",
             0,
             "System"
           )
         : shouldReturnToAgent
           ? message(
               "event",
-              "A Daydream Club support teammate has reopened this conversation.",
+              "A Groundwork support teammate has reopened this conversation.",
               0,
               "System"
             )
@@ -953,7 +1012,7 @@ export default function AgentDesk() {
                 <div className="mx-auto w-full space-y-5 md:max-w-[300px]">
                   {customerMessages.map((item, index) => {
                     const isBotReply =
-                      item.role === "agent" && item.author === "Daydream Club"
+                      item.role === "agent" && item.author === "Groundwork Coffee"
                     const displayContent = isBotReply && typedBotReplies[item.id] !== undefined
                       ? typedBotReplies[item.id]
                       : item.content
@@ -975,7 +1034,7 @@ export default function AgentDesk() {
                     )
                   })}
                   {customerAssistState === "loading" && (
-                    <CustomerTypingIndicator label="Daydream Club is typing…" />
+                    <CustomerTypingIndicator label="Groundwork is typing…" />
                   )}
                   {supportIsTyping && <CustomerTypingIndicator label="Support is typing…" />}
                 </div>
@@ -1167,7 +1226,7 @@ function CustomerMessage({
   return (
     <div className={cn("rag-message flex flex-col gap-1", isCustomer ? "items-end" : "items-start")}>
       <div className={cn("flex items-center gap-2 font-mono text-[10px] text-muted-foreground", isCustomer && "flex-row-reverse")}>
-        <span>{isCustomer ? "Customer" : isSupport ? "Support" : "Daydream Club"}</span>
+        <span>{isCustomer ? "Customer" : isSupport ? "Support" : "Groundwork Coffee"}</span>
         <span>{formatTime(item.timestamp)}</span>
       </div>
       <div className={cn("max-w-[88%] text-sm leading-relaxed md:max-w-[280px]", isCustomer ? "text-foreground" : "rounded-2xl rounded-tl-md px-3.5 py-3", isSupport ? "bg-success/12 text-foreground" : !isCustomer ? "bg-primary/10 text-foreground" : "")}>
