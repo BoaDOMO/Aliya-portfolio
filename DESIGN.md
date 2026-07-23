@@ -212,6 +212,40 @@ The brand signature is `// LABEL` followed by an optional short hairline. It is 
 - Brand statement, page navigation, location, and process remain easy to scan.
 - Footer links use muted text and shift to cobalt on hover/focus.
 
+## Product tool principles
+
+`/rag` and `/design-system` are product workspaces, not portfolio pages. They inherit the semantic colour system, typography roles, accessibility baseline, and atmospheric restraint, then use a denser application shell.
+
+### Shell and surfaces
+
+- Use the blurred botanical atmosphere as a quiet page layer; it must stay abstract behind the work surface.
+- The global tool navigation is a centred, frosted pill with a hairline border, compact controls, and a clear active workspace label.
+- Avoid a single heavy outer application container. Put the visual separation on the working panes: lightly frosted headers, white or near-white content surfaces, thin borders, and one soft shadow.
+- Prefer a small number of intentionally separated floating panes over nested cards, boxed-in sections, or repeated decorative outlines.
+- The canvas should feel spacious and calm. White carries the primary work area; linen and transparent surfaces frame it without competing for attention.
+
+### Product clarity
+
+- A screen should explain itself through its information hierarchy and familiar controls. Remove instructional copy, secondary headings, and labels that do not unlock an action.
+- Use direct, short names: `Chat`, `Support Inbox`, and `Knowledge Base`.
+- Icon-only controls are appropriate for familiar, repeated actions when each has an accessible label and a tooltip or title. Keep text for irreversible or ambiguous actions such as `Resolve`, `Reopen`, `Save`, and `Reset`.
+- Show one focused knowledge-base editor, not a mock IDE, source catalogue, character counter, or multiple invented companies.
+
+### Chat workspace patterns
+
+- Customer messages are plain text aligned to the customer side. Bot replies use a quiet cobalt-tinted surface; live-agent replies use a distinct, quiet success-tinted surface. Do not add borders around message bubbles.
+- Customer Chat and Support Inbox show the same conversation from their own roles. A human handoff appears in the inbox immediately, and resolving hands the conversation back to the bot with a clear event message.
+- Customer Chat may show a typing indicator and character-by-character bot reveal. Support Inbox does not show a typing indicator; the customer can see `Support is typing…` only while the agent is actively composing.
+- Composers are white, unobtrusive, and shadow-defined rather than framed by a second outer card. Send is a circular upward-arrow control.
+- Refresh preserves the current browser session. `Reset` is the intentional fresh start.
+
+### Responsive composition
+
+- Desktop and tablet retain separate Chat and Support Inbox panes when the layout remains readable.
+- Below the compact breakpoint, show one full-height pane at a time and centre the Chat and Inbox icon controls in the navigation. Preserve the wordmark and `Chat Workspace` label; do not silently remove them.
+- Preserve minimum touch targets, avoid horizontal overflow, and let conversation areas scroll internally rather than extending the page.
+- At 375px, 768px, and 1280px, validate navigation, pane switching, knowledge-base editing, handoff/resolution controls, and both composers.
+
 ## Motion protocol
 
 - Page transition: opacity only, approximately 500ms.

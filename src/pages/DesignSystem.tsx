@@ -14,10 +14,11 @@ import PreviewPanel from "@/components/design-system/preview-panel"
 import DrawerSheet from "@/components/design-system/drawer-sheet"
 import type { DrawerType, DrawerContext } from "@/components/design-system/drawer-sheet"
 import { ToolAtmosphere } from "@/components/tool-shell"
+import { BlurredBackground } from "@/components/blurred-background"
 
-const DOCK_MIN_WIDTH = 560
-const DOCK_MAX_WIDTH = 760
-const DOCK_DEFAULT_WIDTH = 640
+const DOCK_MIN_WIDTH = 400
+const DOCK_MAX_WIDTH = 600
+const DOCK_DEFAULT_WIDTH = 480
 
 function clampDockWidth(width: number) {
   return Math.min(DOCK_MAX_WIDTH, Math.max(DOCK_MIN_WIDTH, width))
@@ -122,10 +123,11 @@ function DesignSystemContent() {
   return (
     <motion.div
       layout={!shouldReduceMotion}
-      className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas"
+      className="design-studio-workspace relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas text-foreground"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      <ToolAtmosphere />
+      <BlurredBackground image="blue-flower" position="58% 38%" className="studio-blurred-background opacity-95" />
+      <ToolAtmosphere className="opacity-35" />
       <DesignSystemAppHeader
         inspectorOpen={inspectorOpen}
         onToggleInspector={() => setInspectorOpen((open) => !open)}
@@ -141,39 +143,41 @@ function DesignSystemContent() {
         </SheetContent>
       </Sheet>
 
-      <div className="relative z-10 flex min-h-0 flex-1 overflow-hidden">
-        <motion.div
-          initial={false}
-          animate={{ width: inspectorOpen ? inspectorWidth : 0, opacity: inspectorOpen ? 1 : 0 }}
-          transition={shouldReduceMotion || isResizingInspector ? { duration: 0 } : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          data-design-system-left
-          aria-hidden={!inspectorOpen}
-          inert={!inspectorOpen || undefined}
-          className="relative hidden shrink-0 overflow-hidden border-r border-border print:hidden xl:block"
-        >
-          <div className="h-full" style={{ width: inspectorWidth }}>{panelContent}</div>
-          <div
-            role="separator"
-            aria-label="Resize theme dock"
-            aria-orientation="vertical"
-            aria-valuemin={DOCK_MIN_WIDTH}
-            aria-valuemax={DOCK_MAX_WIDTH}
-            aria-valuenow={inspectorWidth}
-            tabIndex={inspectorOpen ? 0 : -1}
-            onPointerDown={handleResizeStart}
-            onPointerMove={handleResizeMove}
-            onPointerUp={handleResizeEnd}
-            onPointerCancel={handleResizeEnd}
-            onKeyDown={handleResizeKeyDown}
-            className="absolute inset-y-0 right-0 z-20 w-2 cursor-col-resize touch-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      <main className="relative z-10 min-h-0 flex-1 overflow-hidden px-3 py-3 sm:px-5 sm:py-5">
+        <div className={`mx-auto flex h-full min-h-0 w-full max-w-[1440px] ${inspectorOpen ? "gap-4" : "gap-0"}`}>
+          <motion.div
+            initial={false}
+            animate={{ width: inspectorOpen ? inspectorWidth : 0, opacity: inspectorOpen ? 1 : 0 }}
+            transition={shouldReduceMotion || isResizingInspector ? { duration: 0 } : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            data-design-system-left
+            aria-hidden={!inspectorOpen}
+            inert={!inspectorOpen || undefined}
+            className="studio-glass-shell relative hidden h-full shrink-0 overflow-hidden rounded-[20px] border border-border/60 ring-1 ring-border/25 print:hidden xl:block"
           >
-            <span className="absolute left-1/2 top-1/2 h-10 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-border-strong transition-colors hover:bg-primary" />
+            <div className="h-full" style={{ width: inspectorWidth }}>{panelContent}</div>
+            <div
+              role="separator"
+              aria-label="Resize theme dock"
+              aria-orientation="vertical"
+              aria-valuemin={DOCK_MIN_WIDTH}
+              aria-valuemax={DOCK_MAX_WIDTH}
+              aria-valuenow={inspectorWidth}
+              tabIndex={inspectorOpen ? 0 : -1}
+              onPointerDown={handleResizeStart}
+              onPointerMove={handleResizeMove}
+              onPointerUp={handleResizeEnd}
+              onPointerCancel={handleResizeEnd}
+              onKeyDown={handleResizeKeyDown}
+              className="absolute inset-y-0 right-0 z-20 w-2 cursor-col-resize touch-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+            >
+              <span className="absolute top-1/2 left-1/2 h-10 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-border-strong transition-colors hover:bg-primary" />
+            </div>
+          </motion.div>
+          <div className="min-w-0 flex-1 overflow-hidden">
+            <PreviewPanel />
           </div>
-        </motion.div>
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-          <PreviewPanel />
         </div>
-      </div>
+      </main>
 
       <DrawerSheet
         open={drawerOpen}

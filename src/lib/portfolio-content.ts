@@ -57,12 +57,12 @@ export const earlierExperience = [
 export const projects = [
   {
     number: "01",
-    category: "AI · Retrieval augmented generation",
+    category: "AI · Conversational support",
     status: "Working prototype",
-    title: "RAG Chatbot",
+    title: "Chat Workspace",
     description:
-      "A grounded assistant that retrieves the right knowledge before it answers—built for source-aware responses, prompt testing, and fast iteration.",
-    tags: ["Source Retrieval", "Prompt Testing", "Grounded Answers"],
+      "A grounded customer assistant paired with a live support inbox—designed for natural answers, clear human handoff, and a single editable knowledge base.",
+    tags: ["Grounded Answers", "Human Handoff", "Knowledge Base"],
     link: "/rag",
     kind: "rag" as const,
   },

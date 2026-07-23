@@ -20,7 +20,6 @@ import ResponsiveFrame, { type DeviceType } from "./preview-components/responsiv
 import DesignSpecs from "@/pages/DesignSpecs"
 import { SegmentedControl } from "@/components/ui/segmented-control"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-import { ToolSectionLabel, ToolStatusPill } from "@/components/tool-shell"
 
 const DEVICE_OPTIONS = [
   { value: "desktop", label: <Desktop className="size-3.5" />, accessibleLabel: "Desktop preview" },
@@ -254,12 +253,12 @@ export default function PreviewPanel() {
     : renderPane(activeTab as "dashboard" | "landing", activeTokens, isDark ? derived.dark : derived.light, isDark, stylePreset)
 
   return (
-    <div className="relative z-10 flex flex-1 flex-col overflow-hidden motion-reduce:transition-none">
+    <section className="studio-glass-shell relative z-10 flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-[20px] border border-border/60 ring-1 ring-border/25 motion-reduce:transition-none">
       <CVDDefs />
 
       <div
         data-preview-toolbar
-        className="flex min-h-[var(--tool-bar-height)] shrink-0 flex-wrap items-center gap-2 border-b border-border/80 bg-tool-panel/90 px-3 py-2 backdrop-blur-md print:hidden sm:h-[var(--tool-bar-height)] sm:flex-nowrap sm:gap-3 sm:px-4 sm:py-0"
+        className="studio-glass-header flex min-h-14 shrink-0 flex-wrap items-center gap-2 border-b border-border/70 px-3 py-2 print:hidden sm:h-14 sm:flex-nowrap sm:gap-3 sm:px-4 sm:py-0"
       >
         <div className="flex shrink-0 items-center gap-1 rounded-lg bg-muted/50 p-1" role="tablist" aria-label="Preview view">
             {TABS.map((tab) => (
@@ -278,11 +277,6 @@ export default function PreviewPanel() {
                 {tab.label}
               </button>
             ))}
-        </div>
-
-        <div className="hidden items-center gap-2 pl-1 lg:flex">
-          <ToolSectionLabel>Workbench</ToolSectionLabel>
-          <ToolStatusPill tone="info">Preview synced</ToolStatusPill>
         </div>
 
         {!isSpecs && (
@@ -352,21 +346,21 @@ export default function PreviewPanel() {
       </div>
 
       {isSpecs ? (
-        <div className="flex-1 overflow-hidden">
+        <div className="studio-glass-content flex-1 overflow-hidden">
           <DesignSpecs />
         </div>
       ) : (
         <div
           data-preview-chrome
-          className="relative flex-1 overflow-hidden rounded-2xl border border-border/70 bg-muted/20 shadow-[inset_0_1px_0_color-mix(in_oklch,var(--foreground)_6%,transparent)] print:hidden"
+          className="studio-glass-content relative flex-1 overflow-hidden print:hidden"
         >
           {/* Dot grid background */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.07]"
                style={{ backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
 
-          <div className="relative h-full w-full flex gap-4 p-4">
+          <div className="relative flex h-full w-full gap-3 p-3">
               <div
-                className={`h-full overflow-hidden transition-all duration-500 ${splitView ? "flex-1" : "w-full"}`}
+                className={`h-full overflow-hidden rounded-xl border border-border/70 transition-all duration-500 ${splitView ? "flex-1" : "w-full"}`}
                 style={{
                   boxShadow: "var(--preset-shadow)",
                   backgroundColor: "transparent",
@@ -382,7 +376,7 @@ export default function PreviewPanel() {
               </div>
             {splitView && (
               <div
-                className="h-full flex-1 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-500"
+                className="h-full flex-1 overflow-hidden rounded-xl border border-border/70 animate-in fade-in slide-in-from-right-4 duration-500"
                 style={{
                   boxShadow: "var(--preset-shadow)",
                   backgroundColor: "transparent",
@@ -405,6 +399,6 @@ export default function PreviewPanel() {
         </div>
       )}
 
-    </div>
+    </section>
   )
 }

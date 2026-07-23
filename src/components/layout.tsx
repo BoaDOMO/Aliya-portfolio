@@ -10,7 +10,7 @@ const pageTitles: Record<string, string> = {
   "/": "Aliya Koy — Product, AI & Full-stack Builder",
   "/profile": "Profile — Aliya Koy",
   "/lab": "Lab — Aliya Koy",
-  "/rag": "RAG Chatbot — Aliya Koy",
+  "/rag": "Chat Workspace — Aliya Koy",
   "/contact": "Contact — Aliya Koy",
   "/design-system": "Design System — Aliya Koy",
 }

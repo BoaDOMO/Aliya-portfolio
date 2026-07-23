@@ -5,7 +5,6 @@ import {
   ArrowClockwise,
   ArrowLeft,
   CheckCircle,
-  CloudCheck,
   Export,
   List,
   SidebarSimple,
@@ -29,7 +28,7 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { toast } from "sonner"
-import { ToolSectionLabel, ToolStatusPill } from "@/components/tool-shell"
+import { ModeToggle } from "@/components/mode-toggle"
 
 const EXPORT_TABS = [
   { id: "ai", label: "AI Context" },
@@ -81,21 +80,35 @@ export default function DesignSystemAppHeader({
 
   return (
     <>
-      <header className="relative z-10 flex h-13 shrink-0 items-center border-b border-border/80 bg-tool-panel/90 px-3 backdrop-blur-md sm:px-4 print:hidden">
-        <div className="flex min-w-0 items-center gap-2">
+      <header className="relative z-10 mt-4 flex h-[3.4rem] w-[calc(100%-2rem)] max-w-[52rem] shrink-0 self-center items-center rounded-full border border-border/70 bg-surface/95 px-2.5 shadow-[0_18px_48px_-24px_color-mix(in_oklch,var(--foreground)_36%,transparent)] backdrop-blur-2xl sm:px-3 print:hidden">
+        <nav aria-label="Studio navigation" className="flex min-w-0 items-center">
+          <Link
+            to="/"
+            className="hidden h-10 items-center rounded-full px-3 font-display text-sm font-semibold tracking-[-0.04em] outline-none transition-opacity hover:opacity-65 focus-visible:ring-2 focus-visible:ring-ring sm:flex"
+          >
+            ALIYA KOY
+          </Link>
+          <span aria-hidden="true" className="mx-1 hidden h-5 w-px bg-border sm:block" />
           <Link
             to="/lab"
             aria-label="Back to Lab"
-            className="flex size-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex size-9 shrink-0 items-center justify-center rounded-full text-foreground/65 transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <ArrowLeft className="size-4" />
           </Link>
+          <span className="flex h-9 items-center rounded-full bg-accent px-4 text-sm font-medium whitespace-nowrap text-accent-foreground">
+            Design Studio
+          </span>
+        </nav>
+
+        <span aria-hidden="true" className="mx-1 hidden h-5 w-px bg-border md:block" />
+        <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
           <button
             type="button"
             onClick={onToggleInspector}
             aria-label={inspectorOpen ? "Hide inspector" : "Show inspector"}
             aria-pressed={inspectorOpen}
-            className="hidden size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:flex"
+            className="hidden size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:flex"
           >
             <SidebarSimple className="size-4" />
           </button>
@@ -103,29 +116,17 @@ export default function DesignSystemAppHeader({
             type="button"
             onClick={onOpenMobileInspector}
             aria-label="Open inspector"
-            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:hidden"
+            className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring xl:hidden"
           >
             <List className="size-4" />
           </button>
-          <div className="min-w-0 border-l border-border pl-3">
-            <div className="flex items-center gap-2">
-              <p className="truncate text-sm font-semibold text-foreground">Design System Studio</p>
-              <ToolStatusPill tone="success" className="hidden sm:inline-flex">Live</ToolStatusPill>
-            </div>
-            <p className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
-              <CloudCheck className="size-3.5 text-success" /> Autosaved locally · production-ready tokens
-            </p>
-          </div>
-        </div>
-
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           <div className="hidden items-center gap-0.5 sm:flex" role="group" aria-label="Theme history">
             <button
               type="button"
               onClick={() => dispatch({ type: "UNDO" })}
               disabled={!canUndo}
               aria-label="Undo"
-              className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowCounterClockwise className="size-4" />
             </button>
@@ -134,19 +135,16 @@ export default function DesignSystemAppHeader({
               onClick={() => dispatch({ type: "REDO" })}
               disabled={!canRedo}
               aria-label="Redo"
-              className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowClockwise className="size-4" />
             </button>
-          </div>
-          <div className="hidden items-center gap-2 pr-1 lg:flex">
-            <ToolSectionLabel>Studio</ToolSectionLabel>
           </div>
           <button
             type="button"
             onClick={() => setQualityOpen(true)}
             aria-label={issueCount ? `Theme quality: ${issueCount} issues` : "Theme quality"}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-surface-raised px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-surface-raised px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {STATUS_ICONS[overallStatus]}
             <span className="hidden sm:inline">{issueCount ? `${issueCount} issues` : "Quality"}</span>
@@ -155,11 +153,12 @@ export default function DesignSystemAppHeader({
             type="button"
             onClick={() => setExportOpen(true)}
             aria-label="Export theme"
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Export className="size-3.5" />
             <span className="hidden sm:inline">Export</span>
           </button>
+          <ModeToggle />
         </div>
       </header>
 
