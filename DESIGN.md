@@ -1,6 +1,6 @@
 # Aliya Koy Portfolio Design System
 
-This document is the source of truth for the public portfolio at `/`, `/profile`, `/lab`, and `/contact`. The RAG and Design System Studio routes share the semantic tokens and accessibility baseline, but keep their own application-oriented layouts.
+This document is the source of truth for the public portfolio at `/`, `/profile`, `/lab`, and `/contact`. The RAG and Design Studio routes share the semantic tokens and accessibility baseline, but keep their own application-oriented layouts.
 
 ## Direction: Ethereal Monolith
 
@@ -290,4 +290,4 @@ Do not use text in images, human faces, stock-office scenes, computer-screen moc
 
 ## Exceptions
 
-The Design System Studio and RAG assistant may be denser and more utilitarian than the public portfolio. They inherit semantic colours, type roles, accessibility, and interaction standards, but not the portfolio composition. Intentional exceptions should be local, documented, and promoted into this guide only when repeated.
+The Design Studio and RAG assistant may be denser and more utilitarian than the public portfolio. They inherit semantic colours, type roles, accessibility, and interaction standards, but not the portfolio composition. Intentional exceptions should be local, documented, and promoted into this guide only when repeated.

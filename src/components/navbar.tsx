@@ -21,7 +21,7 @@ import {
 
 const labItems = [
   { to: "/chat", label: "Chat Workspace" },
-  { to: "/design-system", label: "Design System Studio" },
+  { to: "/design-system", label: "Design Studio" },
 ] as const
 
 function DesktopNavLink({ to, label }: { to: string; label: string }) {

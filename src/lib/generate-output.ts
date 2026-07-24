@@ -402,7 +402,7 @@ export function generateThemeJSON(state: DesignTokensState): string {
   )
 
   const document = {
-    $description: "Design tokens exported by Aliya Koy's Design System Studio.",
+    $description: "Design tokens exported by Aliya Koy's Design Studio.",
     color: {
       $type: "color",
       light: colorTokens(state.tokens.light as unknown as Record<string, string>),

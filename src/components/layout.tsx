@@ -12,7 +12,7 @@ const pageTitles: Record<string, string> = {
   "/lab": "Lab — Aliya Koy",
   "/chat": "Chat Workspace — Aliya Koy",
   "/contact": "Contact — Aliya Koy",
-  "/design-system": "Design System — Aliya Koy",
+  "/design-system": "Design Studio — Aliya Koy",
 }
 
 export default function Layout() {

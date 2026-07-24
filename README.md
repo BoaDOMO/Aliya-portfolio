@@ -14,7 +14,7 @@ The public site uses the **Ethereal Monolith** direction: editorial product stor
 The repository also contains two working product tools:
 
 - **RAG assistant** (`/chat`) — Gemini-backed Q&A over an editable knowledge base
-- **Design System Studio** (`/design-system`) — token, colour, typography, preview, quality, and export tooling
+- **Design Studio** (`/design-system`) — token, colour, typography, preview, quality, and export tooling
 
 ## Core journeys
 
@@ -71,7 +71,7 @@ src/
   pages/                   Home, Profile, Lab, Contact, RAG, Design System
   components/
     ui/                    shadcn/Base UI primitives
-    design-system/         Design System Studio
+    design-system/         Design Studio
     rag/                   RAG product interface
     lab/                   Embedded lab experiments
   lib/                     Token, colour, contrast, persistence, and export logic

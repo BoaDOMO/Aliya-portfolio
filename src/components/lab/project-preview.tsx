@@ -85,7 +85,7 @@ function StudioPreview() {
       <div className="flex items-center justify-between border-b border-border/70 px-3 py-2">
         <div className="flex items-center gap-1.5 font-medium text-foreground">
           <span className="grid size-4 place-items-center rounded bg-primary text-[8px] text-primary-foreground">✦</span>
-          Design System Studio
+          Design Studio
         </div>
         <span className="flex items-center gap-1 rounded-full border border-border/70 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-muted-foreground">
           <SlidersHorizontal className="size-2.5" /> Tokens
