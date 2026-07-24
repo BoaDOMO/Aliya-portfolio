@@ -6,12 +6,14 @@ export type BlurredBackgroundImage =
   | "blue-leaves"
   | "blue-flower"
   | "hydrangea"
+  | "pink-blossoms"
 
 const sources: Record<BlurredBackgroundImage, string> = {
   mist: "/assets/backgrounds/misty-field.webp",
   "blue-leaves": "/assets/backgrounds/blue-leaves.webp",
   "blue-flower": "/assets/backgrounds/blue-flower.webp",
   hydrangea: "/assets/backgrounds/blue-hydrangea.webp",
+  "pink-blossoms": "/assets/backgrounds/pink-blossoms.webp",
 }
 
 export function BlurredBackground({

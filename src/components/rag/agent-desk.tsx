@@ -18,6 +18,8 @@ import {
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
 import { BlurredBackground } from "@/components/blurred-background"
+import { Aurora } from "@/components/aurora"
+import { useTheme } from "@/components/theme-context"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Textarea } from "@/components/ui/textarea"
@@ -471,6 +473,19 @@ export default function AgentDesk() {
   const customerConversationRef = useRef<HTMLDivElement>(null)
   const agentConversationRef = useRef<HTMLDivElement>(null)
   const sessionIdRef = useRef(initialSession?.sessionId || crypto.randomUUID())
+  const { theme } = useTheme()
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const checkDark = () => {
+      setIsDark(document.documentElement.classList.contains("dark"))
+    }
+    checkDark()
+    const observer = new MutationObserver(checkDark)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [theme])
+
   const botTypewriterTimerRef = useRef<number | null>(null)
 
   const activeThread = useMemo(
@@ -950,7 +965,17 @@ export default function AgentDesk() {
 
   return (
     <div className="rag-workspace relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas text-foreground">
-      <BlurredBackground image="blue-flower" position="58% 38%" className="rag-blurred-background opacity-95" />
+      {isDark ? (
+        <Aurora 
+          colorStops={["#4A88E0", "#4D5F4A", "#111A12"]} 
+          blend={0.6} 
+          amplitude={1.2} 
+          speed={0.8} 
+        />
+      ) : (
+        <BlurredBackground image="pink-blossoms" position="58% 48%" className="opacity-95" />
+      )}
+      <div aria-hidden="true" className="portfolio-hero-glow" />
       <ToolAtmosphere className="opacity-35" />
       <header className="relative z-10 mt-3 flex h-[3.4rem] w-[calc(100%-1rem)] max-w-[36rem] shrink-0 self-center items-center rounded-full border border-border/70 bg-surface/95 px-2 shadow-[0_18px_48px_-24px_color-mix(in_oklch,var(--foreground)_36%,transparent)] backdrop-blur-2xl md:mt-4 md:w-[calc(100%-2rem)] md:px-3 lg:w-auto lg:max-w-none">
         <nav aria-label="Workspace navigation" className="flex min-w-0 shrink-0 items-center">
@@ -1084,7 +1109,7 @@ export default function AgentDesk() {
 
             {knowledgeOpen ? (
               <div className="rag-glass-content rag-workspace-view flex min-h-0 flex-1 flex-col px-4 py-4 sm:px-5">
-                <Textarea value={knowledgeDraft} onChange={(event) => setKnowledgeDraft(event.target.value)} spellCheck={false} className="min-h-0 flex-1 resize-none rounded-xl border-border-strong bg-tool-emphasis font-mono text-xs leading-relaxed shadow-none" aria-label="Knowledge base" />
+                <Textarea value={knowledgeDraft} onChange={(event) => setKnowledgeDraft(event.target.value)} spellCheck={false} className="min-h-0 flex-1 resize-none rounded-xl border-border/50 bg-background/20 font-mono text-xs leading-relaxed shadow-none backdrop-blur-md focus-visible:border-primary/50" aria-label="Knowledge base" />
                 <div className="mt-3 flex items-center justify-between gap-3">
                   <Button variant="outline" onClick={() => setKnowledgeDraft(DEFAULT_KNOWLEDGE)}>Reset</Button>
                   <Button onClick={handleSaveKnowledge} disabled={knowledgeDraft === knowledge}>Save</Button>
@@ -1131,7 +1156,7 @@ export default function AgentDesk() {
                       </div>
 
                       {filteredThreads.length === 0 ? (
-                        <div className="rounded-lg border border-dashed border-border-strong bg-surface-raised p-6 text-center">
+                        <div className="rounded-lg border border-dashed border-border/50 bg-background/20 p-6 text-center backdrop-blur-md">
                           <CircleAlert className="mx-auto size-6 text-muted-foreground" />
                           <p className="mt-2 text-sm font-medium">No {inboxFilter} conversations</p>
                           <p className="mt-1 text-xs text-muted-foreground">Try another inbox view.</p>

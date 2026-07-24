@@ -15,6 +15,8 @@ import DrawerSheet from "@/components/design-system/drawer-sheet"
 import type { DrawerType, DrawerContext } from "@/components/design-system/drawer-sheet"
 import { ToolAtmosphere } from "@/components/tool-shell"
 import { BlurredBackground } from "@/components/blurred-background"
+import { Aurora } from "@/components/aurora"
+import { useTheme } from "@/components/theme-context"
 
 const DOCK_MIN_WIDTH = 400
 const DOCK_MAX_WIDTH = 600
@@ -34,6 +36,19 @@ function DesignSystemContent() {
   const [drawerContext, setDrawerContext] = useState<DrawerContext | undefined>(undefined)
 
   const shouldReduceMotion = useReducedMotion()
+  const { theme } = useTheme()
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const checkDark = () => {
+      setIsDark(document.documentElement.classList.contains("dark"))
+    }
+    checkDark()
+    const observer = new MutationObserver(checkDark)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    return () => observer.disconnect()
+  }, [theme])
+
   const state = useDesignTokens()
   const dispatch = useDesignTokensDispatch()
   const loadedRef = useRef(false)
@@ -126,7 +141,17 @@ function DesignSystemContent() {
       className="design-studio-workspace relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas text-foreground"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      <BlurredBackground image="blue-flower" position="58% 38%" className="studio-blurred-background opacity-95" />
+      {isDark ? (
+        <Aurora 
+          colorStops={["#4A88E0", "#4D5F4A", "#111A12"]} 
+          blend={0.6} 
+          amplitude={1.2} 
+          speed={0.8} 
+        />
+      ) : (
+        <BlurredBackground image="pink-blossoms" position="58% 48%" className="opacity-95" />
+      )}
+      <div aria-hidden="true" className="portfolio-hero-glow" />
       <ToolAtmosphere className="opacity-35" />
       <DesignSystemAppHeader
         inspectorOpen={inspectorOpen}
