@@ -63,6 +63,13 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 
+float fbm(vec2 p) {
+  float n = snoise(p);
+  n += 0.5 * snoise(p * 2.02 + vec2(uTime * 0.05, -uTime * 0.08));
+  n += 0.25 * snoise(p * 4.01 - vec2(uTime * 0.12, uTime * 0.04));
+  return n / 1.75;
+}
+
 struct ColorStop {
   vec3 color;
   float position;
@@ -83,23 +90,28 @@ struct ColorStop {
 }
 
 void main() {
-  vec2 uv = gl_FragCoord.xy / uResolution;
+  vec2 resolution = max(vec2(1.0), uResolution);
+  vec2 uv = gl_FragCoord.xy / resolution;
   
   ColorStop colors[3];
   colors[0] = ColorStop(uColorStops[0], 0.0);
   colors[1] = ColorStop(uColorStops[1], 0.5);
   colors[2] = ColorStop(uColorStops[2], 1.0);
   
-  vec3 rampColor;
-  COLOR_RAMP(colors, uv.x, rampColor);
+  float n1 = fbm(vec2(uv.x * 1.8 + uTime * 0.08, uTime * 0.18));
+  float n2 = snoise(vec2(uv.x * 3.5 - uTime * 0.12, uv.y * 2.0 + uTime * 0.06));
   
-  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
+  float height = (n1 + 0.3 * n2) * 0.5 * uAmplitude;
   height = exp(height);
-  height = (uv.y * 2.0 - height + 0.2);
-  float intensity = 0.6 * height;
+  height = (uv.y * 2.2 - height + 0.15);
+  float intensity = 0.65 * height;
   
   float midPoint = 0.20;
   float auroraAlpha = smoothstep(midPoint - uBlend * 0.5, midPoint + uBlend * 0.5, intensity);
+  
+  float colorFactor = clamp(uv.x + n1 * 0.18 + n2 * 0.08, 0.0, 1.0);
+  vec3 rampColor;
+  COLOR_RAMP(colors, colorFactor, rampColor);
   
   vec3 auroraColor = intensity * rampColor;
   
@@ -114,6 +126,13 @@ export interface AuroraProps {
   time?: number;
   speed?: number;
 }
+
+const parseColorStops = (stops: [string, string, string]) => {
+  return stops.map((hex) => {
+    const c = new Color(hex);
+    return [c.r, c.g, c.b];
+  });
+};
 
 export function Aurora(props: AuroraProps) {
   const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5 } = props;
@@ -131,15 +150,14 @@ export function Aurora(props: AuroraProps) {
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: true,
-      antialias: true
+      antialias: true,
     });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
-    
-    // Fill the container
+
     gl.canvas.style.width = '100%';
     gl.canvas.style.height = '100%';
     gl.canvas.style.position = 'absolute';
@@ -151,8 +169,8 @@ export function Aurora(props: AuroraProps) {
 
     function resize() {
       if (!ctn) return;
-      const width = ctn.offsetWidth;
-      const height = ctn.offsetHeight;
+      const width = Math.max(1, ctn.offsetWidth);
+      const height = Math.max(1, ctn.offsetHeight);
       renderer.setSize(width, height);
       if (program) {
         program.uniforms.uResolution.value = [width, height];
@@ -165,10 +183,17 @@ export function Aurora(props: AuroraProps) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
-      const c = new Color(hex);
-      return [c.r, c.g, c.b];
-    });
+    let lastStopsKey = '';
+    let cachedColorArray: number[][] = [];
+
+    const getColors = (stops: [string, string, string]) => {
+      const key = stops.join(',');
+      if (key !== lastStopsKey) {
+        lastStopsKey = key;
+        cachedColorArray = parseColorStops(stops);
+      }
+      return cachedColorArray;
+    };
 
     program = new Program(gl, {
       vertex: VERT,
@@ -176,10 +201,10 @@ export function Aurora(props: AuroraProps) {
       uniforms: {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
-        uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
-        uBlend: { value: blend }
-      }
+        uColorStops: { value: getColors(colorStops) },
+        uResolution: { value: [Math.max(1, ctn.offsetWidth), Math.max(1, ctn.offsetHeight)] },
+        uBlend: { value: blend },
+      },
     });
 
     const mesh = new Mesh(gl, { geometry, program });
@@ -193,10 +218,7 @@ export function Aurora(props: AuroraProps) {
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
       program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
       const stops = propsRef.current.colorStops ?? colorStops;
-      program.uniforms.uColorStops.value = stops.map(hex => {
-        const c = new Color(hex);
-        return [c.r, c.g, c.b];
-      });
+      program.uniforms.uColorStops.value = getColors(stops);
       renderer.render({ scene: mesh });
     };
     animateId = requestAnimationFrame(update);
