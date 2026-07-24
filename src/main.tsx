@@ -1,6 +1,6 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ThemeProvider } from "@/components/theme-provider"
 import { DesignTokensProvider } from "@/lib/design-tokens-provider"
 import Layout from "@/components/layout"
@@ -23,7 +23,6 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/profile" element={<Profile />} />
               <Route path="/lab" element={<Lab />} />
               <Route path="/chat" element={<RAG />} />
-              <Route path="/rag" element={<Navigate to="/chat" replace />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/design-system" element={<DesignSystem />} />
             </Route>

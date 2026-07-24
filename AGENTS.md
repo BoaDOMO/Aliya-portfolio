@@ -1,8 +1,13 @@
 # CRITICAL RULES — MUST FOLLOW
 
-## Core behaviour
+## Core behaviour & Workflow
 
-- Always present a proposed plan or diff and wait for explicit user confirmation before modifying code files or running build/deployment commands.
+Follow this strict 5-step workflow for all requests:
+1. **Proposal & Clarification First**: When a question, change, fix, or feature is requested, answer any user questions, propose options, and ask for explicit clarification FIRST before modifying any code files.
+2. **Wait for Approval & Response**: Wait for the user to approve the proposed solution and respond to clarifying options before taking action.
+3. **Apply Edits Locally**: Once approved, apply the code changes locally and verify them (lint/build).
+4. **Summary for Local Review**: Clearly summarize all modified files so the user can inspect and test manually.
+5. **Production Safety**: Never run `git push` or production deployment commands unless the user explicitly requests/approves it.
 - Think through edge cases, dependencies, responsive changes, and failure points before editing.
 - Use the loop Plan → Act → Observe → Correct. Test changes, read failures, and fix them autonomously.
 - Preserve unrelated work in a dirty worktree. Never overwrite or revert changes outside the current task.
@@ -49,7 +54,7 @@ shadcn is a repository library, not a skill. Read `@docs/shadcn-reference.md` wh
 - Shared portfolio components include the floating command bar, page container, section label, reveal wrapper, CTA section, footer, progress indicator, and back-to-top control.
 - Keep public content static and hardcoded unless the request explicitly adds content management.
 - Preserve the current Formspree contact delivery, client validation, and direct-email fallback.
-- Preserve the existing RAG endpoint contract and `GOOGLE_API_KEY` requirement.
+- Preserve the existing Chat endpoint contract (`api/chat.js`) and `GOOGLE_API_KEY` requirement.
 
 ## Build mode
 
@@ -78,7 +83,7 @@ Ship nothing visually unreviewed.
 - Tailwind v4 tokens live in `src/index.css` under `@theme`, `:root`, and `.dark`.
 - Display/body/data typography is Plus Jakarta Sans / Inter / JetBrains Mono.
 - Public portfolio direction is **Ethereal Monolith**, documented in `@DESIGN.md`.
-- The RAG endpoint is `api/chat.js`, uses `@google/generative-ai`, and requires `GOOGLE_API_KEY`.
+- The Chat endpoint is `api/chat.js`, uses `@google/generative-ai`, and requires `GOOGLE_API_KEY`.
 - `/chat` and `/design-system` do not render the portfolio shell.
 
 ## References

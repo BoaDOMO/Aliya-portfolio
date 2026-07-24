@@ -1,7 +1,7 @@
 # Product Requirements Document: Chat Workspace UI
 
 **Status:** Applied design, documented as the reference pattern  
-**Source experience:** `/rag`  
+**Source experience:** `/chat`  
 **Primary reuse target:** `/design-system`  
 **Product name:** Chat Workspace  
 **Last updated:** July 23, 2026

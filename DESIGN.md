@@ -155,7 +155,7 @@ The site must reflow at 320px and remain usable at 200% text zoom.
 
 ### Portfolio shell
 
-The shell includes a skip link, floating navigation, main landmark, scroll progress bar, footer, and back-to-top control. `/rag` and `/design-system` use isolated application shells without the portfolio navigation or footer.
+The shell includes a skip link, floating navigation, main landmark, scroll progress bar, footer, and back-to-top control. `/chat` and `/design-system` use isolated application shells without the portfolio navigation or footer.
 
 ### Frosted command bar
 
@@ -214,7 +214,7 @@ The brand signature is `// LABEL` followed by an optional short hairline. It is 
 
 ## Product tool principles
 
-`/rag` and `/design-system` are product workspaces, not portfolio pages. They inherit the semantic colour system, typography roles, accessibility baseline, and atmospheric restraint, then use a denser application shell.
+`/chat` and `/design-system` are product workspaces, not portfolio pages. They inherit the semantic colour system, typography roles, accessibility baseline, and atmospheric restraint, then use a denser application shell.
 
 ### Shell and surfaces
 

@@ -11,7 +11,6 @@ const pageTitles: Record<string, string> = {
   "/profile": "Profile — Aliya Koy",
   "/lab": "Lab — Aliya Koy",
   "/chat": "Chat Workspace — Aliya Koy",
-  "/rag": "Chat Workspace — Aliya Koy",
   "/contact": "Contact — Aliya Koy",
   "/design-system": "Design System — Aliya Koy",
 }
@@ -19,7 +18,7 @@ const pageTitles: Record<string, string> = {
 export default function Layout() {
   const location = useLocation()
   const isDesignSystem = location.pathname === "/design-system"
-  const isChatWorkspace = location.pathname === "/chat" || location.pathname === "/rag"
+  const isChatWorkspace = location.pathname === "/chat"
   const isProductTool = isDesignSystem || isChatWorkspace
 
   useEffect(() => {

@@ -13,7 +13,7 @@ The public site uses the **Ethereal Monolith** direction: editorial product stor
 
 The repository also contains two working product tools:
 
-- **RAG assistant** (`/rag`) — Gemini-backed Q&A over an editable knowledge base
+- **RAG assistant** (`/chat`) — Gemini-backed Q&A over an editable knowledge base
 - **Design System Studio** (`/design-system`) — token, colour, typography, preview, quality, and export tooling
 
 ## Core journeys
@@ -84,7 +84,7 @@ api/
 - `@` resolves to `src/` through Vite and TypeScript configuration.
 - Semantic tokens live in `src/index.css` and switch values under `.dark`.
 - Structural backgrounds and foregrounds use semantic utilities; do not add `dark:` fill overrides to portfolio UI.
-- `/rag` and `/design-system` use isolated product-tool shells without the portfolio navigation and footer.
+- `/chat` and `/design-system` use isolated product-tool shells without the portfolio navigation and footer.
 - `vercel.json` rewrites SPA routes to `index.html`.
 - The inline theme script in `index.html` applies the persisted theme before paint.
 - The Contact form submits to Formspree and retains client-side validation and accessible status feedback.
