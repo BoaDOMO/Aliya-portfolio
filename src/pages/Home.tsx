@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import { ArrowRight, MapPin } from "@phosphor-icons/react"
 import { Link } from "react-router-dom"
 import { CapabilityGrid } from "@/components/capability-grid"
+import { CodeEditor } from "@/components/code-editor"
 import { BlurredBackground } from "@/components/blurred-background"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
@@ -45,7 +46,7 @@ export default function Home() {
         <div aria-hidden="true" className="portfolio-hero-glow" />
         <PageContainer className="relative z-10 flex min-h-[calc(100svh-8rem)] flex-col justify-center pb-12 md:min-h-[calc(100svh-10rem)] md:pb-8">
           
-          <div className="flex flex-col relative w-full flex-1">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center relative w-full flex-1 mt-8 lg:mt-0">
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -91,6 +92,15 @@ export default function Home() {
               </div>
             </motion.div>
 
+            {/* Liquid Glass IDE Editor */}
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.8, delay: reduceMotion ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full max-w-xl mx-auto lg:max-w-none hidden md:block z-10"
+            >
+              <CodeEditor className="w-full" />
+            </motion.div>
           </div>
 
           <motion.div

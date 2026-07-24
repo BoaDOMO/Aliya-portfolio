@@ -1637,11 +1637,15 @@
   }
 
   .dark .rag-glass-shell {
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    border-color: rgba(255, 255, 255, 0.12);
     box-shadow:
-      0 28px 56px -24px color-mix(in oklch, var(--foreground) 48%, transparent),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-      inset 0 -1px 0 0 color-mix(in oklch, var(--border) 40%, transparent),
-      inset 1px 0 0 0 rgba(255, 255, 255, 0.06);
+      0 28px 56px -24px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+      inset 1px 0 0 0 rgba(255, 255, 255, 0.08);
   }
 
   .rag-glass-shell::before {
@@ -1670,6 +1674,18 @@
       color-mix(in oklch, var(--tool-panel) 14%, transparent);
     backdrop-filter: blur(24px) saturate(1.3);
     -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  }
+
+  .dark .rag-glass-header,
+  .dark .studio-glass-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .dark .rag-glass-content,
+  .dark .studio-glass-content {
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 70%),
+      rgba(255, 255, 255, 0.01);
   }
 
   .rag-composer-input {
@@ -1719,11 +1735,15 @@
   }
 
   .dark .studio-glass-shell {
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    border-color: rgba(255, 255, 255, 0.12);
     box-shadow:
-      0 28px 56px -24px color-mix(in oklch, var(--foreground) 48%, transparent),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-      inset 0 -1px 0 0 color-mix(in oklch, var(--border) 40%, transparent),
-      inset 1px 0 0 0 rgba(255, 255, 255, 0.06);
+      0 28px 56px -24px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+      inset 1px 0 0 0 rgba(255, 255, 255, 0.08);
   }
 
   .studio-glass-shell::before {

@@ -43,32 +43,32 @@ export function ProjectPreview({
 function RagPreview() {
   return (
     <div className="relative h-full overflow-hidden bg-background/35 text-foreground">
-      <section className="absolute inset-y-[9%] left-[7%] flex w-[56%] min-w-0 flex-col rounded-[14px] bg-white p-3 shadow-[0_24px_45px_-28px_color-mix(in_oklch,var(--foreground)_70%,transparent)] sm:rounded-[18px] sm:p-4">
+      <section className="absolute inset-y-[9%] left-[7%] flex w-[56%] min-w-0 flex-col rounded-[14px] border border-border/60 bg-card p-3 text-card-foreground shadow-[0_24px_45px_-28px_color-mix(in_oklch,var(--foreground)_30%,transparent)] sm:rounded-[18px] sm:p-4">
         <div className="flex items-center justify-between">
           <span className="font-display text-[10px] font-semibold tracking-[-0.03em] sm:text-xs">Chat</span>
-          <Headset className="size-3 text-success sm:size-3.5" />
+          <Headset className="size-3 text-emerald-600 dark:text-emerald-400 sm:size-3.5" />
         </div>
-        <div className="mt-5 max-w-[88%] rounded-[12px] bg-primary/10 px-2.5 py-2 text-[8px] leading-relaxed sm:mt-7 sm:px-3 sm:py-2.5 sm:text-[10px]">
+        <div className="mt-4 max-w-[88%] rounded-[12px] bg-primary/10 px-2.5 py-2 text-[8px] leading-relaxed text-foreground/90 sm:mt-6 sm:px-3 sm:py-2.5 sm:text-[10px]">
           Hi, how can I help?
         </div>
-        <div className="mt-auto flex h-7 items-center rounded-lg bg-background px-2 text-[7px] text-muted-foreground shadow-[0_12px_24px_-18px_color-mix(in_oklch,var(--foreground)_80%,transparent)] sm:h-8 sm:px-2.5 sm:text-[9px]">
+        <div className="mt-auto flex h-7 items-center rounded-lg border border-border/50 bg-muted/40 px-2 text-[7px] text-muted-foreground shadow-sm sm:h-8 sm:px-2.5 sm:text-[9px]">
           <span className="min-w-0 flex-1 truncate">Write a message…</span>
-          <span className="grid size-4 place-items-center rounded-full bg-foreground text-background sm:size-5"><ArrowUp className="size-2.5 sm:size-3" /></span>
+          <span className="grid size-4 place-items-center rounded-full bg-primary text-primary-foreground sm:size-5"><ArrowUp className="size-2.5 sm:size-3" /></span>
         </div>
       </section>
 
-      <section className="absolute right-[7%] top-[18%] flex h-[64%] w-[37%] min-w-0 flex-col rounded-[14px] border border-border/50 bg-white p-2.5 shadow-[0_28px_54px_-30px_color-mix(in_oklch,var(--foreground)_72%,transparent)] sm:rounded-[18px] sm:p-3">
+      <section className="absolute right-[7%] top-[18%] flex h-[64%] w-[37%] min-w-0 flex-col rounded-[14px] border border-border/60 bg-card p-2.5 text-card-foreground shadow-[0_28px_54px_-30px_color-mix(in_oklch,var(--foreground)_30%,transparent)] sm:rounded-[18px] sm:p-3">
         <div className="flex items-center justify-between gap-1">
           <span className="truncate font-display text-[8px] font-semibold tracking-[-0.03em] sm:text-[10px]">Support Inbox</span>
-          <span className="size-1.5 shrink-0 rounded-full bg-success" />
+          <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
         </div>
         <div className="mt-3 border-t border-border/50 pt-2 font-mono text-[6px] uppercase tracking-[0.1em] text-muted-foreground sm:mt-4 sm:pt-2.5 sm:text-[7px]">Customer · now</div>
-        <div className="mt-2 rounded-[10px] bg-success/10 px-2 py-2 text-[7px] leading-relaxed text-success sm:mt-2.5 sm:px-2.5 sm:py-2.5 sm:text-[9px]">
+        <div className="mt-2 rounded-[10px] bg-emerald-500/10 dark:bg-emerald-500/20 px-2 py-2 text-[7px] leading-relaxed text-emerald-700 dark:text-emerald-300 sm:mt-2.5 sm:px-2.5 sm:py-2.5 sm:text-[9px]">
           You’re now speaking with a Daydream Club support teammate.
         </div>
-        <div className="mt-auto flex h-6 items-center rounded-md bg-background px-1.5 text-[6px] text-muted-foreground sm:h-7 sm:px-2 sm:text-[7px]">
+        <div className="mt-auto flex h-6 items-center rounded-md border border-border/50 bg-muted/40 px-1.5 text-[6px] text-muted-foreground sm:h-7 sm:px-2 sm:text-[7px]">
           <span className="min-w-0 flex-1 truncate">Write a reply…</span>
-          <span className="grid size-3.5 place-items-center rounded-full bg-foreground text-background sm:size-4"><ArrowUp className="size-2" /></span>
+          <span className="grid size-3.5 place-items-center rounded-full bg-primary text-primary-foreground sm:size-4"><ArrowUp className="size-2" /></span>
         </div>
       </section>
 

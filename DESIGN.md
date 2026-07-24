@@ -1,17 +1,18 @@
 # Aliya Koy Portfolio Design System
 
-This document is the source of truth for the public portfolio at `/`, `/profile`, `/lab`, and `/contact`. The RAG and Design Studio routes share the semantic tokens and accessibility baseline, but keep their own application-oriented layouts.
+This document is the source of truth for the public portfolio at `/`, `/profile`, `/lab`, and `/contact`. The Chat Workspace (`/chat`) and Design Studio (`/design-system`) routes share the semantic tokens and accessibility baseline, but keep their own application-oriented product tool shells.
 
 ## Direction: Ethereal Monolith
 
-The portfolio should feel quietly commanding: a serene, editorial product space with the confidence of a senior product and AI leader. The visual language is inspired by premium product storytelling, but it must remain recognisably Aliya through the linen, forest, cobalt, and monospaced signature-label system.
+The portfolio should feel quietly commanding: a serene, editorial product space with the confidence of a senior product and AI leader. The visual language is inspired by premium product storytelling, highlighted by the Liquid Glass design language, native system typography, and monospaced signature labels.
 
 The memorable qualities are:
 
 - Whitespace acts as the architecture.
 - Typography carries the visual weight.
+- Liquid Glass panes refract environmental backgrounds with specular top edges and subtle shimmer.
 - Thin rules and a precise grid create rhythm.
-- Light and dark modes are distinct identities, not a brightness filter.
+- Light and dark modes are distinct identities (The Gallery vs The Studio), not a brightness filter.
 - Motion clarifies hierarchy and state without delaying content.
 
 ## Product intent
@@ -22,30 +23,30 @@ Primary audiences are recruiters, hiring managers, product leaders, engineering 
 
 ## Core journeys
 
-1. Home communicates the positioning and links to Lab or Profile.
-2. Profile explains Aliya's working method and relevant experience.
-3. Lab presents shipped and in-progress projects with outcomes and capabilities.
-4. Contact offers a calm, validated message form and a direct email route.
-5. The theme toggle switches between the Gallery and Studio palettes and persists the choice.
+1. **Home** communicates positioning via a 2-column grid featuring the typewriter CodeEditor, WebGL Aurora background, and CTAs.
+2. **Profile** explains Aliya's working method and relevant experience.
+3. **Lab** presents shipped and in-progress projects with outcomes, capabilities, and interactive previews.
+4. **Contact** offers a calm, validated message form and a direct email route.
+5. **Theme toggle** switches between light and dark modes and persists the choice.
 
 ## Design principles
 
 1. **Whitespace is structure.** Large pauses separate ideas and create authority.
 2. **Type is the hero.** Major statements lead; decoration remains secondary.
-3. **Restraint over ornament.** Avoid gratuitous shadows, gradients, badges, and effects.
-4. **Quietly technical.** Monospaced labels, numbers, dates, and outcomes add precision.
-5. **Demonstrate, do not merely claim.** Projects and experience explain decisions and results.
+3. **Restraint over ornament.** Use Liquid Glass for functional containers rather than decorative clutter.
+4. **Quietly technical.** Monospaced labels, numbers, dates, and typewriter code snippets add precision.
+5. **Demonstrate, do not merely claim.** Interactive product tools and code snippets explain decisions and results.
 6. **Accessible by default.** Contrast, keyboard use, focus, touch targets, reflow, and reduced motion are design requirements.
 7. **Responsive composition.** Mobile is intentionally recomposed rather than compressed desktop.
 
 ## Technical boundaries
 
-- React 19, TypeScript, Vite, and React Router
-- Tailwind CSS v4 with CSS-first semantic tokens in `src/index.css`
-- shadcn components built on Base UI primitives where a primitive is useful
-- The existing theme provider with a class-based light/dark strategy
-- Framer Motion for coordinated reveals, shared-layout navigation, and restrained micro-interactions
-- `@phosphor-icons/react` for every interface icon
+- React 19, TypeScript, Vite, and React Router.
+- Tailwind CSS v4 with CSS-first semantic tokens in `src/index.css`.
+- shadcn components built on Radix/Base UI primitives.
+- WebGL background rendering powered by `ogl` library (`Aurora` component).
+- Framer Motion for coordinated reveals, shared-layout navigation, and typewriter physics.
+- `@phosphor-icons/react` for every interface icon.
 
 Use semantic tokens before raw palette values. Structural backgrounds, foregrounds, borders, and states must adapt through tokens; do not duplicate them with `dark:` fill overrides.
 
@@ -65,6 +66,7 @@ Use semantic tokens before raw palette values. Structural backgrounds, foregroun
 | `muted-foreground` | `#5A5F55` | Supporting copy and metadata |
 | `border` | `#D8D4CA` | Hairlines and field rules |
 | `card` | `#E8E7E1` | Quiet project visual surface |
+| `tool-panel` | `#FAFCFC` | Tool workspace pane background |
 
 ### Dark mode: The Studio
 
@@ -80,33 +82,47 @@ Use semantic tokens before raw palette values. Structural backgrounds, foregroun
 | `muted-foreground` | `#9CAE9A` | Supporting copy and metadata |
 | `border` | `#2A332A` | Hairlines and field rules |
 | `card` | `#202A21` | Quiet project visual surface |
+| `tool-panel` | `#15191B` | Tool workspace pane background |
 
 ### The flip rule
 
-Warm linen moves from the light canvas to the dark foreground. Laurel moves from light-mode selection to the dark identity. Cobalt remains the action colour and becomes brighter in dark mode. Theme surfaces should feel related without being mathematical inverses.
+Warm linen moves from the light canvas to the dark foreground. Laurel moves from light-mode selection to the dark identity. Cobalt remains the action colour and becomes brighter in dark mode. Theme surfaces feel related without being mathematical inverses.
 
-### Usage rules
+## Liquid Glass System
 
-- Use `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`, and related semantic utilities.
-- Use cobalt for actions, links, signature labels, focus rings, and meaningful status—not large structural fills.
-- Active navigation uses the sage `accent` role and includes a filled shape so selection is not communicated by colour alone.
-- Default sections stay on the canvas. Separate them with hairlines and spacing instead of alternating bands.
-- Do not stack blur, glow, transparency, gradient, shadow, and motion on one ordinary component.
-- Do not use colour as the sole indicator of error, success, selection, or status.
+The **Liquid Glass** language provides tactile depth to application shells, chat panels, and floating hero elements (`.rag-glass-shell`, `.studio-glass-shell`).
+
+### Glass Physics & Styling
+- **Refraction & Blur**: `backdrop-filter: blur(52px) saturate(1.6) brightness(1.05)`.
+- **Specular Top Edge**: `inset 0 1px 0 0 rgba(255, 255, 255, 0.38)` in light mode, `rgba(255, 255, 255, 0.18)` in dark mode.
+- **Edge Shimmer**: `@keyframes liquid-glass-shimmer` 8s infinite loop creating a subtle specular highlight across the border ring.
+- **Frosted Translucency**:
+  - Light mode: Translucent white radial & linear gradients over `tool-panel`.
+  - Dark mode: Soft white translucent gradients (`rgba(255, 255, 255, 0.04 - 0.06)`) that refract the underlying WebGL `Aurora` or background asset without being overly harsh.
+
+## Background Presets
+
+Environmental background layers add atmospheric depth under glass shells:
+- `aurora`: WebGL multi-octave FBM noise shader with dynamic color swirling (`#4A88E0`, `#4D5F4A`, `#111A12`), zero-GC memory optimization, and resolution safety guards (used on Home hero dark mode).
+- `mist`: Soft blurred mist texture (used on Home hero light mode).
+- `pink-blossoms`: Botanical atmosphere for Chat Workspace and Design Studio.
+- `hydrangea` & `blue-flower`: Atmospheric backdrops for Lab project previews.
 
 ## Typography physics
 
+The typography stack relies on **native system font stacks** for instant 0ms rendering performance while preserving editorial polish.
+
 | Role | Family | Use |
 | --- | --- | --- |
-| Display | Plus Jakarta Sans | Hero statements, page titles, section headings, project titles |
-| Body | Inter | Navigation, body copy, buttons, forms, and descriptions |
-| Data | JetBrains Mono | Signature labels, dates, status, numbers, and metadata |
+| Display | `Plus Jakarta Sans` | Hero statements, page titles, section headings, project titles |
+| Body | `system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif` | Navigation, body copy, buttons, forms, and descriptions |
+| Data / Mono | `ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace` | Signature labels, dates, status, code editor, numbers, and metadata |
 
 ### Fluid scale
 
 | Element | Size | Weight | Leading | Tracking |
 | --- | --- | --- | --- | --- |
-| Home name | `clamp(4.75rem, 12vw, 9rem)` | 500 | 0.88 | `-0.065em` |
+| Home name | `clamp(5rem, 11vw, 9rem)` | 500 | 0.86 | `-0.07em` |
 | Page display | `clamp(3.25rem, 8vw, 7rem)` | 500 | 0.98 | `-0.055em` |
 | CTA display | `clamp(2.5rem, 5vw, 4.5rem)` | 500 | 1.04 | `-0.045em` |
 | Section heading | `clamp(2.25rem, 4.5vw, 4.25rem)` | 500 | 1.06 | `-0.04em` |
@@ -115,179 +131,89 @@ Warm linen moves from the light canvas to the dark foreground. Laurel moves from
 | Signature label | `0.75rem` | 400 mono | 1 | `0.2em`, uppercase |
 | Navigation | `0.875rem` | 500 | 1 | normal |
 
-Rules:
-
-- Use balanced headings and pretty-wrapped paragraphs.
-- Keep body measures around 55–70 characters.
-- Avoid body copy below 14px; 10–12px is reserved for genuine metadata.
-- Use sentence case for normal copy and wide uppercase only for short mono labels.
-- Use tight display tracking and relaxed paragraph leading.
-
 ## Grid and spatial system
 
 - Standard container: `max-w-6xl` (1152px), centred.
 - Wide product tools: `max-w-7xl` or intentionally full-width.
 - Mobile gutter: 24px; tablet/desktop gutter: 32px when space allows.
 - Portfolio section padding: 80px mobile and approximately 128px desktop.
-- Hero content clears the floating navigation with at least 128px of top space.
-- Section transitions use a low-contrast one-pixel rule.
+- Hero content clears floating navigation with at least 128px of top space.
 
 ### Desktop grid
 
-- Use a 12-column grid for asymmetric editorial compositions.
-- Profile hero: content spans 8 columns; metadata spans 4.
-- Experience: period spans 3 columns; content spans 9.
-- Capability rows: three equal columns separated by hairlines.
-- Lab: two equal project columns.
-- Footer: brand, navigation, and location/process columns.
-
-### Responsive behaviour
-
-| Width | Behaviour |
-| --- | --- |
-| `< 768px` | Single column, compact floating header, horizontal nav overflow or accessible menu, stacked buttons, single-column résumé and project cards |
-| `768–1023px` | Two-column project grid; profile hero remains predominantly single-column; capability grid may use three columns when readable |
-| `>= 1024px` | Full 12-column editorial layouts and three-column footer |
-
-The site must reflow at 320px and remain usable at 200% text zoom.
+- **Home Hero**: 2-Column Responsive Grid (`grid lg:grid-cols-2 gap-12 lg:gap-8 items-center`). Left column houses text/buttons; right column houses the Liquid Glass `CodeEditor`.
+- **Profile hero**: content spans 8 columns; metadata spans 4.
+- **Experience**: period spans 3 columns; content spans 9.
+- **Capability rows**: three equal columns separated by hairlines.
+- **Lab**: two equal project columns (`RagPreview` and `StudioPreview`).
+- **Footer**: three-column brand, navigation, and process grid.
 
 ## Component specifications
 
 ### Portfolio shell
 
-The shell includes a skip link, floating navigation, main landmark, scroll progress bar, footer, and back-to-top control. `/chat` and `/design-system` use isolated application shells without the portfolio navigation or footer.
+Includes skip link, floating navigation, main landmark, scroll progress bar, footer, and back-to-top control. `/chat` and `/design-system` use isolated product tool shells without the portfolio navigation or footer.
 
 ### Frosted command bar
 
-- Fixed near the top and centred.
-- Pill shape with a one-pixel semantic border.
-- Transparent/frosted at the top; increases opacity and subtle elevation after scrolling.
+- Fixed near top and centred.
+- Pill shape with a 1px semantic border and backdrop blur.
+- Transparent/frosted at top; increases opacity after scrolling.
 - Order: wordmark, divider, page links, divider, theme toggle.
-- Active page uses a Framer Motion shared-layout pill in `accent`.
-- Links and the theme toggle retain visible keyboard focus and 44px touch targets.
-- Mobile may use a compact accessible Sheet when all links cannot fit without crowding.
+- Active page uses Framer Motion shared-layout pill in `accent`.
+
+### Home Hero Code Editor (`CodeEditor`)
+
+- Floating Liquid Glass pane embedded in the 2-column hero grid.
+- Features macOS traffic lights (●●●), filename header, line numbers, and token syntax highlighting.
+- Uses `useTypewriter` hook cycling through chill personality snippets (`aliya.ts`, `workflow.ts`, `offline.yaml`).
+- Stacks gracefully on tablet (`md:block`) and hides on small mobile screens to keep hero copy accessible.
 
 ### Section label
 
-The brand signature is `// LABEL` followed by an optional short hairline. It is always cobalt, monospaced, uppercase, and widely tracked. A centred variant is used before CTA statements.
+The brand signature is `// LABEL` followed by an optional short hairline. Always cobalt, monospaced, uppercase, and widely tracked.
 
 ### Buttons
 
-- Primary: cobalt fill, white text, full pill, approximately 44px high.
+- Primary: cobalt fill, white text, full pill, 44px high.
 - Secondary: transparent canvas, semantic border, full pill.
-- Arrows move only a few pixels on hover and do not shift surrounding layout.
-- Hover may gently lift or brighten; pressed state returns toward the canvas.
+- Hover gently lifts; pressed state returns toward canvas.
 
 ### Capability grid
 
-- Flat, borderless canvas with vertical desktop dividers.
+- Flat canvas with vertical desktop dividers.
 - Number in cobalt mono, then title, then supporting copy.
-- No icon is required; text hierarchy and spacing carry the section.
 
-### Experience list
+### Project cards & previews
 
-- Wide, calm rows with the period separate from the role and company.
-- Current status uses a subtle cobalt-tinted mono pill.
-- Selected experience includes concise outcome-led descriptions.
-- Earlier experience remains visible as a compact list; it is not hidden by default.
-
-### Project cards
-
-- Each card contains a large quiet visual panel, a project index, outcome/status pill, category label, title, description, and capability tags.
-- Visuals are CSS/SVG abstractions using frosted glass, circles, axes, and soft internal light; no stock imagery or generic AI icons.
-- On hover, the panel lifts subtly and the title shifts to cobalt.
-- Project cards must remain useful without hover.
+- `RagPreview` and `StudioPreview` render interactive preview windows using semantic `bg-card` and `text-card-foreground` tokens that adapt seamlessly to light and dark modes.
+- Visuals use CSS/SVG abstractions, frosted glass, and soft internal light; no generic stock images.
 
 ### Contact form
 
-- Native semantic form with visible labels and preserved validation messaging.
-- Fields are borderless except for a bottom rule; focus animates a cobalt underline.
-- Inputs use the body font and large comfortable text.
-- Submission includes sending, success, and recoverable error states announced with `aria-live`.
-- Direct email remains visible as a fallback.
-
-### Footer
-
-- Large, three-column information grid above a final copyright rule.
-- Brand statement, page navigation, location, and process remain easy to scan.
-- Footer links use muted text and shift to cobalt on hover/focus.
+- Semantic form with bottom-rule input styling; focus animates a cobalt underline.
+- Direct email fallback remains visible.
 
 ## Product tool principles
 
-`/chat` and `/design-system` are product workspaces, not portfolio pages. They inherit the semantic colour system, typography roles, accessibility baseline, and atmospheric restraint, then use a denser application shell.
+`/chat` and `/design-system` are product workspaces, inheriting semantic colours and accessibility while utilizing denser application layouts.
 
-### Shell and surfaces
-
-- Use the blurred botanical atmosphere as a quiet page layer; it must stay abstract behind the work surface.
-- The global tool navigation is a centred, frosted pill with a hairline border, compact controls, and a clear active workspace label.
-- Avoid a single heavy outer application container. Put the visual separation on the working panes: lightly frosted headers, white or near-white content surfaces, thin borders, and one soft shadow.
-- Prefer a small number of intentionally separated floating panes over nested cards, boxed-in sections, or repeated decorative outlines.
-- The canvas should feel spacious and calm. White carries the primary work area; linen and transparent surfaces frame it without competing for attention.
-
-### Product clarity
-
-- A screen should explain itself through its information hierarchy and familiar controls. Remove instructional copy, secondary headings, and labels that do not unlock an action.
-- Use direct, short names: `Chat`, `Support Inbox`, and `Knowledge Base`.
-- Icon-only controls are appropriate for familiar, repeated actions when each has an accessible label and a tooltip or title. Keep text for irreversible or ambiguous actions such as `Resolve`, `Reopen`, `Save`, and `Reset`.
-- Show one focused knowledge-base editor, not a mock IDE, source catalogue, character counter, or multiple invented companies.
-
-### Chat workspace patterns
-
-- Customer messages are plain text aligned to the customer side. Bot replies use a quiet cobalt-tinted surface; live-agent replies use a distinct, quiet success-tinted surface. Do not add borders around message bubbles.
-- Customer Chat and Support Inbox show the same conversation from their own roles. A human handoff appears in the inbox immediately, and resolving hands the conversation back to the bot with a clear event message.
-- Customer Chat may show a typing indicator and character-by-character bot reveal. Support Inbox does not show a typing indicator; the customer can see `Support is typing…` only while the agent is actively composing.
-- Composers are white, unobtrusive, and shadow-defined rather than framed by a second outer card. Send is a circular upward-arrow control.
-- Refresh preserves the current browser session. `Reset` is the intentional fresh start.
-
-### Responsive composition
-
-- Desktop and tablet retain separate Chat and Support Inbox panes when the layout remains readable.
-- Below the compact breakpoint, show one full-height pane at a time and centre the Chat and Inbox icon controls in the navigation. Preserve the wordmark and `Chat Workspace` label; do not silently remove them.
-- Preserve minimum touch targets, avoid horizontal overflow, and let conversation areas scroll internally rather than extending the page.
-- At 375px, 768px, and 1280px, validate navigation, pane switching, knowledge-base editing, handoff/resolution controls, and both composers.
+- Use direct, short names: `Chat`, `Support Inbox`, `Knowledge Base`, `Design Studio`.
+- Floating glass shells separate panes cleanly over background presets (`pink-blossoms`).
+- Chat Endpoint contract lives in `api/chat.js` requiring `GOOGLE_API_KEY`.
 
 ## Motion protocol
 
-- Page transition: opacity only, approximately 500ms.
+- Page transition: opacity only, 500ms.
 - Section reveal: opacity plus 24px vertical travel, 700ms, ease `[0.22, 1, 0.36, 1]`.
-- Stagger repeated items in roughly 80–120ms increments.
-- Navigation active pill: shared-layout spring around stiffness 380, damping 30.
-- Local hover/focus transitions: 150–250ms.
-- Animate opacity and transforms, not layout properties.
-- Reduced motion removes travel, scale, parallax, looping glow, and bouncing while preserving immediate state changes.
-
-## Imagery guidance
-
-Visuals should feel pristine, atmospheric, and quietly physical: frosted glass, brushed material, soft internal luminescence, circular targets, architectural macro forms, and heavily blurred environmental textures.
-
-Use linen, sage, cobalt, pure light, and restrained blue/green atmospheric imagery. Environmental images may appear only as secondary background layers on the Home and Lab heroes, project previews, shared CTA, and Contact direct-email section; typography and content remain primary. Blur, veil, opacity, and grain must keep the image abstract rather than photographic.
-
-Do not use text in images, human faces, stock-office scenes, computer-screen mockups, literal project screenshots as decoration, or generic AI-brain imagery. Avoid recognisable lifestyle, travel, or beauty imagery that changes the site's product-portfolio character.
+- Navigation active pill: shared-layout spring (stiffness 380, damping 30).
+- Typewriter code editor: 45ms typing speed, 18ms deletion speed, 2500ms pause.
+- Reduced motion removes travel, scale, and looping while preserving state changes.
 
 ## Accessibility baseline
 
-- Meet WCAG 2.2 AA contrast and interaction requirements.
-- Give every interactive element a visible `focus-visible` state.
-- Prefer 44×44px isolated targets; never go below 24×24px.
-- Do not hide essential information behind hover.
-- Keep fixed chrome from covering focused elements or anchors.
-- Respect `prefers-reduced-motion` in CSS and Framer Motion.
-- Provide one `<h1>` per page and correct landmark/heading order.
-- Keep labels visible when form fields contain content.
-- Announce loading, success, and error messages.
-- Validate light and dark modes independently.
-
-## Visual QA checklist
-
-- Review 375px, 768px, and 1280px or wider.
-- Review the Home, Profile, Lab, and Contact pages in light and dark themes.
-- Check the floating navigation at the page top and after scrolling.
-- Navigate using keyboard only and verify focus is not obscured.
-- Check hover, touch, validation, sending, success, and error states.
-- Verify reduced motion and 200% text zoom.
-- Confirm no horizontal overflow or clipped display copy.
-- Run lint, the production build, and the development server before shipping.
-
-## Exceptions
-
-The Design Studio and RAG assistant may be denser and more utilitarian than the public portfolio. They inherit semantic colours, type roles, accessibility, and interaction standards, but not the portfolio composition. Intentional exceptions should be local, documented, and promoted into this guide only when repeated.
+- WCAG 2.2 AA contrast compliance.
+- Visible `focus-visible` ring on every interactive element.
+- Minimum 44×44px touch targets for isolated controls.
+- One `<h1>` per page and correct landmark hierarchy.
+- Respect `prefers-reduced-motion`.
