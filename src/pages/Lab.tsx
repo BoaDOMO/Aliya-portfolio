@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { BlurredBackground } from "@/components/blurred-background"
+import { GradientText } from "@/components/gradient-text"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
 import { ProjectPreview } from "@/components/lab/project-preview"
@@ -17,7 +18,9 @@ export default function Lab() {
           <FadeInWhenVisible className="max-w-5xl">
             <SectionLabel line={false}>Lab</SectionLabel>
             <h1 className="mt-12 max-w-5xl text-balance font-display text-[clamp(3.65rem,8vw,7rem)] font-medium leading-[0.98] tracking-[-0.06em]">
-              Selected work, shipped and in progress.
+              <GradientText colors={["#2DD4BF", "#3B82F6", "#6366F1", "#2DD4BF"]} animationSpeed={8}>
+                Selected work, shipped and in progress.
+              </GradientText>
             </h1>
             <p className="mt-10 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
               The outcome of AI integration and product rigor—where prompts,

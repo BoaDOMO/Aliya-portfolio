@@ -1,6 +1,7 @@
 import { ArrowRight, MapPin } from "@phosphor-icons/react"
 import { Link } from "react-router-dom"
 import { BlurredBackground } from "@/components/blurred-background"
+import { GradientText } from "@/components/gradient-text"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
 import { SectionLabel } from "@/components/section-label"
@@ -22,7 +23,9 @@ export default function Profile() {
           <FadeInWhenVisible className="lg:col-span-8">
             <SectionLabel line={false}>Profile</SectionLabel>
             <h1 className="mt-12 max-w-4xl text-balance font-display text-[clamp(3.65rem,7.7vw,7rem)] font-medium leading-[0.98] tracking-[-0.06em]">
-              Vibe coding, backed by actual judgment.
+              <GradientText colors={["#2DD4BF", "#3B82F6", "#6366F1", "#2DD4BF"]} animationSpeed={8}>
+                Vibe coding, backed by actual judgment.
+              </GradientText>
             </h1>
             <p className="mt-10 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
               A lot of people can ask AI to generate code. I&rsquo;m good at

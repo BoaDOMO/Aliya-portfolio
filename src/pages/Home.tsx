@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { CapabilityGrid } from "@/components/capability-grid"
 import { CodeEditor } from "@/components/code-editor"
 import { BlurredBackground } from "@/components/blurred-background"
+import { GradientText } from "@/components/gradient-text"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
 import { SectionLabel } from "@/components/section-label"
@@ -58,8 +59,10 @@ export default function Home() {
                 aria-label="Aliya Koy"
                 className="mt-14 font-display text-[clamp(5rem,11vw,9rem)] font-medium leading-[0.86] tracking-[-0.07em]"
               >
-                <span className="block">Aliya</span>
-                <span className="block">Koy</span>
+                <GradientText colors={["#2DD4BF", "#3B82F6", "#6366F1", "#2DD4BF"]} animationSpeed={8}>
+                  <span className="block">Aliya</span>
+                  <span className="block pb-[0.25em]">Koy</span>
+                </GradientText>
               </h1>
               <p className="mt-12 max-w-xl text-balance font-display text-[clamp(1.55rem,2.4vw,2.35rem)] font-light leading-[1.16] tracking-[-0.04em]">
                 I build with AI fast—and debug until it actually works.

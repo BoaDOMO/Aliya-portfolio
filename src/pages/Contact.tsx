@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react"
 import { CheckCircle, PaperPlaneRight } from "@phosphor-icons/react"
 import { BlurredBackground } from "@/components/blurred-background"
+import { GradientText } from "@/components/gradient-text"
 import { FadeInWhenVisible } from "@/components/fade-in-when-visible"
 import { PageContainer, PageSection } from "@/components/page-layout"
 import { SectionLabel } from "@/components/section-label"
@@ -89,7 +90,9 @@ export default function Contact() {
           <FadeInWhenVisible>
             <SectionLabel line={false}>Contact</SectionLabel>
             <h1 className="mt-12 max-w-6xl text-balance font-display text-[clamp(3.65rem,8vw,7rem)] font-medium leading-[0.98] tracking-[-0.06em]">
-              Let&rsquo;s start a conversation.
+              <GradientText colors={["#2DD4BF", "#3B82F6", "#6366F1", "#2DD4BF"]} animationSpeed={8}>
+                Let&rsquo;s start a conversation.
+              </GradientText>
             </h1>
             <p className="mt-10 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
               Have a messy idea that AI could help build? Looking for someone to
