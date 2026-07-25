@@ -44,7 +44,7 @@ shadcn is a repository library, not a skill. Read `@docs/shadcn-reference.md` wh
 
 - Before UI code, map the component tree, parent container, Flex/Grid alignment, responsive composition, and required shadcn primitives.
 - Follow `@DESIGN.md` for the public portfolio. Do not improvise a competing visual language.
-- Treat `/chat` and `/design-system` as isolated product-tool shells. They share semantic tokens and accessibility, but not the portfolio navbar, footer, or editorial spacing.
+- Treat `/chat` and `/design-studio` as isolated product-tool shells. They share semantic tokens and accessibility, but not the portfolio navbar, footer, or editorial spacing.
 - Use `@phosphor-icons/react` for all interface icons.
 - Use semantic Tailwind tokens for structural colour. Never add `dark:` modifiers for portfolio background or foreground fills; token values adapt automatically.
 
@@ -84,7 +84,7 @@ Ship nothing visually unreviewed.
 - Display/body/data typography is Plus Jakarta Sans / Inter / JetBrains Mono.
 - Public portfolio direction is **Ethereal Monolith**, documented in `@DESIGN.md`.
 - The Chat endpoint is `api/chat.js`, uses `@google/generative-ai`, and requires `GOOGLE_API_KEY`.
-- `/chat` and `/design-system` do not render the portfolio shell.
+- `/chat` and `/design-studio` do not render the portfolio shell.
 
 ## References
 

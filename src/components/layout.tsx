@@ -12,14 +12,14 @@ const pageTitles: Record<string, string> = {
   "/lab": "Lab — Aliya Koy",
   "/chat": "Chat Workspace — Aliya Koy",
   "/contact": "Contact — Aliya Koy",
-  "/design-system": "Design Studio — Aliya Koy",
+  "/design-studio": "Design Studio — Aliya Koy",
 }
 
 export default function Layout() {
   const location = useLocation()
-  const isDesignSystem = location.pathname === "/design-system"
+  const isDesignStudio = location.pathname === "/design-studio" || location.pathname === "/design-system"
   const isChatWorkspace = location.pathname === "/chat"
-  const isProductTool = isDesignSystem || isChatWorkspace
+  const isProductTool = isDesignStudio || isChatWorkspace
 
   useEffect(() => {
     document.title = pageTitles[location.pathname] ?? "Aliya Koy"
@@ -45,7 +45,7 @@ export default function Layout() {
         id="main-content"
         tabIndex={-1}
         className={`flex min-h-0 flex-1 scroll-mt-24 flex-col outline-none ${isProductTool ? "pt-0 overflow-hidden" : "pt-0"}`}
-        data-design-system={isDesignSystem ? "" : undefined}
+        data-design-system={isDesignStudio ? "" : undefined}
       >
         <Outlet />
       </main>

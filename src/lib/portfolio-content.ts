@@ -74,7 +74,7 @@ export const projects = [
     description:
       "A hands-on workspace for shaping design tokens, type, surfaces, responsive previews, accessibility checks, and production-ready exports.",
     tags: ["Design Tokens", "Live Preview", "Accessibility"],
-    link: "/design-system",
+    link: "/design-studio",
     kind: "studio" as const,
   },
 ]

@@ -14,7 +14,7 @@ export default function AppendixSection() {
       </p>
       <ul className="space-y-2 text-sm">
         <li>
-          <Link to="/design-system" className="text-primary hover:underline">
+          <Link to="/design-studio" className="text-primary hover:underline">
             → Open Design System to copy AI Context, Tailwind v4, Plain CSS, or theme.json
           </Link>
         </li>

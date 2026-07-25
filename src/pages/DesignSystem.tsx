@@ -138,7 +138,7 @@ function DesignSystemContent() {
   return (
     <motion.div
       layout={!shouldReduceMotion}
-      className="design-studio-workspace relative flex min-h-0 flex-1 flex-col overflow-hidden bg-tool-canvas text-foreground"
+      className="design-studio-workspace relative flex min-h-0 flex-1 flex-col overflow-clip bg-tool-canvas text-foreground"
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       {isDark ? (

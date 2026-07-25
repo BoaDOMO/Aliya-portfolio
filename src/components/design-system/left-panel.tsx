@@ -115,7 +115,7 @@ export default function LeftPanel({
         </div>
       </div>
 
-      <div className="studio-glass-content min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-smooth">
+      <div className="studio-glass-content min-h-0 flex-1 overflow-y-auto overscroll-contain scroll-smooth mr-1">
         <div aria-label="Theme controls" className="space-y-9 p-5">
           {!typeAdvancedOpen && (
             <div ref={colorSectionRef} className="scroll-mt-6">
